@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVK4D6KJJP"></script>
+   <script>(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account','2164831');</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DVK4D6KJJP');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="xBRQpYUAaKc9LyyM8bvl9jPKPpNy57MIPW6Wdhwg_4c" />
+<title>Bourbon Trail Planner | Plan Your Perfect Kentucky Bourbon Trail Trip</title>
+<meta property="og:title" content="Bourbon Trail Planner | Plan Your Perfect Kentucky Bourbon Trail Trip">
+<meta name="description" content="Plan your Kentucky Bourbon Trail trip with expert itineraries, distillery guides, booking tips, and an interactive trip builder. Free tools, no account needed.">
+<meta property="og:description" content="Plan your Kentucky Bourbon Trail trip with expert itineraries, distillery guides, booking tips, and an interactive trip builder. Free tools, no account needed.">
+<link rel="canonical" href="https://mybourbontrailplan.com/">
+<meta property="og:title" content="Bourbon Trail Planner | Plan Your Kentucky Bourbon Trail Trip">
+<meta property="og:description" content="Expert itineraries, distillery guides, booking tips, and interactive trip planning tools for the Kentucky Bourbon Trail.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mybourbontrailplan.com/">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1B4F72;
+    --primary-light: #2980B9;
+    --primary-dark: #0E2F44;
+    --accent: #D4A03C;
+    --accent-light: #F0D78C;
+    --bg: #FFFFFF;
+    --bg-subtle: #F7F9FC;
+    --bg-card: #FFFFFF;
+    --text: #1A1A2E;
+    --text-secondary: #5A6178;
+    --text-light: #8B92A8;
+    --border: #E4E8F0;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --max-width: 1200px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: var(--shadow-sm); }
+  .nav-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 68px;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--primary-dark);
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--primary);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 700; font-size: 18px;
+    font-family: var(--font-display);
+  }
+  .logo-text {
+    font-family: var(--font-display);
+    font-weight: 600; font-size: 20px;
+    letter-spacing: -0.3px;
+  }
+  .logo-text span { color: var(--accent); }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-secondary);
+    font-size: 14.5px; font-weight: 500;
+    transition: color 0.2s;
+    position: relative;
+  }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 2px; background: var(--primary); transform: scaleX(0);
+    transition: transform 0.2s; transform-origin: center;
+  }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta {
+    background: var(--primary); color: white !important;
+    padding: 9px 20px; border-radius: 8px;
+    font-weight: 600; font-size: 14px;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .nav-cta:hover { background: var(--primary-light); transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  .mobile-menu-btn {
+    display: none; background: none; border: none; cursor: pointer;
+    padding: 8px; color: var(--text);
+  }
+
+  /* HERO */
+  .hero {
+    padding: 140px 24px 80px;
+    background: linear-gradient(168deg, var(--bg) 0%, var(--bg-subtle) 40%, #EEF2F7 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(27,79,114,0.04) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-inner {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(27,79,114,0.06); border: 1px solid rgba(27,79,114,0.1);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 13px; font-weight: 500; color: var(--primary);
+    margin-bottom: 20px;
+    animation: fadeInUp 0.6s ease both;
+  }
+  .hero-badge::before {
+    content: ''; width: 6px; height: 6px;
+    background: var(--accent); border-radius: 50%;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 700; line-height: 1.12;
+    color: var(--primary-dark);
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    animation: fadeInUp 0.6s ease 0.1s both;
+  }
+  .hero h1 em {
+    font-style: italic; color: var(--accent);
+    font-weight: 600;
+  }
+  .hero-sub {
+    font-size: 17px; line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 520px; margin-bottom: 32px;
+    animation: fadeInUp 0.6s ease 0.2s both;
+  }
+  .hero-actions {
+    display: flex; gap: 14px; flex-wrap: wrap;
+    animation: fadeInUp 0.6s ease 0.3s both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--primary); color: white;
+    padding: 14px 28px; border-radius: 10px;
+    font-weight: 600; font-size: 15px;
+    text-decoration: none; border: none; cursor: pointer;
+    transition: all 0.2s; box-shadow: 0 2px 8px rgba(27,79,114,0.25);
+  }
+  .btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(27,79,114,0.3); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; color: var(--primary);
+    padding: 14px 28px; border-radius: 10px;
+    font-weight: 600; font-size: 15px;
+    text-decoration: none; border: 1.5px solid var(--border);
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--primary); background: rgba(27,79,114,0.02); }
+
+  /* Hero visual */
+  .hero-visual {
+    position: relative;
+    animation: fadeInUp 0.8s ease 0.3s both;
+  }
+  .hero-card {
+    background: white; border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .hero-card-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .hero-card-header h3 {
+    font-size: 15px; font-weight: 600; color: var(--text);
+  }
+  .hero-card-status {
+    font-size: 12px; color: var(--primary-light);
+    background: rgba(41,128,185,0.08);
+    padding: 4px 10px; border-radius: 100px; font-weight: 500;
+  }
+  .hero-card-body { padding: 20px 24px; }
+  .itinerary-day {
+    display: flex; gap: 16px; padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .itinerary-day:last-child { border-bottom: none; }
+  .day-marker {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--bg-subtle); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 14px; color: var(--primary);
+  }
+  .day-content h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .day-content p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+  .day-tag {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px; margin-top: 6px;
+  }
+  .tag-tour { background: rgba(41,128,185,0.08); color: var(--primary-light); }
+  .tag-tasting { background: rgba(212,160,60,0.1); color: #B8860B; }
+  .tag-food { background: rgba(46,139,87,0.08); color: #2E8B57; }
+
+  /* STATS */
+  .stats {
+    padding: 60px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .stats-inner {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 36px; font-weight: 700;
+    color: var(--primary-dark);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 14px; color: var(--text-secondary);
+    margin-top: 6px; font-weight: 500;
+  }
+
+  /* FEATURES */
+  .features {
+    padding: 100px 24px;
+    background: var(--bg);
+  }
+  .section-header {
+    text-align: center; max-width: 640px; margin: 0 auto 64px;
+  }
+  .section-tag {
+    display: inline-block;
+    font-size: 12px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1.5px; color: var(--primary-light);
+    margin-bottom: 14px;
+  }
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 38px);
+    font-weight: 700; color: var(--primary-dark);
+    letter-spacing: -0.5px; margin-bottom: 16px;
+  }
+  .section-header p {
+    font-size: 16px; color: var(--text-secondary); line-height: 1.6;
+  }
+  .features-grid {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px 28px;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .feature-card:hover {
+    border-color: rgba(27,79,114,0.2);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-4px);
+  }
+  .feature-icon {
+    width: 56px; height: 56px;
+    background: rgba(27,79,114,0.05);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .feature-icon svg { width: 30px; height: 30px; }
+  .feature-icon.gold { background: rgba(212,160,60,0.07); }
+  .feature-card h3 {
+    font-size: 17px; font-weight: 600;
+    margin-bottom: 10px; color: var(--text);
+  }
+  .feature-card p {
+    font-size: 14.5px; color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .feature-link {
+    display: inline-flex; align-items: center; gap: 4px;
+    margin-top: 16px; font-size: 14px; font-weight: 600;
+    color: var(--primary); text-decoration: none;
+    transition: gap 0.2s;
+  }
+  .feature-link:hover { gap: 8px; }
+
+  /* POPULAR GUIDES */
+  .guides {
+    padding: 100px 24px;
+    background: var(--bg-subtle);
+  }
+  .guides-grid {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .guide-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    text-decoration: none; color: inherit;
+    display: block;
+  }
+  .guide-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+  .guide-img {
+    height: 180px;
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .guide-img-label {
+    font-family: var(--font-display);
+    font-size: 42px; font-weight: 700;
+    color: rgba(255,255,255,0.15);
+    position: absolute;
+  }
+  .guide-img-icon {
+    position: relative; z-index: 1;
+    width: 52px; height: 52px;
+  }
+  .guide-body { padding: 24px; }
+  .guide-category {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: 1px; color: var(--primary-light); margin-bottom: 8px;
+  }
+  .guide-body h3 {
+    font-size: 17px; font-weight: 600; margin-bottom: 8px;
+    line-height: 1.35;
+  }
+  .guide-body p {
+    font-size: 14px; color: var(--text-secondary); line-height: 1.55;
+  }
+  .guide-meta {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 16px; padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-size: 13px; color: var(--text-light);
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 100px 24px;
+    background: var(--bg);
+  }
+  .cta-box {
+    max-width: 800px; margin: 0 auto;
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    border-radius: 20px;
+    padding: 64px 48px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-box::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(212,160,60,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .cta-box h2 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 700; color: white;
+    margin-bottom: 16px; position: relative;
+  }
+  .cta-box p {
+    font-size: 16px; color: rgba(255,255,255,0.75);
+    max-width: 500px; margin: 0 auto 32px;
+    position: relative;
+  }
+  .cta-email {
+    display: flex; gap: 10px;
+    max-width: 440px; margin: 0 auto;
+    position: relative;
+  }
+  .cta-email input {
+    flex: 1; padding: 14px 18px;
+    border-radius: 10px; border: 2px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.1);
+    color: white; font-size: 15px;
+    font-family: var(--font-body);
+    outline: none; transition: border-color 0.2s;
+  }
+  .cta-email input::placeholder { color: rgba(255,255,255,0.45); }
+  .cta-email input:focus { border-color: var(--accent); }
+  .cta-email button {
+    padding: 14px 24px; border-radius: 10px;
+    background: var(--accent); color: var(--primary-dark);
+    font-weight: 700; font-size: 15px;
+    border: none; cursor: pointer;
+    font-family: var(--font-body);
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .cta-email button:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+  /* FOOTER */
+  footer {
+    padding: 60px 24px 40px;
+    background: var(--primary-dark);
+    color: rgba(255,255,255,0.6);
+  }
+  .footer-inner {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  }
+  .footer-brand p { font-size: 14px; line-height: 1.6; margin-top: 12px; max-width: 280px; }
+  .footer-col h4 {
+    color: white; font-size: 13px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .footer-col a {
+    display: block; color: rgba(255,255,255,0.55);
+    text-decoration: none; font-size: 14px;
+    padding: 4px 0; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom {
+    max-width: var(--max-width); margin: 40px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-on-scroll {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .animate-on-scroll.visible {
+    opacity: 1; transform: translateY(0);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+    .hero-visual { display: none; }
+    .features-grid, .guides-grid { grid-template-columns: 1fr 1fr; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+    .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+  }
+  @media (max-width: 640px) {
+    .nav-links { display: none; }
+    .mobile-menu-btn { display: block; }
+    .features-grid, .guides-grid { grid-template-columns: 1fr; }
+    .stats-inner { grid-template-columns: repeat(2, 1fr); }
+    .hero { padding: 120px 20px 60px; }
+    .cta-box { padding: 48px 28px; }
+    .cta-email { flex-direction: column; }
+    .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  }
+
+  .nav-links.mobile-open { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: white; padding: 16px 24px 24px; border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); gap: 4px; z-index: 99; }
+  .nav-links.mobile-open li { width: 100%; }
+  .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
+  .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <div class="logo-icon">B</div>
+      <div class="logo-text">Bourbon Trail<span>Planner</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>
+      <li><a href="distilleries.html">Distilleries</a></li>
+      <li><a href="where-to-stay-bourbon-trail.html">Where to Stay</a></li>
+      <li><a href="eat-and-drink-bourbon-trail.html">Eat &amp; Drink</a></li>
+      
+      <li><a href="trip-builder.html">Trip Builder</a></li>
+      
+      <li><a href="guides.html">Guides</a></li>
+      <li><a href="bourbon-trail-booking-guide.html" class="nav-cta">Booking Guide</a></li>
+    </ul>
+    <button class="mobile-menu-btn" aria-label="Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">Record 2.7 million annual visitors and growing</div>
+      <h1>Plan your perfect<br>Bourbon Trail trip,<br><em>minus the headaches</em></h1>
+      <p class="hero-sub">Expert itineraries, honest distillery guides, and booking strategies from someone who has actually done it — multiple times. Stop cobbling together Reddit threads and blog posts. Start here.</p>
+      <div class="hero-actions">
+        <a href="3-day-bourbon-trail-itinerary.html" class="btn-primary">
+          Start Planning
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="distilleries.html" class="btn-secondary">Browse Distilleries</a>
+        <a href="trip-builder.html" class="btn-secondary" style="border-color:var(--accent);color:var(--accent);">Build Your Trip →</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <h3>Your Weekend Itinerary</h3>
+          <span class="hero-card-status">3 Days &bull; 7 Stops</span>
+        </div>
+        <div class="hero-card-body">
+          <div class="itinerary-day">
+            <div class="day-marker">D1</div>
+            <div class="day-content">
+              <h4>Louisville &mdash; Whiskey Row</h4>
+              <p>Evan Williams Experience &rarr; Old Forester &rarr; Angel's Envy</p>
+              <span class="day-tag tag-tour">3 tours</span>
+            </div>
+          </div>
+          <div class="itinerary-day">
+            <div class="day-marker">D2</div>
+            <div class="day-content">
+              <h4>Bardstown &mdash; Bourbon Capital</h4>
+              <p>Heaven Hill Bottling Experience &rarr; Maker's Mark (bottle dip)</p>
+              <span class="day-tag tag-tasting">Premium tastings</span>
+            </div>
+          </div>
+          <div class="itinerary-day">
+            <div class="day-marker">D3</div>
+            <div class="day-content">
+              <h4>Frankfort &mdash; Hidden Gems</h4>
+              <p>Buffalo Trace Hard Hat Tour &rarr; Castle &amp; Key &rarr; lunch at Rick House</p>
+              <span class="day-tag tag-food">Food + tours</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-inner">
+    <div class="animate-on-scroll">
+      <div class="stat-num">60+</div>
+      <div class="stat-label">Trail Distilleries</div>
+    </div>
+    <div class="animate-on-scroll">
+      <div class="stat-num">2.7M+</div>
+      <div class="stat-label">Annual Visitors</div>
+    </div>
+    <div class="animate-on-scroll">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Kentucky Regions</div>
+    </div>
+    <div class="animate-on-scroll">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Insider Knowledge</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="guides">
+  <div class="section-header">
+    <div class="section-tag">Why Use This</div>
+    <h2>Everything you need to plan your trip — in one place</h2>
+    <p>No more juggling 12 browser tabs, outdated blog posts, and TripAdvisor threads. We've done the hard work so you don't have to.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card animate-on-scroll">
+      <div class="feature-icon"><svg viewBox="0 0 30 30" fill="none"><circle cx="7" cy="6" r="3" stroke="#1B4F72" stroke-width="1.5" fill="rgba(27,79,114,0.06)"/><circle cx="23" cy="24" r="3" stroke="#D4A03C" stroke-width="1.5" fill="rgba(212,160,60,0.06)"/><circle cx="24" cy="9" r="2.2" stroke="#1B4F72" stroke-width="1.3" fill="rgba(27,79,114,0.04)"/><path d="M9.5 8C12 12.5 19 11 22.5 11.5" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="2.5 2.5"/><path d="M24.5 12C24.5 17 20 20 21.5 22.5" stroke="#D4A03C" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="2.5 2.5"/><circle cx="7" cy="6" r="1.2" fill="#1B4F72"/><circle cx="23" cy="24" r="1.2" fill="#D4A03C"/><circle cx="24" cy="9" r="1" fill="#1B4F72"/></svg></div>
+      <h3>Ready-Made Itineraries</h3>
+      <p>Optimized routes for 1-day, weekend, and week-long trips. Every itinerary includes drive times, booking links, restaurant picks, and lodging options.</p>
+      <a href="3-day-bourbon-trail-itinerary.html" class="feature-link">View itineraries <span>&rarr;</span></a>
+    </div>
+    <div class="feature-card animate-on-scroll">
+      <div class="feature-icon gold"><svg viewBox="0 0 30 30" fill="none"><path d="M9 4H21L18.5 20H11.5L9 4Z" stroke="#1B4F72" stroke-width="1.5" fill="rgba(212,160,60,0.08)" stroke-linejoin="round"/><path d="M11 11H19" stroke="#D4A03C" stroke-width="1.3" stroke-linecap="round"/><path d="M15 20V25" stroke="#1B4F72" stroke-width="1.5" stroke-linecap="round"/><path d="M11 25H19" stroke="#1B4F72" stroke-width="1.5" stroke-linecap="round"/><path d="M11.5 7.5C13 9 17 9 18.5 7.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.45"/></svg></div>
+      <h3>Honest Distillery Guides</h3>
+      <p>In-depth profiles of every distillery on the trail. Which tours are worth it, which are repetitive, and what the other guides won't tell you.</p>
+      <a href="distilleries.html" class="feature-link">Browse distilleries <span>&rarr;</span></a>
+    </div>
+    <div class="feature-card animate-on-scroll">
+      <div class="feature-icon"><svg viewBox="0 0 30 30" fill="none"><rect x="5" y="4" width="20" height="22" rx="2.5" stroke="#1B4F72" stroke-width="1.5" fill="rgba(27,79,114,0.03)"/><path d="M5 10H25" stroke="#1B4F72" stroke-width="1.3"/><rect x="11" y="5.5" width="8" height="3" rx="1.5" fill="rgba(212,160,60,0.15)" stroke="#D4A03C" stroke-width="1"/><path d="M10 15L12.5 17.5L19 11" stroke="#D4A03C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 21H21" stroke="#1B4F72" stroke-width="1.1" stroke-linecap="round" opacity="0.35"/></svg></div>
+      <h3>Booking Strategy</h3>
+      <p>Know exactly when booking windows open, which tours sell out fastest, and how to snag spots at hard-to-get distilleries like Buffalo Trace and Angel's Envy.</p>
+      <a href="bourbon-trail-booking-guide.html" class="feature-link">Read the guide <span>&rarr;</span></a>
+    </div>
+    <div class="feature-card animate-on-scroll">
+      <div class="feature-icon gold"><svg viewBox="0 0 30 30" fill="none"><path d="M4 18H26" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round"/><path d="M7 18L9 12H21L23 18" stroke="#1B4F72" stroke-width="1.5" stroke-linejoin="round" fill="rgba(27,79,114,0.04)"/><path d="M9 12L10 8H20L21 12" stroke="#D4A03C" stroke-width="1.3" stroke-linejoin="round" fill="rgba(212,160,60,0.06)"/><circle cx="9.5" cy="21" r="2" stroke="#1B4F72" stroke-width="1.3" fill="rgba(27,79,114,0.06)"/><circle cx="20.5" cy="21" r="2" stroke="#1B4F72" stroke-width="1.3" fill="rgba(27,79,114,0.06)"/><path d="M11.5 21H18.5" stroke="#1B4F72" stroke-width="1" stroke-linecap="round" opacity="0.3"/></svg></div>
+      <h3>Transportation Sorted</h3>
+      <p>DIY driving routes, guided tour options, designated driver strategies, and why you shouldn't count on Uber outside Louisville.</p>
+      <a href="bourbon-trail-budget-guide.html" class="feature-link">Plan transport <span>&rarr;</span></a>
+    </div>
+    <div class="feature-card animate-on-scroll">
+      <div class="feature-icon"><svg viewBox="0 0 30 30" fill="none"><path d="M7 5V25" stroke="#1B4F72" stroke-width="1.5" stroke-linecap="round"/><path d="M7 5C7 5 7 11 7 13C7 15 10 15 10 13V5" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="rgba(212,160,60,0.06)"/><path d="M8.5 5V11" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.5"/><path d="M16 15H25V19C25 20.1 24.1 21 23 21H18C16.9 21 16 20.1 16 19V15Z" stroke="#1B4F72" stroke-width="1.3" fill="rgba(27,79,114,0.04)"/><path d="M16 15C16 12 17 10 20.5 10C24 10 25 12 25 15" stroke="#D4A03C" stroke-width="1.3" stroke-linecap="round"/><path d="M16 21V25" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round"/><path d="M25 21V25" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+      <h3>Where to Eat &amp; Stay</h3>
+      <p>Hand-picked restaurants, bars, hotels, and unique lodging near every major distillery cluster. Including a few spots only locals know about.</p>
+      <a href="where-to-stay-bourbon-trail.html" class="feature-link">See recommendations <span>&rarr;</span></a>
+    </div>
+    <div class="feature-card animate-on-scroll">
+      <div class="feature-icon gold"><svg viewBox="0 0 30 30" fill="none"><path d="M15 3C10.5 3 8 6.5 8 10C8 13 10 14.5 11 16.5C11.5 17.5 12 18.5 12 20H18C18 18.5 18.5 17.5 19 16.5C20 14.5 22 13 22 10C22 6.5 19.5 3 15 3Z" stroke="#1B4F72" stroke-width="1.5" fill="rgba(212,160,60,0.06)"/><path d="M12 20V22C12 23.1 12.9 24 14 24H16C17.1 24 18 23.1 18 22V20" stroke="#D4A03C" stroke-width="1.3"/><path d="M12 20H18" stroke="#1B4F72" stroke-width="1.2"/><path d="M13 24V25.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.6"/><path d="M17 24V25.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.6"/><path d="M15 3V1" stroke="#D4A03C" stroke-width="1.2" stroke-linecap="round"/><path d="M22 5L23.5 3.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.4"/><path d="M8 5L6.5 3.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.4"/></svg></div>
+      <h3>Insider Tips</h3>
+      <p>First-timer mistakes to avoid, seasonal advice, the best gift shop exclusives, how the bottle lottery works, and things you'll only learn from experience.</p>
+      <a href="bourbon-trail-booking-guide.html" class="feature-link">Get the tips <span>&rarr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- POPULAR GUIDES -->
+<section class="guides" id="distilleries">
+  <div class="section-header">
+    <div class="section-tag">Popular Guides</div>
+    <h2>Start with the essentials</h2>
+    <p>The most-read guides for planning a Bourbon Trail trip that's actually worth the drive.</p>
+  </div>
+  <div class="guides-grid">
+    <a href="3-day-bourbon-trail-itinerary.html" class="guide-card animate-on-scroll">
+      <div class="guide-img" style="background: linear-gradient(135deg, #0E2F44, #2980B9);">
+        <span class="guide-img-label">3D</span>
+        <span class="guide-img-icon"><svg viewBox="0 0 52 52" fill="none"><path d="M26 8C19 8 14 13 14 20C14 30 26 42 26 42C26 42 38 30 38 20C38 13 33 8 26 8Z" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.12)"/><circle cx="26" cy="20" r="5" stroke="#D4A03C" stroke-width="1.8" fill="rgba(212,160,60,0.2)"/></svg></span>
+      </div>
+      <div class="guide-body">
+        <div class="guide-category">Itinerary</div>
+        <h3>The Ultimate 3-Day Bourbon Trail Itinerary</h3>
+        <p>The best way to experience the trail if you have a long weekend. Covers Louisville, Bardstown, and Frankfort with 7 distillery stops.</p>
+        <div class="guide-meta">
+          <span>18 min read</span>
+          <span>&bull;</span>
+          <span>Updated Feb 2026</span>
+        </div>
+      </div>
+    </a>
+    <a href="distillery-buffalo-trace.html" class="guide-card animate-on-scroll">
+      <div class="guide-img" style="background: linear-gradient(135deg, #1B4F72, #D4A03C);">
+        <span class="guide-img-label">BT</span>
+        <span class="guide-img-icon"><svg viewBox="0 0 52 52" fill="none"><path d="M26 6L30 18H42L32 26L36 38L26 30L16 38L20 26L10 18H22L26 6Z" stroke="white" stroke-width="1.8" fill="rgba(255,255,255,0.1)"/><circle cx="26" cy="24" r="4" stroke="#D4A03C" stroke-width="1.5" fill="rgba(212,160,60,0.2)"/></svg></span>
+      </div>
+      <div class="guide-body">
+        <div class="guide-category">Distillery Guide</div>
+        <h3>Buffalo Trace: How to Actually Get a Tour</h3>
+        <p>The most in-demand tour on the trail. Here's when to book, which tour to pick, and what to do if it's sold out.</p>
+        <div class="guide-meta">
+          <span>12 min read</span>
+          <span>&bull;</span>
+          <span>Updated Feb 2026</span>
+        </div>
+      </div>
+    </a>
+    <a href="bourbon-trail-budget-guide.html" class="guide-card animate-on-scroll">
+      <div class="guide-img" style="background: linear-gradient(135deg, #2C3E50, #1ABC9C);">
+        <span class="guide-img-label">$$</span>
+        <span class="guide-img-icon"><svg viewBox="0 0 52 52" fill="none"><rect x="8" y="14" width="36" height="24" rx="4" stroke="white" stroke-width="1.8" fill="rgba(255,255,255,0.08)"/><circle cx="26" cy="26" r="7" stroke="#D4A03C" stroke-width="1.5" fill="rgba(212,160,60,0.15)"/><path d="M26 22V30" stroke="white" stroke-width="1.3" stroke-linecap="round"/><path d="M23 24.5H28C28 24.5 29.5 24.5 29.5 26C29.5 27.5 28 27.5 28 27.5H23" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </div>
+      <div class="guide-body">
+        <div class="guide-category">Planning</div>
+        <h3>What Does a Bourbon Trail Trip Actually Cost?</h3>
+        <p>A realistic budget breakdown covering tours, tastings, food, lodging, and transportation — for budget and premium trips.</p>
+        <div class="guide-meta">
+          <span>10 min read</span>
+          <span>&bull;</span>
+          <span>Updated Jan 2026</span>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="newsletter">
+  <div class="cta-box">
+    <h2>Get the free Bourbon Trail<br>Planning Checklist</h2>
+    <p>A step-by-step checklist covering everything from booking timelines to packing essentials. Delivered straight to your inbox.</p>
+    <div class="ml-embedded" data-form="WD5yKI"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo" style="margin-bottom:4px;">
+        <div class="logo-icon">B</div>
+        <div class="logo-text" style="color:white;">Bourbon Trail<span>Planner</span></div>
+      </a>
+      <p>Independent trip planning resource for the Kentucky Bourbon Trail. Built by someone who's done the trail multiple times and wants to help you skip the headaches.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Plan</h4>
+      <a href="3-day-bourbon-trail-itinerary.html">Getting Started</a>
+      <a href="3-day-bourbon-trail-itinerary.html">Itineraries</a>
+      <a href="bourbon-trail-booking-guide.html">Booking Guide</a>
+      <a href="bourbon-trail-budget-guide.html">Budget Planner</a>
+      <a href="bourbon-trail-budget-guide.html#transport">Transportation</a>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="distilleries.html">All Distilleries</a>
+      <a href="trip-builder.html">By Region</a>
+      <a href="where-to-stay-bourbon-trail.html">Where to Stay</a>
+      <a href="eat-and-drink-bourbon-trail.html">Where to Eat</a>
+      
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a href="guides.html">Guides</a>
+      <a href="bourbon-trail-booking-guide.html">Insider Tips</a>
+      <a href="trip-builder.html">Interactive Map</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Bourbon Trail Planner. Not affiliated with the Kentucky Distillers' Association.</span>
+    <span>Made with firsthand experience</span>
+  </div>
+</footer>
+
+<script>
+  // Nav scroll effect
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+</script>
+<script>
+document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+  document.querySelector('.nav-links').classList.toggle('mobile-open');
+});
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.remove('mobile-open');
+  });
+});
+</script>
+</body>
+</html>

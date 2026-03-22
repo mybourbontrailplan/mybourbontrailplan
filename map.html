@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVK4D6KJJP"></script>
+   <script>(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account','2164831');</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DVK4D6KJJP');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interactive Kentucky Bourbon Trail Map — All 60+ Distilleries | Bourbon Trail Planner</title>
+<meta property="og:title" content="Interactive Kentucky Bourbon Trail Map — All 60+ Distilleries | Bourbon Trail Planner">
+<meta name="description" content="Interactive map of 56+ Kentucky Bourbon Trail distilleries with region filters, driving routes, and quick info for every stop.">
+<meta property="og:description" content="Interactive map of 56+ Kentucky Bourbon Trail distilleries with region filters, driving routes, and quick info for every stop.">
+<link rel="canonical" href="https://mybourbontrailplan.com/map.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Kentucky Bourbon Trail Distillery Map — Interactive Guide">
+<meta property="og:description" content="Interactive map of 56+ Kentucky Bourbon Trail distilleries with region filters and driving routes.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mybourbontrailplan.com/map.html">
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+
+<style>
+  :root {
+    --primary: #1B4F72; --primary-light: #2980B9; --primary-dark: #0E2F44;
+    --accent: #D4A03C; --bg: #FFFFFF; --bg-subtle: #F7F9FC;
+    --text: #1A1A2E; --text-secondary: #5A6178; --text-light: #8B92A8;
+    --border: #E4E8F0; --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, sans-serif;
+    --louisville: #2980B9; --bardstown: #D4A03C; --frankfort: #8E44AD;
+    --lexington: #2E8B57; --northern-ky: #E74C3C; --other: #8B92A8;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-body); color: var(--text); background: var(--bg-subtle); -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-dark); }
+  .logo-icon { width: 34px; height: 34px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 17px; font-family: var(--font-display); }
+  .logo-text { font-family: var(--font-display); font-weight: 600; font-size: 19px; }
+  .logo-text span { color: var(--accent); }
+  .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 14px; font-weight: 500; }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-links a.active { color: var(--primary); font-weight: 600; }
+  .nav-cta { background: var(--primary); color: white !important; padding: 8px 18px; border-radius: 8px; font-weight: 600; }
+
+  /* MAP PAGE */
+  .map-page { padding-top: 64px; display: flex; height: calc(100vh - 64px); }
+
+  /* SIDEBAR */
+  .map-sidebar {
+    width: 380px; flex-shrink: 0; background: white;
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .sidebar-header { padding: 24px 20px 0; }
+  .sidebar-header h1 {
+    font-family: var(--font-display); font-size: 22px;
+    font-weight: 700; color: var(--primary-dark); margin-bottom: 6px;
+  }
+  .sidebar-header p { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; line-height: 1.5; }
+  .sidebar-count { font-size: 13px; color: var(--text-light); padding: 0 20px; margin-bottom: 8px; }
+  .sidebar-count strong { color: var(--text); }
+
+  /* FILTERS */
+  .filter-section { padding: 0 20px 16px; border-bottom: 1px solid var(--border); }
+  .filter-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .filter-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin-bottom: 6px; }
+  .fbtn {
+    padding: 5px 12px; border-radius: 100px; border: 1.5px solid var(--border);
+    background: white; font-size: 12.5px; font-weight: 500;
+    color: var(--text-secondary); cursor: pointer; font-family: var(--font-body);
+    transition: all 0.15s; display: flex; align-items: center; gap: 5px;
+  }
+  .fbtn:hover { border-color: var(--primary-light); color: var(--primary); }
+  .fbtn.active { background: var(--primary); border-color: var(--primary); color: white; font-weight: 600; }
+  .fbtn .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* ROUTES */
+  .route-section { padding: 12px 20px; border-bottom: 1px solid var(--border); }
+  .route-btn {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    padding: 10px 14px; border-radius: 10px; border: 1.5px solid var(--border);
+    background: white; cursor: pointer; font-family: var(--font-body);
+    transition: all 0.15s; margin-bottom: 6px; text-align: left;
+  }
+  .route-btn:last-child { margin-bottom: 0; }
+  .route-btn:hover { border-color: var(--primary-light); }
+  .route-btn.active { border-color: var(--primary); background: rgba(27,79,114,0.03); }
+  .route-icon { font-size: 20px; flex-shrink: 0; }
+  .route-info { flex: 1; }
+  .route-name { font-size: 13.5px; font-weight: 600; color: var(--text); }
+  .route-desc { font-size: 11.5px; color: var(--text-light); }
+
+  /* DISTILLERY LIST */
+  .dist-list { flex: 1; overflow-y: auto; }
+  .dist-list-item {
+    display: flex; gap: 12px; padding: 14px 20px;
+    border-bottom: 1px solid var(--border); cursor: pointer;
+    transition: background 0.15s;
+  }
+  .dist-list-item:hover { background: var(--bg-subtle); }
+  .dist-list-item.hidden { display: none; }
+  .dli-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .dli-info { flex: 1; min-width: 0; }
+  .dli-name { font-size: 14px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .dli-detail { font-size: 12px; color: var(--text-light); }
+  .dli-tags { display: flex; gap: 4px; margin-top: 4px; }
+  .dli-tag { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 100px; }
+
+  /* MAP */
+  .map-container { flex: 1; position: relative; }
+  #map { width: 100%; height: 100%; }
+
+  /* LEAFLET POPUP */
+  .leaflet-popup-content-wrapper { border-radius: 12px !important; box-shadow: var(--shadow-md) !important; padding: 0 !important; }
+  .leaflet-popup-content { margin: 0 !important; width: 280px !important; font-family: var(--font-body); }
+  .popup-inner { padding: 16px; }
+  .popup-name { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--primary-dark); margin-bottom: 4px; }
+  .popup-region { font-size: 12px; color: var(--text-light); margin-bottom: 10px; }
+  .popup-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 13px; border-bottom: 1px solid var(--border); }
+  .popup-row:last-of-type { border-bottom: none; }
+  .popup-row-label { color: var(--text-secondary); }
+  .popup-row-value { font-weight: 600; color: var(--text); }
+  .popup-link { display: block; margin-top: 12px; padding: 8px; text-align: center; background: var(--primary); color: white; border-radius: 8px; font-size: 13px; font-weight: 600; text-decoration: none; }
+  .popup-link:hover { background: var(--primary-dark); }
+
+  /* LEGEND */
+  .map-legend {
+    position: absolute; bottom: 20px; left: 20px; z-index: 800;
+    background: white; border-radius: 10px; padding: 14px 16px;
+    box-shadow: var(--shadow-md); border: 1px solid var(--border);
+  }
+  .legend-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin-bottom: 8px; }
+  .legend-item { display: flex; align-items: center; gap: 8px; padding: 3px 0; font-size: 12.5px; color: var(--text-secondary); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+
+  /* MOBILE */
+  @media (max-width: 800px) {
+    .map-page { flex-direction: column; height: auto; }
+    .map-sidebar { width: 100%; height: auto; max-height: 45vh; border-right: none; border-bottom: 1px solid var(--border); }
+    .map-container { height: 55vh; }
+    .nav-links { display: none; }
+    .map-legend { bottom: 10px; left: 10px; padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><div class="logo-icon">B</div><div class="logo-text">Bourbon Trail<span>Planner</span></div></a>
+    <ul class="nav-links">
+      <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>
+      <li><a href="distilleries.html">Distilleries</a></li>
+      <li><a href="where-to-stay-bourbon-trail.html">Where to Stay</a></li>
+      <li><a href="#" class="active">Map</a></li>
+      
+      <li><a href="guides.html">Guides</a></li>
+      <li><a href="bourbon-trail-booking-guide.html" class="nav-cta">Booking Guide</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="map-page">
+  <div class="map-sidebar">
+    <div class="sidebar-header">
+      <h1>Bourbon Trail Map</h1>
+      <p>All 60 distilleries on the Kentucky Bourbon Trail. Click a pin or name for details. Select a route to see suggested driving itineraries.</p>
+    </div>
+
+    <div class="filter-section">
+      <div class="filter-label">Filter by Region</div>
+      <div class="filter-row" id="regionFilters">
+        <button class="fbtn active" data-region="all">All</button>
+        <button class="fbtn" data-region="louisville"><span class="dot" style="background:var(--louisville)"></span>Louisville</button>
+        <button class="fbtn" data-region="bardstown"><span class="dot" style="background:var(--bardstown)"></span>Bardstown</button>
+        <button class="fbtn" data-region="frankfort"><span class="dot" style="background:var(--frankfort)"></span>Frankfort</button>
+        <button class="fbtn" data-region="lexington"><span class="dot" style="background:var(--lexington)"></span>Lexington</button>
+        <button class="fbtn" data-region="other"><span class="dot" style="background:var(--other)"></span>Other</button>
+      </div>
+    </div>
+
+    <div class="route-section">
+      <div class="filter-label">Suggested Routes</div>
+      <button class="route-btn" data-route="day1" id="routeDay1">
+        <span class="route-icon">&#128309;</span>
+        <div class="route-info">
+          <div class="route-name">Day 1: Louisville Whiskey Row</div>
+          <div class="route-desc">Evan Williams → Old Forester → Angel's Envy</div>
+        </div>
+      </button>
+      <button class="route-btn" data-route="day2" id="routeDay2">
+        <span class="route-icon">&#128992;</span>
+        <div class="route-info">
+          <div class="route-name">Day 2: Bardstown & Craft Country</div>
+          <div class="route-desc">Heaven Hill → Maker's Mark → Log Still</div>
+        </div>
+      </button>
+      <button class="route-btn" data-route="day3" id="routeDay3">
+        <span class="route-icon">&#128995;</span>
+        <div class="route-info">
+          <div class="route-name">Day 3: Frankfort & Versailles</div>
+          <div class="route-desc">Buffalo Trace → Preservation → Woodford Reserve</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="sidebar-count">Showing <strong id="distCount">60</strong> distilleries</div>
+
+    <div class="dist-list" id="distList"></div>
+  </div>
+
+  <div class="map-container">
+    <div id="map"></div>
+    <div class="map-legend">
+      <div class="legend-title">Regions</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--louisville)"></span>Louisville</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--bardstown)"></span>Bardstown & New Hope</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--frankfort)"></span>Frankfort</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--lexington)"></span>Lexington / Lawrenceburg</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--other)"></span>Other Regions</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const DISTILLERIES = [
+  // LOUISVILLE
+  {name:"Angel's Envy Distillery",lat:38.2565,lng:-85.7405,region:"louisville",type:"major",cost:"$25–$50",booking:"Hard",profile:"distillery-angels-envy.html",desc:"Port-finished bourbon, stunning Whiskey Row facility, rooftop bar."},
+  {name:"Old Forester Distillery",lat:38.2568,lng:-85.7610,region:"louisville",type:"major",cost:"$20–$75",booking:"Moderate",profile:"distillery-old-forester.html",desc:"Best-designed tour on Whiskey Row. Bottle Your Own experience."},
+  {name:"Evan Williams Bourbon Experience",lat:38.2563,lng:-85.7590,region:"louisville",type:"major",cost:"$18",booking:"Easy",profile:"distillery-evan-williams.html",desc:"Most affordable Whiskey Row tour. Great bourbon history exhibit."},
+  {name:"Rabbit Hole Distillery",lat:38.2530,lng:-85.7372,region:"louisville",type:"major",cost:"$20–$55",booking:"Moderate",profile:"distillery-rabbit-hole.html",desc:"Ultra-modern NuLu facility. Innovative bourbon and rye lineup."},
+  {name:"Michter's Fort Nelson Distillery",lat:38.2567,lng:-85.7615,region:"louisville",type:"major",cost:"$20–$50",booking:"Moderate",profile:"distillery-michters.html",desc:"Historic Whiskey Row building. Premium small-batch producer."},
+  {name:"Kentucky Peerless Distilling",lat:38.2610,lng:-85.7530,region:"louisville",type:"craft",cost:"$15–$30",booking:"Easy",profile:"distillery-peerless.html",desc:"Grain-to-glass craft distillery. Award-winning rye whiskey."},
+  {name:"Stitzel-Weller / Bulleit Experience",lat:38.2075,lng:-85.7730,region:"louisville",type:"major",cost:"$18–$40",booking:"Moderate",profile:"#",desc:"Historic Stitzel-Weller campus. Bulleit frontier spirit."},
+  {name:"Copper & Kings Brandy",lat:38.2365,lng:-85.7475,region:"louisville",type:"craft",cost:"$15–$25",booking:"Easy",profile:"#",desc:"Unique brandy distillery in Butchertown. Great cocktail bar."},
+  {name:"Bardstown Bourbon Co. (Louisville)",lat:38.2571,lng:-85.7595,region:"louisville",type:"craft",cost:"$15–$30",booking:"Easy",profile:"#",desc:"Louisville tasting room with immersive sensory experience."},
+  {name:"Old Louisville Whiskey Co.",lat:38.2380,lng:-85.7620,region:"louisville",type:"craft",cost:"$12–$25",booking:"Easy",profile:"#",desc:"Small-batch craft distillery in the Old Louisville neighborhood."},
+  {name:"Whiskey Thief Distilling Co.",lat:38.2640,lng:-85.7290,region:"louisville",type:"craft",cost:"$15–$25",booking:"Easy",profile:"distillery-whiskey-thief.html",desc:"Craft distillery with grain-to-glass approach and distinctive bourbon."},
+  {name:"Green River (Louisville Tasting Room)",lat:38.2555,lng:-85.7600,region:"louisville",type:"craft",cost:"$15",booking:"Easy",profile:"#",desc:"Louisville tasting outpost for the Owensboro distillery."},
+  {name:"Barrels & Billets",lat:38.2537,lng:-85.7582,region:"louisville",type:"craft",cost:"$40–$60",booking:"Easy",profile:"#",desc:"Create-and-bottle-your-own at the Louisville Slugger Museum."},
+
+  // BARDSTOWN / NEW HOPE / CLERMONT
+  {name:"Heaven Hill Bourbon Experience",lat:37.8095,lng:-85.4530,region:"bardstown",type:"major",cost:"$20–$50",booking:"Easy",profile:"distillery-heaven-hill.html",desc:"Best educational tasting on the trail. Massive bourbon portfolio."},
+  {name:"Maker's Mark Distillery",lat:37.6298,lng:-85.3369,region:"bardstown",type:"major",cost:"$18–$75",booking:"Moderate",profile:"distillery-makers-mark.html",desc:"National Historic Landmark. Hand-dip your own bottle."},
+  {name:"Jim Beam American Stillhouse",lat:37.8960,lng:-85.6550,region:"bardstown",type:"major",cost:"$16–$75",booking:"Easy",profile:"distillery-jim-beam.html",desc:"World's best-selling bourbon. Large campus, multiple experiences."},
+  {name:"Bardstown Bourbon Company",lat:37.8225,lng:-85.4420,region:"bardstown",type:"major",cost:"$25–$80",booking:"Moderate",profile:"distillery-bardstown-bourbon-co.html",desc:"State-of-the-art distillery. Collaborative distilling program."},
+  {name:"Lux Row Distillers",lat:37.8170,lng:-85.4590,region:"bardstown",type:"craft",cost:"$15–$40",booking:"Easy",profile:"distillery-lux-row.html",desc:"Modern facility. Ezra Brooks, Rebel, Blood Oath."},
+  {name:"Log Still Distillery",lat:37.6520,lng:-85.5780,region:"bardstown",type:"craft",cost:"$15–$35",booking:"Easy",profile:"distillery-log-still.html",desc:"Craft gem in New Hope. Excellent Monk's Road bourbon."},
+  {name:"Preservation Distillery",lat:37.8290,lng:-85.4615,region:"bardstown",type:"craft",cost:"$15–$30",booking:"Easy",profile:"distillery-preservation.html",desc:"Outstanding craft bourbon. Personal, uncrowded experience."},
+  {name:"Willett Distillery",lat:37.8120,lng:-85.4695,region:"bardstown",type:"craft",cost:"$15–$30",booking:"Moderate",profile:"distillery-willett.html",desc:"Family-owned since 1936. Iconic pot still shape. Cult following."},
+  {name:"Limestone Branch Distillery",lat:37.7935,lng:-85.6105,region:"bardstown",type:"craft",cost:"$12–$25",booking:"Easy",profile:"#",desc:"Family distillery in Lebanon. Minor Case Rye and Yellowstone."},
+  {name:"Barton 1792 Distillery",lat:37.8145,lng:-85.4485,region:"bardstown",type:"major",cost:"$10–$15",booking:"Easy",profile:"distillery-barton-1792.html",desc:"One of the oldest operating distilleries. 1792 bourbon. Sazerac-owned."},
+  {name:"Boundary Oak Distillery",lat:37.9060,lng:-85.9310,region:"bardstown",type:"craft",cost:"$10–$20",booking:"Easy",profile:"#",desc:"Family-owned craft distillery in Radcliff. Small-batch spirits."},
+  {name:"Chicken Cock Tasting Room",lat:37.8120,lng:-85.4670,region:"bardstown",type:"craft",cost:"$15",booking:"Easy",profile:"#",desc:"Historic bourbon brand with tasting room in Bardstown."},
+  {name:"Fred B. Noe Distillery (Beam)",lat:37.8975,lng:-85.6280,region:"bardstown",type:"major",cost:"$20–$50",booking:"Easy",profile:"#",desc:"Newest Beam campus focused on Booker's and Knob Creek."},
+  {name:"J. Mattingly 1845 Distillery",lat:37.6870,lng:-85.1450,region:"bardstown",type:"craft",cost:"$15–$25",booking:"Easy",profile:"#",desc:"Craft distillery in Harrodsburg area. Small-batch approach."},
+
+  // FRANKFORT
+  {name:"Buffalo Trace Distillery",lat:38.2112,lng:-84.8735,region:"frankfort",type:"major",cost:"Free",booking:"Hard",profile:"distillery-buffalo-trace.html",desc:"Most iconic distillery. Pappy, Blanton's, Eagle Rare. Free tours."},
+  {name:"Castle & Key Distillery",lat:38.1980,lng:-84.8480,region:"frankfort",type:"craft",cost:"$15–$30",booking:"Easy",profile:"distillery-castle-key.html",desc:"Restored pre-Prohibition distillery. Stunning grounds. Great gin."},
+  {name:"Glenn's Creek Distillery",lat:38.1855,lng:-84.8510,region:"frankfort",type:"craft",cost:"$10–$20",booking:"Easy",profile:"#",desc:"Small-batch craft distillery near Castle & Key. O.Z. Tyler heritage."},
+
+  // LEXINGTON / LAWRENCEBURG / VERSAILLES
+  {name:"Woodford Reserve Distillery",lat:38.0635,lng:-84.7430,region:"lexington",type:"major",cost:"$20–$80",booking:"Moderate",profile:"distillery-woodford-reserve.html",desc:"Postcard-perfect horse country campus. Corn to Cork premium tour."},
+  {name:"Wild Turkey Distillery",lat:38.0540,lng:-84.7990,region:"lexington",type:"major",cost:"$15–$45",booking:"Moderate",profile:"distillery-wild-turkey.html",desc:"Kentucky River bluff location. Jimmy Russell, legend. Russell's Reserve."},
+  {name:"Four Roses Distillery",lat:38.0585,lng:-84.7375,region:"lexington",type:"major",cost:"$10–$30",booking:"Easy",profile:"distillery-four-roses.html",desc:"Spanish Mission architecture. 10 distinct bourbon recipes."},
+  {name:"Four Roses Warehouse & Bottling",lat:37.8440,lng:-85.4900,region:"lexington",type:"major",cost:"$10–$20",booking:"Easy",profile:"#",desc:"See aging and bottling operations in Cox's Creek."},
+  {name:"Town Branch Distillery",lat:38.0390,lng:-84.4950,region:"lexington",type:"craft",cost:"$10–$20",booking:"Easy",profile:"distillery-town-branch.html",desc:"Alltech's Lexington Brewing and Distilling. Bourbon and beer campus."},
+  {name:"James E. Pepper Distillery",lat:38.0450,lng:-84.5015,region:"lexington",type:"craft",cost:"$12–$25",booking:"Easy",profile:"#",desc:"Historic distillery revival on the Distillery District. 1776 bourbon."},
+  {name:"Barrel House Distilling",lat:38.0380,lng:-84.4925,region:"lexington",type:"craft",cost:"$10–$20",booking:"Easy",profile:"#",desc:"Craft distillery in the Distillery District. Oak Rum and bourbon."},
+  {name:"Bluegrass Distillers",lat:38.1340,lng:-84.6835,region:"lexington",type:"craft",cost:"$10–$20",booking:"Easy",profile:"#",desc:"Elkwood Farm in Midway. Grain-to-glass with estate grains."},
+  {name:"Bourbon 30 Spirits",lat:38.1580,lng:-84.6250,region:"lexington",type:"craft",cost:"$10–$15",booking:"Easy",profile:"#",desc:"Georgetown craft distillery. Small-batch bourbon and whiskey."},
+  {name:"Hartfield & Co.",lat:38.0110,lng:-84.6420,region:"lexington",type:"craft",cost:"$10–$20",booking:"Easy",profile:"#",desc:"Family-owned in Paris, KY. Craft bourbon and apple brandy."},
+  {name:"Wilderness Trail Distillery",lat:37.6380,lng:-84.5735,region:"lexington",type:"craft",cost:"$15–$30",booking:"Moderate",profile:"distillery-wilderness-trail.html",desc:"Rising star in Danville. Excellent bourbon, modern operation."},
+  {name:"Bulleit Distilling Co.",lat:38.1755,lng:-85.2255,region:"lexington",type:"major",cost:"$18–$40",booking:"Easy",profile:"#",desc:"State-of-the-art Shelbyville facility. Sustainability-focused."},
+  {name:"Jeptha Creed Distillery",lat:38.2880,lng:-85.2430,region:"lexington",type:"craft",cost:"$12–$20",booking:"Easy",profile:"#",desc:"Shelbyville farm distillery. Bloody Butcher corn. Grain-to-glass."},
+  {name:"RD1 Spirits",lat:38.0420,lng:-84.5000,region:"lexington",type:"craft",cost:"$15–$30",booking:"Easy",profile:"#",desc:"Lexington craft distillery with growing bourbon program."},
+  {name:"Boone County Distilling",lat:39.0140,lng:-84.7310,region:"other",type:"craft",cost:"$10–$20",booking:"Easy",profile:"#",desc:"Northern Kentucky craft distillery. Small-batch spirits."},
+
+  // NORTHERN KY / OTHER
+  {name:"New Riff Distilling",lat:39.0930,lng:-84.4960,region:"other",type:"craft",cost:"$10–$20",booking:"Easy",profile:"distillery-new-riff.html",desc:"Newport, KY. One of the best craft distilleries in America."},
+  {name:"Neeley Family Distillery",lat:37.5830,lng:-84.3320,region:"other",type:"craft",cost:"$10–$15",booking:"Easy",profile:"#",desc:"Harrodsburg farm distillery. Small-batch bourbon."},
+  {name:"MB Roland Distillery",lat:36.8280,lng:-87.3775,region:"other",type:"craft",cost:"$8–$15",booking:"Easy",profile:"#",desc:"Christian County craft distillery. Uncut, unfiltered spirits."},
+  {name:"Dueling Grounds Distillery",lat:36.7540,lng:-86.5910,region:"other",type:"craft",cost:"$8–$15",booking:"Easy",profile:"#",desc:"Franklin, KY. First stop Northbound on the trail."},
+  {name:"Green River Distilling Co.",lat:37.7740,lng:-87.1170,region:"other",type:"major",cost:"$15–$25",booking:"Easy",profile:"#",desc:"Historic Owensboro distillery. Green River bourbon revival."},
+  {name:"O.Z. Tyler Distillery",lat:37.7690,lng:-87.0920,region:"other",type:"major",cost:"$12–$20",booking:"Easy",profile:"#",desc:"Owensboro heritage distillery. Full production tours."},
+  {name:"Casey Jones Distillery",lat:36.7620,lng:-87.1080,region:"other",type:"craft",cost:"$8–$15",booking:"Easy",profile:"#",desc:"Hopkinsville. Third-generation moonshine tradition."},
+  {name:"Fresh Bourbon Distilling",lat:38.0440,lng:-84.4960,region:"lexington",type:"craft",cost:"$12–$20",booking:"Easy",profile:"#",desc:"Lexington's newest craft distillery. Fresh approach."},
+  {name:"Wenzel Distilling",lat:39.0850,lng:-84.5180,region:"other",type:"craft",cost:"$10–$18",booking:"Easy",profile:"#",desc:"Covington, KY craft distillery. Northern Kentucky B-Line."},
+  {name:"Larrikin Bourbon Co.",lat:38.0340,lng:-84.7275,region:"lexington",type:"craft",cost:"$15",booking:"Easy",profile:"#",desc:"Lawrenceburg craft producer. Small-batch bourbon."},
+  {name:"Garrard County Distilling",lat:37.6830,lng:-84.5580,region:"lexington",type:"craft",cost:"$12",booking:"Easy",profile:"#",desc:"Newest addition to the trail. Lancaster, KY."},
+];
+
+// Color map
+const COLORS = { louisville:"#2980B9", bardstown:"#D4A03C", frankfort:"#8E44AD", lexington:"#2E8B57", other:"#8B92A8" };
+const REGION_NAMES = { louisville:"Louisville", bardstown:"Bardstown & New Hope", frankfort:"Frankfort", lexington:"Lexington / Lawrenceburg", other:"Other Regions" };
+
+// ROUTES
+const ROUTES = {
+  day1: {
+    color: "#2980B9",
+    points: [
+      [38.2563, -85.7590], // Evan Williams
+      [38.2568, -85.7610], // Old Forester
+      [38.2565, -85.7405], // Angel's Envy
+    ],
+    labels: ["Evan Williams", "Old Forester", "Angel's Envy"]
+  },
+  day2: {
+    color: "#D4A03C",
+    points: [
+      [37.8095, -85.4530], // Heaven Hill
+      [37.6298, -85.3369], // Maker's Mark
+      [37.6520, -85.5780], // Log Still
+      [37.6450, -85.5700], // New Hope Airbnb (approximate)
+    ],
+    labels: ["Heaven Hill", "Maker's Mark", "Log Still", "Stay: New Hope Bourbon Stop"]
+  },
+  day3: {
+    color: "#8E44AD",
+    points: [
+      [38.2112, -84.8735], // Buffalo Trace
+      [37.8290, -85.4615], // Preservation (on way)
+      [38.0635, -84.7430], // Woodford Reserve
+    ],
+    labels: ["Buffalo Trace", "Preservation", "Woodford Reserve"]
+  }
+};
+
+// Init map
+const map = L.map('map', { zoomControl: true }).setView([37.95, -85.2], 8);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '© OpenStreetMap contributors',
+  maxZoom: 18
+}).addTo(map);
+
+// Create markers
+const markers = [];
+const listEl = document.getElementById('distList');
+
+function createIcon(color, size = 12) {
+  return L.divIcon({
+    className: 'custom-marker',
+    html: `<div style="width:${size}px;height:${size}px;background:${color};border:2.5px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.3);"></div>`,
+    iconSize: [size, size],
+    iconAnchor: [size/2, size/2],
+    popupAnchor: [0, -size/2 - 4]
+  });
+}
+
+DISTILLERIES.forEach((d, i) => {
+  const color = COLORS[d.region];
+  const marker = L.marker([d.lat, d.lng], { icon: createIcon(color) }).addTo(map);
+
+  const profileLink = d.profile && d.profile !== '#'
+    ? `<a href="${d.profile}" class="popup-link">Read Full Guide →</a>`
+    : `<a href="distilleries.html" class="popup-link">View All Distilleries →</a>`;
+
+  marker.bindPopup(`
+    <div class="popup-inner">
+      <div class="popup-name">${d.name}</div>
+      <div class="popup-region">${REGION_NAMES[d.region]}</div>
+      <p style="font-size:13px;color:#5A6178;margin:0 0 10px;line-height:1.5;">${d.desc}</p>
+      <div class="popup-row"><span class="popup-row-label">Tours</span><span class="popup-row-value">${d.cost}</span></div>
+      <div class="popup-row"><span class="popup-row-label">Booking</span><span class="popup-row-value">${d.booking}</span></div>
+      <div class="popup-row"><span class="popup-row-label">Type</span><span class="popup-row-value">${d.type === 'major' ? 'Major' : 'Craft'}</span></div>
+      ${profileLink}
+    </div>
+  `);
+
+  markers.push({ marker, data: d, index: i });
+
+  // Sidebar list item
+  const li = document.createElement('div');
+  li.className = 'dist-list-item';
+  li.dataset.region = d.region;
+  li.dataset.index = i;
+  li.innerHTML = `
+    <span class="dli-dot" style="background:${color}"></span>
+    <div class="dli-info">
+      <div class="dli-name">${d.name}</div>
+      <div class="dli-detail">${REGION_NAMES[d.region]} · ${d.cost} · ${d.booking}</div>
+    </div>
+  `;
+  li.addEventListener('click', () => {
+    map.setView([d.lat, d.lng], 14);
+    marker.openPopup();
+  });
+  listEl.appendChild(li);
+});
+
+// Region filtering
+let activeRegion = 'all';
+document.getElementById('regionFilters').addEventListener('click', e => {
+  const btn = e.target.closest('.fbtn');
+  if (!btn) return;
+  document.querySelectorAll('#regionFilters .fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeRegion = btn.dataset.region;
+  applyFilter();
+});
+
+function applyFilter() {
+  let count = 0;
+  markers.forEach(({ marker, data }) => {
+    const show = activeRegion === 'all' || data.region === activeRegion;
+    if (show) { marker.addTo(map); count++; }
+    else { map.removeLayer(marker); }
+  });
+  document.querySelectorAll('.dist-list-item').forEach(el => {
+    const show = activeRegion === 'all' || el.dataset.region === activeRegion;
+    el.classList.toggle('hidden', !show);
+  });
+  document.getElementById('distCount').textContent = count;
+}
+
+// Route drawing
+let activeRoute = null;
+let routeLayers = [];
+
+function clearRoutes() {
+  routeLayers.forEach(l => map.removeLayer(l));
+  routeLayers = [];
+  document.querySelectorAll('.route-btn').forEach(b => b.classList.remove('active'));
+  activeRoute = null;
+}
+
+function drawRoute(routeKey) {
+  clearRoutes();
+  activeRoute = routeKey;
+  document.querySelector(`[data-route="${routeKey}"]`).classList.add('active');
+  const route = ROUTES[routeKey];
+
+  // Polyline
+  const line = L.polyline(route.points, {
+    color: route.color, weight: 4, opacity: 0.8,
+    dashArray: '8, 8', lineCap: 'round'
+  }).addTo(map);
+  routeLayers.push(line);
+
+  // Numbered circle markers
+  route.points.forEach((pt, i) => {
+    const isLodging = route.labels[i].startsWith('Stay:');
+    const iconHtml = isLodging
+      ? `<div style="width:28px;height:28px;background:${route.color};border:3px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-size:14px;">&#127968;</div>`
+      : `<div style="width:28px;height:28px;background:${route.color};border:3px solid white;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;font-family:var(--font-body);">${i+1}</div>`;
+    const m = L.marker(pt, {
+      icon: L.divIcon({ className:'route-marker', html: iconHtml, iconSize:[28,28], iconAnchor:[14,14] })
+    }).addTo(map);
+
+    m.bindTooltip(route.labels[i], {
+      permanent: true, direction: 'right', offset: [16, 0],
+      className: 'route-tooltip'
+    });
+    routeLayers.push(m);
+  });
+
+  map.fitBounds(line.getBounds().pad(0.3));
+}
+
+document.querySelectorAll('.route-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (activeRoute === btn.dataset.route) { clearRoutes(); return; }
+    drawRoute(btn.dataset.route);
+  });
+});
+
+// Fit initial bounds
+map.fitBounds(L.latLngBounds(DISTILLERIES.map(d => [d.lat, d.lng])).pad(0.05));
+</script>
+
+<style>
+  .route-tooltip {
+    background: white !important; border: 1px solid #E4E8F0 !important;
+    border-radius: 6px !important; padding: 4px 10px !important;
+    font-size: 12px !important; font-weight: 600 !important;
+    font-family: 'DM Sans', sans-serif !important;
+    color: #1A1A2E !important; box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+  }
+  .route-tooltip::before { border-right-color: #E4E8F0 !important; }
+</style>
+<script>
+document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+  document.querySelector('.nav-links').classList.toggle('mobile-open');
+});
+document.querySelectorAll('.nav-links a').forEach(function(link) {
+  link.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.remove('mobile-open');
+  });
+});
+</script>
+</body>
+</html>

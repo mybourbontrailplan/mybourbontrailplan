@@ -1,0 +1,136 @@
+<!--
+  BOURBON TRAIL PLANNER — Email Signup CTA Block
+  ================================================
+  Drop this section into any page where you want the email capture.
+  Recommended placements:
+    - index.html: Replace existing email CTA section
+    - 3-day-bourbon-trail-itinerary.html: After packing section
+    - bourbon-trail-booking-guide.html: After the 10-step checklist
+    - where-to-stay-bourbon-trail.html: Before footer
+
+  SETUP: Replace MC_DC and MC_U values below with your Mailchimp details.
+  See instructions at the bottom of this file.
+-->
+
+<!-- ========== CSS — Add this inside your <style> tag ========== -->
+<style>
+.email-cta{background:linear-gradient(135deg,#0E2F44 0%,#1B4F72 100%);padding:4rem 2rem;text-align:center;position:relative;overflow:hidden}
+.email-cta::before{content:'';position:absolute;top:-60%;right:-20%;width:500px;height:500px;background:radial-gradient(circle,rgba(212,160,60,.12) 0%,transparent 70%);pointer-events:none}
+.email-cta-inner{max-width:560px;margin:0 auto;position:relative;z-index:1}
+.email-cta h2{font-family:var(--font-display);font-size:2rem;font-weight:700;color:#fff;margin-bottom:.5rem;line-height:1.25}
+.email-cta h2 span{color:#D4A03C}
+.email-cta .cta-sub{font-size:1.05rem;color:rgba(255,255,255,.75);line-height:1.6;margin-bottom:1.5rem}
+.email-cta .cta-bonus{display:inline-flex;align-items:center;gap:8px;background:rgba(212,160,60,.12);border:1px solid rgba(212,160,60,.25);border-radius:8px;padding:10px 18px;margin-bottom:1.5rem;font-size:.9rem;color:rgba(255,255,255,.85)}
+.email-cta .cta-bonus svg{color:#D4A03C;flex-shrink:0}
+.email-cta-form{display:flex;gap:10px;max-width:440px;margin:0 auto}
+.email-cta-form input{flex:1;padding:13px 16px;border-radius:10px;border:2px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-family:var(--font-body);font-size:1rem;outline:none;transition:border-color .2s}
+.email-cta-form input::placeholder{color:rgba(255,255,255,.4)}
+.email-cta-form input:focus{border-color:rgba(212,160,60,.5);background:rgba(255,255,255,.12)}
+.email-cta-form button{padding:13px 24px;border-radius:10px;border:none;background:#D4A03C;color:#0E2F44;font-family:var(--font-body);font-size:1rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:all .15s}
+.email-cta-form button:hover{background:#c4922e;transform:translateY(-1px)}
+.email-cta-form button:disabled{opacity:.6;cursor:default;transform:none}
+.email-cta-msg{font-size:.9rem;margin-top:10px;min-height:24px;border-radius:6px;padding:4px 0}
+.email-cta-msg.success{color:#5AD696}.email-cta-msg.error{color:#FF8A80}
+.email-cta-privacy{font-size:.8rem;color:rgba(255,255,255,.35);margin-top:12px}
+@media(max-width:520px){.email-cta-form{flex-direction:column}.email-cta h2{font-size:1.5rem}}
+</style>
+
+<!-- ========== HTML — Drop this where you want the CTA ========== -->
+<section class="email-cta">
+  <div class="email-cta-inner">
+    <h2>Plan smarter. <span>Drink better.</span></h2>
+    <p class="cta-sub">Get our free 3-page Bourbon Trail planning checklist — booking timeline, packing list, and budget worksheet — delivered straight to your inbox.</p>
+    <div class="cta-bonus">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Free PDF checklist — used by 500+ trail planners
+    </div>
+    <div class="email-cta-form">
+      <input type="email" id="ctaEmail" placeholder="you@email.com" autocomplete="email">
+      <button id="ctaSubmit" onclick="submitCtaEmail()">Get the Checklist</button>
+    </div>
+    <div class="email-cta-msg" id="ctaMsg"></div>
+    <p class="email-cta-privacy">No spam, ever. Unsubscribe with one click.</p>
+  </div>
+</section>
+
+<!-- ========== JS — Add before </body> ========== -->
+<script>
+// =====================================================
+// MAILCHIMP CONFIG — Replace these with your values:
+// 1. In Mailchimp: Audience → Signup forms → Embedded forms
+// 2. Find the form action URL:
+//    https://mybourbontrailplan.usXX.list-manage.com/subscribe/post?u=XXXXXXXX&id=379fe1f472
+// 3. Copy usXX into MC_DC and the u= value into MC_U
+// =====================================================
+var MC_DC = 'us1';
+var MC_U  = 'b5f4967c4addd691be550d169';
+var MC_ID = '379fe1f472';
+
+function submitCtaEmail() {
+  var email = document.getElementById('ctaEmail').value.trim();
+  var msg = document.getElementById('ctaMsg');
+  var btn = document.getElementById('ctaSubmit');
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    msg.className = 'email-cta-msg error';
+    msg.textContent = 'Please enter a valid email address.';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+  msg.className = 'email-cta-msg';
+  msg.textContent = '';
+
+  var cbName = 'mc_cta_' + Date.now();
+  var script = document.createElement('script');
+  var url = 'https://' + MC_DC + '.list-manage.com/subscribe/post-json?u=' + MC_U + '&id=' + MC_ID
+    + '&EMAIL=' + encodeURIComponent(email)
+    + '&SOURCE=website-cta'
+    + '&c=' + cbName;
+
+  window[cbName] = function(resp) {
+    if (script.parentNode) script.parentNode.removeChild(script);
+    delete window[cbName];
+    if (resp.result === 'success') {
+      msg.className = 'email-cta-msg success';
+      msg.textContent = '✓ Check your inbox! Your checklist is on the way.';
+      btn.textContent = 'Sent!';
+      document.getElementById('ctaEmail').value = '';
+    } else {
+      var errMsg = resp.msg || 'Something went wrong.';
+      if (errMsg.indexOf('already subscribed') !== -1) {
+        msg.className = 'email-cta-msg success';
+        msg.textContent = '✓ You\'re already on the list! Check your inbox for the checklist.';
+        btn.textContent = 'Sent!';
+      } else {
+        msg.className = 'email-cta-msg error';
+        msg.textContent = errMsg.replace(/<[^>]*>/g, '');
+        btn.disabled = false;
+        btn.textContent = 'Get the Checklist';
+      }
+    }
+  };
+
+  var timer = setTimeout(function() {
+    if (script.parentNode) script.parentNode.removeChild(script);
+    delete window[cbName];
+    msg.className = 'email-cta-msg error';
+    msg.textContent = 'Connection timed out. Please try again.';
+    btn.disabled = false;
+    btn.textContent = 'Get the Checklist';
+  }, 8000);
+
+  script.src = url;
+  script.onerror = function() {
+    clearTimeout(timer);
+    if (script.parentNode) script.parentNode.removeChild(script);
+    delete window[cbName];
+    msg.className = 'email-cta-msg error';
+    msg.textContent = 'Could not connect. Please try again.';
+    btn.disabled = false;
+    btn.textContent = 'Get the Checklist';
+  };
+  document.body.appendChild(script);
+}
+</script>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVK4D6KJJP"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVK4D6KJJP"></script>
+<script>(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account','2164831');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="google-site-verification" content="xBRQpYUAaKc9LyyM8bvl9jPKPpNy57MIPW6Wdhwg_4c" />
+<title>Bourbon Trail Trip Builder — Plan Your Custom Route | Bourbon Trail Planner</title>
+<meta name="description" content="Build your perfect Kentucky Bourbon Trail itinerary. Add distilleries, see drive times, get smart tips, and export your plan. Free, no account needed.">
+<link rel="canonical" href="https://mybourbontrailplan.com/trip-builder.html">
+<meta property="og:title" content="Bourbon Trail Trip Builder — Plan Your Custom Route">
+<meta property="og:description" content="Build a custom Kentucky Bourbon Trail itinerary. Add distilleries, see drive times, get smart pacing tips. Free, no account needed.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mybourbontrailplan.com/trip-builder.html">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<style>
+:root{--primary:#1B4F72;--primary-light:#2980B9;--primary-dark:#0E2F44;--accent:#D4A03C;--accent-light:#F0D78C;--success:#2E8B57;--warning:#E67E22;--danger:#C0392B;--bg:#FFF;--bg-subtle:#F7F9FC;--text:#1A1A2E;--text-secondary:#5A6178;--text-light:#8B92A8;--border:#E4E8F0;--shadow-sm:0 1px 3px rgba(0,0,0,.06);--shadow-md:0 4px 16px rgba(0,0,0,.08);--shadow-lg:0 8px 32px rgba(0,0,0,.12);--font-display:'Fraunces',Georgia,serif;--font-body:'DM Sans',-apple-system,sans-serif;--day1:#2980B9;--day2:#D4A03C;--day3:#2E8B57;--day4:#8E44AD}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{font-family:var(--font-body);color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased;overflow:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255,.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);height:56px}
+.nav-inner{max-width:100%;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--primary-dark)}
+.logo-icon{width:30px;height:30px;background:var(--primary);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;font-family:var(--font-display)}
+.logo-text{font-family:var(--font-display);font-weight:600;font-size:17px}.logo-text span{color:var(--accent)}
+.nav-links{display:flex;align-items:center;gap:24px;list-style:none}.nav-links a{text-decoration:none;color:var(--text-secondary);font-size:13.5px;font-weight:500}.nav-links a:hover{color:var(--primary)}
+.nav-cta{background:var(--primary);color:#fff!important;padding:7px 16px;border-radius:7px;font-weight:600;font-size:13px}
+.mobile-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:6px;-webkit-tap-highlight-color:transparent;touch-action:manipulation;position:relative;z-index:1001}
+.app{display:flex;height:calc(100vh - 56px);margin-top:56px}
+
+/* LEFT BROWSE */
+.browse-panel{width:320px;height:100%;background:#fff;border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;z-index:10}
+.browse-header{padding:16px 16px 12px;border-bottom:1px solid var(--border)}
+.browse-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--primary-dark);margin-bottom:10px;display:flex;align-items:center;justify-content:space-between}
+.browse-close-btn{display:none;width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:#fff;color:var(--text-secondary);font-size:20px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;align-items:center;justify-content:center;flex-shrink:0}
+.search-wrap{position:relative}.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-light);pointer-events:none}
+.search-box{width:100%;padding:9px 12px 9px 34px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:13.5px;color:var(--text);background:var(--bg-subtle);outline:none}.search-box:focus{border-color:var(--primary-light);background:#fff}
+.region-filters{display:flex;gap:6px;padding:10px 16px;border-bottom:1px solid var(--border);overflow-x:auto}
+.region-pill{padding:5px 12px;border-radius:16px;font-size:12px;font-weight:600;border:1.5px solid var(--border);background:#fff;color:var(--text-secondary);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s}
+.region-pill:hover{border-color:var(--primary-light);color:var(--primary)}.region-pill.active{background:var(--primary);color:#fff;border-color:var(--primary)}
+.browse-list{flex:1;overflow-y:auto;padding:4px 0}
+.browse-item{display:flex;align-items:center;gap:10px;padding:10px 16px;cursor:pointer;transition:background .1s;border-bottom:1px solid rgba(228,232,240,.4)}
+.browse-item:hover{background:rgba(27,79,114,.03)}
+.browse-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}.browse-dot.easy{background:var(--success)}.browse-dot.moderate{background:var(--warning)}.browse-dot.hard{background:var(--danger)}
+.browse-item-info{flex:1;min-width:0}.browse-item-name{font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.browse-item-meta{font-size:11px;color:var(--text-light);margin-top:1px}
+.browse-item-rating{font-size:12px;font-weight:700;color:var(--primary);flex-shrink:0}
+.browse-add-btn{width:28px;height:28px;border-radius:6px;border:1.5px solid var(--border);background:#fff;color:var(--primary);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;line-height:1}
+.browse-add-btn:hover{background:var(--primary);color:#fff;border-color:var(--primary)}.browse-add-btn.added{background:var(--success);color:#fff;border-color:var(--success);font-size:13px;cursor:default}
+.browse-empty{padding:24px 16px;text-align:center;color:var(--text-light);font-size:13px}
+.browse-legend{display:flex;gap:12px;padding:8px 16px;border-top:1px solid var(--border);font-size:10.5px;color:var(--text-light);align-items:center}
+.legend-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:3px}
+
+/* MAP */
+.map-panel{flex:1;position:relative}
+#map{width:100%;height:100%}
+.region-overlay{position:absolute;cursor:pointer;z-index:500;background:#fff;border-radius:10px;padding:10px 16px;text-align:center;box-shadow:var(--shadow-md);transition:transform .15s,box-shadow .15s;border:2px solid transparent;pointer-events:auto}
+.region-overlay:hover{transform:scale(1.06);box-shadow:var(--shadow-lg);border-color:var(--primary-light)}
+.region-overlay-name{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--primary-dark)}.region-overlay-count{font-size:11px;color:var(--text-light);margin-top:1px}
+.back-overview{position:absolute;top:12px;left:12px;z-index:600;padding:8px 14px;border-radius:8px;background:#fff;border:1.5px solid var(--border);font-family:var(--font-body);font-size:12.5px;font-weight:600;color:var(--text-secondary);cursor:pointer;box-shadow:var(--shadow-sm);display:none}.back-overview:hover{border-color:var(--primary-light);color:var(--primary)}
+
+/* RIGHT SIDEBAR */
+.sidebar{width:340px;height:100%;background:#fff;border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
+.sidebar-header{padding:16px 16px 12px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(27,79,114,.03) 0%,#fff 100%)}
+.sidebar-title{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--primary-dark);margin-bottom:2px}.sidebar-sub{font-size:12.5px;color:var(--text-light)}
+.day-tabs{display:flex;gap:4px;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg-subtle)}
+.day-tab{padding:5px 12px;border-radius:16px;font-size:12px;font-weight:600;border:2px solid var(--border);background:#fff;color:var(--text-secondary);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
+.day-tab:hover{border-color:var(--primary-light)}.day-tab.active{color:#fff;border-color:transparent}
+.day-tab[data-day="1"].active{background:var(--day1)}.day-tab[data-day="2"].active{background:var(--day2)}.day-tab[data-day="3"].active{background:var(--day3)}.day-tab[data-day="4"].active{background:var(--day4)}
+.tab-count{width:17px;height:17px;border-radius:50%;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:10px}.day-tab.active .tab-count{background:rgba(255,255,255,.3)}
+.add-day-btn{padding:5px 10px;border-radius:16px;font-size:11px;font-weight:500;border:2px dashed var(--border);background:transparent;color:var(--text-light);cursor:pointer}.add-day-btn:hover{border-color:var(--primary-light);color:var(--primary)}
+.stops-area{flex:1;overflow-y:auto;padding:8px 12px}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-light)}.empty-state svg{margin-bottom:12px;opacity:.35}.empty-state h3{font-family:var(--font-display);font-size:15px;font-weight:600;color:var(--text-secondary);margin-bottom:4px}.empty-state p{font-size:12.5px;line-height:1.5}
+.stop-card{background:#fff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:6px;animation:slideIn .2s ease-out}.stop-card:hover{box-shadow:var(--shadow-sm)}
+@keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.stop-card[data-day="1"]{border-left:3px solid var(--day1)}.stop-card[data-day="2"]{border-left:3px solid var(--day2)}.stop-card[data-day="3"]{border-left:3px solid var(--day3)}.stop-card[data-day="4"]{border-left:3px solid var(--day4)}
+.stop-num{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.stop-card[data-day="1"] .stop-num{background:var(--day1)}.stop-card[data-day="2"] .stop-num{background:var(--day2)}.stop-card[data-day="3"] .stop-num{background:var(--day3)}.stop-card[data-day="4"] .stop-num{background:var(--day4)}
+.stop-top{display:flex;align-items:center;gap:8px}.stop-info{flex:1;min-width:0}.stop-name{font-size:13px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.stop-meta{font-size:10.5px;color:var(--text-light);margin-top:1px}
+.stop-actions{display:flex;gap:4px;align-items:center;flex-shrink:0}
+.stop-move{font-size:10.5px;border:1px solid var(--border);border-radius:4px;padding:2px 6px;color:var(--text-light);background:#fff;cursor:pointer}
+.stop-remove{width:22px;height:22px;border-radius:5px;border:none;background:transparent;color:var(--text-light);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}.stop-remove:hover{background:rgba(192,57,43,.08);color:var(--danger)}
+.drive-info{display:flex;align-items:center;gap:5px;padding:2px 0 2px 28px;font-size:10.5px;color:var(--text-light);margin-bottom:2px}
+.smart-tip{margin:6px 0;padding:8px 10px;border-radius:7px;font-size:12px;line-height:1.4;display:flex;gap:7px;align-items:flex-start;animation:slideIn .25s ease-out}
+.smart-tip.tip-good{background:rgba(46,139,87,.06);color:var(--success);border:1px solid rgba(46,139,87,.1)}.smart-tip.tip-warn{background:rgba(230,126,34,.06);color:var(--warning);border:1px solid rgba(230,126,34,.1)}.smart-tip.tip-info{background:rgba(41,128,185,.06);color:var(--primary);border:1px solid rgba(41,128,185,.1)}
+.smart-tip-icon{font-size:13px;flex-shrink:0;margin-top:1px}
+.sidebar-footer{padding:12px 16px;border-top:1px solid var(--border);background:var(--bg-subtle)}
+.trip-stats{display:flex;gap:12px;margin-bottom:10px}.trip-stat{display:flex;flex-direction:column}.trip-stat-val{font-size:16px;font-weight:700;color:var(--primary-dark);font-family:var(--font-display)}.trip-stat-label{font-size:10px;color:var(--text-light);margin-top:1px}
+.export-btn{display:block;width:100%;padding:10px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:var(--font-body);font-size:13.5px;font-weight:600;cursor:pointer}.export-btn:hover{background:var(--primary-dark)}.export-btn:disabled{background:var(--border);color:var(--text-light);cursor:default}
+.clear-btn{display:block;width:100%;margin-top:6px;padding:6px;border:none;background:transparent;color:var(--text-light);font-size:11px;cursor:pointer}.clear-btn:hover{color:var(--danger)}
+/* EMAIL MODAL */
+.email-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(14,47,68,.55);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(2px)}.email-overlay.open{display:flex}
+.email-modal{background:#fff;border-radius:14px;padding:28px 24px;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .25s ease-out}
+.email-modal h3{font-family:var(--font-display);font-size:19px;font-weight:700;color:var(--primary-dark);margin-bottom:4px;line-height:1.3}
+.email-modal .modal-sub{font-size:13px;color:var(--text-secondary);line-height:1.5;margin-bottom:16px}
+.email-modal .modal-bonus{display:flex;gap:8px;align-items:flex-start;background:rgba(212,160,60,.08);border:1px solid rgba(212,160,60,.2);border-radius:8px;padding:10px 12px;margin-bottom:16px;font-size:12px;color:var(--text-secondary);line-height:1.4}
+.email-modal .modal-bonus svg{flex-shrink:0;color:var(--accent);margin-top:1px}
+.email-input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:14px;color:var(--text);outline:none;margin-bottom:10px;transition:border-color .15s}.email-input:focus{border-color:var(--primary-light)}
+.email-submit{display:block;width:100%;padding:11px;border-radius:8px;border:none;background:var(--accent);color:var(--primary-dark);font-family:var(--font-body);font-size:14px;font-weight:700;cursor:pointer;transition:all .15s}.email-submit:hover{background:#c4922e}.email-submit:disabled{opacity:.6;cursor:default}
+.email-close{display:block;width:100%;margin-top:8px;padding:6px;border:none;background:transparent;color:var(--text-light);font-size:12px;cursor:pointer}.email-close:hover{color:var(--text-secondary)}
+.email-msg{font-size:12.5px;text-align:center;padding:6px 0;border-radius:6px;margin-bottom:8px;display:none}.email-msg.success{display:block;background:rgba(46,139,87,.08);color:var(--success)}.email-msg.error{display:block;background:rgba(192,57,43,.08);color:var(--danger)}
+.email-privacy{font-size:10.5px;color:var(--text-light);text-align:center;margin-top:8px;line-height:1.4}
+.map-popup{font-family:var(--font-body)}.map-popup h3{font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--primary-dark);margin-bottom:4px}.map-popup-meta{font-size:12px;color:var(--text-secondary);margin-bottom:4px;line-height:1.4}.map-popup-tags{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}.map-popup-tag{font-size:10.5px;padding:2px 8px;border-radius:4px;font-weight:600}
+.tag-booking-easy{background:rgba(46,139,87,.1);color:var(--success)}.tag-booking-moderate{background:rgba(230,126,34,.1);color:var(--warning)}.tag-booking-hard{background:rgba(192,57,43,.1);color:var(--danger)}.tag-type{background:rgba(27,79,114,.08);color:var(--primary)}
+.popup-add-btn{width:100%;padding:7px;border-radius:6px;border:none;background:var(--primary);color:#fff;font-family:var(--font-body);font-size:12.5px;font-weight:600;cursor:pointer}.popup-add-btn:hover{background:var(--primary-dark)}.popup-add-btn.added{background:var(--success);cursor:default}
+.cluster-item{padding:7px 0;border-bottom:1px solid rgba(228,232,240,.5)}.cluster-item:last-child{border-bottom:none}
+.cluster-row{display:flex;align-items:center;gap:7px}
+.cluster-num{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+.cluster-info{flex:1;min-width:0}.cluster-name{font-size:12.5px;font-weight:600;color:var(--primary-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cluster-meta{font-size:10px;color:var(--text-light)}
+.cluster-add{width:22px;height:22px;border-radius:5px;border:1.5px solid var(--border);background:#fff;color:var(--primary);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;line-height:1}.cluster-add:hover{background:var(--primary);color:#fff;border-color:var(--primary)}.cluster-add.added{background:var(--success);color:#fff;border-color:var(--success);font-size:10px}
+.cluster-title{font-family:var(--font-display);font-size:13px;font-weight:600;color:var(--primary-dark);margin-bottom:6px;padding-bottom:5px;border-bottom:2px solid var(--accent)}
+.popup-profile-link{display:block;text-align:center;margin-top:5px;font-size:11px;color:var(--primary-light);text-decoration:none}
+.onboard-overlay{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(14,47,68,.5);z-index:700;display:flex;align-items:center;justify-content:center}
+.onboard-card{background:#fff;border-radius:16px;padding:32px 28px;max-width:400px;text-align:center;box-shadow:var(--shadow-lg);animation:popIn .3s ease-out}
+@keyframes popIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.onboard-card h2{font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--primary-dark);margin-bottom:6px}.onboard-card>p{font-size:13.5px;color:var(--text-secondary);line-height:1.55;margin-bottom:18px}
+.onboard-steps{text-align:left;margin:0 auto 20px;max-width:310px}.onboard-step{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px}
+.onboard-step-num{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+.onboard-step:nth-child(1) .onboard-step-num{background:var(--day1)}.onboard-step:nth-child(2) .onboard-step-num{background:var(--day2)}.onboard-step:nth-child(3) .onboard-step-num{background:var(--day3)}
+.onboard-step-text{font-size:13px;color:var(--text-secondary);line-height:1.4;padding-top:3px}
+.onboard-start{padding:10px 28px;border-radius:8px;border:none;background:var(--primary);color:#fff;font-family:var(--font-body);font-size:14px;font-weight:600;cursor:pointer}.onboard-start:hover{background:var(--primary-dark)}
+.onboard-skip{display:block;margin-top:8px;font-size:12px;color:var(--text-light);background:none;border:none;cursor:pointer}
+.mobile-drawer-handle{display:none;width:100%;padding:12px 0 4px;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation;text-align:center}
+.mobile-drawer-handle::after{content:'';display:block;width:40px;height:5px;border-radius:3px;background:var(--border);margin:0 auto}
+.drawer-hint{display:none;font-size:10px;color:var(--text-light);margin-top:4px}
+.mobile-browse-btn{display:none;position:absolute;bottom:80px;left:12px;z-index:800;padding:14px 20px;border-radius:12px;background:#fff;border:1.5px solid var(--border);font-family:var(--font-body);font-size:15px;font-weight:600;color:var(--primary);cursor:pointer;box-shadow:var(--shadow-lg);-webkit-tap-highlight-color:transparent;touch-action:manipulation;min-height:50px}
+.mobile-browse-btn svg{vertical-align:middle;margin-right:6px}
+.mobile-trip-toggle{display:none;position:absolute;bottom:80px;right:12px;z-index:800;padding:14px 20px;border-radius:12px;background:var(--primary);border:none;font-family:var(--font-body);font-size:15px;font-weight:600;color:#fff;cursor:pointer;box-shadow:var(--shadow-lg);-webkit-tap-highlight-color:transparent;touch-action:manipulation;min-height:50px}
+.mobile-trip-toggle .toggle-badge{display:inline-block;min-width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.3);font-size:11px;font-weight:700;text-align:center;line-height:20px;margin-left:6px}
+.sidebar-close-btn{display:none;position:absolute;top:8px;right:12px;width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:#fff;color:var(--text-secondary);font-size:20px;cursor:pointer;z-index:10;-webkit-tap-highlight-color:transparent;touch-action:manipulation;align-items:center;justify-content:center}
+@media(max-width:1024px){.browse-panel{width:260px}.sidebar{width:300px}}
+@media(max-width:900px){
+  .nav-links{display:none}
+  .mobile-menu-btn{display:block;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+  .app{flex-direction:column;position:relative}
+  .browse-panel{display:none;position:absolute;top:0;left:0;right:0;bottom:0;width:100%;z-index:850;box-shadow:none;background:#fff}
+  .browse-panel.mobile-open{display:flex}
+  .map-panel{flex:1;min-height:50vh}
+  .sidebar{display:none;position:absolute;bottom:0;left:0;right:0;width:100%;max-height:90vh;border-left:none;border-top:1px solid var(--border);border-radius:14px 14px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,.12);z-index:850;overflow:hidden}
+  .sidebar.mobile-open{display:flex;flex-direction:column}
+  .sidebar.mobile-open .stops-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px}
+  .sidebar.mobile-open .sidebar-footer{flex-shrink:0;border-top:1px solid var(--border);padding:12px 16px calc(24px + env(safe-area-inset-bottom,34px))}
+  .mobile-drawer-handle{display:block!important;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .drawer-hint{display:block}
+  .mobile-browse-btn{display:flex!important;align-items:center;bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+  .mobile-trip-toggle{display:block;bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+  .sidebar-close-btn{display:flex}
+  .browse-close-btn{display:flex}
+  .sidebar-header{padding:4px 16px 10px;position:relative}
+  .onboard-card{margin:16px;padding:24px 20px}
+}
+.nav-links.mobile-open{display:flex;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:#fff;padding:16px 24px 24px;border-bottom:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,.08);gap:4px;z-index:1100}
+.nav-links.mobile-open li{width:100%}.nav-links.mobile-open a{display:block;padding:10px 0;font-size:16px;border-bottom:1px solid var(--border)}.nav-links.mobile-open a.nav-cta{text-align:center;margin-top:8px;border-bottom:none;border-radius:8px;padding:12px}
+</style>
+</head>
+<body>
+<nav><div class="nav-inner">
+  <a href="index.html" class="logo"><div class="logo-icon">B</div><div class="logo-text">Bourbon Trail<span>Planner</span></div></a>
+  <ul class="nav-links">
+    <li><a href="3-day-bourbon-trail-itinerary.html">Itineraries</a></li>
+    <li><a href="distilleries.html">Distilleries</a></li>
+    <li><a href="where-to-stay-bourbon-trail.html">Where to Stay</a></li>
+    <li><a href="eat-and-drink-bourbon-trail.html">Eat &amp; Drink</a></li>
+      
+    
+      <li><a href="guides.html">Guides</a></li>
+      <li><a href="bourbon-trail-booking-guide.html" class="nav-cta">Booking Guide</a></li>
+  </ul>
+  <button class="mobile-menu-btn" aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+</div></nav>
+<div class="app">
+  <div class="browse-panel" id="browsePanel">
+    <div class="browse-header"><div class="browse-title">Distilleries<button class="browse-close-btn" onclick="toggleMobileBrowse()">&times;</button></div><div class="search-wrap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><input type="text" class="search-box" id="searchBox" placeholder="Search distilleries..." oninput="filterList()"></div></div>
+    <div class="region-filters"><button class="region-pill active" data-region="all" onclick="filterRegion('all',this)">All</button><button class="region-pill" data-region="Louisville" onclick="filterRegion('Louisville',this)">Louisville</button><button class="region-pill" data-region="Bardstown" onclick="filterRegion('Bardstown',this)">Bardstown</button><button class="region-pill" data-region="Frankfort" onclick="filterRegion('Frankfort',this)">Frankfort</button><button class="region-pill" data-region="Lexington" onclick="filterRegion('Lexington',this)">Lexington</button><button class="region-pill" data-region="Central" onclick="filterRegion('Central',this)">Central</button><button class="region-pill" data-region="Northern" onclick="filterRegion('Northern',this)">Northern</button><button class="region-pill" data-region="Western" onclick="filterRegion('Western',this)">Western</button><button class="region-pill" data-region="Other" onclick="filterRegion('Other',this)">Other</button></div>
+    <div class="browse-list" id="browseList"></div>
+    <div class="browse-legend"><span class="legend-dot" style="background:var(--success)"></span>Easy <span class="legend-dot" style="background:var(--warning);margin-left:8px"></span>Moderate <span class="legend-dot" style="background:var(--danger);margin-left:8px"></span>Hard</div>
+  </div>
+  <div class="map-panel">
+    <div id="map"></div>
+    <button class="back-overview" id="backBtn" onclick="zoomOverview()">&#8592; All Regions</button>
+    <div class="onboard-overlay" id="onboard"><div class="onboard-card"><h2>Build Your Trip</h2><p>Create a custom bourbon trail itinerary in minutes. No account needed.</p><div class="onboard-steps"><div class="onboard-step"><div class="onboard-step-num">1</div><div class="onboard-step-text">Browse distilleries or click a region on the map</div></div><div class="onboard-step"><div class="onboard-step-num">2</div><div class="onboard-step-text">Click + to add stops to your trip and assign them to days</div></div><div class="onboard-step"><div class="onboard-step-num">3</div><div class="onboard-step-text">Get smart pacing tips, then export and share your plan</div></div></div><button class="onboard-start" onclick="dismissOnboard()">Start Building</button><button class="onboard-skip" onclick="dismissOnboard()">I've been here before</button></div></div>
+  </div>
+  <button class="mobile-browse-btn" id="mobileBrowseBtn" onclick="toggleMobileBrowse()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Browse</button>
+  <button class="mobile-trip-toggle" id="mobileTripBtn" onclick="toggleMobileTrip()">Your Trip <span class="toggle-badge" id="tripBadge">0</span></button>
+  <div class="sidebar" id="sidebar">
+    <div class="mobile-drawer-handle" onclick="toggleMobileTrip()"><span class="drawer-hint">Tap to close</span></div>
+    <div class="sidebar-header"><div class="sidebar-title">Your Trip</div><button class="sidebar-close-btn" onclick="toggleMobileTrip()">&times;</button><div class="sidebar-sub">Add stops from the browse panel or map</div></div>
+    <div class="day-tabs" id="dayTabs"><button class="day-tab active" data-day="1" onclick="switchDay(1)">Day 1 <span class="tab-count" id="count-1">0</span></button><button class="day-tab" data-day="2" onclick="switchDay(2)">Day 2 <span class="tab-count" id="count-2">0</span></button><button class="day-tab" data-day="3" onclick="switchDay(3)">Day 3 <span class="tab-count" id="count-3">0</span></button><button class="add-day-btn" id="addDayBtn" onclick="addDay()">+ Day</button></div>
+    <div class="stops-area" id="stopsArea"><div class="empty-state"><svg width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><h3>No stops yet</h3><p>Browse distilleries and click + to add them</p></div></div>
+    <div class="sidebar-footer" id="sidebarFooter" style="display:none"><div class="trip-stats"><div class="trip-stat"><div class="trip-stat-val" id="statStops">0</div><div class="trip-stat-label">Stops</div></div><div class="trip-stat"><div class="trip-stat-val" id="statDrive">—</div><div class="trip-stat-label">Drive (today)</div></div><div class="trip-stat"><div class="trip-stat-val" id="statCost">$0</div><div class="trip-stat-label">Tour cost</div></div><div class="trip-stat"><div class="trip-stat-val" id="statDays">—</div><div class="trip-stat-label">Days</div></div></div><button class="export-btn" id="exportBtn" onclick="openEmailModal()" disabled>Email Me This Itinerary</button><button class="clear-btn" onclick="clearTrip()">Clear all stops</button></div>
+  </div>
+</div>
+
+<!-- EMAIL CAPTURE MODAL -->
+<div class="email-overlay" id="emailOverlay" onclick="if(event.target===this)closeEmailModal()">
+  <div class="email-modal">
+    <h3>Your itinerary is ready!</h3>
+    <p class="modal-sub">Your email app should have opened with your full trip plan. It's also been copied to your clipboard just in case.</p>
+    <div class="modal-bonus">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <span><strong>Want our free planning checklist too?</strong> Booking timeline, packing list, and budget worksheet — delivered to your inbox.</span>
+    </div>
+    <!-- MAILERLITE FORM: Replace YOUR_FORM_ID with your actual MailerLite form ID -->
+    <div class="ml-embedded" data-form="WD5yKI"></div>
+    <button class="email-close" onclick="closeEmailModal()">No thanks, I'm good</button>
+    <p class="email-privacy">No spam, ever. Unsubscribe with one click.</p>
+  </div>
+</div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>const D=[
+{id:"angels-envy",name:"Angel's Envy",lat:38.2561,lng:-85.7370,region:"Louisville",type:"Major",cost:"$25–$50",costAvg:37,booking:"Hard",profile:"distillery-angels-envy.html",desc:"Port-finished bourbon, stunning Whiskey Row facility, rooftop bar.",rating:8.8,bookWeeks:"4–6 weeks"},
+{id:"old-forester",name:"Old Forester",lat:38.2563,lng:-85.7523,region:"Louisville",type:"Major",cost:"$20–$75",costAvg:35,booking:"Moderate",profile:"distillery-old-forester.html",desc:"Best-designed tour on Whiskey Row. Bottle Your Own experience.",rating:8.9,bookWeeks:"3–4 weeks"},
+{id:"evan-williams",name:"Evan Williams",lat:38.2555,lng:-85.7585,region:"Louisville",type:"Major",cost:"$18",costAvg:18,booking:"Easy",profile:"distillery-evan-williams.html",desc:"Most affordable Whiskey Row tour. Great bourbon history exhibit.",rating:8.7,bookWeeks:"1 week"},
+{id:"rabbit-hole",name:"Rabbit Hole",lat:38.2502,lng:-85.7334,region:"Louisville",type:"Craft",cost:"$20–$55",costAvg:30,booking:"Easy",profile:"distillery-rabbit-hole.html",desc:"Ultra-modern NuLu facility. Innovative bourbon and rye lineup.",rating:7.9,bookWeeks:"1 week"},
+{id:"michters",name:"Michter's Fort Nelson",lat:38.2546,lng:-85.7633,region:"Louisville",type:"Major",cost:"$25–$50",costAvg:35,booking:"Moderate",profile:"distillery-michters.html",desc:"Premium small-batch. Bar 8314 upstairs is world-class.",rating:8.6,bookWeeks:"2–3 weeks"},
+{id:"peerless",name:"Kentucky Peerless",lat:38.2580,lng:-85.7633,region:"Louisville",type:"Craft",cost:"$15–$35",costAvg:20,booking:"Easy",profile:"distillery-peerless.html",desc:"Grain-to-glass craft. Award-winning rye whiskey.",rating:8.2,bookWeeks:"Walk-up"},
+{id:"whiskey-thief",name:"Whiskey Thief",lat:38.2530,lng:-85.7340,region:"Louisville",type:"Craft",cost:"$15–$25",costAvg:18,booking:"Easy",profile:"distillery-whiskey-thief.html",desc:"Craft distillery with grain-to-glass approach.",rating:7.5,bookWeeks:"Walk-up"},
+{id:"buffalo-trace",name:"Buffalo Trace",lat:38.2112,lng:-84.8735,region:"Frankfort",type:"Major",cost:"Free",costAvg:0,booking:"Hard",profile:"distillery-buffalo-trace.html",desc:"Most iconic distillery on the trail. Pappy, Blanton's, Eagle Rare.",rating:9.2,bookWeeks:"6–8 weeks"},
+{id:"castle-key",name:"Castle & Key",lat:38.2090,lng:-84.8690,region:"Frankfort",type:"Craft",cost:"$15–$40",costAvg:22,booking:"Easy",profile:"distillery-castle-key.html",desc:"Beautifully restored historic site. Outstanding cocktail bar.",rating:8.3,bookWeeks:"1 week"},
+{id:"woodford-reserve",name:"Woodford Reserve",lat:38.0740,lng:-84.7398,region:"Lexington",type:"Major",cost:"$20–$80",costAvg:35,booking:"Moderate",profile:"distillery-woodford-reserve.html",desc:"Horse country campus. Most photogenic distillery on the trail.",rating:8.5,bookWeeks:"2–3 weeks"},
+{id:"wild-turkey",name:"Wild Turkey",lat:38.0020,lng:-84.8280,region:"Lexington",type:"Major",cost:"$15–$35",costAvg:22,booking:"Easy",profile:"distillery-wild-turkey.html",desc:"Kentucky River views. Home of Russell's Reserve.",rating:8.1,bookWeeks:"1 week"},
+{id:"four-roses",name:"Four Roses",lat:37.9748,lng:-84.8610,region:"Lexington",type:"Major",cost:"$10–$30",costAvg:18,booking:"Easy",profile:"distillery-four-roses.html",desc:"Spanish Mission-style architecture. 10-recipe system.",rating:8.3,bookWeeks:"1 week"},
+{id:"makers-mark",name:"Maker's Mark",lat:37.6298,lng:-85.3369,region:"Bardstown",type:"Major",cost:"$18–$75",costAvg:30,booking:"Moderate",profile:"distillery-makers-mark.html",desc:"National Historic Landmark. Red wax hand-dipping experience.",rating:9.0,bookWeeks:"4–6 weeks"},
+{id:"heaven-hill",name:"Heaven Hill",lat:37.8124,lng:-85.4648,region:"Bardstown",type:"Major",cost:"$20–$50",costAvg:30,booking:"Moderate",profile:"distillery-heaven-hill.html",desc:"You Do Bourbon tasting. Best educational experience.",rating:8.5,bookWeeks:"2–3 weeks"},
+{id:"preservation",name:"Preservation Distillery",lat:37.8065,lng:-85.4690,region:"Bardstown",type:"Craft",cost:"$10–$25",costAvg:15,booking:"Easy",profile:"distillery-preservation.html",desc:"Best craft bourbon near Bardstown. No frills, great whiskey.",rating:7.5,bookWeeks:"Walk-up"},
+{id:"lux-row",name:"Lux Row Distillers",lat:37.7990,lng:-85.4640,region:"Bardstown",type:"Craft",cost:"$15–$40",costAvg:22,booking:"Easy",profile:"distillery-lux-row.html",desc:"Modern facility. Penelope, Blood Oath, Ezra Brooks.",rating:8.0,bookWeeks:"Walk-up"},
+{id:"willett",name:"Willett Distillery",lat:37.8130,lng:-85.4590,region:"Bardstown",type:"Craft",cost:"$15–$35",costAvg:22,booking:"Moderate",profile:"distillery-willett.html",desc:"Family-owned since 1936. Cult following. Iconic pot still.",rating:8.2,bookWeeks:"1–2 weeks"},
+{id:"bardstown-bourbon-co",name:"Bardstown Bourbon Co.",lat:37.8000,lng:-85.4580,region:"Bardstown",type:"Major",cost:"$25–$80",costAvg:45,booking:"Moderate",profile:"distillery-bardstown-bourbon-co.html",desc:"State-of-the-art. Bottle & Bond restaurant.",rating:8.5,bookWeeks:"2–3 weeks"},
+{id:"log-still",name:"Log Still Distillery",lat:37.7750,lng:-85.4350,region:"Bardstown",type:"Craft",cost:"$10–$20",costAvg:15,booking:"Easy",profile:"distillery-log-still.html",desc:"Dant Crossing campus with restaurant and bourbon village.",rating:7.8,bookWeeks:"Walk-up"},
+{id:"barton-1792",name:"Barton 1792",lat:37.8080,lng:-85.4850,region:"Bardstown",type:"Major",cost:"Free (no tours)",costAvg:0,booking:"Easy",profile:"distillery-barton-1792.html",desc:"196-acre campus. No longer offering tours — gift shop and grounds visits only. 1792 Full Proof is the must-buy.",rating:7.6,bookWeeks:"Walk-up"},
+{id:"jim-beam",name:"Jim Beam",lat:37.9210,lng:-85.6310,region:"Bardstown",type:"Major",cost:"$16–$75",costAvg:25,booking:"Easy",profile:"distillery-jim-beam.html",desc:"The biggest name in bourbon. Fred B. Noe campus.",rating:8.4,bookWeeks:"1 week"},
+{id:"town-branch",name:"Town Branch",lat:38.0490,lng:-84.5135,region:"Lexington",type:"Major",cost:"$10–$30",costAvg:15,booking:"Easy",profile:"distillery-town-branch.html",desc:"Only combined distillery + brewery. Downtown Lexington.",rating:7.4,bookWeeks:"Walk-up"},
+{id:"new-riff",name:"New Riff Distilling",lat:39.0890,lng:-84.4960,region:"Other",type:"Craft",cost:"Free–$25",costAvg:0,booking:"Easy",profile:"distillery-new-riff.html",desc:"Free tours. Bottled-in-bond everything. Rooftop bar.",rating:8.4,bookWeeks:"Walk-up"},
+{id:"wilderness-trail",name:"Wilderness Trail",lat:37.6660,lng:-84.8050,region:"Other",type:"Craft",cost:"$10–$30",costAvg:15,booking:"Easy",profile:"distillery-wilderness-trail.html",desc:"Science-driven sweet mash process. Run by a microbiologist.",rating:8.3,bookWeeks:"1 week"},
+{id:"copper-kings",name:"Copper & Kings",lat:38.2380,lng:-85.7450,region:"Louisville",type:"Craft",cost:"$10–$25",costAvg:15,booking:"Moderate",profile:"distillery-copper-and-kings.html",desc:"American brandy meets bourbon. Underground barrel aging with bass-heavy music.",rating:8.3,bookWeeks:"1–2 weeks"},
+{id:"stitzel-weller",name:"Stitzel-Weller",lat:38.2200,lng:-85.8040,region:"Louisville",type:"Major",cost:"$10–$25",costAvg:15,booking:"Moderate",profile:"distillery-stitzel-weller.html",desc:"Historic Pappy Van Winkle home. Blade & Bow, I.W. Harper. A bourbon pilgrimage.",rating:8.6,bookWeeks:"1–2 weeks"},
+{id:"the-bard",name:"The Bard Distillery",lat:37.8130,lng:-85.4740,region:"Bardstown",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-the-bard.html",desc:"Small-batch Bardstown craft. Walk-in friendly, personal tours.",rating:7.4,bookWeeks:"Walk-up"},
+{id:"chicken-cock",name:"Chicken Cock Whiskey",lat:37.8095,lng:-85.4658,region:"Bardstown",type:"Craft",cost:"$15–$30",costAvg:20,booking:"Moderate",profile:"distillery-chicken-cock.html",desc:"Upscale bar, tasting room & micro-distillery on Stephen Foster Ave. Official Trail stop.",rating:7.8,bookWeeks:"Few days"},
+{id:"glenns-creek",name:"Glenns Creek Distilling",lat:38.1845,lng:-84.8470,region:"Frankfort",type:"Craft",cost:"$10–$25",costAvg:15,booking:"Easy",profile:"distillery-glenns-creek.html",desc:"Historic Old Crow site reborn. Small-batch bourbon on hallowed ground.",rating:7.6,bookWeeks:"Walk-up"},
+{id:"j-mattingly",name:"J. Mattingly 1845",lat:38.2065,lng:-84.8725,region:"Frankfort",type:"Craft",cost:"$15–$75",costAvg:30,booking:"Easy",profile:"distillery-j-mattingly.html",desc:"Custom barrel blending experience. Hands-on, personal Frankfort craft stop.",rating:7.9,bookWeeks:"1 week"},
+{id:"james-e-pepper",name:"James E. Pepper",lat:38.0545,lng:-84.4860,region:"Lexington",type:"Craft",cost:"$15–$30",costAvg:20,booking:"Moderate",profile:"distillery-james-e-pepper.html",desc:"Distillery District anchor. Historic brand reborn in Lexington.",rating:7.8,bookWeeks:"1 week"},
+{id:"barrel-house",name:"Barrel House Distilling Co.",lat:38.0540,lng:-84.4890,region:"Lexington",type:"Craft",cost:"$10–$15",costAvg:12,booking:"Easy",profile:"distillery-barrel-house.html",desc:"Casual Distillery District stop. Affordable tours, pair with James E. Pepper.",rating:7.5,bookWeeks:"Walk-up"},
+{id:"fresh-bourbon",name:"Fresh Bourbon Distilling",lat:38.0370,lng:-84.7480,region:"Lexington",type:"Craft",cost:"$20–$40",costAvg:25,booking:"Moderate",profile:"distillery-fresh-bourbon.html",desc:"Beautiful horse country farm. Grain-to-glass with pastoral views.",rating:8.2,bookWeeks:"1 week"},
+{id:"rd1-spirits",name:"RD1 Spirits",lat:38.0460,lng:-84.4950,region:"Lexington",type:"Craft",cost:"$15–$40",costAvg:22,booking:"Easy",profile:"distillery-rd1-spirits.html",desc:"Sourcing-first Lexington distillery. Great blending experiences.",rating:8.4,bookWeeks:"1 week"},
+{id:"bulleit",name:"Bulleit Distilling Co.",lat:37.9020,lng:-85.0110,region:"Central",type:"Major",cost:"$15–$40",costAvg:22,booking:"Moderate",profile:"distillery-bulleit.html",desc:"Diageo's showcase facility in Shelbyville. Modern, scenic campus.",rating:8.0,bookWeeks:"1–2 weeks"},
+{id:"jeptha-creed",name:"Jeptha Creed",lat:38.2880,lng:-85.3260,region:"Central",type:"Craft",cost:"$10–$25",costAvg:15,booking:"Easy",profile:"distillery-jeptha-creed.html",desc:"Ground-to-glass family farm. Bloody Butcher corn, vodka, and bourbon.",rating:8.0,bookWeeks:"Walk-up"},
+{id:"kentucky-artisan",name:"Kentucky Artisan Distillery",lat:37.9680,lng:-85.1650,region:"Central",type:"Craft",cost:"$15–$30",costAvg:18,booking:"Moderate",profile:"distillery-kentucky-artisan.html",desc:"Contract distilling plus their own brands. Jeff Ruby's collaboration.",rating:8.0,bookWeeks:"1 week"},
+{id:"bluegrass",name:"Bluegrass Distillers",lat:38.0355,lng:-84.5205,region:"Lexington",type:"Craft",cost:"$15–$25",costAvg:15,booking:"Easy",profile:"distillery-bluegrass.html",desc:"True craft operation in downtown Lexington. Blue corn bourbon.",rating:7.7,bookWeeks:"Walk-up"},
+{id:"larrikin",name:"Larrikin Distillery",lat:38.0870,lng:-84.8975,region:"Central",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-larrikin.html",desc:"Australian-born distillers making bourbon in Lawrenceburg. Unique story.",rating:7.3,bookWeeks:"Walk-up"},
+{id:"boone-county",name:"Boone County Distilling",lat:38.9370,lng:-84.6610,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-boone-county.html",desc:"Northern KY gem. First distillery in Bourbon County since Prohibition.",rating:7.8,bookWeeks:"Walk-up"},
+{id:"second-sight",name:"Second Sight Spirits",lat:39.0890,lng:-84.5710,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-second-sight.html",desc:"Arts-forward experimental spirits in Ludlow. Creative NKY wild card.",rating:7.5,bookWeeks:"Walk-up"},
+{id:"neeley-family",name:"Neeley Family Distillery",lat:38.6880,lng:-84.8400,region:"Northern",type:"Craft",cost:"$10–$15",costAvg:10,booking:"Easy",profile:"distillery-neeley-family.html",desc:"Quick I-71 corridor stop. Small family craft operation.",rating:7.2,bookWeeks:"Walk-up"},
+{id:"old-pogue",name:"Old Pogue Distillery",lat:38.5440,lng:-84.1410,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-old-pogue.html",desc:"Maysville heritage brand. Civil War-era recipe revived.",rating:7.4,bookWeeks:"Walk-up"},
+{id:"hartfield",name:"Hartfield & Co.",lat:38.5050,lng:-84.2980,region:"Northern",type:"Craft",cost:"$10–$15",costAvg:10,booking:"Easy",profile:"distillery-hartfield.html",desc:"Paris, KY craft distillery. First in Bourbon County since Prohibition.",rating:7.6,bookWeeks:"Walk-up"},
+{id:"wenzel",name:"Wenzel Whiskey",lat:38.9840,lng:-84.6490,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-wenzel.html",desc:"Small-batch Northern KY craft whiskey. Pair with New Riff.",rating:7.3,bookWeeks:"Walk-up"},
+{id:"baker-bird",name:"Baker-Bird Winery & Distillery",lat:38.6360,lng:-83.7740,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-baker-bird.html",desc:"Historic Augusta winery and distillery combo on the Ohio River.",rating:7.5,bookWeeks:"Walk-up"},
+{id:"green-river",name:"Green River Distilling",lat:37.7740,lng:-87.1130,region:"Western",type:"Major",cost:"$10–$25",costAvg:15,booking:"Easy",profile:"distillery-green-river.html",desc:"One of Kentucky's oldest brands reborn in Owensboro.",rating:8.1,bookWeeks:"Walk-up"},
+{id:"casey-jones",name:"Casey Jones Distillery",lat:36.7920,lng:-86.5760,region:"Western",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-casey-jones.html",desc:"Moonshine heritage near Tennessee border. Good Nashville day trip add-on.",rating:7.5,bookWeeks:"Walk-up"},
+{id:"mb-roland",name:"MB Roland Distillery",lat:36.7770,lng:-87.3850,region:"Western",type:"Craft",cost:"$5–$15",costAvg:8,booking:"Easy",profile:"distillery-mb-roland.html",desc:"Farm-to-bottle craft in Pembroke. Unfiltered Kentucky spirit.",rating:7.4,bookWeeks:"Walk-up"},
+{id:"dueling-grounds",name:"Dueling Grounds Distillery",lat:36.7210,lng:-86.5640,region:"Western",type:"Craft",cost:"$10–$15",costAvg:10,booking:"Easy",profile:"distillery-dueling-grounds.html",desc:"Near Tennessee border. Good Nashville-area bourbon stop.",rating:7.3,bookWeeks:"Walk-up"},
+{id:"bh-james",name:"B.H. James Distillery",lat:37.6910,lng:-87.0700,region:"Western",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-bh-james.html",desc:"Small Western KY operation in Whitesville. Off-the-path craft stop.",rating:7.2,bookWeeks:"Walk-up"},
+{id:"golden-pond",name:"Golden Pond Distillery",lat:36.8410,lng:-87.9960,region:"Western",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-golden-pond.html",desc:"Near Land Between the Lakes. Remote Western KY moonshine and bourbon.",rating:7.1,bookWeeks:"Walk-up"},
+{id:"jackson-purchase",name:"Jackson Purchase Distillery",lat:36.8530,lng:-88.6490,region:"Western",type:"Craft",cost:"$5–$15",costAvg:8,booking:"Easy",profile:"distillery-jackson-purchase.html",desc:"Far western KY craft outpost near Paducah. Corn whiskey roots.",rating:7.3,bookWeeks:"Walk-up"},
+{id:"limestone-branch",name:"Limestone Branch Distillery",lat:37.7320,lng:-85.3370,region:"Other",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-limestone-branch.html",desc:"Beam family heritage in Lebanon. Yellowstone bourbon, Minor Case rye.",rating:7.9,bookWeeks:"Walk-up"},
+{id:"boundary-oak",name:"Boundary Oak Distillery",lat:37.8210,lng:-85.9010,region:"Other",type:"Craft",cost:"$8–$30",costAvg:15,booking:"Easy",profile:"distillery-boundary-oak.html",desc:"Family-owned near Fort Knox. Military-themed bourbons, natural spring.",rating:7.3,bookWeeks:"Walk-up"}
+];
+
+const RD={Louisville:{lat:38.257,lng:-85.755,zoom:14},Bardstown:{lat:37.81,lng:-85.47,zoom:14},Frankfort:{lat:38.210,lng:-84.871,zoom:14},Lexington:{lat:38.035,lng:-84.76,zoom:11},Central:{lat:38.05,lng:-85.15,zoom:10},Northern:{lat:38.85,lng:-84.55,zoom:9},Western:{lat:37.2,lng:-87.2,zoom:8}};
+const RG={Louisville:'Louisville',Bardstown:'Bardstown',Loretto:'Bardstown',Clermont:'Bardstown',Frankfort:'Frankfort',Versailles:'Lexington',Lawrenceburg:'Lexington',Lexington:'Lexington',Newport:'Other',Danville:'Other',Shelbyville:'Central',Crestwood:'Central',Independence:'Northern',Ludlow:'Northern',Sparta:'Northern',Maysville:'Northern',Paris:'Northern',Burlington:'Northern',Augusta:'Northern',Owensboro:'Western',Hopkinsville:'Western',Pembroke:'Western',Franklin:'Western',Whitesville:'Western',Eddyville:'Western',Murray:'Western',Lebanon:'Other',Radcliff:'Other',Midway:'Lexington',Central:'Central',Northern:'Northern',Western:'Western'};
+function grp(r){return RG[r]||'Other'}
+
+const pairings=[
+{a:"buffalo-trace",b:"castle-key",tip:"Buffalo Trace and Castle & Key are 10 min apart — perfect Frankfort pairing.",type:"good"},
+{a:"old-forester",b:"evan-williams",tip:"Old Forester and Evan Williams are a 2-min walk on Whiskey Row.",type:"good"},
+{a:"old-forester",b:"michters",tip:"Old Forester and Michter's are neighbors on Whiskey Row.",type:"good"},
+{a:"michters",b:"peerless",tip:"Michter's and Peerless are a 3-min walk — closest pairing in Louisville.",type:"good"},
+{a:"heaven-hill",b:"preservation",tip:"Heaven Hill and Preservation are minutes apart in Bardstown.",type:"good"},
+{a:"heaven-hill",b:"willett",tip:"Willett is right down the road from Heaven Hill.",type:"good"},
+{a:"woodford-reserve",b:"wild-turkey",tip:"Woodford and Wild Turkey are 20 min apart through horse country.",type:"good"},
+{a:"woodford-reserve",b:"four-roses",tip:"Woodford and Four Roses are close. Natural pairing.",type:"good"},
+{a:"makers-mark",b:"heaven-hill",tip:"Maker's Mark to Heaven Hill is ~30 min. Good Bardstown combo.",type:"good"},
+{a:"glenns-creek",b:"buffalo-trace",tip:"Glenns Creek is 15 min from Buffalo Trace — easy Frankfort pairing.",type:"good"},
+{a:"glenns-creek",b:"castle-key",tip:"Glenns Creek and Castle & Key are both on Glenns Creek Rd.",type:"good"},
+{a:"j-mattingly",b:"buffalo-trace",tip:"J. Mattingly is 5 min from Buffalo Trace in downtown Frankfort.",type:"good"},
+{a:"james-e-pepper",b:"barrel-house",tip:"James E. Pepper and Barrel House are neighbors in the Distillery District.",type:"good"},
+{a:"copper-kings",b:"rabbit-hole",tip:"Copper & Kings and Rabbit Hole are both in Butchertown/NuLu — walk between them.",type:"good"},
+{a:"boone-county",b:"second-sight",tip:"Boone County and Second Sight are both in Northern KY — pair for a NKY day.",type:"good"},
+{a:"new-riff",b:"second-sight",tip:"New Riff and Second Sight are 5 min apart in Northern KY.",type:"good"},
+{a:"casey-jones",b:"dueling-grounds",tip:"Casey Jones and Dueling Grounds are both near the TN border — combine them.",type:"good"},
+{a:"mb-roland",b:"casey-jones",tip:"MB Roland and Casey Jones make a Western KY craft day.",type:"good"},
+{a:"green-river",b:"bh-james",tip:"Green River and B.H. James are both in the Owensboro area.",type:"good"},
+{a:"bulleit",b:"jeptha-creed",tip:"Bulleit and Jeptha Creed are both in Shelbyville — 15 min apart.",type:"good"},
+{a:"chicken-cock",b:"the-bard",tip:"Chicken Cock and The Bard are a 3-min walk in downtown Bardstown.",type:"good"}
+];
+const BW={"buffalo-trace":"Buffalo Trace books out 6–8 weeks ahead. Book first.","angels-envy":"Angel's Envy sells out weekends. Book 4–6 weeks ahead.","makers-mark":"Maker's Mark hand-dip books out. Reserve 4–6 weeks ahead."};
+function getTips(ds){const t=[],ids=ds.map(s=>s.id);pairings.forEach(p=>{if(ids.includes(p.a)&&ids.includes(p.b))t.push({text:p.tip,type:p.type})});if(ds.length>=4)t.push({text:"4+ stops is ambitious with tastings. Consider moving one.",type:"warn"});if(ds.length>=5)t.push({text:"5 stops will be exhausting. Trim this day.",type:"warn"});ds.forEach(s=>{if(BW[s.id])t.push({text:BW[s.id],type:"info"})});const rr=[...new Set(ds.map(s=>grp(s.region)))];if(rr.length>=3&&ds.length>=3)t.push({text:"Covering "+rr.length+" regions — lots of driving. Group by region.",type:"warn"});return t}
+
+let trip={1:[],2:[],3:[]},aDay=1,tDays=3,MM={},rLines=[],map,aRF='all',regMk=[];
+
+function initMap(){
+  map=L.map('map',{center:[38.05,-85.3],zoom:8,zoomControl:true});
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19}).addTo(map);
+
+  // Region cards
+  Object.entries(RD).forEach(([n,r])=>{
+    const cnt=D.filter(d=>grp(d.region)===n).length;
+    const ic=L.divIcon({className:'',html:'<div class="region-overlay" onclick="event.stopPropagation();zoomToRegion(\''+n+'\')"><div class="region-overlay-name">'+n+'</div><div class="region-overlay-count">'+cnt+' distilleries</div></div>',iconSize:[130,56],iconAnchor:[65,28]});
+    const m=L.marker([r.lat,r.lng],{icon:ic,interactive:false,zIndexOffset:1000}).addTo(map);
+    m._isRC=true;regMk.push(m);
+  });
+
+  function mC(b){return b==='Hard'?'#C0392B':b==='Moderate'?'#E67E22':'#2E8B57'}
+  D.forEach(d=>{
+    const c=mC(d.booking);
+    const ic=L.divIcon({className:'custom-marker',html:'<div style="width:26px;height:26px;border-radius:50%;background:'+c+';border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25);cursor:pointer"></div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-15]});
+    const marker=L.marker([d.lat,d.lng],{icon:ic});
+    marker.on('click',function(){openPopup(d)});
+    MM[d.id]={marker,data:d,_onMap:false};
+  });
+  map.on('zoomend',function(){clearTimeout(window._hzTimer);window._hzTimer=setTimeout(handleZoom,200)});
+  map.on('moveend',function(){clearTimeout(window._hzTimer);window._hzTimer=setTimeout(handleZoom,200)});
+  handleZoom();
+}
+
+function _addPin(id){var m=MM[id];if(!m||m._onMap)return;m.marker.addTo(map);m._onMap=true}
+function _removePin(id){var m=MM[id];if(!m||!m._onMap)return;m.marker.removeFrom(map);m._onMap=false}
+
+function handleZoom(){
+  var z=map.getZoom(),show=z>=10;
+  regMk.forEach(m=>{if(m._icon){m._icon.style.opacity=show?'0':'1';m._icon.style.pointerEvents=show?'none':'auto'}});
+  var tripIds=new Set(Object.values(trip).flat().map(s=>s.id));
+  D.forEach(function(d){
+    if(tripIds.has(d.id)||show){_addPin(d.id)}else{_removePin(d.id)}
+  });
+  document.getElementById('backBtn').style.display=z>=10?'block':'none';
+}
+
+function zoomToRegion(n){const r=RD[n];if(!r)return;map.flyTo([r.lat,r.lng],r.zoom,{duration:.5});filterRegion(n,document.querySelector('.region-pill[data-region="'+n+'"]'))}
+function zoomOverview(){map.flyTo([38.05,-85.3],8,{duration:.5});filterRegion('all',document.querySelector('.region-pill[data-region="all"]'))}
+
+function openPopup(d){
+  const m=MM[d.id];if(!m)return;
+  if(m.marker.getPopup())m.marker.unbindPopup();
+  const added=Object.values(trip).flat().some(s=>s.id===d.id);
+  const gd=()=>{for(let dy in trip){if(trip[dy].some(s=>s.id===d.id))return parseInt(dy)}return null};
+  const h='<div class="map-popup"><h3>'+d.name+'</h3><div class="map-popup-meta">'+d.region+' &middot; '+d.type+' &middot; '+d.cost+'</div><div class="map-popup-meta">'+d.desc+'</div><div class="map-popup-tags"><span class="map-popup-tag tag-booking-'+d.booking.toLowerCase()+'">'+d.booking+' booking</span><span class="map-popup-tag tag-type">'+d.rating+'/10</span></div><button class="popup-add-btn '+(added?'added':'')+'" onclick="'+(added?'':'addStop(\''+d.id+'\')')+'" '+(added?'disabled':'')+'>'+(added?'&#10003; Added to Day '+gd():'+ Add to Day '+aDay)+'</button>'+(d.profile?'<a href="'+d.profile+'" class="popup-profile-link">Read full guide &rarr;</a>':'')+'</div>';
+  m.marker.bindPopup(h,{maxWidth:250}).openPopup();
+}
+
+function openClusterPopup(nearby,clicked){
+  function bC(b){return b==='Hard'?'#C0392B':b==='Moderate'?'#E67E22':'#2E8B57'}
+  var items=nearby.map(function(d,i){
+    var added=Object.values(trip).flat().some(function(s){return s.id===d.id});
+    return '<div class="cluster-item"><div class="cluster-row">'+
+      '<div class="cluster-num" style="background:'+bC(d.booking)+'">'+(i+1)+'</div>'+
+      '<div class="cluster-info"><div class="cluster-name">'+d.name+'</div>'+
+      '<div class="cluster-meta">'+d.rating+'/10 &middot; '+d.cost+' &middot; '+d.booking+'</div></div>'+
+      '<button class="cluster-add '+(added?'added':'')+'" onclick="event.stopPropagation();'+(added?'':'clusterAdd(this,&quot;'+d.id+'&quot;)')+'" '+(added?'disabled':'')+'>'+(added?'&#10003;':'+')+'</button></div></div>';
+  }).join('');
+  var h='<div class="map-popup"><div class="cluster-title">'+nearby.length+' Distilleries Here</div>'+items+'</div>';
+  var lat=nearby.reduce(function(s,d){return s+d.lat},0)/nearby.length;
+  var lng=nearby.reduce(function(s,d){return s+d.lng},0)/nearby.length;
+  L.popup({maxWidth:280,minWidth:220,offset:[0,-15]}).setLatLng([lat,lng]).setContent(h).openOn(map);
+}
+function clusterAdd(btn,id){addStop(id);btn.classList.add('added');btn.disabled=true;btn.innerHTML='&#10003;';}
+
+// BROWSE LIST
+function renderBrowseList(){
+  const list=document.getElementById('browseList'),q=document.getElementById('searchBox').value.toLowerCase().trim();
+  let f=D.filter(d=>{const ms=!q||d.name.toLowerCase().includes(q)||d.region.toLowerCase().includes(q);const mr=aRF==='all'||grp(d.region)===aRF;return ms&&mr});
+  f.sort((a,b)=>b.rating-a.rating);
+  if(!f.length){list.innerHTML='<div class="browse-empty">No distilleries match your search</div>';return}
+  const inT=id=>Object.values(trip).flat().some(s=>s.id===id);
+  list.innerHTML=f.map(d=>{const a=inT(d.id);return '<div class="browse-item" onclick="highlightOnMap(\''+d.id+'\')"><div class="browse-dot '+d.booking.toLowerCase()+'"></div><div class="browse-item-info"><div class="browse-item-name">'+d.name+'</div><div class="browse-item-meta">'+d.region+' &middot; '+d.cost+' &middot; '+d.bookWeeks+'</div></div><div class="browse-item-rating">'+d.rating+'</div><button class="browse-add-btn '+(a?'added':'')+'" onclick="event.stopPropagation();'+(a?'':'addStop(\''+d.id+'\')')+'" '+(a?'disabled':'')+'>'+(a?'&#10003;':'+')+'</button></div>'}).join('');
+}
+function filterList(){renderBrowseList()}
+function filterRegion(r,el){aRF=r;document.querySelectorAll('.region-pill').forEach(p=>p.classList.remove('active'));if(el)el.classList.add('active');renderBrowseList()}
+function highlightOnMap(id){const d=D.find(x=>x.id===id);if(!d)return;window._hlTarget=id;map.flyTo([d.lat,d.lng],16,{duration:.4});setTimeout(()=>{if(window._hlTarget===id)openPopup(d)},500);document.getElementById('browsePanel').classList.remove('mobile-open');document.getElementById('sidebar').classList.remove('mobile-open')}
+
+// TRIP
+function addStop(id){
+  const d=D.find(x=>x.id===id);if(!d||Object.values(trip).flat().some(s=>s.id===id))return;
+  trip[aDay].push({...d});setTripIcon(id,aDay);map.closePopup();renderStops();renderBrowseList();updateStats();drawRoutes();updateTripBadge();
+}
+function removeStop(id){for(let dy in trip)trip[dy]=trip[dy].filter(s=>s.id!==id);resetIcon(id);renderStops();renderBrowseList();updateStats();drawRoutes();updateTripBadge()}
+function moveStop(id,to){let s=null;for(let dy in trip){const i=trip[dy].findIndex(x=>x.id===id);if(i!==-1){s=trip[dy].splice(i,1)[0];break}}if(s){trip[to].push(s);refreshIcons();renderStops();updateStats();drawRoutes()}}
+
+const DC={1:'#2980B9',2:'#D4A03C',3:'#2E8B57',4:'#8E44AD'};
+function setTripIcon(id,dy){const m=MM[id];if(!m)return;const idx=trip[dy].findIndex(s=>s.id===id)+1;m.marker.setIcon(L.divIcon({className:'custom-marker',html:'<div style="width:30px;height:30px;border-radius:50%;background:'+DC[dy]+';border:2.5px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;font-family:DM Sans,sans-serif">'+idx+'</div>',iconSize:[30,30],iconAnchor:[15,15],popupAnchor:[0,-17]}));_addPin(id)}
+function resetIcon(id){const m=MM[id];if(!m)return;const c=m.data.booking==='Hard'?'#C0392B':m.data.booking==='Moderate'?'#E67E22':'#2E8B57';m.marker.setIcon(L.divIcon({className:'custom-marker',html:'<div style="width:26px;height:26px;border-radius:50%;background:'+c+';border:2.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25);cursor:pointer"></div>',iconSize:[26,26],iconAnchor:[13,13],popupAnchor:[0,-15]}));handleZoom()}
+function refreshIcons(){D.forEach(d=>resetIcon(d.id));for(let dy in trip)trip[dy].forEach((s,i)=>{const m=MM[s.id];if(!m)return;m.marker.setIcon(L.divIcon({className:'custom-marker',html:'<div style="width:30px;height:30px;border-radius:50%;background:'+DC[dy]+';border:2.5px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;font-family:DM Sans,sans-serif">'+(i+1)+'</div>',iconSize:[30,30],iconAnchor:[15,15],popupAnchor:[0,-17]}));_addPin(s.id)})}
+
+// ROUTES
+function drawRoutes(){rLines.forEach(l=>map.removeLayer(l));rLines=[];for(let dy in trip){if(trip[dy].length<2)continue;rLines.push(L.polyline(trip[dy].map(s=>[s.lat,s.lng]),{color:DC[dy],weight:3,opacity:.7,dashArray:'8 6'}).addTo(map))}}
+function calcDr(a,b){const R=3959,dL=(b.lat-a.lat)*Math.PI/180,dG=(b.lng-a.lng)*Math.PI/180;const x=Math.sin(dL/2)**2+Math.cos(a.lat*Math.PI/180)*Math.cos(b.lat*Math.PI/180)*Math.sin(dG/2)**2;return Math.round((R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))*1.3/45)*60)}
+
+// RENDER STOPS
+function renderStops(){
+  const area=document.getElementById('stopsArea'),stops=trip[aDay]||[];
+  for(let d=1;d<=tDays;d++){const el=document.getElementById('count-'+d);if(el)el.textContent=(trip[d]||[]).length}
+  if(!stops.length){area.innerHTML='<div class="empty-state"><svg width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><h3>No stops on Day '+aDay+'</h3><p>Browse distilleries and click + to add</p></div>';document.getElementById('sidebarFooter').style.display='none';return}
+  document.getElementById('sidebarFooter').style.display='';
+  let h='';
+  stops.forEach((s,i)=>{
+    if(i>0){const mn=calcDr(stops[i-1],s);h+='<div class="drive-info"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8B92A8" stroke-width="2"><path d="M12 5v14"/></svg>'+mn+' min drive</div>'}
+    let mo='';for(let d=1;d<=tDays;d++){if(d!==aDay)mo+='<option value="'+d+'">&rarr; Day '+d+'</option>'}
+    h+='<div class="stop-card" data-day="'+aDay+'"><div class="stop-top"><div class="stop-num">'+(i+1)+'</div><div class="stop-info"><div class="stop-name">'+s.name+'</div><div class="stop-meta">'+s.region+' &middot; '+s.cost+' &middot; '+s.booking+'</div></div><div class="stop-actions"><select class="stop-move" onchange="moveStop(\''+s.id+'\',parseInt(this.value));this.selectedIndex=0"><option selected disabled>Move</option>'+mo+'</select><button class="stop-remove" onclick="removeStop(\''+s.id+'\')">&times;</button></div></div></div>';
+  });
+  getTips(stops).forEach(t=>{const ic=t.type==='good'?'&#10003;':t.type==='warn'?'&#9888;':'&#8505;';h+='<div class="smart-tip tip-'+t.type+'"><span class="smart-tip-icon">'+ic+'</span><span>'+t.text+'</span></div>'});
+  area.innerHTML=h;
+}
+
+// DAYS
+function switchDay(d){aDay=d;document.querySelectorAll('.day-tab').forEach(t=>t.classList.toggle('active',parseInt(t.dataset.day)===d));renderStops();updateStats()}
+function addDay(){if(tDays>=4)return;tDays++;trip[tDays]=[];const tabs=document.getElementById('dayTabs'),btn=document.getElementById('addDayBtn');const t=document.createElement('button');t.className='day-tab';t.dataset.day=tDays;t.onclick=function(){switchDay(tDays)};t.innerHTML='Day '+tDays+' <span class="tab-count" id="count-'+tDays+'">0</span>';tabs.insertBefore(t,btn);if(tDays>=4)btn.style.display='none';switchDay(tDays)}
+
+// STATS
+function updateStats(){const all=Object.values(trip).flat();document.getElementById('statStops').textContent=all.length;const ds=trip[aDay]||[];let mn=0;for(let i=1;i<ds.length;i++)mn+=calcDr(ds[i-1],ds[i]);document.getElementById('statDrive').textContent=mn>0?mn+' min':'—';const c=all.reduce((s,x)=>s+(x.costAvg||0),0);document.getElementById('statCost').textContent=c>0?'$'+c:'Free';const ad=Object.keys(trip).filter(d=>trip[d].length>0).length;document.getElementById('statDays').textContent=ad||'—';document.getElementById('exportBtn').disabled=!all.length;document.getElementById('sidebarFooter').style.display=all.length?'':'none'}
+
+// EMAIL MODAL + ITINERARY EXPORT
+function buildItineraryText(){
+  const all=Object.values(trip).flat();if(!all.length)return'';
+  let s='MY BOURBON TRAIL TRIP\n';
+  s+='━━━━━━━━━━━━━━━━━━━━━━\n\n';
+  for(let d=1;d<=tDays;d++){
+    if(!trip[d].length)continue;
+    s+='DAY '+d+'\n';
+    s+='──────\n';
+    trip[d].forEach((x,i)=>{
+      s+='  '+(i+1)+'. '+x.name+'\n';
+      s+='     '+x.region+' · '+x.cost+' · '+x.booking+' booking';
+      if(x.bookWeeks&&x.booking!=='Easy')s+=' (book '+x.bookWeeks+' ahead)';
+      s+='\n';
+      if(i<trip[d].length-1){
+        var mn=calcDr(trip[d][i],trip[d][i+1]);
+        s+='     ↓ ~'+mn+' min drive\n';
+      }
+    });
+    var tips=getTips(trip[d]);
+    if(tips.length){
+      s+='\n  Tips:\n';
+      tips.forEach(function(t){
+        var icon=t.type==='good'?'✓':t.type==='warn'?'⚠':'ℹ';
+        s+='  '+icon+' '+t.text+'\n';
+      });
+    }
+    s+='\n';
+  }
+  // Summary
+  var totalCost=all.reduce(function(sum,x){return sum+(x.costAvg||0)},0);
+  var activeDays=Object.keys(trip).filter(function(d){return trip[d].length>0}).length;
+  s+='━━━━━━━━━━━━━━━━━━━━━━\n';
+  s+='TRIP SUMMARY\n';
+  s+=all.length+' stops · '+activeDays+' day'+(activeDays>1?'s':'')+' · ~$'+totalCost+' in tour costs\n\n';
+  if(activeDays>=2){
+    s+='NEED A PLACE TO STAY?\n';
+    s+='The New Hope Bourbon Stop — top-rated rental near Bardstown\n';
+    s+='Book: tidd.ly/4scCPU3\n';
+    s+='Airbnb: airbnb.com/rooms/1133406907482529297\n';
+    s+='VRBO: vrbo.com/affiliate/VD0a4b2\n\n';
+  }
+  s+='Built with mybourbontrailplan.com/trip-builder\n';
+  return s;
+}
+
+function openEmailModal(){
+  var all=Object.values(trip).flat();if(!all.length)return;
+  var itin=buildItineraryText();
+  // Open user's email app with itinerary pre-filled
+  var subject=encodeURIComponent('My Bourbon Trail Itinerary');
+  var body=encodeURIComponent(itin);
+  window.location.href='mailto:?subject='+subject+'&body='+body;
+  // Also copy to clipboard as fallback
+  try{
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(itin).catch(function(){fallbackCopy(itin)});
+    }else{fallbackCopy(itin)}
+  }catch(e){fallbackCopy(itin)}
+  // Show the MailerLite signup modal after a short delay
+  setTimeout(function(){
+    document.getElementById('emailOverlay').classList.add('open');
+  },800);
+}
+function fallbackCopy(text){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.style.cssText='position:fixed;left:-9999px;top:0';
+  document.body.appendChild(ta);ta.focus();ta.select();
+  try{document.execCommand('copy')}catch(e){}
+  document.body.removeChild(ta);
+}
+function closeEmailModal(){document.getElementById('emailOverlay').classList.remove('open')}
+
+function exportTrip(){var itin=buildItineraryText();if(!itin)return;var btn=document.getElementById('exportBtn'),o=btn.textContent;if(navigator.clipboard){navigator.clipboard.writeText(itin).then(function(){btn.textContent='\u2713 Copied!';setTimeout(function(){btn.textContent=o},2500)})}}
+function clearTrip(){if(!confirm('Clear all stops?'))return;for(let d in trip)trip[d]=[];refreshIcons();renderStops();renderBrowseList();updateStats();drawRoutes();updateTripBadge()}
+
+// ONBOARDING / MOBILE
+function dismissOnboard(){document.getElementById('onboard').style.display='none';try{localStorage.setItem('btp-seen','1')}catch(e){}}
+function toggleMobileBrowse(){
+  var bp=document.getElementById('browsePanel');
+  var sb=document.getElementById('sidebar');
+  sb.classList.remove('mobile-open');
+  bp.classList.toggle('mobile-open');
+}
+function toggleMobileTrip(){
+  var bp=document.getElementById('browsePanel');
+  var sb=document.getElementById('sidebar');
+  bp.classList.remove('mobile-open');
+  sb.classList.toggle('mobile-open');
+  if(sb.classList.contains('mobile-open')){
+    setTimeout(function(){map.invalidateSize()},50);
+  }
+}
+function updateTripBadge(){
+  var el=document.getElementById('tripBadge');
+  if(el)el.textContent=Object.values(trip).flat().length;
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  try{if(localStorage.getItem('btp-seen'))document.getElementById('onboard').style.display='none'}catch(e){}
+  initMap();renderBrowseList();renderStops();updateStats();updateTripBadge();
+});
+document.querySelector('.mobile-menu-btn').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('mobile-open')});
+document.getElementById('map').addEventListener('click',()=>{document.getElementById('browsePanel').classList.remove('mobile-open')});
+</script>
+</body>
+</html>
