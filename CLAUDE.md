@@ -7,7 +7,7 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 - **Repo:** github.com/mybourbontrailplan/mybourbontrailplan
 - **Hosting:** Netlify with GitHub auto-deploy on push to `main`
 - **Workflow:** `git pull` → make changes → `git add .` → `git commit -m "message"` → `git push`
-- **No build tools, no framework, no CMS** — every page is a standalone HTML file in a flat folder (no subdirectories)
+- **No build tools, no framework, no CMS** — every page is a standalone HTML file at root level, with an `images/` subfolder for distillery photos
 
 ## Tech Stack
 - Static HTML/CSS/JS
@@ -53,11 +53,14 @@ All named `distillery-{name}.html`. All use the standardized template (white fro
 ### Other
 - `sitemap.xml` — 69 URLs, all using `mybourbontrailplan.com` domain
 - `bourbon-trail-planning-checklist.pdf` — Lead magnet delivered via MailerLite
+- `images/` — Distillery photos, named `{distillery}-1.jpg`, `{distillery}-2.jpg`, etc. All photos are EXIF-rotation-fixed and optimized for web (max 1200px, ~80% JPEG quality)
 
 ## Distillery Profile Template Rules
 When creating or editing distillery profiles:
 - Use an existing profile like `distillery-buffalo-trace.html` as the canonical template reference
 - All profiles MUST have: correct canonical URL (`https://mybourbontrailplan.com/filename.html`), OG tags (og:title, og:description, og:type, og:url), GA script, MailerLite universal script, `-webkit-text-size-adjust: 100%`
+- Photo gallery section goes between "What to Expect" and "Tour Options", using the `.photo-gallery` / `.gallery-grid` classes
+- Photos are referenced as `images/{distillery}-1.jpg` etc. — always use `loading="lazy"` on gallery images
 - Nearby pairing cards must link to real profile pages (never `href="#"`)
 - Restaurant cards link to `eat-and-drink-bourbon-trail.html`
 - Sidebar region guides link to `guides.html`
