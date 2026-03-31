@@ -368,6 +368,16 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
+
+  /* Photo Gallery */
+  .photo-gallery { margin: 32px 0; }
+  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; }
+  .gallery-item img { width: 100%; height: 280px; object-fit: cover; display: block; transition: transform 0.3s; }
+  .gallery-item:hover img { transform: scale(1.03); }
+  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
+  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } .gallery-item img { height: 240px; } }
 </style>
 </head>
 <body>
@@ -446,8 +456,8 @@
       <div class="snap-card">
         <div class="snap-icon">&#127942;</div>
         <div class="snap-label">Our Rating</div>
-        <div class="snap-value">7.8 / 10</div>
-        <div class="snap-note">Worth a stop</div>
+        <div class="snap-value">7.0 / 10</div>
+        <div class="snap-note">Nice add-on</div>
       </div>
       <div class="snap-card">
         <div class="snap-icon">&#128205;</div>
@@ -464,10 +474,32 @@
   <div class="profile-content">
 
     <h2 id="overview">What to Expect</h2>
-    <p>Chicken Cock Whiskey Circa 1856 is one of the newer additions to Bardstown's bourbon scene, and it's a different kind of stop. Housed in a big yellow house on the southeast corner of Stephen Foster Avenue — directly across the street from the Old Talbott Tavern — it's part micro-distillery, part upscale bar, part retail shop. The vibe is polished and refined, more cocktail lounge than production facility.</p>
-    <p>This is an official Kentucky Bourbon Trail stop, but the experience leans more toward tasting and enjoying cocktails than watching bourbon get made. If you're looking for a deep production tour with fermenters and warehouses, this isn't it. If you're looking for a well-crafted flight of award-winning whiskey in a comfortable setting with good service, Chicken Cock delivers.</p>
-    <p>The brand itself has serious history — Chicken Cock dates back to before Prohibition, and the "Famous Old Brand" tagline is earned. The whiskey lineup includes small-batch bourbon and rye expressions that have won multiple awards. The Bardstown location does small-scale distilling on-site, so you can see production happening, just at a micro scale.</p>
-    <p><strong>The real draw here is the bar.</strong> The cocktail program is excellent, the staff is knowledgeable, and the atmosphere makes it a great spot to start or end a Bardstown bourbon day. They also serve light bites — check the menu for current offerings.</p>
+    <p>Chicken Cock Whiskey Circa 1856 is one of the newer additions to Bardstown's bourbon scene, and it's a different kind of stop. Housed in a charming yellow house on the southeast corner of Stephen Foster Avenue — directly across the street from the Old Talbott Tavern — it's part micro-distillery, part upscale bar, part retail shop. The vibe is polished and refined, more cocktail lounge than production facility.</p>
+    <p>This is an official Kentucky Bourbon Trail stop, but the experience leans more toward tasting and enjoying cocktails than watching bourbon get made. If you're looking for a deep production tour with fermenters and warehouses, this isn't it. <strong>Set your expectations on space, too</strong> — the accessible area is limited to the bar (which is on the smaller side) and two front rooms that make up the gift shop. The historic house itself is cool, but you won't be exploring much of it.</p>
+    <p>The brand has serious history — Chicken Cock dates back to before Prohibition, and the "Famous Old Brand" tagline is earned. The whiskey lineup includes small-batch bourbon and rye expressions that have won multiple awards. The Bardstown location does small-scale distilling on-site, so you can see production happening, just at a micro scale.</p>
+    <p><strong>The real draw here is the bar.</strong> If you're a cocktail person, ask about the <strong>old fashioned flight</strong> — it's a great way to taste their whiskey in a format that goes beyond a standard tasting pour. The staff is knowledgeable and the atmosphere makes it a solid spot to start or end a Bardstown bourbon day. They also serve light bites — check the menu for current offerings.</p>
+
+<div class="photo-gallery">
+<h2>Photos from Our Visit</h2>
+<div class="gallery-grid">
+  <div class="gallery-item">
+    <img src="images/chicken-cock-1.jpg" alt="Chicken Cock Whiskey Circa 1856 entrance sign in Bardstown" loading="lazy">
+    <div class="gallery-caption">The Circa 1856 sign — tasting room, bar, store &amp; distillery</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/chicken-cock-2.jpg" alt="Chicken Cock Whiskey Circa 1856 yellow building exterior on Stephen Foster Ave" loading="lazy">
+    <div class="gallery-caption">The charming yellow house on Stephen Foster Ave</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/chicken-cock-3.jpg" alt="Inside Chicken Cock Circa 1856 tasting room with bottles and leather chairs" loading="lazy">
+    <div class="gallery-caption">The tasting room — leather chairs, bottles, and old-house charm</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/chicken-cock-4.jpg" alt="Chicken Cock Whiskey bar with chandelier and mirrored back bar" loading="lazy">
+    <div class="gallery-caption">The bar — crystal chandelier and mirrored back bar</div>
+  </div>
+</div>
+</div>
 
     <h2 id="tours">Tasting &amp; Experience Options</h2>
 
@@ -517,23 +549,23 @@
     <div class="rating-group">
       <div class="rating-row">
         <span class="rating-label">Tour Quality</span>
-        <div class="rating-bar-bg"><div class="rating-bar" style="width:75%"></div></div>
-        <span class="rating-score">7.5</span>
+        <div class="rating-bar-bg"><div class="rating-bar" style="width:65%"></div></div>
+        <span class="rating-score">6.5</span>
       </div>
       <div class="rating-row">
         <span class="rating-label">Value for Money</span>
-        <div class="rating-bar-bg"><div class="rating-bar" style="width:78%"></div></div>
-        <span class="rating-score">7.8</span>
+        <div class="rating-bar-bg"><div class="rating-bar" style="width:70%"></div></div>
+        <span class="rating-score">7.0</span>
       </div>
       <div class="rating-row">
         <span class="rating-label">Campus &amp; Grounds</span>
-        <div class="rating-bar-bg"><div class="rating-bar" style="width:80%"></div></div>
-        <span class="rating-score">8.0</span>
+        <div class="rating-bar-bg"><div class="rating-bar" style="width:68%"></div></div>
+        <span class="rating-score">6.8</span>
       </div>
       <div class="rating-row">
         <span class="rating-label">Gift Shop</span>
-        <div class="rating-bar-bg"><div class="rating-bar" style="width:76%"></div></div>
-        <span class="rating-score">7.6</span>
+        <div class="rating-bar-bg"><div class="rating-bar" style="width:70%"></div></div>
+        <span class="rating-score">7.0</span>
       </div>
       <div class="rating-row">
         <span class="rating-label">Booking Ease</span>
@@ -542,14 +574,14 @@
       </div>
       <div class="rating-row">
         <span class="rating-label">Crowd Level</span>
-        <div class="rating-bar-bg"><div class="rating-bar" style="width:75%"></div></div>
-        <span class="rating-score">7.5</span>
+        <div class="rating-bar-bg"><div class="rating-bar" style="width:78%"></div></div>
+        <span class="rating-score">7.8</span>
       </div>
     </div>
 
     <div class="verdict-box">
       <h3>The Bottom Line</h3>
-      <p>Chicken Cock Circa 1856 is a solid Bardstown add-on, especially if you appreciate a good cocktail bar as much as a distillery tour. The prime downtown location — right across from Talbott Tavern — makes it easy to work into any Bardstown day. It's not a must-visit if your time is tight and you're prioritizing the big production tours, but if you have an afternoon or evening to fill in Bardstown, the bar experience and guided flights are well worth your time. The whiskey is genuinely good and the setting is a nice change of pace from warehouse tours.</p>
+      <p>Chicken Cock Circa 1856 is a nice add-on if you have time in your Bardstown day, but it shouldn't bump a bigger distillery off your list. The prime downtown location — right across from Talbott Tavern — makes it easy to pop in, and the old fashioned flight is a highlight if you're a cocktail fan. Just know that the space is smaller than you'd expect and the experience is more bar-forward than distillery. If your schedule is tight, prioritize the full-production distilleries first and save Chicken Cock for when you have an afternoon or evening gap to fill.</p>
     </div>
 
     <h2 id="practical">Practical Info</h2>
