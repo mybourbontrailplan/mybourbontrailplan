@@ -354,15 +354,11 @@
   .photo-gallery { margin: 32px 0; }
   .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
   .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
-  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
+  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; }
+  .gallery-item img { width: 100%; height: 280px; object-fit: cover; display: block; transition: transform 0.3s; }
   .gallery-item:hover img { transform: scale(1.03); }
   .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
-  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
-  .gallery-lightbox.active { display: flex; }
-  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
-  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
-  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } .gallery-item img { height: 240px; } }
 </style>
 </head>
 <body>
@@ -411,7 +407,7 @@
       <div class="profile-quick">
         <div class="pq-item">
           <div class="pq-label">Location</div>
-          <div class="pq-value">Central</div>
+          <div class="pq-value">Lawrenceburg</div>
         </div>
         <div class="pq-item">
           <div class="pq-label">Booking</div>
@@ -445,8 +441,8 @@
       <div class="snap-card">
         <div class="snap-icon">&#128205;</div>
         <div class="snap-label">Region</div>
-        <div class="snap-value">Central</div>
-        <div class="snap-note">Central region</div>
+        <div class="snap-value">Lawrenceburg</div>
+        <div class="snap-note">Near Wild Turkey</div>
       </div>
     </div>
   </div>
@@ -560,9 +556,9 @@ Lawrenceburg's location makes Larrikin an easy stop between the Frankfort cluste
         <p>Scenic Lawrenceburg landmark.</p>
       </a>
       <a href="distillery-wild-turkey.html" class="nearby-card">
-        <div class="nearby-card-type">Distillery &bull; 15 min drive</div>
+        <div class="nearby-card-type">Distillery &bull; 2 min drive</div>
         <h4>Wild Turkey Distillery</h4>
-        <p>Hilltop icon overlooking the Kentucky River.</p>
+        <p>Hilltop icon overlooking the Kentucky River. Less than a mile away.</p>
       </a>
       <a href="distillery-woodford-reserve.html" class="nearby-card">
         <div class="nearby-card-type">Distillery &bull; 20 min drive</div>
@@ -594,7 +590,7 @@ Lawrenceburg's location makes Larrikin an easy stop between the Frankfort cluste
         <div class="sidebar-row"><span class="sidebar-row-label">Tour Cost</span><span class="sidebar-row-value">$10–$20</span></div>
         <div class="sidebar-row"><span class="sidebar-row-label">Booking</span><span class="sidebar-row-value">Walk-In</span></div>
         <div class="sidebar-row"><span class="sidebar-row-label">Duration</span><span class="sidebar-row-value">30–45 min</span></div>
-        <div class="sidebar-row"><span class="sidebar-row-label">Region</span><span class="sidebar-row-value">Central</span></div>
+        <div class="sidebar-row"><span class="sidebar-row-label">Region</span><span class="sidebar-row-value">Lawrenceburg</span></div>
         <div class="sidebar-row"><span class="sidebar-row-label">Type</span><span class="sidebar-row-value">Craft</span></div>
         <div class="sidebar-row"><span class="sidebar-row-label">Phone</span><span class="sidebar-row-value"></span></div>
       </div>
@@ -605,7 +601,7 @@ Lawrenceburg's location makes Larrikin an easy stop between the Frankfort cluste
       <div class="sidebar-section">
         <h4>Featured In</h4>
         <a href="3-day-bourbon-trail-itinerary.html" class="sidebar-link">3-Day Itinerary &rarr;</a>
-        <a href="distilleries.html" class="sidebar-link">Central Region Guide &rarr;</a>
+        <a href="distilleries.html" class="sidebar-link">Lexington Region Guide &rarr;</a>
       </div>
       <div class="sidebar-section">
         <h4>Contact</h4>
@@ -636,7 +632,5 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
   });
 });
 </script>
-<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
-<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body>
 </html>
