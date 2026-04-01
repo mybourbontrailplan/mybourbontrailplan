@@ -61,6 +61,10 @@ When creating or editing distillery profiles:
 - All profiles MUST have: correct canonical URL (`https://mybourbontrailplan.com/filename.html`), OG tags (og:title, og:description, og:type, og:url), GA script, MailerLite universal script, `-webkit-text-size-adjust: 100%`
 - Photo gallery section goes between "What to Expect" and "Tour Options", using the `.photo-gallery` / `.gallery-grid` classes
 - Photos are referenced as `images/{distillery}-1.jpg` etc. — always use `loading="lazy"` on gallery images
+- Gallery uses `aspect-ratio: 4/3` with `object-fit: cover` (NOT fixed height) to avoid cropping important content
+- Use `repeat(3, 1fr)` grid for 3 photos, `repeat(2, 1fr)` for 4 photos
+- Lightbox: each gallery page includes a `.gallery-lightbox` div and click-to-expand JS before `</body>` — tap any photo to see it full-screen
+- Distilleries with photos so far: Willett (3), Heaven Hill (3), Chicken Cock (4), Lux Row (4), Larrikin (3), Preservation (3), Four Roses (4), Peerless (3), Wild Turkey (4), Maker's Mark (4), Old Forester (4), Buffalo Trace (4)
 - Nearby pairing cards must link to real profile pages (never `href="#"`)
 - Restaurant cards link to `eat-and-drink-bourbon-trail.html`
 - Sidebar region guides link to `guides.html`
@@ -140,3 +144,5 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 - Visitor stat: "Record 2.7 million annual visitors and growing" (use as evergreen)
 - Budget guide uses per-person pricing
 - Three Boys Farm Distillery is now Whiskey Thief Distilling Co.
+- **Chicken Cock rating lowered to 7.0** (from 7.8) — bar is smaller than expected, accessible area limited to bar + two front gift shop rooms. Old fashioned flight is a highlight worth mentioning.
+- **Heaven's to Betsy Bakery** added to eat-and-drink page (On the Road section) and Wild Turkey nearby cards — Lawrenceburg, outstanding Reuben sandwich

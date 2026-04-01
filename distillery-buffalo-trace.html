@@ -369,6 +369,20 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
+
+  /* Photo Gallery */
+  .photo-gallery { margin: 32px 0; }
+  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
+  .gallery-item:hover img { transform: scale(1.03); }
+  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
+  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
+  .gallery-lightbox.active { display: flex; }
+  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
+  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -469,6 +483,28 @@
     <p>Buffalo Trace is the distillery everyone wants to visit — and for good reason. The campus is enormous and beautiful, sitting on the Kentucky River in Frankfort. It's been continuously operating since 1775 (making it the oldest continuously operating distillery in America, a claim they're proud of), and the place feels like it. Stone warehouses, copper stills, century-old buildings — there's a weight and history here that the newer distilleries can't replicate.</p>
     <p>But here's the thing most people don't realize until they arrive: <strong>the experience is entirely free</strong>. Every tour, every tasting, no charge. That alone makes it one of the best values on the entire trail. The tradeoff is that it's also the hardest booking to get, especially for the Hard Hat Tour.</p>
     <p>Plan to spend at least 2 hours here, even if your tour is only 60–90 minutes. The grounds are worth walking, the gift shop is extensive (and sometimes has allocated bottles — more on that below), and there's a peaceful quality to the riverside campus that rewards slowing down.</p>
+
+<div class="photo-gallery">
+<h2>Photos from Our Visit</h2>
+<div class="gallery-grid">
+  <div class="gallery-item">
+    <img src="images/buffalo-trace-1.jpg" alt="Buffalo Trace Distillery water tower with buffalo logo above historic buildings" loading="lazy">
+    <div class="gallery-caption">The iconic water tower — visible from across the campus</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/buffalo-trace-2.jpg" alt="Buffalo Trace fermentation room with massive 93,000 gallon mash fermenters" loading="lazy">
+    <div class="gallery-caption">Mash fermenters — 93,000 gallons each, and they run around the clock</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/buffalo-trace-3.jpg" alt="Buffalo Trace copper High Wine and Low Wine stills with buffalo figurines" loading="lazy">
+    <div class="gallery-caption">The copper stills — buffalo figurines on top of the High Wine and Low Wine</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/buffalo-trace-4.jpg" alt="Inside a Buffalo Trace rick house with barrels lining both sides and light at the end" loading="lazy">
+    <div class="gallery-caption">Inside the rick house — barrels aging on weathered wood floors</div>
+  </div>
+</div>
+</div>
 
     <h2 id="tours">Tour Options</h2>
     <p>Buffalo Trace offers several tour options. Here's the honest breakdown on which ones are worth your time:</p>
@@ -692,5 +728,7 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
   });
 });
 </script>
+<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
+<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body>
 </html>
