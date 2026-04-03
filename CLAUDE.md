@@ -64,7 +64,7 @@ When creating or editing distillery profiles:
 - Gallery uses `aspect-ratio: 4/3` with `object-fit: cover` (NOT fixed height) to avoid cropping important content
 - Use `repeat(3, 1fr)` grid for 3 photos, `repeat(2, 1fr)` for 4 photos
 - Lightbox: each gallery page includes a `.gallery-lightbox` div and click-to-expand JS before `</body>` — tap any photo to see it full-screen
-- Distilleries with photos so far: Willett (3), Heaven Hill (3), Chicken Cock (4), Lux Row (4), Larrikin (3), Preservation (3), Four Roses (4), Peerless (3), Wild Turkey (4), Maker's Mark (4), Old Forester (4), Buffalo Trace (4)
+- Distilleries with photos so far: Willett (3), Heaven Hill (3), Chicken Cock (4), Lux Row (4), Larrikin (3), Preservation (3), Four Roses (4), Peerless (3), Wild Turkey (4), Maker's Mark (4), Old Forester (4), Buffalo Trace (4), Stitzel-Weller (4), Buzzard's Roost (3)
 - Nearby pairing cards must link to real profile pages (never `href="#"`)
 - Restaurant cards link to `eat-and-drink-bourbon-trail.html`
 - Sidebar region guides link to `guides.html`

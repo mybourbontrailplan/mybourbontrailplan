@@ -216,6 +216,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 {id:"michters",name:"Michter's Fort Nelson",lat:38.2546,lng:-85.7633,region:"Louisville",type:"Major",cost:"$25–$50",costAvg:35,booking:"Moderate",profile:"distillery-michters.html",desc:"Premium small-batch. Bar 8314 upstairs is world-class.",rating:8.6,bookWeeks:"2–3 weeks"},
 {id:"peerless",name:"Kentucky Peerless",lat:38.2580,lng:-85.7633,region:"Louisville",type:"Craft",cost:"$15–$35",costAvg:20,booking:"Easy",profile:"distillery-peerless.html",desc:"Grain-to-glass craft. Award-winning rye whiskey.",rating:8.2,bookWeeks:"Walk-up"},
 {id:"whiskey-thief",name:"Whiskey Thief",lat:38.2530,lng:-85.7340,region:"Louisville",type:"Craft",cost:"$15–$25",costAvg:18,booking:"Easy",profile:"distillery-whiskey-thief.html",desc:"Craft distillery with grain-to-glass approach.",rating:7.5,bookWeeks:"Walk-up"},
+{id:"buzzards-roost",name:"Buzzard's Roost",lat:38.2570,lng:-85.7630,region:"Louisville",type:"Craft",cost:"$15–$100",costAvg:32,booking:"Easy",profile:"distillery-buzzards-roost.html",desc:"Woman-led craft distillery on Whiskey Row. Double-oaked secondary maturation, great bar vibe.",rating:7.5,bookWeeks:"Walk-up"},
 {id:"buffalo-trace",name:"Buffalo Trace",lat:38.2112,lng:-84.8735,region:"Frankfort",type:"Major",cost:"Free",costAvg:0,booking:"Hard",profile:"distillery-buffalo-trace.html",desc:"Most iconic distillery on the trail. Pappy, Blanton's, Eagle Rare.",rating:9.2,bookWeeks:"6–8 weeks"},
 {id:"castle-key",name:"Castle & Key",lat:38.2090,lng:-84.8690,region:"Frankfort",type:"Craft",cost:"$15–$40",costAvg:22,booking:"Easy",profile:"distillery-castle-key.html",desc:"Beautifully restored historic site. Outstanding cocktail bar.",rating:8.3,bookWeeks:"1 week"},
 {id:"woodford-reserve",name:"Woodford Reserve",lat:38.0740,lng:-84.7398,region:"Lexington",type:"Major",cost:"$20–$80",costAvg:35,booking:"Moderate",profile:"distillery-woodford-reserve.html",desc:"Horse country campus. Most photogenic distillery on the trail.",rating:8.5,bookWeeks:"2–3 weeks"},
@@ -291,7 +292,10 @@ const pairings=[
 {a:"mb-roland",b:"casey-jones",tip:"MB Roland and Casey Jones make a Western KY craft day.",type:"good"},
 {a:"green-river",b:"bh-james",tip:"Green River and B.H. James are both in the Owensboro area.",type:"good"},
 {a:"bulleit",b:"jeptha-creed",tip:"Bulleit and Jeptha Creed are both in Shelbyville — 15 min apart.",type:"good"},
-{a:"chicken-cock",b:"the-bard",tip:"Chicken Cock and The Bard are a 3-min walk in downtown Bardstown.",type:"good"}
+{a:"chicken-cock",b:"the-bard",tip:"Chicken Cock and The Bard are a 3-min walk in downtown Bardstown.",type:"good"},
+{a:"buzzards-roost",b:"evan-williams",tip:"Buzzard's Roost and Evan Williams are a 5-min walk on Whiskey Row.",type:"good"},
+{a:"buzzards-roost",b:"old-forester",tip:"Buzzard's Roost and Old Forester are neighbors on Whiskey Row — easy pair.",type:"good"},
+{a:"buzzards-roost",b:"michters",tip:"Buzzard's Roost and Michter's are a 3-min walk on Whiskey Row.",type:"good"}
 ];
 const BW={"buffalo-trace":"Buffalo Trace books out 6–8 weeks ahead. Book first.","angels-envy":"Angel's Envy sells out weekends. Book 4–6 weeks ahead.","makers-mark":"Maker's Mark hand-dip books out. Reserve 4–6 weeks ahead."};
 function getTips(ds){const t=[],ids=ds.map(s=>s.id);pairings.forEach(p=>{if(ids.includes(p.a)&&ids.includes(p.b))t.push({text:p.tip,type:p.type})});if(ds.length>=4)t.push({text:"4+ stops is ambitious with tastings. Consider moving one.",type:"warn"});if(ds.length>=5)t.push({text:"5 stops will be exhausting. Trim this day.",type:"warn"});ds.forEach(s=>{if(BW[s.id])t.push({text:BW[s.id],type:"info"})});const rr=[...new Set(ds.map(s=>grp(s.region)))];if(rr.length>=3&&ds.length>=3)t.push({text:"Covering "+rr.length+" regions — lots of driving. Group by region.",type:"warn"});return t}
