@@ -30,7 +30,7 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 ### Core Pages (9)
 - `index.html` — Homepage
 - `3-day-bourbon-trail-itinerary.html` — Flagship SEO page with 2/3/4-day trip selector
-- `distilleries.html` — Directory with 55 filterable cards (region, type, booking) + sort by rating/A-Z
+- `distilleries.html` — Directory with 56 filterable cards (region, type, booking) + sort by rating/A-Z
 - `map.html` — Static interactive map with 56+ distilleries
 - `trip-builder.html` — Interactive trip builder (see Trip Builder section below)
 - `bourbon-trail-booking-guide.html` — 10-step booking checklist
@@ -46,12 +46,13 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 ### Blog Posts
 - `best-time-to-visit-bourbon-trail.html` — Month-by-month seasonal guide
 - `bourbon-trail-non-bourbon-drinkers.html` — Guide for non-bourbon-drinking partners
+- `louisville-whiskey-row-walking-guide.html` — Louisville Whiskey Row self-guided walking tour
 
 ### Distillery Profiles (56 total)
 All named `distillery-{name}.html`. All use the standardized template (white frosted nav, snapshot cards, tour card headers, rating bars, verdict box, sidebar with quick details). Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdict, nearby pairings with links, GA tracking, mobile menu, MailerLite universal script, OG tags, correct canonical URL.
 
 ### Other
-- `sitemap.xml` — 69 URLs, all using `mybourbontrailplan.com` domain
+- `sitemap.xml` — 70 URLs, all using `mybourbontrailplan.com` domain
 - `bourbon-trail-planning-checklist.pdf` — Lead magnet delivered via MailerLite
 - `images/` — Distillery photos, named `{distillery}-1.jpg`, `{distillery}-2.jpg`, etc. All photos are EXIF-rotation-fixed and optimized for web (max 1200px, ~80% JPEG quality)
 
@@ -73,7 +74,7 @@ When creating or editing distillery profiles:
 ## Trip Builder — Critical Technical Notes
 
 ### Architecture
-- 55 distilleries with Leaflet.js markers, region filters, smart pairing tips
+- 56 distilleries with Leaflet.js markers, region filters, smart pairing tips
 - Markers are added to the map ONCE and never removed from the DOM
 - Visibility is controlled via `setOpacity(1/0)` and `pointerEvents` toggling
 - **NEVER use `marker.addTo(map)` / `marker.removeFrom(map)` for showing/hiding** — this destroys DOM elements and breaks click handlers after repeated interactions
@@ -128,6 +129,9 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 - Signup forms on: homepage, trip builder, itinerary page, booking guide
 - 3-email nurture sequence active (Day 3: top distilleries, Day 6: where to stay featuring Kyle's property, Day 10: booking mistakes)
 - Lead magnet: PDF checklist delivered via welcome automation
+
+## Google Drive Artifact Files
+The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-cock (1).html`, `guides (1).html`). These are Google Drive sync duplicates — identical to the originals, not separate pages. Also `.tmp.driveupload/` folder accumulates Google Drive temp files. Neither should be edited or referenced; they can be cleaned up by deleting them, but they're harmless if left in place.
 
 ## Known Gotchas
 - **Notepad++ Find in Files** was previously used for batch changes — with Claude Code, this is no longer needed. Just describe the batch change and Claude Code will handle it.
