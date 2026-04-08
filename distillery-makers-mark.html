@@ -128,20 +128,6 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
-
-  /* Photo Gallery */
-  .photo-gallery { margin: 32px 0; }
-  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
-  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
-  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
-  .gallery-item:hover img { transform: scale(1.03); }
-  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
-  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
-  .gallery-lightbox.active { display: flex; }
-  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
-  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
-  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -175,28 +161,6 @@
 <p>Maker's Mark is one of those rare places that lives up to the hype. The campus is a National Historic Landmark set on a quiet stretch of Hardin's Creek in Loretto — about an hour south of Louisville and 25 minutes from Bardstown. Black and red buildings against rolling green hills, limestone creek running through the property, and an unhurried pace that feels intentional.</p>
 <p>What sets Maker's Mark apart from other big-name distilleries is the <strong>hand-dipping experience</strong>. You can dip your own bottle in Maker's signature red wax, label it, and take it home. It's genuinely fun and makes for a great souvenir or gift. This is the experience that sells out — the standard tour usually has more availability.</p>
 <p>Plan to spend at least 90 minutes here, longer if you do the hand-dip. The grounds are beautiful for walking, the gift shop is well-stocked, and there's a relaxed quality to the campus that rewards slowing down. Don't rush this one.</p>
-
-<div class="photo-gallery">
-<h2>Photos from Our Visit</h2>
-<div class="gallery-grid">
-  <div class="gallery-item">
-    <img src="images/makers-mark-1.jpg" alt="Maker's Mark Distillery red sign and iron-gated entrance doors" loading="lazy">
-    <div class="gallery-caption">The iconic red and gold entrance — Star Hill Farm</div>
-  </div>
-  <div class="gallery-item">
-    <img src="images/makers-mark-2.jpg" alt="Maker's Mark campus grounds with brick walkway and black buildings with red shutters" loading="lazy">
-    <div class="gallery-caption">The campus grounds — black buildings, red shutters, and winding paths</div>
-  </div>
-  <div class="gallery-item">
-    <img src="images/makers-mark-3.jpg" alt="Chihuly glass ceiling installation inside Maker's Mark Distillery" loading="lazy">
-    <div class="gallery-caption">The Chihuly glass ceiling — an unexpected showstopper</div>
-  </div>
-  <div class="gallery-item">
-    <img src="images/makers-mark-4.jpg" alt="Maker's Mark limestone cellar with aging barrels and pendant lights" loading="lazy">
-    <div class="gallery-caption">The limestone cellar — barrels aging in natural Kentucky rock</div>
-  </div>
-</div>
-</div>
 
 <h2>Tour Options</h2>
 
@@ -367,6 +331,4 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
   });
 });
 </script>
-<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
-<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body></html>

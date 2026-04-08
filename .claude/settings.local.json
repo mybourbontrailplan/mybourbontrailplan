@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.woodfordreserve.com)",
+      "WebFetch(domain:www.wildturkeybourbon.com)",
+      "WebFetch(domain:www.newriffdistilling.com)",
+      "WebFetch(domain:kybourbontrail.com)",
+      "WebFetch(domain:whiskeythief.com)"
+    ]
+  }
+}

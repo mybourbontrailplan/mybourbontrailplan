@@ -128,20 +128,6 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
-
-  /* Photo Gallery */
-  .photo-gallery { margin: 32px 0; }
-  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
-  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
-  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
-  .gallery-item:hover img { transform: scale(1.03); }
-  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
-  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
-  .gallery-lightbox.active { display: flex; }
-  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
-  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
-  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -175,24 +161,6 @@
 <p>Kentucky Peerless is a few blocks north of Whiskey Row and worth the short walk. The Corley family revived the Peerless name (originally distilling in the 1880s) and built a genuine grain-to-glass operation — meaning they control every step from sourcing grain to bottling. No sourced whiskey here.</p>
 <p>The rye whiskey is the star. Peerless Rye has won multiple awards and developed a serious following among whiskey enthusiasts. The bourbon is also excellent — bold, full-flavored, and non-chill-filtered. Everything is bottled at barrel proof, which means you're getting the whiskey exactly as it comes out of the barrel.</p>
 <p>Tours are smaller and more personal than the big Whiskey Row operations. You're likely to meet family members or long-time employees who genuinely care about the product. The tasting at the end is generous and educational.</p>
-
-<div class="photo-gallery">
-<h2>Photos from Our Visit</h2>
-<div class="gallery-grid">
-  <div class="gallery-item">
-    <img src="images/peerless-1.jpg" alt="Kentucky Peerless Distilling Company brick exterior with DSP-KY-50 sign" loading="lazy">
-    <div class="gallery-caption">The historic brick building — DSP-KY-50 since the 1880s</div>
-  </div>
-  <div class="gallery-item">
-    <img src="images/peerless-2.jpg" alt="Kentucky Peerless lounge with leather seating, exposed beams, and bottle displays" loading="lazy">
-    <div class="gallery-caption">The lounge — industrial chic with exposed beams and Barcelona chairs</div>
-  </div>
-  <div class="gallery-item">
-    <img src="images/peerless-3.jpg" alt="Full Peerless bourbon and rye lineup on vintage tin-pressed bar" loading="lazy">
-    <div class="gallery-caption">The full lineup on the vintage tin bar — all barrel proof</div>
-  </div>
-</div>
-</div>
 
 <h2>Tour Options</h2>
 
@@ -344,6 +312,4 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
   });
 });
 </script>
-<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
-<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body></html>

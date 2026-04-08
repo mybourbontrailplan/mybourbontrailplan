@@ -25,7 +25,7 @@
   "name": "Wild Turkey Distillery",
   "description": "Lawrenceburg distillery perched on Kentucky River bluffs, home to Wild Turkey and Russell's Reserve bourbons.",
   "address": { "@type": "PostalAddress", "streetAddress": "1525 Tyrone Rd", "addressLocality": "Lawrenceburg", "addressRegion": "KY" },
-  "geo": { "@type": "GeoCoordinates", "latitude": 38.035, "longitude": -84.837 },
+  "geo": { "@type": "GeoCoordinates", "latitude": 38.054, "longitude": -84.799 },
   "openingHours": "Tu-Sa 09:00-17:00, Su 12:00-16:00",
   "isAccessibleForFree": false,
   "url": "https://www.wildturkeybourbon.com/visit-us"
@@ -128,20 +128,6 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
-
-  /* Photo Gallery */
-  .photo-gallery { margin: 32px 0; }
-  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
-  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
-  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
-  .gallery-item:hover img { transform: scale(1.03); }
-  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
-  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
-  .gallery-lightbox.active { display: flex; }
-  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
-  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
-  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -160,7 +146,7 @@
 <div class="profile-quick">
 <div class="pq-item"><div class="pq-label">Location</div><div class="pq-value">Lawrenceburg, KY</div></div>
 <div class="pq-item"><div class="pq-label">Booking</div><div class="pq-value" style="color:var(--warning)">Moderate</div></div>
-<div class="pq-item"><div class="pq-label">Tours</div><div class="pq-value">$25–$65</div></div>
+<div class="pq-item"><div class="pq-label">Tours</div><div class="pq-value">$15–$45</div></div>
 </div></div>
 <div class="snapshot">
 <div class="snap-card"><div class="snap-icon">&#128197;</div><div class="snap-label">Book Ahead</div><div class="snap-value">2–3 Weeks</div></div>
@@ -177,28 +163,6 @@
 <p>The bourbon itself is bold and unapologetic — higher proof than most competitors, with a rich, spicy profile. If you like your bourbon with backbone, Wild Turkey delivers.</p>
 <p><strong>Don't skip the bar.</strong> Wild Turkey's on-site bar is one of the best-kept secrets on the trail. Even if you're not doing a full tour, you can stop in for a tasting flight or cocktail with those Kentucky River views. It's a great spot to relax between stops.</p>
 
-<div class="photo-gallery">
-<h2>Photos from Our Visit</h2>
-<div class="gallery-grid">
-  <div class="gallery-item">
-    <img src="images/wild-turkey-1.jpg" alt="Wild Turkey Distilling Co. black exterior with turkey mural" loading="lazy">
-    <div class="gallery-caption">The striking black visitor center with the iconic turkey mural</div>
-  </div>
-  <div class="gallery-item">
-    <img src="images/wild-turkey-2.jpg" alt="Wild Turkey slatted wood and metal hallway with vanishing perspective" loading="lazy">
-    <div class="gallery-caption">The slatted hallway — one of the coolest walkways on the trail</div>
-  </div>
-  <div class="gallery-item">
-    <img src="images/wild-turkey-3.jpg" alt="Wild Turkey Longbranch bottle wall display with backlit shelves" loading="lazy">
-    <div class="gallery-caption">The Longbranch bottle wall — backlit and impressive</div>
-  </div>
-  <div class="gallery-item">
-    <img src="images/wild-turkey-4.jpg" alt="Wild Turkey outdoor patio with covered pavilion and stone fireplace" loading="lazy">
-    <div class="gallery-caption">The outdoor patio — stone fireplace and Kentucky River views</div>
-  </div>
-</div>
-</div>
-
 <h2>Tour Options</h2>
 
     <div class="tour-card">
@@ -209,7 +173,7 @@
       <div class="tour-card-body">
         <p>Standard tour through the production facility with Kentucky River views. Covers the full process and ends with a tasting of the core lineup. Well-run and informative.</p>
         <div class="tour-meta">
-          <div class="tour-meta-item">&#128176; <strong>$25</strong></div>
+          <div class="tour-meta-item">&#128176; <strong>$15</strong></div>
           <div class="tour-meta-item">&#9201; <strong>60 min</strong></div>
           <div class="tour-meta-item">&#128197; Book <strong>1–2 weeks ahead</strong></div>
         </div>
@@ -223,7 +187,7 @@
       <div class="tour-card-body">
         <p>A deeper dive focused on the Russell's Reserve premium lineup. Smaller groups, more in-depth tasting, and a chance to explore the nuances of their barrel selection process. Worth the upgrade.</p>
         <div class="tour-meta">
-          <div class="tour-meta-item">&#128176; <strong>$65</strong></div>
+          <div class="tour-meta-item">&#128176; <strong>$35–$45</strong></div>
           <div class="tour-meta-item">&#9201; <strong>75–90 min</strong></div>
           <div class="tour-meta-item">&#128197; Book <strong>2–3 weeks ahead</strong></div>
         </div>
@@ -254,7 +218,7 @@
           </div>
           <div class="booking-detail">
             <div class="booking-detail-label">Best Experience</div>
-            <div class="booking-detail-value">Russell's Reserve ($65)</div>
+            <div class="booking-detail-value">Russell's Reserve ($35–$45)</div>
           </div>
           <div class="booking-detail">
             <div class="booking-detail-label">Cancellation</div>
@@ -323,20 +287,10 @@
         <h4>Castle & Key Distillery</h4>
         <p>Stunning restored pre-Prohibition grounds.</p>
       </a>
-      <a href="distillery-larrikin.html" class="nearby-card">
-        <div class="nearby-card-type">Distillery &bull; 2 min</div>
-        <h4>Larrikin Bourbon Co.</h4>
-        <p>Veteran-owned craft distillery with Australian flair.</p>
-      </a>
       <a href="eat-and-drink-bourbon-trail.html" class="nearby-card">
         <div class="nearby-card-type">Restaurant &bull; 20 min</div>
         <h4>Wallace Station</h4>
         <p>Famous sandwiches near Woodford Reserve.</p>
-      </a>
-      <a href="eat-and-drink-bourbon-trail.html" class="nearby-card">
-        <div class="nearby-card-type">Restaurant &bull; 5 min</div>
-        <h4>Heaven's to Betsy Bakery</h4>
-        <p>Outstanding Reuben and scratch-made baked goods in Lawrenceburg.</p>
       </a></div>
 
 <div class="tip-box"><div class="tip-box-header">&#128205; Itinerary Fit</div>
@@ -346,7 +300,7 @@
 <aside class="profile-sidebar"><div class="sidebar-card">
 <div class="sidebar-section"><a href="https://www.wildturkeybourbon.com/visit-us" class="sidebar-btn" target="_blank" rel="noopener">Book a Tour &rarr;</a></div>
 <div class="sidebar-section"><h4>Quick Details</h4>
-<div class="sidebar-row"><span class="sidebar-row-label">Tour Cost</span><span class="sidebar-row-value">$25–$65</span></div>
+<div class="sidebar-row"><span class="sidebar-row-label">Tour Cost</span><span class="sidebar-row-value">$15–$45</span></div>
 <div class="sidebar-row"><span class="sidebar-row-label">Booking</span><span class="sidebar-row-value" style="color:var(--warning)">2–3 Weeks</span></div>
 <div class="sidebar-row"><span class="sidebar-row-label">Duration</span><span class="sidebar-row-value">60–90 min</span></div>
 <div class="sidebar-row"><span class="sidebar-row-label">Region</span><span class="sidebar-row-value">Lexington / Lawrenceburg</span></div>
@@ -374,6 +328,4 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
   });
 });
 </script>
-<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
-<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body></html>
