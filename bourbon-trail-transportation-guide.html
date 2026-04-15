@@ -30,10 +30,10 @@
     "headline": "Bourbon Trail Transportation Guide — How to Get Around Kentucky's Distilleries",
     "description": "A comprehensive, honest guide to every transportation option for the Kentucky Bourbon Trail, including self-driving, private tours, rideshare, and region-by-region tips.",
     "url": "https://mybourbontrailplan.com/bourbon-trail-transportation-guide.html",
-    "publisher": {
-        "@type": "Organization",
-        "name": "My Bourbon Trail Plan"
-    }
+    "author": {"@type": "Organization", "name": "Bourbon Trail Planner"},
+    "publisher": {"@type": "Organization", "name": "Bourbon Trail Planner"},
+    "datePublished": "2026-04-15",
+    "dateModified": "2026-04-15"
 }
 </script>
 
@@ -44,172 +44,60 @@
 
 <style>
     :root {
-        --primary: #1B4F72;
-        --primary-light: #2980B9;
-        --primary-dark: #0E2F44;
-        --accent: #D4A03C;
-        --accent-light: #F0D78C;
-        --font-display: 'Fraunces', serif;
-        --font-body: 'DM Sans', sans-serif;
-        --text: #1a1a1a;
-        --text-secondary: #555;
-        --text-light: #777;
-        --border: #e0e0e0;
-        --bg-subtle: #f8f8f8;
+        --primary: #1B4F72; --primary-light: #2980B9; --primary-dark: #0E2F44;
+        --accent: #D4A03C; --accent-light: #F0D78C;
+        --bg: #FFFFFF; --bg-subtle: #F7F9FC;
+        --text: #1A1A2E; --text-secondary: #5A6178; --text-light: #8B92A8;
+        --border: #E4E8F0;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+        --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+        --radius: 12px;
+        --font-display: 'Fraunces', Georgia, serif;
+        --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        --max-width: 1200px;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    html {
-        -webkit-text-size-adjust: 100%;
-        scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
     body {
         font-family: var(--font-body);
         color: var(--text);
         line-height: 1.7;
-        background: #fff;
+        background: var(--bg);
+        -webkit-font-smoothing: antialiased;
     }
 
-    /* ========== NAV ========== */
-    .nav {
-        background: rgba(255,255,255,0.97);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--border);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        padding: 0 24px;
-    }
-    .nav-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        height: 64px;
-    }
-    .nav-logo {
-        font-family: var(--font-display);
-        font-weight: 700;
-        font-size: 1.2rem;
-        color: var(--primary);
-        text-decoration: none;
-    }
-    .nav-logo span { color: var(--accent); }
-    .nav-links {
-        display: flex;
-        gap: 28px;
-        list-style: none;
-    }
-    .nav-links a {
-        font-size: 0.92rem;
-        font-weight: 500;
-        color: var(--text-secondary);
-        text-decoration: none;
-        transition: color 0.2s;
-    }
+    /* NAV */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+    nav.scrolled { box-shadow: var(--shadow-sm); }
+    .nav-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-dark); }
+    .logo-icon { width: 36px; height: 36px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-display); }
+    .logo-text { font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: -0.3px; }
+    .logo-text span { color: var(--accent); }
+    .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 14.5px; font-weight: 500; transition: color 0.2s; }
     .nav-links a:hover { color: var(--primary); }
-    .nav-links .cta-link {
-        background: var(--primary);
-        color: #fff;
-        padding: 8px 18px;
-        border-radius: 8px;
-        font-weight: 600;
+    .nav-cta { background: var(--primary); color: white !important; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+    .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; color: var(--text); }
+    @media (max-width: 640px) {
+        .nav-links { display: none; }
+        .mobile-menu-btn { display: block; }
     }
-    .nav-links .cta-link:hover { background: var(--primary-dark); color: #fff; }
+    .nav-links.mobile-open { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: white; padding: 16px 24px 24px; border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); gap: 4px; z-index: 99; }
+    .nav-links.mobile-open li { width: 100%; }
+    .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
+    .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
 
-    /* Mobile hamburger */
-    .hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        z-index: 1001;
-        padding: 4px;
-    }
-    .hamburger span {
-        display: block;
-        width: 24px;
-        height: 2.5px;
-        background: var(--primary);
-        border-radius: 2px;
-        transition: 0.3s;
-    }
-
-    @media (max-width: 900px) {
-        .hamburger { display: flex; }
-        .nav-links {
-            display: none;
-            position: absolute;
-            top: 64px;
-            left: 0;
-            right: 0;
-            background: #fff;
-            flex-direction: column;
-            padding: 16px 24px 24px;
-            gap: 0;
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            z-index: 1100;
-        }
-        .nav-links.active { display: flex; }
-        .nav-links li { padding: 12px 0; border-bottom: 1px solid #f0f0f0; }
-        .nav-links li:last-child { border-bottom: none; }
-        .nav-links .cta-link {
-            display: inline-block;
-            margin-top: 8px;
-            text-align: center;
-        }
-    }
-
-    /* ========== HERO ========== */
-    .hero {
-        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-        color: #fff;
-        padding: 80px 24px 72px;
-        text-align: center;
-    }
-    .hero-inner {
-        max-width: 800px;
-        margin: 0 auto;
-    }
-    .hero-badge {
-        display: inline-block;
-        background: rgba(212, 160, 60, 0.2);
-        color: var(--accent-light);
-        font-size: 0.82rem;
-        font-weight: 600;
-        padding: 6px 16px;
-        border-radius: 20px;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        margin-bottom: 20px;
-    }
-    .hero h1 {
-        font-family: var(--font-display);
-        font-size: 2.6rem;
-        font-weight: 800;
-        line-height: 1.15;
-        margin-bottom: 16px;
-    }
-    .hero p {
-        font-size: 1.12rem;
-        opacity: 0.9;
-        max-width: 620px;
-        margin: 0 auto;
-        line-height: 1.6;
-    }
-
-    @media (max-width: 600px) {
-        .hero { padding: 56px 20px 48px; }
-        .hero h1 { font-size: 1.8rem; }
-        .hero p { font-size: 1rem; }
-    }
+    /* ARTICLE HERO */
+    .article-hero { padding: 120px 24px 48px; background: linear-gradient(168deg, var(--bg) 0%, var(--bg-subtle) 100%); }
+    .article-hero-inner { max-width: 780px; margin: 0 auto; }
+    .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-light); margin-bottom: 24px; }
+    .breadcrumb a { color: var(--primary-light); text-decoration: none; }
+    .article-hero h1 { font-family: var(--font-display); font-size: clamp(32px, 4.5vw, 48px); font-weight: 700; line-height: 1.15; color: var(--primary-dark); letter-spacing: -0.5px; margin-bottom: 16px; }
+    .article-hero .subtitle { font-size: 18px; color: var(--text-secondary); line-height: 1.65; max-width: 650px; }
 
     /* ========== CONTENT LAYOUT ========== */
     .content-wrapper {
@@ -500,7 +388,7 @@
         text-align: center;
         font-size: 0.85rem;
     }
-    .footer a { color: var(--accent-light); text-decoration: none; }
+    .footer a { color: var(--accent); text-decoration: none; }
     .footer a:hover { text-decoration: underline; }
     .footer-links {
         display: flex;
@@ -514,29 +402,38 @@
 <body>
 
     <!-- NAV -->
-    <nav class="nav">
+    <nav id="nav">
         <div class="nav-inner">
-            <a href="index.html" class="nav-logo">My Bourbon Trail <span>Plan</span></a>
-            <button class="hamburger" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('active')">
-                <span></span><span></span><span></span>
-            </button>
+            <a href="index.html" class="logo">
+                <div class="logo-icon">B</div>
+                <div class="logo-text">Bourbon Trail<span>Planner</span></div>
+            </a>
             <ul class="nav-links">
-                <li><a href="3-day-bourbon-trail-itinerary.html">Itineraries</a></li>
+                <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>
                 <li><a href="distilleries.html">Distilleries</a></li>
                 <li><a href="where-to-stay-bourbon-trail.html">Where to Stay</a></li>
                 <li><a href="eat-and-drink-bourbon-trail.html">Eat &amp; Drink</a></li>
                 <li><a href="guides.html">Guides</a></li>
-                <li><a href="trip-builder.html" class="cta-link">Trip Builder</a></li>
+                <li><a href="bourbon-trail-booking-guide.html" class="nav-cta">Booking Guide</a></li>
             </ul>
+            <button class="mobile-menu-btn" aria-label="Menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+            </button>
         </div>
     </nav>
 
     <!-- HERO -->
-    <section class="hero">
-        <div class="hero-inner">
-            <div class="hero-badge">Planning Guide</div>
-            <h1>How to Get Around the Kentucky Bourbon Trail</h1>
-            <p>Every transportation option compared honestly — from self-driving and rideshare to private tours and shuttle services — with costs, trade-offs, and region-by-region tips.</p>
+    <section class="article-hero">
+        <div class="article-hero-inner">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span>›</span>
+                <a href="guides.html">Guides</a>
+                <span>›</span>
+                <span>Transportation Guide</span>
+            </div>
+            <h1>Bourbon Trail Transportation Guide</h1>
+            <p class="subtitle">Every option compared honestly — from self-driving and rideshare to private tours and shuttle services — with costs, trade-offs, and region-by-region tips for getting around Kentucky safely.</p>
         </div>
     </section>
 
@@ -862,5 +759,15 @@
         <p>&copy; 2025 My Bourbon Trail Plan. All rights reserved. | <a href="about.html">Affiliate Disclosure</a></p>
     </footer>
 
+
+<script>
+  const navEl = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    navEl.classList.toggle('scrolled', window.scrollY > 10);
+  });
+  document.querySelector('.mobile-menu-btn').addEventListener('click', () => {
+    document.querySelector('.nav-links').classList.toggle('mobile-open');
+  });
+</script>
 </body>
 </html>
