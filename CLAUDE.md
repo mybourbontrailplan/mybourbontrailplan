@@ -30,7 +30,7 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 ### Core Pages (9)
 - `index.html` — Homepage
 - `3-day-bourbon-trail-itinerary.html` — Flagship SEO page with 2/3/4-day trip selector
-- `distilleries.html` — Directory with 56 filterable cards (region, type, booking) + sort by rating/A-Z
+- `distilleries.html` — Directory with 55 filterable cards (region, type, booking) + sort by rating/A-Z
 - `map.html` — Static interactive map with 56+ distilleries
 - `trip-builder.html` — Interactive trip builder (see Trip Builder section below)
 - `bourbon-trail-booking-guide.html` — 10-step booking checklist
@@ -43,12 +43,13 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 - `about.html` — Monetization disclosure, JS email rendering
 - `contact.html` — JS email rendering
 
-### Blog Posts
+### Blog Posts / Guides
 - `best-time-to-visit-bourbon-trail.html` — Month-by-month seasonal guide
 - `bourbon-trail-non-bourbon-drinkers.html` — Guide for non-bourbon-drinking partners
 - `louisville-whiskey-row-walking-guide.html` — Louisville Whiskey Row self-guided walking tour
+- `bourbon-trail-transportation-guide.html` — How to get around: DIY driving, guided tours, designated driver strategies
 
-### Distillery Profiles (56 total)
+### Distillery Profiles (55 total)
 All named `distillery-{name}.html`. All use the standardized template (white frosted nav, snapshot cards, tour card headers, rating bars, verdict box, sidebar with quick details). Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdict, nearby pairings with links, GA tracking, mobile menu, MailerLite universal script, OG tags, correct canonical URL.
 
 ### Other
@@ -148,5 +149,6 @@ The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-co
 - Visitor stat: "Record 2.7 million annual visitors and growing" (use as evergreen)
 - Budget guide uses per-person pricing
 - Three Boys Farm Distillery is now Whiskey Thief Distilling Co.
-- **Chicken Cock rating lowered to 7.0** (from 7.8) — bar is smaller than expected, accessible area limited to bar + two front gift shop rooms. Old fashioned flight is a highlight worth mentioning.
+- **Chicken Cock rating is 7.0** — bar is smaller than expected, accessible area limited to bar + two front gift shop rooms. Old fashioned flight is a highlight worth mentioning.
 - **Heaven's to Betsy Bakery** added to eat-and-drink page (On the Road section) and Wild Turkey nearby cards — Lawrenceburg, outstanding Reuben sandwich
+- **Becker & Bird Distillery** (file: `distillery-baker-bird.html`) — the distillery's official KBT name is Becker & Bird; the winery on the same property is called Baker-Bird. File name stays as-is for URL continuity.

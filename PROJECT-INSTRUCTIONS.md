@@ -61,16 +61,18 @@ All pages have been audited and optimized:
 - contact.html — JS email rendering.
 - sitemap.xml — XML sitemap with all 56 distillery profiles + core pages + blog posts (69 URLs total)
 
-### Blog Posts (2)
+### Blog Posts / Guides (4)
 - best-time-to-visit-bourbon-trail.html — Month-by-month seasonal guide covering weather, crowds, warehouse temperatures, bourbon releases. Targets "best time to visit bourbon trail" keywords.
 - bourbon-trail-non-bourbon-drinkers.html — Guide for couples where one partner doesn't drink bourbon. Recommends Castle & Key (gin), Copper & Kings (brandy), Michter's (cocktails), Chicken Cock (bar). Includes sample 3-day couples itinerary.
+- louisville-whiskey-row-walking-guide.html — Self-guided walking tour of Louisville's Whiskey Row distilleries and tasting rooms.
+- bourbon-trail-transportation-guide.html — How to get around: DIY driving routes, guided tour options, designated driver strategies, and why you shouldn't count on Uber outside Louisville.
 
 ### Distillery Profiles (56 total)
 Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdict, nearby pairings with links, GA tracking, mobile menu, MailerLite universal script, OG tags, correct canonical URL. **ALL profiles now use the standardized "good" template** (white frosted nav, snapshot cards, tour card headers, rating bars, verdict box, sidebar with quick details). **All href="#" placeholder links have been fixed** — distillery nearby cards link to real profiles, restaurant cards link to eat-and-drink page, sidebar region guides link to guides.html.
 
 **Louisville (9):** Angel's Envy (8.8), Old Forester (8.9), Evan Williams (8.7), Rabbit Hole (7.9), Michter's (8.6), Kentucky Peerless (8.2), Whiskey Thief (7.5), Copper & Kings (8.3), Stitzel-Weller (8.6)
 
-**Bardstown (11):** Maker's Mark (9.0), Heaven Hill (8.5), Willett (8.2), Bardstown Bourbon Co. (8.5), Lux Row (8.0), Preservation (7.5), Log Still (7.8), Barton 1792 (7.6 — NO LONGER OFFERING TOURS, gift shop only), Jim Beam (8.4), The Bard (7.4), Chicken Cock Whiskey (7.8 — Circa 1856 bar/tasting room/micro-distillery, 103 E Stephen Foster Ave, books via Resy)
+**Bardstown (11):** Maker's Mark (9.0), Heaven Hill (8.5), Willett (8.2), Bardstown Bourbon Co. (8.5), Lux Row (8.0), Preservation (7.5), Log Still (7.8), Barton 1792 (7.6 — NO LONGER OFFERING TOURS, gift shop only), Jim Beam (8.4), The Bard (7.4), Chicken Cock Whiskey (7.0 — Circa 1856 bar/tasting room/micro-distillery, 103 E Stephen Foster Ave, books via Resy; bar smaller than expected, old fashioned flight highlight)
 
 **Frankfort (4):** Buffalo Trace (9.2), Castle & Key (8.3), Glenns Creek (7.6), J. Mattingly 1845 (7.9)
 
@@ -82,7 +84,7 @@ Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdi
 
 **Western (8):** Wilderness Trail (8.3), Green River (8.1), Casey Jones (7.5), MB Roland (7.4), Dueling Grounds (7.3), B.H. James (7.2), Golden Pond (7.1), Jackson Purchase (7.3)
 
-**Other (3):** Limestone Branch (7.9), Boundary Oak (7.3)
+**Other (2):** Limestone Branch (7.9), Boundary Oak (7.3)
 
 ### Lead Magnet
 - bourbon-trail-planning-checklist.pdf — 3-page PDF: booking timeline, schedule, packing list, budget worksheet. Hosted on Netlify at mybourbontrailplan.com/bourbon-trail-planning-checklist.pdf. Delivered via MailerLite welcome automation.
@@ -182,8 +184,8 @@ The clipboard export now includes: day-by-day stops with region/cost/booking inf
 
 Three-panel layout on desktop. Mobile-optimized with floating Browse/Your Trip buttons. Differentiates from KDA's tool: no account needed, opinionated ratings, smart tips, cost tracking.
 
-### Current State (Rollout 2 Complete + Mobile Optimization + Chicken Cock)
-The trip builder contains **55 distilleries** across 8 regions: Louisville (9), Bardstown (11), Frankfort (4), Lexington (9), Central (4), Northern (7), Western (7), Other (4). All 55 have profile page links.
+### Current State
+The trip builder contains **55 distilleries** across 8 regions: Louisville (9), Bardstown (11), Frankfort (4), Lexington (8), Central (5), Northern (8), Western (8), Other (2). All 55 have profile page links.
 
 ### Mobile Experience (Updated March 2026)
 - **Breakpoint:** 900px (not 768px — needed for iPhone Pro models)
@@ -427,7 +429,7 @@ All 236 href="#" placeholder links fixed across all distillery profiles: 207 nea
 - **Backlink building:** Share guides in bourbon subreddits/Facebook groups, reach out to distilleries about linking to their profile pages
 - **Google Business Profile:** Set up for New Hope Bourbon Stop property with link to site
 - **Upcoming blog post ideas:** Buffalo Trace gift shop guide (allocated bottles), Bourbon Trail packing list, bourbon trail with kids, bourbon trail in winter, best free tours on the bourbon trail
-- Satellite tasting room profiles (Bardstown Bourbon Co. Louisville, Monk's Road Louisville) — lower priority
+- Satellite tasting room profiles (Bardstown Bourbon Co. Louisville) — lower priority; Monk's Road Boiler House (Log Still's Louisville Whiskey Row location) now mentioned in Log Still's profile
 - Heaven's Door Distillery (Pleasureville) — watch for opening
 - Approach lodging properties for direct sponsorship once traffic demonstrates click volume
 
