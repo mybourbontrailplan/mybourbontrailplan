@@ -78,7 +78,7 @@ Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdi
 
 **Central (5):** Bulleit (8.0), Jeptha Creed (8.0), Kentucky Artisan (8.0), Bluegrass Distillers (7.7), Larrikin (7.3)
 
-**Northern (8):** New Riff (8.4), Boone County (7.8), Second Sight (7.5), Neeley Family (7.2), Old Pogue (7.4), Hartfield & Co. (7.6), Wenzel (7.3), Baker-Bird (7.5)
+**Northern (8):** New Riff (8.4), Boone County (7.8), Second Sight (7.5), Neeley Family (7.2), Old Pogue (7.4), Hartfield & Co. (7.6), Wenzel (7.3), Becker & Bird (7.5)
 
 **Western (8):** Wilderness Trail (8.3), Green River (8.1), Casey Jones (7.5), MB Roland (7.4), Dueling Grounds (7.3), B.H. James (7.2), Golden Pond (7.1), Jackson Purchase (7.3)
 
