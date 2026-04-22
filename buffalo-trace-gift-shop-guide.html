@@ -246,6 +246,18 @@
     .footer a { color: var(--accent); text-decoration: none; }
     .footer a:hover { text-decoration: underline; }
     .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 16px; }
+  .photo-gallery { margin: 32px 0; }
+  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
+  .gallery-item:hover img { transform: scale(1.03); }
+  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
+  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
+  .gallery-lightbox.active { display: flex; }
+  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
+  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -291,6 +303,28 @@
     <div class="callout tip">
       <div class="callout-title">Bottom Line Up Front</div>
       <p>Standard bottles like Buffalo Trace bourbon, Weller Special Reserve, Traveller Whiskey, and Sazerac Rye are available daily. Allocated bottles — Blanton's, Weller Antique 107, Eagle Rare, E.H. Taylor Small Batch — rotate and vary. Buffalo Trace now posts each day's allocated availability on their website each morning, so you can check before you go. The gift shop does not hold bottles or take requests.</p>
+    </div>
+
+    <div class="photo-gallery">
+    <h2>Photos from the Distillery</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="images/buffalo-trace-6.jpeg" alt="Buffalo Trace brick warehouse exterior with water tower against blue sky" loading="lazy">
+        <div class="gallery-caption">The distillery campus — century-old brick warehouses continuously operating since 1775</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/buffalo-trace-9.jpeg" alt="Buffalo Trace historic fermentation room with O.F.C. Whiskey portrait murals and yeast tub" loading="lazy">
+        <div class="gallery-caption">The heritage room — O.F.C. Whiskey murals and the original yeast tub from the 1800s</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/buffalo-trace-10.jpeg" alt="Buffalo Trace distillery campus overview with steam rising from production buildings" loading="lazy">
+        <div class="gallery-caption">Steam rising from production — a distillery that runs around the clock</div>
+      </div>
+      <div class="gallery-item">
+        <img src="images/buffalo-trace-11.jpeg" alt="Buffalo Trace workers on the bottling line hand-labeling and packaging bottles" loading="lazy">
+        <div class="gallery-caption">The bottling line — workers hand-finishing every bottle before it leaves the distillery</div>
+      </div>
+    </div>
     </div>
 
     <h2>What's Always in Stock</h2>
@@ -573,6 +607,7 @@
     document.querySelector('.nav-links').classList.toggle('mobile-open');
   });
 </script>
-
+<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
+<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body>
 </html>

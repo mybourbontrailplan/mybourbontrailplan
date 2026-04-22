@@ -128,6 +128,18 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
+  .photo-gallery { margin: 32px 0; }
+  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
+  .gallery-item:hover img { transform: scale(1.03); }
+  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
+  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
+  .gallery-lightbox.active { display: flex; }
+  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
+  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -161,6 +173,20 @@
 <p>Michter's Fort Nelson Distillery sits at the western end of Whiskey Row in a beautifully restored 19th-century building. The brand has a fascinating history — claiming roots back to 1753, making it one of America's oldest whiskey companies. Whether or not you buy the full lineage, the whiskey speaks for itself. Michter's small-batch approach and refusal to cut corners has earned them a devoted following among serious bourbon drinkers.</p>
 <p>The real gem here is <strong>Bar 8314</strong>, the upstairs cocktail bar. Named after Michter's permit number, it's staffed by some of Louisville's best bartenders serving expertly crafted cocktails using Michter's spirits. The drinks are exceptional and the space is gorgeous — exposed brick, warm lighting, and a vibe that feels elevated without being pretentious. Even if you skip the tour, come here for a cocktail.</p>
 <p>The production tour is solid — smaller scale than Old Forester or Angel's Envy, which gives it a more intimate feel. You'll learn about their commitment to traditional methods including barrel toasting before charring, and why they produce in smaller batches than most competitors.</p>
+
+<div class="photo-gallery">
+<h2>Photos from Our Visit</h2>
+<div class="gallery-grid">
+  <div class="gallery-item">
+    <img src="images/michters-1.jpeg" alt="Michter's Fort Nelson Distillery historic building exterior on Whiskey Row in Louisville" loading="lazy">
+    <div class="gallery-caption">Fort Nelson — the beautifully restored 19th-century building on Whiskey Row</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/michters-2.jpeg" alt="Bar 8314 at Michter's with back-lit shelves displaying rows of Michter's bottles" loading="lazy">
+    <div class="gallery-caption">Bar 8314 — named after Michter's permit number, one of Whiskey Row's best cocktail bars</div>
+  </div>
+</div>
+</div>
 
 <h2>Tour Options</h2>
 
@@ -312,4 +338,6 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
   });
 });
 </script>
+<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
+<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body></html>
