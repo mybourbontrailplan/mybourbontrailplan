@@ -275,6 +275,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 {id:"old-pogue",name:"Old Pogue Distillery",lat:38.5440,lng:-84.1410,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-old-pogue.html",desc:"Maysville heritage brand. Civil War-era recipe revived.",rating:7.4,bookWeeks:"Walk-up"},
 {id:"hartfield",name:"Hartfield & Co.",lat:38.5050,lng:-84.2980,region:"Northern",type:"Craft",cost:"$10–$15",costAvg:10,booking:"Easy",profile:"distillery-hartfield.html",desc:"Paris, KY craft distillery. First in Bourbon County since Prohibition.",rating:7.6,bookWeeks:"Walk-up"},
 {id:"wenzel",name:"Wenzel Whiskey",lat:38.9840,lng:-84.6490,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-wenzel.html",desc:"Small-batch Northern KY craft whiskey. Pair with New Riff.",rating:7.3,bookWeeks:"Walk-up"},
+{id:"augusta",name:"Augusta Distillery",lat:38.7731,lng:-83.9968,region:"Northern",type:"Craft",cost:"$29–$99",costAvg:29,booking:"Moderate",profile:"distillery-augusta.html",desc:"Award-winning Buckner's bourbon — Best Bourbon at 2023 SF World Spirits. River Proof Barrel Experience is a trail highlight.",rating:8.1,bookWeeks:"2–3 wks"},
 {id:"baker-bird",name:"Becker & Bird Distillery",lat:38.6360,lng:-83.7740,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-baker-bird.html",desc:"Historic Augusta winery and distillery combo on the Ohio River.",rating:7.5,bookWeeks:"Walk-up"},
 {id:"green-river",name:"Green River Distilling",lat:37.7740,lng:-87.1130,region:"Western",type:"Major",cost:"$10–$25",costAvg:15,booking:"Easy",profile:"distillery-green-river.html",desc:"One of Kentucky's oldest brands reborn in Owensboro.",rating:8.1,bookWeeks:"Walk-up"},
 {id:"casey-jones",name:"Casey Jones Distillery",lat:36.7920,lng:-86.5760,region:"Western",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-casey-jones.html",desc:"Moonshine heritage near Tennessee border. Good Nashville day trip add-on.",rating:7.5,bookWeeks:"Walk-up"},
@@ -292,6 +293,7 @@ const RG={Louisville:'Louisville',Bardstown:'Bardstown',Loretto:'Bardstown',Cler
 function grp(r){return RG[r]||'Other'}
 
 const pairings=[
+{a:"augusta",b:"baker-bird",tip:"Augusta Distillery and Becker & Bird are both in Augusta, KY — easy same-day pairing in this charming Ohio River town.",type:"good"},
 {a:"buffalo-trace",b:"castle-key",tip:"Buffalo Trace and Castle & Key are 10 min apart — perfect Frankfort pairing.",type:"good"},
 {a:"old-forester",b:"evan-williams",tip:"Old Forester and Evan Williams are a 2-min walk on Whiskey Row.",type:"good"},
 {a:"buzzards-roost",b:"evan-williams",tip:"Buzzard's Roost and Evan Williams are a 2-min walk apart on Whiskey Row.",type:"good"},
