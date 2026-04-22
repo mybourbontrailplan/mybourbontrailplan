@@ -30,7 +30,7 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 ### Core Pages (9)
 - `index.html` — Homepage
 - `3-day-bourbon-trail-itinerary.html` — Flagship SEO page with 2/3/4-day trip selector
-- `distilleries.html` — Directory with 55 filterable cards (region, type, booking) + sort by rating/A-Z
+- `distilleries.html` — Directory with 56 filterable cards (region, type, booking) + sort by rating/A-Z
 - `map.html` — Static interactive map with 56+ distilleries
 - `trip-builder.html` — Interactive trip builder (see Trip Builder section below)
 - `bourbon-trail-booking-guide.html` — 10-step booking checklist
@@ -49,11 +49,11 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 - `louisville-whiskey-row-walking-guide.html` — Louisville Whiskey Row self-guided walking tour
 - `bourbon-trail-transportation-guide.html` — How to get around: DIY driving, guided tours, designated driver strategies
 
-### Distillery Profiles (55 total)
+### Distillery Profiles (56 total)
 All named `distillery-{name}.html`. All use the standardized template (white frosted nav, snapshot cards, tour card headers, rating bars, verdict box, sidebar with quick details). Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdict, nearby pairings with links, GA tracking, mobile menu, MailerLite universal script, OG tags, correct canonical URL.
 
 ### Other
-- `sitemap.xml` — 70 URLs, all using `mybourbontrailplan.com` domain
+- `sitemap.xml` — 71 URLs, all using `mybourbontrailplan.com` domain
 - `bourbon-trail-planning-checklist.pdf` — Lead magnet delivered via MailerLite
 - `images/` — Distillery photos, named `{distillery}-1.jpg`, `{distillery}-2.jpg`, etc. All photos are EXIF-rotation-fixed and optimized for web (max 1200px, ~80% JPEG quality)
 
@@ -75,7 +75,7 @@ When creating or editing distillery profiles:
 ## Trip Builder — Critical Technical Notes
 
 ### Architecture
-- 56 distilleries with Leaflet.js markers, region filters, smart pairing tips
+- 57 distilleries with Leaflet.js markers, region filters, smart pairing tips
 - Markers are added to the map ONCE and never removed from the DOM
 - Visibility is controlled via `setOpacity(1/0)` and `pointerEvents` toggling
 - **NEVER use `marker.addTo(map)` / `marker.removeFrom(map)` for showing/hiding** — this destroys DOM elements and breaks click handlers after repeated interactions
@@ -152,3 +152,4 @@ The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-co
 - **Chicken Cock rating is 7.0** — bar is smaller than expected, accessible area limited to bar + two front gift shop rooms. Old fashioned flight is a highlight worth mentioning.
 - **Heaven's to Betsy Bakery** added to eat-and-drink page (On the Road section) and Wild Turkey nearby cards — Lawrenceburg, outstanding Reuben sandwich
 - **Becker & Bird Distillery** (file: `distillery-baker-bird.html`) — the distillery's official KBT name is Becker & Bird; the winery on the same property is called Baker-Bird. File name stays as-is for URL continuity.
+- **Augusta Distillery** (file: `distillery-augusta.html`) — separate from Becker & Bird, also in Augusta, KY at 207 Seminary Ave. Produces Buckner's bourbon (Best Bourbon at 2023 SFWSC). Wed–Sat 11–5 only. Rating 8.1. River Proof Barrel Experience ($29) is their signature tour. Trip builder pin: lat 38.7731, lng -83.9968. Smart pairing: Augusta + Becker & Bird (5-min walk).

@@ -47,9 +47,9 @@ All pages have been audited and optimized:
 ### Core Pages (9)
 - index.html — Homepage with hero, feature cards (custom SVG icons), popular guides, MailerLite email CTA. Gold "Build Your Trip" button links to trip-builder.html.
 - 3-day-bourbon-trail-itinerary.html — Flagship SEO page. 2/3/4-day trip selector with collapsible day cards. Packing section includes portable fan for summer. MailerLite signup form before footer. Lodging cards link to Kyle's Airbnb (Booking.com affiliate + Airbnb + VRBO affiliate) and Talbott Tavern (affiliate). Transportation section includes WhiskMe Transportation, Mint Julep Experiences, and Louisville Bourbon Tours.
-- distilleries.html — Directory with 55 filterable cards (region, type, booking) + sort by rating or A-Z. "Other Regions" filter included.
+- distilleries.html — Directory with 56 filterable cards (region, type, booking) + sort by rating or A-Z. "Other Regions" filter included.
 - map.html — Static interactive map with 56+ distilleries, region filters, 3 driving routes (older page)
-- trip-builder.html — Interactive trip builder with 55 distilleries (see detailed section below)
+- trip-builder.html — Interactive trip builder with 56 distilleries (see detailed section below)
 - bourbon-trail-booking-guide.html — Step-by-step booking strategy, 10-step checklist. MailerLite signup form before footer. Transportation section mentions WhiskMe and Mint Julep.
 - bourbon-trail-budget-guide.html — Per-person cost breakdown for budget and premium trips
 - where-to-stay-bourbon-trail.html — Lodging guide with Booking.com affiliate links on ALL 10 named properties + VRBO affiliate on Kyle's property
@@ -59,7 +59,7 @@ All pages have been audited and optimized:
 - eat-and-drink-bourbon-trail.html — Restaurant/bar guide by region. Includes Evergreen Liquors (Bardstown), La Bodeguita de Mima (Louisville NuLu). No day numbers in headers.
 - about.html — Monetization disclosure. JS email rendering.
 - contact.html — JS email rendering.
-- sitemap.xml — XML sitemap with all 56 distillery profiles + core pages + blog posts (69 URLs total)
+- sitemap.xml — XML sitemap with all 56 distillery profiles + core pages + blog posts (71 URLs total)
 
 ### Blog Posts / Guides (4)
 - best-time-to-visit-bourbon-trail.html — Month-by-month seasonal guide covering weather, crowds, warehouse temperatures, bourbon releases. Targets "best time to visit bourbon trail" keywords.
@@ -80,7 +80,7 @@ Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdi
 
 **Central (5):** Bulleit (8.0), Jeptha Creed (8.0), Kentucky Artisan (8.0), Bluegrass Distillers (7.7), Larrikin (7.3)
 
-**Northern (8):** New Riff (8.4), Boone County (7.8), Second Sight (7.5), Neeley Family (7.2), Old Pogue (7.4), Hartfield & Co. (7.6), Wenzel (7.3), Becker & Bird (7.5)
+**Northern (9):** New Riff (8.4), Boone County (7.8), Second Sight (7.5), Neeley Family (7.2), Old Pogue (7.4), Hartfield & Co. (7.6), Wenzel (7.3), Augusta Distillery (8.1), Becker & Bird (7.5)
 
 **Western (8):** Wilderness Trail (8.3), Green River (8.1), Casey Jones (7.5), MB Roland (7.4), Dueling Grounds (7.3), B.H. James (7.2), Golden Pond (7.1), Jackson Purchase (7.3)
 
@@ -185,7 +185,7 @@ The clipboard export now includes: day-by-day stops with region/cost/booking inf
 Three-panel layout on desktop. Mobile-optimized with floating Browse/Your Trip buttons. Differentiates from KDA's tool: no account needed, opinionated ratings, smart tips, cost tracking.
 
 ### Current State
-The trip builder contains **55 distilleries** across 8 regions: Louisville (9), Bardstown (11), Frankfort (4), Lexington (8), Central (5), Northern (8), Western (8), Other (2). All 55 have profile page links.
+The trip builder contains **56 distilleries** across 8 regions: Louisville (9), Bardstown (11), Frankfort (4), Lexington (8), Central (5), Northern (9), Western (8), Other (2). All 56 have profile page links.
 
 ### Mobile Experience (Updated March 2026)
 - **Breakpoint:** 900px (not 768px — needed for iPhone Pro models)
@@ -289,7 +289,7 @@ When adding new distilleries, their coordinates MUST be verified against the rea
 - "Email Me This Itinerary" → opens mailto: with itinerary pre-filled + clipboard copy + MailerLite signup modal
 - Onboarding overlay for first-time visitors (localStorage)
 
-### Smart Tip Pairings (21 total):
+### Smart Tip Pairings (22 total):
 - Buffalo Trace + Castle & Key (10 min, Frankfort)
 - Old Forester + Evan Williams (2 min walk, Whiskey Row)
 - Old Forester + Michter's (neighbors, Whiskey Row)
@@ -311,6 +311,7 @@ When adding new distilleries, their coordinates MUST be verified against the rea
 - Green River + B.H. James (Owensboro area)
 - Bulleit + Jeptha Creed (Shelbyville, 15 min)
 - Chicken Cock + The Bard (3-min walk, downtown Bardstown)
+- Augusta Distillery + Becker & Bird (5-min walk, Augusta, KY)
 
 ### Booking Warnings: Buffalo Trace (6-8 wks), Angel's Envy (4-6 wks), Maker's Mark (4-6 wks)
 
@@ -376,6 +377,17 @@ All 30 "bad format" distillery profile pages converted to the "good" Buffalo Tra
 
 ### Dead Link Cleanup (COMPLETED)
 All 236 href="#" placeholder links fixed across all distillery profiles: 207 nearby cards (distillery cards → real profile pages, restaurant cards → eat-and-drink-bourbon-trail.html), 25 sidebar links (region guides → guides.html), plus 4 miscellaneous on core pages.
+
+### New Distillery: Augusta Distillery (Augusta, KY — Northern)
+- Profile page: distillery-augusta.html (8.1 rating, craft)
+- Address: 207 Seminary Ave, Augusta, KY 41002. Hours: Wed–Sat 11 AM–5 PM only.
+- Phone: (888) 592-6872. Website: augustakydistillery.com
+- Key claim: Buckner's 13 won Best Bourbon at 2023 San Francisco World Spirits Competition
+- Signature tour: River Proof Barrel Experience ($29, 60 min) — pop a bung, thief a pour from the barrel
+- Other tours: Production Tour ($29), Rolling on the River with tobacco farmers ($99, 90 min), Private Barrel Selection (up to 10 people, contact for pricing)
+- Bottles: Buckner's 10/13/15/17 yr single barrel; Old Route 8 (best value); River Proof Series 2/4/6 yr (on-site only)
+- Trip builder: lat 38.7731, lng -83.9968. Booking: Moderate (2–3 weeks). Smart pairing: Augusta + Becker & Bird (5-min walk)
+- Added to distilleries.html (56 cards), trip-builder.html (56 distilleries), sitemap.xml (71 URLs)
 
 ### New Distillery: Chicken Cock Whiskey Circa 1856 (Bardstown)
 - Profile page: distillery-chicken-cock.html (7.8 rating, bar/tasting room/micro-distillery)
