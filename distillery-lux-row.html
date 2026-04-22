@@ -128,6 +128,18 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
+  .photo-gallery { margin: 32px 0; }
+  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
+  .gallery-item:hover img { transform: scale(1.03); }
+  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
+  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
+  .gallery-lightbox.active { display: flex; }
+  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
+  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -161,6 +173,28 @@
 <p>Lux Row is one of the newer facilities on the trail, and the modern design shows — clean lines, well-organized visitor center, and a polished tasting room. It doesn't have the historic charm of Maker's Mark or the sprawling grounds of Jim Beam, but it makes up for it with <strong>solid bourbon and a well-run tasting experience</strong>.</p>
 <p>The portfolio is broader than most visitors expect: <strong>Ezra Brooks</strong> (their workhorse bourbon), <strong>Rebel</strong> (wheated bourbon), <strong>Blood Oath</strong> (a cult-favorite finished bourbon series that generates serious collector interest), and <strong>Penelope Bourbon</strong> — one of the fastest-growing bourbon brands in the country, known for their blended straight bourbons and innovative four-grain recipes. Penelope has built a huge following and seeing where it's made adds real context to the brand.</p>
 <p>Lux Row works well as a complement to the bigger Bardstown stops. It's easy to book, rarely crowded, and takes about an hour — making it a perfect fit in the gaps between Heaven Hill and Maker's Mark.</p>
+
+<div class="photo-gallery">
+<h2>Photos from Our Visit</h2>
+<div class="gallery-grid">
+  <div class="gallery-item">
+    <img src="images/lux-row-1.jpg" alt="Lux Row Distillers exterior with modern architecture and hydrangeas" loading="lazy">
+    <div class="gallery-caption">The modern Lux Row facility — one of the newer builds on the trail</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/lux-row-2.jpg" alt="Lux Row bottle display wall featuring Rebel, Ezra Brooks, and Blood Oath" loading="lazy">
+    <div class="gallery-caption">The full lineup — Rebel, Ezra Brooks, Blood Oath, and Penelope</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/lux-row-3.jpg" alt="Lux Row Distillers Family Owned and Operated still plate" loading="lazy">
+    <div class="gallery-caption">The still — "Family Owned and Operated" since day one</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/lux-row-4.jpg" alt="Lux Row rick house with branded barrels stacked floor to ceiling" loading="lazy">
+    <div class="gallery-caption">Looking up in the rick house — barrels as far as you can see</div>
+  </div>
+</div>
+</div>
 
 <h2>Tour Options</h2>
 
@@ -311,4 +345,6 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
   });
 });
 </script>
+<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
+<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body></html>

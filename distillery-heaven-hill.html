@@ -128,6 +128,18 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
+  .photo-gallery { margin: 32px 0; }
+  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
+  .gallery-item:hover img { transform: scale(1.03); }
+  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
+  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
+  .gallery-lightbox.active { display: flex; }
+  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
+  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
@@ -161,6 +173,24 @@
 <p>Heaven Hill's Bardstown visitor center is one of the newer facilities on the trail, and it shows. The design is clean and modern, the experiences are well-structured, and the tasting options are some of the most educational available anywhere.</p>
 <p>What makes Heaven Hill special is the <strong>"You Do Bourbon" tasting</strong>. Instead of just sipping finished products, you taste through different grains, mashbills, and aging profiles to understand how bourbon gets its flavor. It's the best "learn while you drink" experience on the trail — you'll leave understanding bourbon in a way that most tours don't teach.</p>
 <p>The gift shop is also a standout. Heaven Hill produces an enormous portfolio (Evan Williams, Elijah Craig, Larceny, Henry McKenna, Rittenhouse Rye) and the visitor center often has distillery-exclusive bottles and single barrel picks that don't hit retail shelves.</p>
+
+<div class="photo-gallery">
+<h2>Photos from Our Visit</h2>
+<div class="gallery-grid">
+  <div class="gallery-item">
+    <img src="images/heaven-hill-1.jpg" alt="Heaven Hill Bourbon Experience exterior with vintage truck and visitor center" loading="lazy">
+    <div class="gallery-caption">The visitor center entrance with Heaven Hill's vintage truck</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/heaven-hill-3.jpg" alt="Inside Five Brothers Bar and Kitchen at Heaven Hill with guests at the bar" loading="lazy">
+    <div class="gallery-caption">Five Brothers Bar &amp; Kitchen — a great spot after your tasting</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/heaven-hill-2.jpg" alt="Five Brothers Bar and Kitchen bourbon bottle display at Heaven Hill" loading="lazy">
+    <div class="gallery-caption">The Five Brothers Bar &amp; Kitchen bottle lineup</div>
+  </div>
+</div>
+</div>
 
 <h2>Tour Options</h2>
 
@@ -327,4 +357,6 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
   });
 });
 </script>
+<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
+<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body></html>
