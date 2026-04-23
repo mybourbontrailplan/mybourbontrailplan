@@ -290,7 +290,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 {id:"boundary-oak",name:"Boundary Oak Distillery",lat:37.8210,lng:-85.9010,region:"Other",type:"Craft",cost:"$8–$30",costAvg:15,booking:"Easy",profile:"distillery-boundary-oak.html",desc:"Family-owned near Fort Knox. Military-themed bourbons, natural spring.",rating:7.3,bookWeeks:"Walk-up"}
 ];
 
-const RD={Louisville:{lat:38.257,lng:-85.755,zoom:14},Bardstown:{lat:37.81,lng:-85.47,zoom:14},Frankfort:{lat:38.210,lng:-84.871,zoom:14},Lexington:{lat:38.035,lng:-84.76,zoom:11},Central:{lat:38.05,lng:-85.15,zoom:10},Northern:{lat:38.85,lng:-84.55,zoom:9},Western:{lat:37.2,lng:-87.2,zoom:8}};
+const RD={Louisville:{lat:38.257,lng:-85.755,zoom:14},Bardstown:{lat:37.81,lng:-85.47,zoom:14},Frankfort:{lat:38.210,lng:-84.871,zoom:14},Lexington:{lat:38.035,lng:-84.76,zoom:11},Central:{lat:38.05,lng:-85.15,zoom:10},Northern:{lat:38.85,lng:-84.55,zoom:10},Western:{lat:37.2,lng:-87.2,zoom:10}};
 const RG={Louisville:'Louisville',Bardstown:'Bardstown',Loretto:'Bardstown',Clermont:'Bardstown',Frankfort:'Frankfort',Versailles:'Lexington',Lawrenceburg:'Lexington',Lexington:'Lexington',Newport:'Other',Danville:'Other',Shelbyville:'Central',Crestwood:'Central',Independence:'Northern',Ludlow:'Northern',Sparta:'Northern',Maysville:'Northern',Paris:'Northern',Burlington:'Northern',Augusta:'Northern',Owensboro:'Western',Hopkinsville:'Western',Pembroke:'Western',Franklin:'Western',Whitesville:'Western',Eddyville:'Western',Murray:'Western',Lebanon:'Other',Radcliff:'Other',Midway:'Lexington',Central:'Central',Northern:'Northern',Western:'Western'};
 function grp(r){return RG[r]||'Other'}
 
@@ -363,7 +363,8 @@ function handleZoom(){
     if(tripIds.has(d.id)||show){_addPin(d.id)}else{_removePin(d.id)}
   });
   document.getElementById('backBtn').style.display=z>=10?'block':'none';
-  map.getContainer().classList.toggle('show-labels',z>=(window.innerWidth>=900?11:12));
+  var labelZoom=aRF&&aRF!=='all'?10:12;
+  map.getContainer().classList.toggle('show-labels',z>=labelZoom);
 }
 
 function zoomToRegion(n){const r=RD[n];if(!r)return;map.flyTo([r.lat,r.lng],r.zoom,{duration:.5});filterRegion(n,document.querySelector('.region-pill[data-region="'+n+'"]'))}
@@ -405,7 +406,7 @@ function renderBrowseList(){
   list.innerHTML=f.map(d=>{const a=inT(d.id);return '<div class="browse-item" onclick="highlightOnMap(\''+d.id+'\')"><div class="browse-dot '+d.booking.toLowerCase()+'"></div><div class="browse-item-info"><div class="browse-item-name">'+d.name+'</div><div class="browse-item-meta">'+d.region+' &middot; '+d.cost+' &middot; '+d.bookWeeks+'</div></div><div class="browse-item-rating">'+d.rating+'</div><button class="browse-add-btn '+(a?'added':'')+'" onclick="event.stopPropagation();'+(a?'':'addStop(\''+d.id+'\')')+'" '+(a?'disabled':'')+'>'+(a?'&#10003;':'+')+'</button></div>'}).join('');
 }
 function filterList(){renderBrowseList()}
-function filterRegion(r,el){aRF=r;document.querySelectorAll('.region-pill').forEach(p=>p.classList.remove('active'));if(el)el.classList.add('active');renderBrowseList()}
+function filterRegion(r,el){aRF=r;document.querySelectorAll('.region-pill').forEach(p=>p.classList.remove('active'));if(el)el.classList.add('active');renderBrowseList();handleZoom()}
 function highlightOnMap(id){const d=D.find(x=>x.id===id);if(!d)return;window._hlTarget=id;map.flyTo([d.lat,d.lng],16,{duration:.4});setTimeout(()=>{if(window._hlTarget===id)openPopup(d)},500);document.getElementById('browsePanel').classList.remove('mobile-open');document.getElementById('sidebar').classList.remove('mobile-open')}
 
 // TRIP
