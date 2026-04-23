@@ -290,7 +290,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 {id:"boundary-oak",name:"Boundary Oak Distillery",lat:37.8210,lng:-85.9010,region:"Other",type:"Craft",cost:"$8–$30",costAvg:15,booking:"Easy",profile:"distillery-boundary-oak.html",desc:"Family-owned near Fort Knox. Military-themed bourbons, natural spring.",rating:7.3,bookWeeks:"Walk-up"}
 ];
 
-const RD={Louisville:{lat:38.257,lng:-85.755,zoom:14},Bardstown:{lat:37.81,lng:-85.47,zoom:14},Frankfort:{lat:38.210,lng:-84.871,zoom:14},Lexington:{lat:38.035,lng:-84.76,zoom:11},Central:{lat:38.05,lng:-85.15,zoom:10},Northern:{lat:38.85,lng:-84.55,zoom:10},Western:{lat:37.13,lng:-87.24,zoom:10}};
+const RD={Louisville:{lat:38.257,lng:-85.755,zoom:14},Bardstown:{lat:37.81,lng:-85.47,zoom:14},Frankfort:{lat:38.210,lng:-84.871,zoom:14},Lexington:{lat:38.035,lng:-84.76,zoom:11},Central:{lat:38.05,lng:-85.15,zoom:10},Northern:{lat:38.85,lng:-84.55,zoom:10},Western:{lat:37.13,lng:-87.59,zoom:8}};
 const RG={Louisville:'Louisville',Bardstown:'Bardstown',Loretto:'Bardstown',Clermont:'Bardstown',Frankfort:'Frankfort',Versailles:'Lexington',Lawrenceburg:'Lexington',Lexington:'Lexington',Newport:'Other',Danville:'Other',Shelbyville:'Central',Crestwood:'Central',Independence:'Northern',Ludlow:'Northern',Sparta:'Northern',Maysville:'Northern',Paris:'Northern',Burlington:'Northern',Augusta:'Northern',Owensboro:'Western',Hopkinsville:'Western',Pembroke:'Western',Franklin:'Western',Whitesville:'Western',Eddyville:'Western',Murray:'Western',Lebanon:'Other',Radcliff:'Other',Midway:'Lexington',Central:'Central',Northern:'Northern',Western:'Western'};
 function grp(r){return RG[r]||'Other'}
 
@@ -332,10 +332,15 @@ function initMap(){
   L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19}).addTo(map);
 
   // Region cards
+  const isMobile=window.innerWidth<900;
   Object.entries(RD).forEach(([n,r])=>{
     const cnt=D.filter(d=>grp(d.region)===n).length;
-    const ic=L.divIcon({className:'',html:'<div class="region-overlay" onclick="event.stopPropagation();zoomToRegion(\''+n+'\')"><div class="region-overlay-name">'+n+'</div><div class="region-overlay-count">'+cnt+' distilleries</div></div>',iconSize:[130,56],iconAnchor:[65,28]});
-    const m=L.marker([r.lat,r.lng],{icon:ic,interactive:false,zIndexOffset:1000}).addTo(map);
+    // Western is off-screen on mobile at the initial zoom-8 overview; slide button to visible position
+    const mLat=n==='Western'&&isMobile?37.3:r.lat;
+    const mLng=n==='Western'&&isMobile?-86.2:r.lng;
+    const anchor=n==='Western'&&isMobile?[0,28]:[65,28];
+    const ic=L.divIcon({className:'',html:'<div class="region-overlay" onclick="event.stopPropagation();zoomToRegion(\''+n+'\')"><div class="region-overlay-name">'+n+'</div><div class="region-overlay-count">'+cnt+' distilleries</div></div>',iconSize:[130,56],iconAnchor:anchor});
+    const m=L.marker([mLat,mLng],{icon:ic,interactive:false,zIndexOffset:1000}).addTo(map);
     m._isRC=true;regMk.push(m);
   });
 
@@ -356,7 +361,7 @@ function _addPin(id){var m=MM[id];if(!m||m._onMap)return;m.marker.addTo(map);m._
 function _removePin(id){var m=MM[id];if(!m||!m._onMap)return;m.marker.removeFrom(map);m._onMap=false}
 
 function handleZoom(){
-  var z=map.getZoom(),show=z>=10;
+  var z=map.getZoom(),showThr=aRF&&aRF!=='all'&&RD[aRF]?Math.min(10,RD[aRF].zoom):10,show=z>=showThr;
   regMk.forEach(m=>{if(m._icon){m._icon.style.opacity=show?'0':'1';m._icon.style.pointerEvents=show?'none':'auto'}});
   var tripIds=new Set(Object.values(trip).flat().map(s=>s.id));
   D.forEach(function(d){

@@ -105,7 +105,8 @@ When creating or editing distillery profiles:
 - Label threshold is **filter-aware**: when a specific region is filtered (`aRF !== 'all'`), labels show at zoom 10; when "All" is active, labels show at zoom 12
 - Desktop hover shows label on mouseover at any zoom (`@media (hover:hover)` so it doesn't fire on touch)
 - `filterRegion()` calls `handleZoom()` at the end so labels update immediately when the filter changes
-- Western region center: lat 37.13, lng -87.24 (geographic mean of all 8 distilleries)
+- Western region center: lat 37.13, lng -87.59 (midpoint of extremes — better fit than geographic mean), zoom 8 (not 10 — Western spans 2+ degrees of longitude, zoom 10 is too close for mobile)
+- `handleZoom` show-threshold is filter-aware: `Math.min(10, RD[activeRegion].zoom)` — so Western dots appear at zoom 8 when Western filter is active
 - Northern and Western region overlay buttons zoom to 10 (previously 9 and 8) so dots appear immediately on click
 
 ### Why Bottom Buttons Were Abandoned
