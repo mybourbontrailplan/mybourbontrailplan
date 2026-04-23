@@ -61,6 +61,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 .back-overview{position:absolute;top:12px;left:12px;z-index:600;padding:8px 14px;border-radius:8px;background:#fff;border:1.5px solid var(--border);font-family:var(--font-body);font-size:12.5px;font-weight:600;color:var(--text-secondary);cursor:pointer;box-shadow:var(--shadow-sm);display:none}.back-overview:hover{border-color:var(--primary-light);color:var(--primary)}
 .distillery-label{position:absolute;left:calc(100% + 4px);top:50%;transform:translateY(-50%);white-space:nowrap;background:rgba(255,255,255,.92);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:11px;font-family:var(--font-body);font-weight:600;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.1);pointer-events:none;display:none}
 #map.show-labels .distillery-label{display:block}
+@media(hover:hover){.custom-marker:hover .distillery-label{display:block}}
 
 /* RIGHT SIDEBAR */
 .sidebar{width:340px;height:100%;background:#fff;border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0}
@@ -362,7 +363,7 @@ function handleZoom(){
     if(tripIds.has(d.id)||show){_addPin(d.id)}else{_removePin(d.id)}
   });
   document.getElementById('backBtn').style.display=z>=10?'block':'none';
-  map.getContainer().classList.toggle('show-labels',z>=14);
+  map.getContainer().classList.toggle('show-labels',z>=(window.innerWidth>=900?11:12));
 }
 
 function zoomToRegion(n){const r=RD[n];if(!r)return;map.flyTo([r.lat,r.lng],r.zoom,{duration:.5});filterRegion(n,document.querySelector('.region-pill[data-region="'+n+'"]'))}
