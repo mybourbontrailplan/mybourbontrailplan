@@ -47,7 +47,7 @@ All pages have been audited and optimized:
 ### Core Pages (9)
 - index.html — Homepage with hero, feature cards (custom SVG icons), popular guides, MailerLite email CTA. Gold "Build Your Trip" button links to trip-builder.html.
 - 3-day-bourbon-trail-itinerary.html — Flagship SEO page. 2/3/4-day trip selector with collapsible day cards. Packing section includes portable fan for summer. MailerLite signup form before footer. Lodging cards link to Kyle's Airbnb (Booking.com affiliate + Airbnb + VRBO affiliate) and Talbott Tavern (affiliate). Transportation section includes WhiskMe Transportation, Mint Julep Experiences, and Louisville Bourbon Tours.
-- distilleries.html — Directory with 56 filterable cards (region, type, booking) + sort by rating or A-Z. "Other Regions" filter included.
+- distilleries.html — Directory with 57 filterable cards (region, type, booking) + sort by rating or A-Z. "Other Regions" filter included.
 - map.html — Static interactive map with 56+ distilleries, region filters, 3 driving routes (older page)
 - trip-builder.html — Interactive trip builder with 56 distilleries (see detailed section below)
 - bourbon-trail-booking-guide.html — Step-by-step booking strategy, 10-step checklist. MailerLite signup form before footer. Transportation section mentions WhiskMe and Mint Julep.
@@ -59,7 +59,7 @@ All pages have been audited and optimized:
 - eat-and-drink-bourbon-trail.html — Restaurant/bar guide by region. Includes Evergreen Liquors (Bardstown), La Bodeguita de Mima (Louisville NuLu). No day numbers in headers.
 - about.html — Monetization disclosure. JS email rendering.
 - contact.html — JS email rendering.
-- sitemap.xml — XML sitemap with all 56 distillery profiles + core pages + blog posts (71 URLs total)
+- sitemap.xml — XML sitemap with all 57 distillery profiles + core pages + blog posts (72 URLs total)
 
 ### Blog Posts / Guides (4)
 - best-time-to-visit-bourbon-trail.html — Month-by-month seasonal guide covering weather, crowds, warehouse temperatures, bourbon releases. Targets "best time to visit bourbon trail" keywords.
@@ -67,7 +67,7 @@ All pages have been audited and optimized:
 - louisville-whiskey-row-walking-guide.html — Self-guided walking tour of Louisville's Whiskey Row distilleries and tasting rooms.
 - bourbon-trail-transportation-guide.html — How to get around: DIY driving routes, guided tour options, designated driver strategies, and why you shouldn't count on Uber outside Louisville.
 
-### Distillery Profiles (56 total)
+### Distillery Profiles (57 total)
 Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdict, nearby pairings with links, GA tracking, mobile menu, MailerLite universal script, OG tags, correct canonical URL. **ALL profiles now use the standardized "good" template** (white frosted nav, snapshot cards, tour card headers, rating bars, verdict box, sidebar with quick details). **All href="#" placeholder links have been fixed** — distillery nearby cards link to real profiles, restaurant cards link to eat-and-drink page, sidebar region guides link to guides.html.
 
 **Louisville (9):** Angel's Envy (8.8), Old Forester (8.9), Evan Williams (8.7), Rabbit Hole (7.9), Michter's (8.6), Kentucky Peerless (8.2), Whiskey Thief (7.5), Copper & Kings (8.3), Stitzel-Weller (8.6)
@@ -82,7 +82,7 @@ Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdi
 
 **Northern (9):** New Riff (8.4), Boone County (7.8), Second Sight (7.5), Neeley Family (7.2), Old Pogue (7.4), Hartfield & Co. (7.6), Wenzel (7.3), Augusta Distillery (8.1), Becker & Bird (7.5)
 
-**Western (8):** Wilderness Trail (8.3), Green River (8.1), Casey Jones (7.5), MB Roland (7.4), Dueling Grounds (7.3), B.H. James (7.2), Golden Pond (7.1), Jackson Purchase (7.3)
+**Western (9):** Wilderness Trail (8.3), Green River (8.1), General George Stillhouse (7.0), Casey Jones (7.5), MB Roland (7.4), Dueling Grounds (7.3), B.H. James (7.2), Golden Pond (7.1), Jackson Purchase (7.3)
 
 **Other (2):** Limestone Branch (7.9), Boundary Oak (7.3)
 
@@ -185,7 +185,7 @@ The clipboard export now includes: day-by-day stops with region/cost/booking inf
 Three-panel layout on desktop. Mobile-optimized with floating Browse/Your Trip buttons. Differentiates from KDA's tool: no account needed, opinionated ratings, smart tips, cost tracking.
 
 ### Current State
-The trip builder contains **56 distilleries** across 8 regions: Louisville (9), Bardstown (11), Frankfort (4), Lexington (8), Central (5), Northern (9), Western (8), Other (2). All 56 have profile page links.
+The trip builder contains **58 distilleries** across 8 regions: Louisville (9), Bardstown (11), Frankfort (4), Lexington (8), Central (5), Northern (9), Western (8), Other (2). All 58 have profile page links.
 
 ### Mobile Experience (Updated March 2026)
 - **Breakpoint:** 900px (not 768px — needed for iPhone Pro models)
@@ -322,9 +322,15 @@ Bardstown:   lat:37.81,  lng:-85.47,  zoom:14
 Frankfort:   lat:38.210, lng:-84.871, zoom:14
 Lexington:   lat:38.035, lng:-84.76,  zoom:11
 Central:     lat:38.05,  lng:-85.15,  zoom:10
-Northern:    lat:38.85,  lng:-84.55,  zoom:9
-Western:     lat:37.2,   lng:-87.2,   zoom:8
+Northern:    lat:38.85,  lng:-84.55,  zoom:10
+Western:     lat:37.13,  lng:-87.24,  zoom:10  ← center is geographic mean of all 8 distilleries
 ```
+
+### Map Label Behavior
+- Labels hidden by default; shown via `#map.show-labels` class toggled in `handleZoom()`
+- Threshold is filter-aware: zoom 10 when a region filter is active, zoom 12 when "All" is shown
+- Desktop hover (`@media (hover:hover)`) shows label on mouseover at any zoom
+- `filterRegion()` calls `handleZoom()` so labels update immediately on filter change, not just on zoom events
 
 ### Region Grouping (RG map):
 Cities map to display regions via the `grp()` function. Current mappings:
