@@ -102,12 +102,33 @@ When creating or editing distillery profiles:
 
 ### Map Label Behavior
 - Distillery name labels are hidden by default (`display:none`) and shown via `#map.show-labels` class
-- Label threshold is **filter-aware**: when a specific region is filtered (`aRF !== 'all'`), labels show at zoom 10; when "All" is active, labels show at zoom 12
+- Label threshold is **filter-aware**: `Math.min(10, RD[aRF].zoom)` when a region is active, 12 when "All" — so Western at zoom 8 shows labels, Northern at zoom 10 shows labels, "All" requires zoom 12
 - Desktop hover shows label on mouseover at any zoom (`@media (hover:hover)` so it doesn't fire on touch)
 - `filterRegion()` calls `handleZoom()` at the end so labels update immediately when the filter changes
-- Western region center: lat 37.13, lng -87.59 (midpoint of extremes — better fit than geographic mean), zoom 8 (not 10 — Western spans 2+ degrees of longitude, zoom 10 is too close for mobile)
-- `handleZoom` show-threshold is filter-aware: `Math.min(10, RD[activeRegion].zoom)` — so Western dots appear at zoom 8 when Western filter is active
-- Northern and Western region overlay buttons zoom to 10 (previously 9 and 8) so dots appear immediately on click
+
+### handleZoom() Thresholds (all filter-aware)
+- **Dot threshold** (`showThr`): `Math.min(10, RD[aRF].zoom)` when filtered, `10` when "All" — dots appear at the region's flyTo zoom
+- **Label threshold** (`labelZoom`): same formula as dot threshold — labels and dots appear together
+- **Back button** ("← All Regions"): shows at `z >= showThr` — visible as soon as dots appear
+- **Region overlay buttons** (e.g. "Western 8 distilleries"): hidden when `show=true`, visible when `show=false`
+
+### Region Data (RD) — flyTo destinations
+- `Louisville`, `Bardstown`, `Frankfort`: zoom 14
+- `Lexington`: zoom 11
+- `Central`, `Northern`: zoom 10
+- **`Western`: lat 37.13, lng -87.59, zoom 8** — spans 2+ degrees of longitude; zoom 10 is too close for mobile to see all 8 distilleries; center is midpoint of extremes (not geographic mean) for best viewport fit
+
+### Western Button Mobile Repositioning
+- On desktop the Western button marker sits at the `RD` flyTo center (–87.59), which is visible in the wide desktop viewport
+- On mobile (< 900px), the initial overview viewport only spans ~2 degrees of longitude and the Western center is off-screen to the left
+- **Mobile fix**: Western button marker is placed at `lat 37.3, lng -86.2` with `iconAnchor [0,28]` (left-aligned) so the button sits near the left edge of the initial mobile view and extends rightward into full view
+- Clicking the button still `flyTo`s `RD.Western` (37.13, -87.59, zoom 8) — marker position and flyTo destination are separate
+- Detection: `const isMobile = window.innerWidth < 900` at map init time
+
+### Mobile Back Button ("← All Regions")
+- `position:absolute; top:24px; left:12px` on mobile (bumped from 12px to 24px)
+- The fixed action bar (`top:56px`, ~58px tall) bottoms out at ~114px; `.app` starts at 100px; old `top:12px` put the button at 112px — directly under the action bar
+- `z-index:600` — stays below the action bar (800); the extra `top` clearance keeps it visually below, not z-fighting above
 
 ### Why Bottom Buttons Were Abandoned
 iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-area-inset-bottom)`. Multiple attempts with increased bottom values, dvh units, and @supports fallbacks all failed across iPhone 16 Pro and 17 Pro simultaneously. Top action bar eliminates all bottom-edge issues permanently.
