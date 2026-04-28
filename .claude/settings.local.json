@@ -6,7 +6,15 @@
       "WebFetch(domain:www.wildturkeybourbon.com)",
       "WebFetch(domain:www.newriffdistilling.com)",
       "WebFetch(domain:kybourbontrail.com)",
-      "WebFetch(domain:whiskeythief.com)"
+      "WebFetch(domain:whiskeythief.com)",
+      "Bash(git pull *)",
+      "WebFetch(domain:www.darkartswhiskey.com)",
+      "WebFetch(domain:augustakydistillery.com)",
+      "Bash(git -C C:/Users/cowde/Desktop/mybourbontrailplan show d90b6ff --stat)",
+      "Bash(git -C C:/Users/cowde/Desktop/mybourbontrailplan show a37970f:distillery-buffalo-trace.html)",
+      "Bash(git -C C:/Users/cowde/Desktop/mybourbontrailplan show a37970f:distillery-larrikin.html)",
+      "Bash(git -C C:/Users/cowde/Desktop/mybourbontrailplan show a37970f:distillery-lux-row.html)",
+      "WebFetch(domain:generalgeorge.store)"
     ]
   }
 }
