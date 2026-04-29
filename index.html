@@ -730,24 +730,34 @@
   </div>
 </section>
 
-<!-- PRINTABLE MAP CTA -->
+<!-- FREE RESOURCES -->
 <section style="padding:80px 24px;background:var(--bg-subtle);">
-  <div style="max-width:660px;margin:0 auto;background:white;border-radius:16px;border:2px solid var(--accent);padding:40px 48px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.06);">
-    <div style="width:64px;height:64px;background:var(--accent);border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
-      <svg width="32" height="32" viewBox="0 0 36 36" fill="none"><path d="M6 9L14 6L22 9L30 6V27L22 30L14 27L6 30V9Z" stroke="white" stroke-width="2" stroke-linejoin="round" fill="rgba(255,255,255,0.15)"/><path d="M14 6V27" stroke="white" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.7"/><path d="M22 9V30" stroke="white" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.7"/></svg>
+  <div style="max-width:800px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:36px;">
+      <h2 style="font-family:var(--font-display);font-size:clamp(22px,3vw,28px);font-weight:700;color:var(--primary-dark);margin-bottom:10px;">Free Trip Planning Resources</h2>
+      <p style="color:var(--text-secondary);font-size:16px;max-width:480px;margin:0 auto;">Two free downloads to help you plan a better bourbon trail trip.</p>
     </div>
-    <h2 style="font-family:var(--font-display);font-size:clamp(20px,3vw,26px);font-weight:700;color:var(--primary-dark);margin-bottom:10px;">Get the Free Printable Bourbon Trail Map</h2>
-    <p style="color:var(--text-secondary);max-width:480px;margin:0 auto 24px;">A two-page PDF you can print, fold, and bring with you. Every distillery plotted by region, with a checklist column to track your visits.</p>
-    <a href="map.html" style="display:inline-block;background:var(--primary);color:white;padding:12px 28px;border-radius:9px;font-weight:600;font-size:15px;text-decoration:none;">Download Free PDF Map &rarr;</a>
-  </div>
-</section>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
 
-<!-- CTA -->
-<section class="cta-section" id="newsletter">
-  <div class="cta-box">
-    <h2>Get the free Bourbon Trail<br>Planning Checklist</h2>
-    <p>A step-by-step checklist covering everything from booking timelines to packing essentials. Delivered straight to your inbox.</p>
-    <div class="ml-embedded" data-form="WD5yKI"></div>
+      <div style="flex:1;min-width:260px;background:white;border-radius:16px;border:2px solid var(--accent);padding:32px 28px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.06);display:flex;flex-direction:column;align-items:center;">
+        <div style="width:56px;height:56px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><path d="M6 9L14 6L22 9L30 6V27L22 30L14 27L6 30V9Z" stroke="white" stroke-width="2" stroke-linejoin="round" fill="rgba(255,255,255,0.15)"/><path d="M14 6V27" stroke="white" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.7"/><path d="M22 9V30" stroke="white" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.7"/></svg>
+        </div>
+        <h3 style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--primary-dark);margin-bottom:8px;">Printable Bourbon Trail Map</h3>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;margin-bottom:24px;flex:1;">A two-page PDF you can print and bring with you. Every distillery plotted by region, with a checklist column to track your visits.</p>
+        <button onclick="openPdfModal()" style="background:var(--primary);color:white;padding:11px 24px;border-radius:9px;font-weight:600;font-size:14px;border:none;cursor:pointer;width:100%;">Download Free Map &rarr;</button>
+      </div>
+
+      <div style="flex:1;min-width:260px;background:white;border-radius:16px;border:2px solid var(--accent);padding:32px 28px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,0.06);display:flex;flex-direction:column;align-items:center;">
+        <div style="width:56px;height:56px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+          <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><rect x="8" y="7" width="20" height="24" rx="3" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.15)"/><path d="M13 7V5h10v2" stroke="white" stroke-width="2" stroke-linejoin="round"/><path d="M12 17l2 2 4-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 24l2 2 4-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 18.5h3M21 25.5h3" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/></svg>
+        </div>
+        <h3 style="font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--primary-dark);margin-bottom:8px;">Bourbon Trail Planning Checklist</h3>
+        <p style="color:var(--text-secondary);font-size:14px;line-height:1.6;margin-bottom:24px;flex:1;">A step-by-step checklist covering booking timelines, packing essentials, and what to do at each stop. Delivered to your inbox.</p>
+        <button onclick="openChecklistModal()" style="background:var(--primary);color:white;padding:11px 24px;border-radius:9px;font-weight:600;font-size:14px;border:none;cursor:pointer;width:100%;">Download Free Checklist &rarr;</button>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -821,6 +831,39 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
     document.querySelector('.nav-links').classList.remove('mobile-open');
   });
 });
+</script>
+
+<!-- PDF MAP MODAL -->
+<div id="pdf-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(14,47,68,0.6);padding:24px;align-items:center;justify-content:center;" onclick="if(event.target===this)closePdfModal()">
+  <div style="background:white;border-radius:16px;max-width:520px;width:100%;padding:40px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+    <button onclick="closePdfModal()" aria-label="Close" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:26px;line-height:1;padding:4px 8px;">&times;</button>
+    <div style="width:52px;height:52px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+      <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><path d="M6 9L14 6L22 9L30 6V27L22 30L14 27L6 30V9Z" stroke="white" stroke-width="2" stroke-linejoin="round" fill="rgba(255,255,255,0.15)"/><path d="M14 6V27" stroke="white" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.7"/><path d="M22 9V30" stroke="white" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.7"/></svg>
+    </div>
+    <h2 style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--primary-dark);margin-bottom:8px;">Get the Free Printable Bourbon Trail Map</h2>
+    <p style="color:var(--text-secondary);font-size:15px;margin-bottom:20px;">A two-page PDF you can print, fold, and bring with you. Every distillery by region, with a checklist column to track your visits.</p>
+    <div class="ml-embedded" data-form="CliYpr"></div>
+  </div>
+</div>
+
+<!-- PLANNING CHECKLIST MODAL -->
+<div id="checklist-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(14,47,68,0.6);padding:24px;align-items:center;justify-content:center;" onclick="if(event.target===this)closeChecklistModal()">
+  <div style="background:white;border-radius:16px;max-width:520px;width:100%;padding:40px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+    <button onclick="closeChecklistModal()" aria-label="Close" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:26px;line-height:1;padding:4px 8px;">&times;</button>
+    <div style="width:52px;height:52px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+      <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><rect x="8" y="7" width="20" height="24" rx="3" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.15)"/><path d="M13 7V5h10v2" stroke="white" stroke-width="2" stroke-linejoin="round"/><path d="M12 17l2 2 4-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 24l2 2 4-5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 18.5h3M21 25.5h3" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/></svg>
+    </div>
+    <h2 style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--primary-dark);margin-bottom:8px;">Bourbon Trail Planning Checklist</h2>
+    <p style="color:var(--text-secondary);font-size:15px;margin-bottom:20px;">A step-by-step checklist covering booking timelines, packing essentials, and what to do at each stop. Delivered straight to your inbox.</p>
+    <div class="ml-embedded" data-form="WD5yKI"></div>
+  </div>
+</div>
+<script>
+function openPdfModal(){document.getElementById('pdf-modal').style.display='flex';document.body.style.overflow='hidden';}
+function closePdfModal(){document.getElementById('pdf-modal').style.display='none';document.body.style.overflow='';}
+function openChecklistModal(){document.getElementById('checklist-modal').style.display='flex';document.body.style.overflow='hidden';}
+function closeChecklistModal(){document.getElementById('checklist-modal').style.display='none';document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePdfModal();closeChecklistModal();}});
 </script>
 </body>
 </html>

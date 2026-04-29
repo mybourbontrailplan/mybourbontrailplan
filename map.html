@@ -401,7 +401,7 @@
       <div class="pdf-cta-content">
         <h3>Get the Free Printable Bourbon Trail Map</h3>
         <p>A two-page PDF map you can print, fold up, and bring with you. Includes a region reference list with locations and a distilleries-visited checklist.</p>
-        <a href="#pdf-signup" class="pdf-cta-btn" onclick="document.querySelector('#pdf-signup').scrollIntoView({behavior:'smooth'}); return false;">Download Free PDF Map →</a>
+        <button onclick="openPdfModal()" class="pdf-cta-btn" style="cursor:pointer;border:none;">Download Free PDF Map →</button>
       </div>
     </div>
 
@@ -530,13 +530,6 @@
       <h3>Where to Stay on the Bourbon Trail</h3>
       <p>Your home base matters more than people think. Staying in the wrong region can add 90 minutes of driving each day. The short version: stay in Louisville for Whiskey Row trips, Bardstown for the densest bourbon region, and Lexington for horse-country distilleries.</p>
       <p>For a deeper breakdown of hotels, B&Bs, and distillery-stay options including a vacation rental in New Hope just a few minutes from Maker's Mark and Log Still, see our <a href="where-to-stay-bourbon-trail.html">complete guide to where to stay on the bourbon trail</a>.</p>
-    </div>
-
-    <!-- PDF SIGNUP ANCHOR -->
-    <div class="content-section" id="pdf-signup">
-      <h3>Free Printable Bourbon Trail Map (PDF)</h3>
-      <p>Sign up below to download the printable two-page bourbon trail map. Includes a visual map of every distillery color-coded by region, plus a reference list with locations, regions, and a checklist column to track which distilleries you've visited.</p>
-      <div class="ml-embedded" data-form="CliYpr"></div>
     </div>
 
     <!-- FAQ -->
@@ -868,6 +861,24 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
     document.querySelector('.nav-links').classList.remove('mobile-open');
   });
 });
+</script>
+
+<!-- PDF MAP MODAL -->
+<div id="pdf-modal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(14,47,68,0.6);padding:24px;align-items:center;justify-content:center;" onclick="if(event.target===this)closePdfModal()">
+  <div style="background:white;border-radius:16px;max-width:520px;width:100%;padding:40px;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+    <button onclick="closePdfModal()" aria-label="Close" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;color:var(--text-secondary);font-size:26px;line-height:1;padding:4px 8px;">&times;</button>
+    <div style="width:52px;height:52px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+      <svg width="28" height="28" viewBox="0 0 36 36" fill="none"><path d="M6 9L14 6L22 9L30 6V27L22 30L14 27L6 30V9Z" stroke="white" stroke-width="2" stroke-linejoin="round" fill="rgba(255,255,255,0.15)"/><path d="M14 6V27" stroke="white" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.7"/><path d="M22 9V30" stroke="white" stroke-width="1.5" stroke-dasharray="3 2" opacity="0.7"/></svg>
+    </div>
+    <h2 style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--primary-dark);margin-bottom:8px;">Get the Free Printable Bourbon Trail Map</h2>
+    <p style="color:var(--text-secondary);font-size:15px;margin-bottom:20px;">A two-page PDF you can print, fold, and bring with you. Every distillery by region, with a checklist column to track your visits.</p>
+    <div class="ml-embedded" data-form="CliYpr"></div>
+  </div>
+</div>
+<script>
+function openPdfModal(){document.getElementById('pdf-modal').style.display='flex';document.body.style.overflow='hidden';}
+function closePdfModal(){document.getElementById('pdf-modal').style.display='none';document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePdfModal();});
 </script>
 </body>
 </html>
