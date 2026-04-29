@@ -31,7 +31,7 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 - `index.html` — Homepage
 - `3-day-bourbon-trail-itinerary.html` — Flagship SEO page with 2/3/4-day trip selector
 - `distilleries.html` — Directory with 58 filterable cards (region, type, booking) + sort by rating/A-Z; count is dynamically set on load via `applyFilters()`
-- `map.html` — Static interactive map with 58+ distilleries; height is `calc(100vh - 120px)` so content below is visible on scroll
+- `map.html` — Static interactive map with 58+ distilleries; height is `calc(100vh - 120px)` so content below is visible on scroll. PDF map CTA card opens a modal (no `#pdf-signup` inline section — that was removed)
 - `trip-builder.html` — Interactive trip builder (see Trip Builder section below)
 - `bourbon-trail-booking-guide.html` — 10-step booking checklist
 - `bourbon-trail-budget-guide.html` — Per-person cost breakdown
@@ -166,9 +166,16 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 ## Email Marketing (MailerLite)
 - Account ID: 2164831
 - Universal script is on every HTML page (placed after GA script)
-- Signup forms on: homepage, trip builder, itinerary page, booking guide
+- Signup forms on: homepage (modal), itinerary page (modal), trip builder (inline), booking guide (inline)
 - 3-email nurture sequence active (Day 3: top distilleries, Day 6: where to stay featuring Kyle's property, Day 10: booking mistakes)
 - Lead magnet: PDF checklist delivered via welcome automation
+
+### MailerLite Form IDs
+- `CliYpr` — Printable PDF map (delivered via email); triggers from PDF map modal on homepage, itinerary page, and map.html
+- `WD5yKI` — Planning checklist lead magnet; triggers from checklist modal on homepage and itinerary page; also inline on trip builder and booking guide
+
+### Free Resources Modal Pattern
+Homepage and itinerary page have a unified "Free Trip Planning Resources" section with two gold-border cards side by side (stacking on mobile). Each card opens its own modal containing the MailerLite form — no inline embedded widgets in the page flow. Modal functions: `openPdfModal()` / `closePdfModal()` and `openChecklistModal()` / `closeChecklistModal()`. Both modals share z-index 2000 and close on outside click or Escape. map.html has the PDF map modal only (no checklist modal).
 
 ## Google Drive Artifact Files
 The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-cock (1).html`, `guides (1).html`). These are Google Drive sync duplicates — identical to the originals, not separate pages. Also `.tmp.driveupload/` folder accumulates Google Drive temp files. Neither should be edited or referenced; they can be cleaned up by deleting them, but they're harmless if left in place.
