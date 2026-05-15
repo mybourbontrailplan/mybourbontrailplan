@@ -30,8 +30,8 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 ### Core Pages (9)
 - `index.html` — Homepage
 - `3-day-bourbon-trail-itinerary.html` — Flagship SEO page with 2/3/4-day trip selector
-- `distilleries.html` — Directory with 58 filterable cards (region, type, booking) + sort by rating/A-Z; count is dynamically set on load via `applyFilters()`
-- `map.html` — Static interactive map with 58+ distilleries; height is `calc(100vh - 120px)` so content below is visible on scroll. PDF map CTA card opens a modal (no `#pdf-signup` inline section — that was removed)
+- `distilleries.html` — Directory with 59 filterable cards (region, type, booking) + sort by rating/A-Z; count is dynamically set on load via `applyFilters()`
+- `map.html` — Static interactive map with 59+ distilleries; height is `calc(100vh - 120px)` so content below is visible on scroll. PDF map CTA card opens a modal (no `#pdf-signup` inline section — that was removed)
 - `trip-builder.html` — Interactive trip builder (see Trip Builder section below)
 - `bourbon-trail-booking-guide.html` — 10-step booking checklist
 - `bourbon-trail-budget-guide.html` — Per-person cost breakdown
@@ -50,18 +50,18 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 - `bourbon-trail-transportation-guide.html` — How to get around: DIY driving, guided tours, designated driver strategies
 - `kentucky-bourbonfest.html` — Kentucky BourbonFest guide: dates, tickets, 60+ distilleries, 200+ bourbons, what to expect
 
-### Distillery Profiles (59 total)
+### Distillery Profiles (60 total)
 All named `distillery-{name}.html`. All use the standardized template (white frosted nav, snapshot cards, tour card headers, rating bars, verdict box, sidebar with quick details). Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdict, nearby pairings with links, GA tracking, mobile menu, MailerLite universal script, OG tags, correct canonical URL.
-- **Note:** `distillery-garrard-county.html` exists but has NOT yet been added to `distilleries.html`, `trip-builder.html`, or `sitemap.xml` — needs to be completed.
+- **Note:** `distillery-garrard-county.html` exists but has NOT yet been added to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml` — needs to be completed.
 
 ### Other
-- `sitemap.xml` — 76 URLs, all using `mybourbontrailplan.com` domain
+- `sitemap.xml` — 77 URLs, all using `mybourbontrailplan.com` domain
 - `bourbon-trail-planning-checklist.pdf` — Lead magnet delivered via MailerLite
 - `bourbon-trail-map.pdf` — Printable/downloadable bourbon trail map; linked from homepage and map.html
 - `images/` — Distillery photos, named `{distillery}-1.jpg`, `{distillery}-2.jpg`, etc. All photos are EXIF-rotation-fixed and optimized for web (max 1200px, ~80% JPEG quality)
 
 ## Nav & Footer Template (ALL pages)
-- **Top nav links (in order):** Plan Your Trip → Distilleries → Map → Where to Stay → Eat & Drink → Guides → Booking Guide (CTA style)
+- **Top nav links (in order):** Plan Your Trip → Distilleries → Map → Where to Stay → Eat & Drink → Trip Builder → Guides → Booking Guide (CTA style)
 - **Footer links (in order):** Home, Plan Your Trip, Distilleries, Map, Trip Builder, Guides, Where to Stay, Booking Guide, About, Contact — plus Instagram handle line and copyright
 - Map must be a nav item on every new page created
 
@@ -79,12 +79,12 @@ When creating or editing distillery profiles:
 - Nearby pairing cards must link to real profile pages (never `href="#"`)
 - Restaurant cards link to `eat-and-drink-bourbon-trail.html`
 - Sidebar region guides link to `guides.html`
-- After creating a new profile: add it to `distilleries.html`, `trip-builder.html`, and `sitemap.xml`
+- After creating a new profile: add it to `distilleries.html`, `trip-builder.html`, `map.html`, and `sitemap.xml`
 
 ## Trip Builder — Critical Technical Notes
 
 ### Architecture
-- 58 distilleries with Leaflet.js markers, region filters, smart pairing tips
+- 60 distilleries with Leaflet.js markers, region filters, smart pairing tips
 - Markers are added to the map ONCE and never removed from the DOM
 - Visibility is controlled via `setOpacity(1/0)` and `pointerEvents` toggling
 - **NEVER use `marker.addTo(map)` / `marker.removeFrom(map)` for showing/hiding** — this destroys DOM elements and breaks click handlers after repeated interactions
@@ -119,6 +119,11 @@ When creating or editing distillery profiles:
 - **Label threshold** (`labelZoom`): same formula as dot threshold — labels and dots appear together
 - **Back button** ("← All Regions"): shows at `z >= showThr` — visible as soon as dots appear
 - **Region overlay buttons** (e.g. "Western 8 distilleries"): hidden when `show=true`, visible when `show=false`
+
+### RG City-to-Region Mapping (trip-builder.html)
+- `Newport:'Northern'` — New Riff and Pensive are both in Newport; they appear under the Northern filter
+- Most other Northern KY cities (Independence, Ludlow, Sparta, Maysville, Paris, Burlington, Augusta) also map to `Northern`
+- `Danville`, `Lebanon`, `Radcliff` map to `Other` (no dedicated region flyTo — shown only in "All" view)
 
 ### Region Data (RD) — flyTo destinations
 - `Louisville`, `Bardstown`, `Frankfort`: zoom 14
@@ -200,4 +205,5 @@ The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-co
 - **Becker & Bird Distillery** (file: `distillery-baker-bird.html`) — the distillery's official KBT name is Becker & Bird; the winery on the same property is called Baker-Bird. File name stays as-is for URL continuity.
 - **Augusta Distillery** (file: `distillery-augusta.html`) — separate from Becker & Bird, also in Augusta, KY at 207 Seminary Ave. Produces Buckner's bourbon (Best Bourbon at 2023 SFWSC). Wed–Sat 11–5 only. Rating 8.1. River Proof Barrel Experience ($29) is their signature tour. Trip builder pin: lat 38.7731, lng -83.9968. Smart pairing: Augusta + Becker & Bird (5-min walk).
 - **General George Stillhouse & Distillery** (file: `distillery-general-george.html`) — Western KY craft distillery in Falls of Rough (Grayson County) at 1867 Junction Rd. Land once owned by George Washington. Joined KBT January 2026. Produces Founding Fox bourbon, gin, vodka; also Shakertown Spirits and Bluefield Bourbon. Three tour options: Ambassador's Tour + Thieving (1 hr, top pick), Founding Fox Tasting & Tour (40 min), Tasting in the Fox Den (30 min). Pricing not published — book via generalgeorgestillhouse.setmore.com. Rating 7.0. Phone: (702) 505-9481. Trip builder pin: lat 37.5607, lng -86.5326. Smart pairing: General George + Green River (~50 min).
-- **Garrard County Distilling Co.** (file: `distillery-garrard-county.html`) — New craft distillery in Lancaster, KY bringing bourbon production back to Garrard County; part of the expanding Lexington-to-Danville corridor. Rating 7.1. Best for completists. **Still needs to be added to `distilleries.html`, `trip-builder.html`, and `sitemap.xml`.**
+- **Garrard County Distilling Co.** (file: `distillery-garrard-county.html`) — New craft distillery in Lancaster, KY bringing bourbon production back to Garrard County; part of the expanding Lexington-to-Danville corridor. Rating 7.1. Best for completists. **Still needs to be added to `distilleries.html`, `trip-builder.html`, `map.html`, and `sitemap.xml`.**
+- **Pensive Distilling Co.** (file: `distillery-pensive.html`) — Newport, KY craft distillery in a historic Prohibition-era building. Speakeasy tasting room requires a password (provided at booking). Named after Pensive, the 1944 Kentucky Derby/Preakness winner. On-site kitchen is award-winning (City Beat Top 10 NKY Restaurants); every menu item named after a racehorse. Live music Fridays. Tours $15–$25, easy booking via Peek. Rating 8.0. Pair with New Riff (5 min, same city). Trip builder pin: lat 38.9928, lng -84.4969. Region: Northern (Newport maps to Northern in RG).
