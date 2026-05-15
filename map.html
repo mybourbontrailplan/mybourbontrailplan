@@ -965,6 +965,56 @@ document.getElementById('legendToggle').addEventListener('click', function() {
     document.getElementById('mapLegend').classList.toggle('collapsed');
   }
 });
+
+// Deep-link support: map.html?region=bardstown or ?distillery=buffalo-trace
+function applyDeepLink() {
+  const params = new URLSearchParams(window.location.search);
+  const regionParam = params.get('region');
+  const distilleryParam = params.get('distillery');
+  if (!regionParam && !distilleryParam) return;
+
+  const REGION_MAP = {
+    louisville: 'louisville', bardstown: 'bardstown',
+    frankfort: 'frankfort', lexington: 'lexington',
+    northern: 'other', central: 'other', western: 'other', other: 'other'
+  };
+
+  const targetRegion = regionParam ? (REGION_MAP[regionParam.toLowerCase()] || null) : null;
+
+  let targetMarkerObj = null;
+  if (distilleryParam) {
+    const slug = distilleryParam.toLowerCase();
+    targetMarkerObj = markers.find(({ data }) => {
+      if (!data.profile || data.profile === '#') return false;
+      return data.profile.replace(/^distillery-/, '').replace(/\.html$/, '') === slug;
+    }) || null;
+    if (!targetMarkerObj) console.warn('[map deeplink] No distillery matched slug:', distilleryParam);
+  }
+
+  // If both params present but distillery isn't in that region, skip the region filter
+  const applyRegion = (targetRegion && targetMarkerObj && targetMarkerObj.data.region !== targetRegion)
+    ? null
+    : targetRegion;
+
+  if (applyRegion) {
+    document.querySelectorAll('#regionFilters .fbtn').forEach(b => b.classList.remove('active'));
+    const btn = document.querySelector(`#regionFilters .fbtn[data-region="${applyRegion}"]`);
+    if (btn) btn.classList.add('active');
+    activeRegion = applyRegion;
+    applyFilter();
+  }
+
+  if (targetMarkerObj) {
+    map.setView([targetMarkerObj.data.lat, targetMarkerObj.data.lng], 14);
+    setTimeout(() => targetMarkerObj.marker.openPopup(), 300);
+  } else if (applyRegion) {
+    const latlngs = markers
+      .filter(({ data }) => data.region === applyRegion)
+      .map(({ data }) => [data.lat, data.lng]);
+    if (latlngs.length) map.fitBounds(L.latLngBounds(latlngs).pad(0.1));
+  }
+}
+applyDeepLink();
 </script>
 
 <script>
