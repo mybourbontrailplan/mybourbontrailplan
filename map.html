@@ -182,7 +182,7 @@
   .map-container { flex: 1; position: relative; }
   #map { width: 100%; height: 100%; }
 
-  /* PIN LABELS — always visible at zoom 11+ */
+  /* PIN LABELS — always visible at zoom 9+ */
   .pin-label {
     background: rgba(255,255,255,0.95) !important;
     border: 1px solid var(--border) !important;
@@ -842,9 +842,9 @@ function applyFilter() {
 // Fit initial bounds
 map.fitBounds(L.latLngBounds(DISTILLERIES.map(d => [d.lat, d.lng])).pad(0.05));
 
-// Show labels only at zoom 11+ (when focused on a region) to prevent overlap chaos at the overview
+// Show labels only at zoom 9+ to prevent overlap chaos at the overview
 function updateLabels() {
-  const showLabels = map.getZoom() >= 11;
+  const showLabels = map.getZoom() >= 9;
   document.querySelectorAll('.pin-label').forEach(el => {
     el.style.display = showLabels ? '' : 'none';
   });
