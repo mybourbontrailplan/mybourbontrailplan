@@ -50,9 +50,9 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 - `bourbon-trail-transportation-guide.html` — How to get around: DIY driving, guided tours, designated driver strategies
 - `kentucky-bourbonfest.html` — Kentucky BourbonFest guide: dates, tickets, 60+ distilleries, 200+ bourbons, what to expect
 
-### Distillery Profiles (60 total)
+### Distillery Profiles (59 active)
 All named `distillery-{name}.html`. All use the standardized template (white frosted nav, snapshot cards, tour card headers, rating bars, verdict box, sidebar with quick details). Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdict, nearby pairings with links, GA tracking, mobile menu, MailerLite universal script, OG tags, correct canonical URL.
-- **Note:** `distillery-garrard-county.html` exists in the repo but is intentionally excluded from the site — Garrard County Distilling Co. is shut down. Do NOT add it to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`.
+- 60 HTML files exist in repo, but `distillery-garrard-county.html` is intentionally excluded — Garrard County Distilling Co. is shut down. Do NOT add it to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`.
 
 ### Other
 - `sitemap.xml` — 77 URLs, all using `mybourbontrailplan.com` domain
@@ -80,6 +80,19 @@ When creating or editing distillery profiles:
 - Restaurant cards link to `eat-and-drink-bourbon-trail.html`
 - Sidebar region guides link to `guides.html`
 - After creating a new profile: add it to `distilleries.html`, `trip-builder.html`, `map.html`, and `sitemap.xml`
+
+### Sidebar Contact Section — Standard Structure
+All 59 profiles have a standardized Contact section. Order must be:
+1. `<a href="map.html?distillery={slug}" class="sidebar-link">See on Map &rarr;</a>` — always first
+2. Phone row (`<div class="sidebar-row">`) — in Contact only, NOT in Quick Details
+3. Official Website link
+- **No Google Maps link** — the "See on Map" deep-link replaces it; do not add `google.com/maps` links to the sidebar
+- Phone goes in Contact section only (removed from Quick Details to eliminate duplication)
+
+### Internal Linking Conventions
+- Every distillery profile links to `map.html?distillery={slug}` via the "See on Map" sidebar link
+- Guide pages link to `map.html?region={region}` in context: `where-to-stay`, `3-day-bourbon-trail-itinerary`, `eat-and-drink-bourbon-trail`, `louisville-whiskey-row-walking-guide`, `kentucky-bourbonfest`, `bourbon-trail-non-bourbon-drinkers`
+- Use `style="color:var(--primary-light);font-weight:500;"` for inline region map links in guide page body copy
 
 ## Trip Builder — Critical Technical Notes
 
