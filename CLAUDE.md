@@ -55,7 +55,7 @@ All named `distillery-{name}.html`. All use the standardized template (white fro
 - 60 HTML files exist in repo, but `distillery-garrard-county.html` is intentionally excluded — Garrard County Distilling Co. is shut down. Do NOT add it to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`.
 
 ### Other
-- `sitemap.xml` — 77 URLs, all using `mybourbontrailplan.com` domain
+- `sitemap.xml` — 76 URLs, all using `mybourbontrailplan.com` domain
 - `bourbon-trail-planning-checklist.pdf` — Lead magnet delivered via MailerLite
 - `bourbon-trail-map.pdf` — Printable/downloadable bourbon trail map; linked from homepage and map.html
 - `images/` — Distillery photos, named `{distillery}-1.jpg`, `{distillery}-2.jpg`, etc. All photos are EXIF-rotation-fixed and optimized for web (max 1200px, ~80% JPEG quality)
@@ -204,7 +204,7 @@ The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-co
 - **GA script** must be on every new page (in head)
 - **iOS Safari text inflation** — all pages need `-webkit-text-size-adjust: 100%` in the html CSS rule
 - **No OverlappingMarkerSpiderfier** — was removed from the trip builder, don't re-add it
-- **Barton 1792** no longer offers tours — gift shop and grounds only
+- **Barton 1792** — not open to the public; profile file exists (`distillery-barton-1792.html`) but is intentionally excluded from the site. Do NOT add to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`
 - **Log Still is in New Haven, KY** (not New Hope) — Kyle's Airbnb is in New Hope, these are different places
 
 ## Content Accuracy Notes
