@@ -9,6 +9,45 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 - **Workflow:** `git pull` → make changes → `git add .` → `git commit -m "message"` → `git push`
 - **No build tools, no framework, no CMS** — every page is a standalone HTML file at root level, with an `images/` subfolder for distillery photos
 
+## Deployment Workflow
+
+The standard deploy command is:
+
+```
+netlify deploy --prod --dir=.
+```
+
+**IMPORTANT: After every successful deploy, immediately run the IndexNow submission script:**
+
+```
+python scripts\indexnow_submit_changed.py
+```
+
+This pings Bing (and other IndexNow-participating search engines) with the URLs of files changed in the most recent commit, triggering faster recrawl. The site relies heavily on Bing traffic, so this step is non-negotiable for deploys that include HTML changes.
+
+### When to skip IndexNow
+
+Skip the IndexNow ping only if:
+- The deploy contains no HTML changes (CSS-only or JS-only changes that don't alter page content)
+- The deploy is a rollback or no-op
+- The script has already been run for this commit
+
+### When to run the bulk submission instead
+
+If a deploy includes 20+ changed HTML files (e.g., a site-wide template update or large refactor), use the bulk submission script instead to avoid hitting per-URL rate limits:
+
+```
+python scripts\indexnow_bulk_submit.py
+```
+
+### IndexNow response handling
+
+HTTP 200 and HTTP 202 are both success responses. The scripts treat both as valid. If you see any other response code, surface the error to the user before continuing.
+
+### Verification
+
+After running the IndexNow script, paste the output back to the user so they can confirm the submission succeeded. Don't silently swallow the output.
+
 ## Tech Stack
 - Static HTML/CSS/JS
 - Fonts: DM Sans (body) + Fraunces (display/headings)

@@ -84,7 +84,7 @@ def submit(urls, key):
         return
 
     print(f"Response: HTTP {code}")
-    if code == 200:
+    if code in (200, 202):
         print("Success — URLs queued for recrawl.")
     elif code == 400:
         print("Bad request. Request body:")
