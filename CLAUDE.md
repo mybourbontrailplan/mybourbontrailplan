@@ -109,6 +109,7 @@ When creating or editing distillery profiles:
 - Use an existing profile like `distillery-buffalo-trace.html` as the canonical template reference
 - All profiles MUST have: correct canonical URL (`https://mybourbontrailplan.com/filename.html`), OG tags (og:title, og:description, og:type, og:url), GA script, MailerLite universal script, `-webkit-text-size-adjust: 100%`, and `TouristAttraction` JSON-LD schema (see `scripts/add_schema.py` for the standard structure)
 - **Do NOT add a `review` or `reviewRating` block to TouristAttraction schemas** — self-authored ratings violate Google's review snippet policy and cause Rich Results Test critical errors
+- **`@type` must be an array: `["TouristAttraction", "LocalBusiness"]`** — `openingHours` is a `LocalBusiness` property; using a single string type `"TouristAttraction"` causes a schema.org validator warning
 - Photo gallery section goes between "What to Expect" and "Tour Options", using the `.photo-gallery` / `.gallery-grid` classes
 - Photos are referenced as `images/{distillery}-1.jpg` etc. — always use `loading="lazy"` on gallery images
 - Gallery uses `aspect-ratio: 4/3` with `object-fit: cover` (NOT fixed height) to avoid cropping important content
@@ -214,7 +215,7 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 - Title tags under 85 characters
 - Meta descriptions under 170 characters
 - Schema markup: fully comprehensive JSON-LD across all page types:
-  - Distillery profiles: `TouristAttraction` with `address`, `geo`, `telephone`, `openingHours`, `url`, `sameAs` — **no `review` block** (violates Google policy, causes Rich Results errors)
+  - Distillery profiles: `["TouristAttraction", "LocalBusiness"]` (array type) with `address`, `geo`, `telephone`, `openingHours`, `isAccessibleForFree`, `url`, `sameAs` — **no `review` block** (violates Google policy, causes Rich Results errors); array type required so `openingHours` is valid per schema.org
   - Guide/article pages: `Article` with `url`, `mainEntityOfPage`, `author`, `publisher`, `datePublished`, `dateModified`
   - Directory pages (`distilleries.html`, `guides.html`, `map.html`): `CollectionPage` with `url`, `publisher`
   - Homepage: `WebSite` + `Organization` (two separate schema blocks)
