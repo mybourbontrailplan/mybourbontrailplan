@@ -107,7 +107,7 @@ All named `distillery-{name}.html`. All use the standardized template (white fro
 ## Distillery Profile Template Rules
 When creating or editing distillery profiles:
 - Use an existing profile like `distillery-buffalo-trace.html` as the canonical template reference
-- All profiles MUST have: correct canonical URL (`https://mybourbontrailplan.com/filename.html`), OG tags (og:title, og:description, og:type, og:url), GA script, MailerLite universal script, `-webkit-text-size-adjust: 100%`
+- All profiles MUST have: correct canonical URL (`https://mybourbontrailplan.com/filename.html`), OG tags (og:title, og:description, og:type, og:url), GA script, MailerLite universal script, `-webkit-text-size-adjust: 100%`, and `TouristAttraction` JSON-LD schema (see `scripts/add_schema.py` for the standard structure including `review`/`reviewRating`)
 - Photo gallery section goes between "What to Expect" and "Tour Options", using the `.photo-gallery` / `.gallery-grid` classes
 - Photos are referenced as `images/{distillery}-1.jpg` etc. — always use `loading="lazy"` on gallery images
 - Gallery uses `aspect-ratio: 4/3` with `object-fit: cover` (NOT fixed height) to avoid cropping important content
@@ -205,13 +205,20 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 4. Add smart pairing tip if there's a nearby distillery within 5 min drive
 5. Update region counts in the code if applicable
 6. Also add to `distilleries.html` and `sitemap.xml`
+7. Add `TouristAttraction` JSON-LD schema to the new profile's `<head>` — include `address`, `geo`, `telephone`, `openingHours`, `url`, `sameAs`, and `review` with the distillery's rating (see `scripts/add_schema.py` for the exact structure)
 
 ## SEO Notes
 - All canonical URLs must point to `https://mybourbontrailplan.com/filename.html`
 - All pages need OG tags (og:title, og:description, og:type, og:url)
 - Title tags under 85 characters
 - Meta descriptions under 170 characters
-- Schema markup: Article (content pages), TouristAttraction (distillery profiles), CollectionPage (directory)
+- Schema markup: fully comprehensive JSON-LD across all page types:
+  - Distillery profiles: `TouristAttraction` with `address`, `geo`, `telephone`, `openingHours`, `url`, `sameAs`, and `review` (Kyle's /10 rating via `reviewRating`, `bestRating: "10"`, `author: Kyle Cowden`)
+  - Guide/article pages: `Article` with `url`, `mainEntityOfPage`, `author`, `publisher`, `datePublished`, `dateModified`
+  - Directory pages (`distilleries.html`, `guides.html`, `map.html`): `CollectionPage` with `url`, `publisher`
+  - Homepage: `WebSite` + `Organization` (two separate schema blocks)
+  - Trip builder: `WebApplication`; About: `AboutPage`; Contact: `ContactPage`
+- `scripts/add_schema.py` — bulk schema utility; use as the reference template when writing TouristAttraction schema for a new distillery profile
 - Sitemap at `sitemap.xml` — update when adding any new page
 
 ## Affiliate Links — DO NOT modify these URLs
