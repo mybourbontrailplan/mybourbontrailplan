@@ -11,11 +11,23 @@ Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site dep
 
 ## Deployment Workflow
 
-The standard deploy command is:
+### Step 1 — Regenerate sitemap (if any HTML pages were added, removed, or noindex-toggled)
+
+```
+python scripts\generate_sitemap.py
+```
+
+This scans root-level HTML files, applies the blocklist and noindex exclusions, and writes a fresh `sitemap.xml`. Run it before deploying so the updated sitemap ships in the same deploy. Skip if the deploy contains no HTML page additions or removals (e.g. CSS-only or content-only edits to existing pages).
+
+If the sitemap changed, stage and commit it with the rest of the deploy files before running the Netlify command.
+
+### Step 2 — Deploy
 
 ```
 netlify deploy --prod --dir=.
 ```
+
+### Step 3 — Submit to IndexNow
 
 **IMPORTANT: After every successful deploy, immediately run the IndexNow submission script:**
 
