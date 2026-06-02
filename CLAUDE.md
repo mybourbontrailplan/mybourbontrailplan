@@ -64,7 +64,7 @@ After running the IndexNow script, paste the output back to the user so they can
 - Static HTML/CSS/JS
 - Fonts: DM Sans (body) + Fraunces (display/headings)
 - Maps: Leaflet.js with CartoDB Light tiles
-- Analytics: Google Analytics (G-DVK4D6KJJP) on all pages
+- Analytics: Google Analytics (G-DVK4D6KJJP) on all pages; custom events: `email_signup` (MailerLite form success) and `trip_builder_complete` (itinerary export)
 - Email marketing: MailerLite (account ID 2164831, universal script on every page after GA script)
 - Affiliate links: Awin/Booking.com (tidd.ly short URLs), CJ Affiliate/VRBO, direct Airbnb
 - Email obfuscation: Contact and About pages use JS-rendered email to prevent mangling
@@ -253,6 +253,16 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 ### MailerLite Form IDs
 - `CliYpr` — Printable PDF map (delivered via email); triggers from PDF map modal on homepage, itinerary page, and map.html
 - `WD5yKI` — Planning checklist lead magnet; triggers from checklist modal on homepage and itinerary page; also inline on trip builder and booking guide
+
+### GA4 Event Tracking on MailerLite Forms
+The 5 pages with embedded MailerLite forms (index.html, 3-day-bourbon-trail-itinerary.html, map.html, trip-builder.html, bourbon-trail-booking-guide.html) each have a MutationObserver in their GA4 init `<script>` block (trip-builder has it in its own `<script>` block immediately after the MailerLite script). The observer watches for `.ml-form-successBody` changing from `display:none` to visible — the exact DOM transition MailerLite makes on confirmed subscription. It fires `gtag('event', 'email_signup', {'method': ...})` at most once per form per page load.
+
+- `CliYpr` → `method: 'pdf_map'`
+- `WD5yKI` → `method: 'checklist'`
+
+**If adding a new page with a MailerLite form**, copy the observer one-liner from any existing form page's GA4 init block and add it there. The dataLayer.push interception approach was tried first and confirmed broken — MailerLite does not push `form_submit` to the dataLayer for `ml-embedded` forms.
+
+`trip_builder_complete` fires in `openEmailModal()` in trip-builder.html with the stop count as `{'stops': N}`.
 
 ### Free Resources Modal Pattern
 Homepage and itinerary page have a unified "Free Trip Planning Resources" section with two gold-border cards side by side (stacking on mobile). Each card opens its own modal containing the MailerLite form — no inline embedded widgets in the page flow. Modal functions: `openPdfModal()` / `closePdfModal()` and `openChecklistModal()` / `closeChecklistModal()`. Both modals share z-index 2000 and close on outside click or Escape. map.html has the PDF map modal only (no checklist modal).
