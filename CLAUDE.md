@@ -247,6 +247,7 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
   - 21c Museum Louisville: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2F21c-museum.html`
   - Hampton Inn Louisville: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fhampton-inn-louisville-downtown.html`
   - Bardstown Motor Lodge: `https://www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fbardstown-motor-lodge.html`
+  - The Trail Hotel (Bardstown): `https://www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fthe-trail.html`
   - Old Talbott Tavern: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fthe-old-talbott-tavern.html`
   - Capital Plaza (Frankfort): `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fcapital-plaza.html`
   - 21c Museum Lexington: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2F21c-museum-lexington.html`
