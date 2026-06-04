@@ -91,24 +91,24 @@ Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdi
 
 ## Monetization — Affiliate Links (LIVE)
 
-### Awin / Booking.com Setup
-- **Network:** Awin (affiliate.booking.com routes through Awin)
-- **Advertiser:** Booking.com (search "Booking" in Awin advertiser directory)
-- **Link format:** tidd.ly short URLs generated via Awin Link Builder
+### CJ Affiliate / Booking.com Setup
+- **Network:** CJ Affiliate (formerly Commission Junction) — migrated from Awin June 2026
+- **Advertiser:** Booking.com via CJ
+- **Link format:** kqzyfj.com / anrdoezrs.net / tkqlhce.com / jdoqocy.com domains (all CJ tracking domains) with `click-101752228-17293132` publisher ID
 - **Commission:** Earned on ANY Booking.com property booked through the affiliate link (not just the linked property). Cookie window ~30 days.
 
 ### Active Affiliate Links
 **where-to-stay-bourbon-trail.html (10 links):**
-- The New Hope Bourbon Stop (Kyle's property): `https://tidd.ly/4scCPU3` + direct Airbnb + direct VRBO
-- Hotel Distil (Louisville): `https://tidd.ly/4rmKbD4`
-- Omni Louisville: `https://tidd.ly/4utpUPh`
-- 21c Museum Hotel Louisville: `https://tidd.ly/4bfe16C`
-- Hampton Inn Downtown Louisville: `https://tidd.ly/4rq4qzZ`
-- Bardstown Motor Lodge: `https://tidd.ly/4bixMds`
-- Old Talbott Tavern & Inn: `https://tidd.ly/4blCaIQ`
-- Capital Plaza Hotel (Frankfort): `https://tidd.ly/46U1lRk`
-- 21c Museum Hotel Lexington: `https://tidd.ly/4lvKDh9`
-- Hilton Lexington Downtown: `https://tidd.ly/4cFuH9U`
+- The New Hope Bourbon Stop (Kyle's property): `https://www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fnew-hope-bourbon-stop-new-hope.html` + direct Airbnb + direct VRBO
+- Hotel Distil (Louisville): `https://www.anrdoezrs.net/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fautograph-collection-distil.html`
+- Omni Louisville: `https://www.tkqlhce.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fomni-louisville.html`
+- 21c Museum Hotel Louisville: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2F21c-museum.html`
+- Hampton Inn Downtown Louisville: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fhampton-inn-louisville-downtown.html`
+- Bardstown Motor Lodge: `https://www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fbardstown-motor-lodge.html`
+- Old Talbott Tavern & Inn: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fthe-old-talbott-tavern.html`
+- Capital Plaza Hotel (Frankfort): `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fcapital-plaza.html`
+- 21c Museum Hotel Lexington: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2F21c-museum-lexington.html`
+- Hilton Lexington Downtown: `https://www.anrdoezrs.net/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fhilton-lexington-downtown.html`
 
 **3-day-bourbon-trail-itinerary.html (2 links):**
 - New Hope Bourbon Stop: Booking.com affiliate + Airbnb + VRBO
@@ -120,7 +120,7 @@ Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdi
 ### Kyle's Direct Property Links
 - **Airbnb:** https://www.airbnb.com/rooms/1133406907482529297
 - **VRBO (affiliate):** https://vrbo.com/affiliate/VD0a4b2
-- **Booking.com (affiliate):** https://tidd.ly/4scCPU3
+- **Booking.com (affiliate):** https://www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fnew-hope-bourbon-stop-new-hope.html
 
 ### CJ Affiliate / VRBO Setup
 - **Network:** CJ Affiliate (formerly Commission Junction)

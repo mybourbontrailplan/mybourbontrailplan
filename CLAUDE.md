@@ -66,7 +66,7 @@ After running the IndexNow script, paste the output back to the user so they can
 - Maps: Leaflet.js with CartoDB Light tiles
 - Analytics: Google Analytics (G-DVK4D6KJJP) on all pages; custom events: `email_signup` (MailerLite form success) and `trip_builder_complete` (itinerary export)
 - Email marketing: MailerLite (account ID 2164831, universal script on every page after GA script)
-- Affiliate links: Awin/Booking.com (tidd.ly short URLs), CJ Affiliate/VRBO, direct Airbnb
+- Affiliate links: CJ Affiliate/Booking.com (kqzyfj.com/anrdoezrs.net/tkqlhce.com/jdoqocy.com tracking domains), CJ Affiliate/VRBO, direct Airbnb
 - Email obfuscation: Contact and About pages use JS-rendered email to prevent mangling
 - Search Console verified via meta tag on all pages
 
@@ -238,7 +238,7 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 - Sitemap at `sitemap.xml` — update when adding any new page
 
 ## Affiliate Links — DO NOT modify these URLs
-- Booking.com links use `tidd.ly` short URLs generated via Awin
+- Booking.com links use CJ Affiliate tracking URLs (publisher ID 101752228-17293132) — migrated from Awin/tidd.ly in June 2026
 - VRBO link: `https://vrbo.com/affiliate/VD0a4b2`
 - Kyle's Airbnb: direct link (no affiliate network)
 - Commission is earned on ANY Booking.com booking through the affiliate link, not just the linked property

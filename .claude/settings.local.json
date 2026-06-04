@@ -14,7 +14,11 @@
       "Bash(git -C C:/Users/cowde/Desktop/mybourbontrailplan show a37970f:distillery-buffalo-trace.html)",
       "Bash(git -C C:/Users/cowde/Desktop/mybourbontrailplan show a37970f:distillery-larrikin.html)",
       "Bash(git -C C:/Users/cowde/Desktop/mybourbontrailplan show a37970f:distillery-lux-row.html)",
-      "WebFetch(domain:generalgeorge.store)"
+      "WebFetch(domain:generalgeorge.store)",
+      "WebFetch(domain:pensivedistilling.com)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
