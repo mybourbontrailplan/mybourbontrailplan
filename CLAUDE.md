@@ -294,6 +294,7 @@ The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-co
 - **Log Still is in New Haven, KY** (not New Hope) — Kyle's Airbnb is in New Hope, these are different places
 
 ## Content Accuracy Notes
+- **KDA Passport program ended July 2025** — do NOT reference the Kentucky Bourbon Trail Passport, stamp program, or KDA companion app anywhere on the site. The program is discontinued. If a page mentions it, remove the reference.
 - Kyle has real bourbon trail experience — the site reflects honest, opinionated reviews
 - Distilleries CAN pay for featured listings but CANNOT change ratings (disclosed on About page)
 - Visitor stat: "Record 2.7 million annual visitors and growing" (use as evergreen)
