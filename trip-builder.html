@@ -8,10 +8,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="google-site-verification" content="xBRQpYUAaKc9LyyM8bvl9jPKPpNy57MIPW6Wdhwg_4c" />
-<title>Bourbon Trail Trip Builder — Plan Your Custom Route | Bourbon Trail Planner</title>
+<title>Bourbon Trail Trip Builder: Plan Your Custom Route | Bourbon Trail Planner</title>
 <meta name="description" content="Build your perfect Kentucky Bourbon Trail itinerary. Add distilleries, see drive times, get smart tips, and export your plan. Free, no account needed.">
 <link rel="canonical" href="https://mybourbontrailplan.com/trip-builder.html">
-<meta property="og:title" content="Bourbon Trail Trip Builder — Plan Your Custom Route">
+<meta property="og:title" content="Bourbon Trail Trip Builder: Plan Your Custom Route">
 <meta property="og:description" content="Build a custom Kentucky Bourbon Trail itinerary. Add distilleries, see drive times, get smart pacing tips. Free, no account needed.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mybourbontrailplan.com/trip-builder.html">
@@ -244,7 +244,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
     <div class="mobile-drawer-handle" onclick="toggleMobileTrip()"><span class="drawer-hint">Tap to close</span></div>
     <div class="sidebar-header"><div class="sidebar-title">Your Trip</div><button class="sidebar-close-btn" onclick="toggleMobileTrip()">&times;</button><div class="sidebar-sub">Add stops from the browse panel or map</div><div class="sidebar-header-actions"><button class="mobile-export-btn" id="mobileExportBtn" onclick="openEmailModal()" disabled>Email Me This Itinerary</button><button class="mobile-clear-btn" onclick="clearTrip()">Clear</button></div></div>
     <div class="day-tabs" id="dayTabs"><button class="day-tab active" data-day="1" onclick="switchDay(1)">Day 1 <span class="tab-count" id="count-1">0</span></button><button class="day-tab" data-day="2" onclick="switchDay(2)">Day 2 <span class="tab-count" id="count-2">0</span></button><button class="day-tab" data-day="3" onclick="switchDay(3)">Day 3 <span class="tab-count" id="count-3">0</span></button><button class="add-day-btn" id="addDayBtn" onclick="addDay()">+ Day</button></div>
-    <div class="stops-area" id="stopsArea"><div class="empty-guide"><svg class="empty-guide-icon" width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><div class="empty-guide-title">Your trip starts here</div><div class="empty-guide-sub">Build a day-by-day itinerary across 59 distilleries and 5 regions.</div><div class="empty-guide-steps"><div class="empty-guide-step"><div class="empty-guide-num">1</div><div class="empty-guide-text"><strong>Pick a region</strong> &mdash; click any region button on the map</div></div><div class="empty-guide-step"><div class="empty-guide-num">2</div><div class="empty-guide-text"><strong>Add stops</strong> &mdash; hit + on any distillery card to add it to your day</div></div><div class="empty-guide-step"><div class="empty-guide-num">3</div><div class="empty-guide-text"><strong>Email your plan</strong> &mdash; export the full itinerary when you&rsquo;re done</div></div></div></div></div>
+    <div class="stops-area" id="stopsArea"><div class="empty-guide"><svg class="empty-guide-icon" width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><div class="empty-guide-title">Your trip starts here</div><div class="empty-guide-sub">Build a day-by-day itinerary across 59 distilleries and 5 regions.</div><div class="empty-guide-steps"><div class="empty-guide-step"><div class="empty-guide-num">1</div><div class="empty-guide-text"><strong>Pick a region</strong>: click any region button on the map</div></div><div class="empty-guide-step"><div class="empty-guide-num">2</div><div class="empty-guide-text"><strong>Add stops</strong>: hit + on any distillery card to add it to your day</div></div><div class="empty-guide-step"><div class="empty-guide-num">3</div><div class="empty-guide-text"><strong>Email your plan</strong>: export the full itinerary when you&rsquo;re done</div></div></div></div></div>
     <div class="sidebar-footer" id="sidebarFooter" style="display:none"><div class="trip-stats"><div class="trip-stat"><div class="trip-stat-val" id="statStops">0</div><div class="trip-stat-label">Stops</div></div><div class="trip-stat"><div class="trip-stat-val" id="statDrive">—</div><div class="trip-stat-label">Drive (today)</div></div><div class="trip-stat"><div class="trip-stat-val" id="statCost">$0</div><div class="trip-stat-label">Tour cost</div></div><div class="trip-stat"><div class="trip-stat-val" id="statDays">—</div><div class="trip-stat-label">Days</div></div></div><button class="export-btn" id="exportBtn" onclick="openEmailModal()" disabled>Email Me This Itinerary</button><button class="clear-btn" onclick="clearTrip()">Clear all stops</button></div>
   </div>
 </div>
@@ -256,7 +256,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
     <p class="modal-sub">Your email app should have opened with your full trip plan. It's also been copied to your clipboard just in case.</p>
     <div class="modal-bonus">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-      <span><strong>Want our free planning checklist too?</strong> Booking timeline, packing list, and budget worksheet — delivered to your inbox.</span>
+      <span><strong>Want our free planning checklist too?</strong> Booking timeline, packing list, and budget worksheet, delivered to your inbox.</span>
     </div>
     <!-- MAILERLITE FORM: Replace YOUR_FORM_ID with your actual MailerLite form ID -->
     <div class="ml-embedded" data-form="WD5yKI"></div>
@@ -313,7 +313,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 {id:"old-pogue",name:"Old Pogue Distillery",lat:38.5440,lng:-84.1410,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-old-pogue.html",desc:"Maysville heritage brand. Civil War-era recipe revived.",rating:7.4,bookWeeks:"Walk-up"},
 {id:"hartfield",name:"Hartfield & Co.",lat:38.5050,lng:-84.2980,region:"Northern",type:"Craft",cost:"$10–$15",costAvg:10,booking:"Easy",profile:"distillery-hartfield.html",desc:"Paris, KY craft distillery. First in Bourbon County since Prohibition.",rating:7.6,bookWeeks:"Walk-up"},
 {id:"wenzel",name:"Wenzel Whiskey",lat:38.9840,lng:-84.6490,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-wenzel.html",desc:"Small-batch Northern KY craft whiskey. Pair with New Riff.",rating:7.3,bookWeeks:"Walk-up"},
-{id:"augusta",name:"Augusta Distillery",lat:38.7731,lng:-83.9968,region:"Northern",type:"Craft",cost:"$29–$99",costAvg:29,booking:"Moderate",profile:"distillery-augusta.html",desc:"Award-winning Buckner's bourbon — Best Bourbon at 2023 SF World Spirits. River Proof Barrel Experience is a trail highlight.",rating:8.1,bookWeeks:"2–3 wks"},
+{id:"augusta",name:"Augusta Distillery",lat:38.7731,lng:-83.9968,region:"Northern",type:"Craft",cost:"$29–$99",costAvg:29,booking:"Moderate",profile:"distillery-augusta.html",desc:"Award-winning Buckner's bourbon, Best Bourbon at 2023 SF World Spirits. River Proof Barrel Experience is a trail highlight.",rating:8.1,bookWeeks:"2–3 wks"},
 {id:"baker-bird",name:"Becker & Bird Distillery",lat:38.6360,lng:-83.7740,region:"Northern",type:"Craft",cost:"$10–$20",costAvg:12,booking:"Easy",profile:"distillery-baker-bird.html",desc:"Historic Augusta winery and distillery combo on the Ohio River.",rating:7.5,bookWeeks:"Walk-up"},
 {id:"green-river",name:"Green River Distilling",lat:37.7740,lng:-87.1130,region:"Western",type:"Major",cost:"$10–$25",costAvg:15,booking:"Easy",profile:"distillery-green-river.html",desc:"One of Kentucky's oldest brands reborn in Owensboro.",rating:8.1,bookWeeks:"Walk-up"},
 {id:"general-george",name:"General George Stillhouse",lat:37.5607,lng:-86.5326,region:"Western",type:"Craft",cost:"See website",costAvg:20,booking:"Easy",profile:"distillery-general-george.html",desc:"Historic Washington land. Farm-to-glass bourbon, gin, and vodka. Ambassador's barrel-thieving tour is the standout experience.",rating:7.0,bookWeeks:"Walk-up"},
@@ -332,36 +332,36 @@ const RG={Louisville:'Louisville',Bardstown:'Bardstown',Loretto:'Bardstown',Cler
 function grp(r){return RG[r]||'Other'}
 
 const pairings=[
-{a:"augusta",b:"baker-bird",tip:"Augusta Distillery and Becker & Bird are both in Augusta, KY — easy same-day pairing in this charming Ohio River town.",type:"good"},
-{a:"buffalo-trace",b:"castle-key",tip:"Buffalo Trace and Castle & Key are 10 min apart — perfect Frankfort pairing.",type:"good"},
+{a:"augusta",b:"baker-bird",tip:"Augusta Distillery and Becker & Bird are both in Augusta, KY, easy same-day pairing in this charming Ohio River town.",type:"good"},
+{a:"buffalo-trace",b:"castle-key",tip:"Buffalo Trace and Castle & Key are 10 min apart, perfect Frankfort pairing.",type:"good"},
 {a:"old-forester",b:"evan-williams",tip:"Old Forester and Evan Williams are a 2-min walk on Whiskey Row.",type:"good"},
 {a:"buzzards-roost",b:"evan-williams",tip:"Buzzard's Roost and Evan Williams are a 2-min walk apart on Whiskey Row.",type:"good"},
 {a:"buzzards-roost",b:"michters",tip:"Buzzard's Roost and Michter's are neighbors on Whiskey Row.",type:"good"},
 {a:"old-forester",b:"michters",tip:"Old Forester and Michter's are neighbors on Whiskey Row.",type:"good"},
-{a:"michters",b:"peerless",tip:"Michter's and Peerless are a 3-min walk — closest pairing in Louisville.",type:"good"},
+{a:"michters",b:"peerless",tip:"Michter's and Peerless are a 3-min walk, closest pairing in Louisville.",type:"good"},
 {a:"heaven-hill",b:"preservation",tip:"Heaven Hill and Preservation are minutes apart in Bardstown.",type:"good"},
 {a:"heaven-hill",b:"willett",tip:"Willett is right down the road from Heaven Hill.",type:"good"},
 {a:"woodford-reserve",b:"wild-turkey",tip:"Woodford and Wild Turkey are 20 min apart through horse country.",type:"good"},
 {a:"woodford-reserve",b:"four-roses",tip:"Woodford and Four Roses are close. Natural pairing.",type:"good"},
 {a:"makers-mark",b:"heaven-hill",tip:"Maker's Mark to Heaven Hill is ~30 min. Good Bardstown combo.",type:"good"},
-{a:"glenns-creek",b:"buffalo-trace",tip:"Glenns Creek is 15 min from Buffalo Trace — easy Frankfort pairing.",type:"good"},
+{a:"glenns-creek",b:"buffalo-trace",tip:"Glenns Creek is 15 min from Buffalo Trace, easy Frankfort pairing.",type:"good"},
 {a:"glenns-creek",b:"castle-key",tip:"Glenns Creek and Castle & Key are both on Glenns Creek Rd.",type:"good"},
 {a:"j-mattingly",b:"buffalo-trace",tip:"J. Mattingly is 5 min from Buffalo Trace in downtown Frankfort.",type:"good"},
 {a:"james-e-pepper",b:"barrel-house",tip:"James E. Pepper and Barrel House are neighbors in the Distillery District.",type:"good"},
-{a:"dark-arts",b:"james-e-pepper",tip:"Dark Arts and James E. Pepper are both in the Distillery District — easy walkable pair.",type:"good"},
+{a:"dark-arts",b:"james-e-pepper",tip:"Dark Arts and James E. Pepper are both in the Distillery District, easy walkable pair.",type:"good"},
 {a:"dark-arts",b:"barrel-house",tip:"Dark Arts and Barrel House are a short walk apart in the Distillery District.",type:"good"},
-{a:"copper-kings",b:"rabbit-hole",tip:"Copper & Kings and Rabbit Hole are both in Butchertown/NuLu — walk between them.",type:"good"},
-{a:"boone-county",b:"second-sight",tip:"Boone County and Second Sight are both in Northern KY — pair for a NKY day.",type:"good"},
-{a:"pensive",b:"new-riff",tip:"Pensive and New Riff are both in Newport — under a mile apart. Perfect Northern KY double.",type:"good"},
+{a:"copper-kings",b:"rabbit-hole",tip:"Copper & Kings and Rabbit Hole are both in Butchertown/NuLu - walk between them.",type:"good"},
+{a:"boone-county",b:"second-sight",tip:"Boone County and Second Sight are both in Northern KY - pair for a NKY day.",type:"good"},
+{a:"pensive",b:"new-riff",tip:"Pensive and New Riff are both in Newport - under a mile apart. Perfect Northern KY double.",type:"good"},
 {a:"new-riff",b:"second-sight",tip:"New Riff and Second Sight are 5 min apart in Northern KY.",type:"good"},
-{a:"casey-jones",b:"dueling-grounds",tip:"Casey Jones and Dueling Grounds are both near the TN border — combine them.",type:"good"},
+{a:"casey-jones",b:"dueling-grounds",tip:"Casey Jones and Dueling Grounds are both near the TN border - combine them.",type:"good"},
 {a:"mb-roland",b:"casey-jones",tip:"MB Roland and Casey Jones make a Western KY craft day.",type:"good"},
 {a:"green-river",b:"bh-james",tip:"Green River and B.H. James are both in the Owensboro area.",type:"good"},
-{a:"bulleit",b:"jeptha-creed",tip:"Bulleit and Jeptha Creed are both in Shelbyville — 15 min apart.",type:"good"},
+{a:"bulleit",b:"jeptha-creed",tip:"Bulleit and Jeptha Creed are both in Shelbyville - 15 min apart.",type:"good"},
 {a:"chicken-cock",b:"the-bard",tip:"Chicken Cock and The Bard are a 3-min walk in downtown Bardstown.",type:"good"}
 ];
 const BW={"buffalo-trace":"Buffalo Trace books out 6–8 weeks ahead. Book first.","angels-envy":"Angel's Envy sells out weekends. Book 4–6 weeks ahead.","makers-mark":"Maker's Mark hand-dip books out. Reserve 4–6 weeks ahead."};
-function getTips(ds){const t=[],ids=ds.map(s=>s.id);pairings.forEach(p=>{if(ids.includes(p.a)&&ids.includes(p.b))t.push({text:p.tip,type:p.type})});if(ds.length>=4)t.push({text:"4+ stops is ambitious with tastings. Consider moving one.",type:"warn"});if(ds.length>=5)t.push({text:"5 stops will be exhausting. Trim this day.",type:"warn"});ds.forEach(s=>{if(BW[s.id])t.push({text:BW[s.id],type:"info"})});const rr=[...new Set(ds.map(s=>grp(s.region)))];if(rr.length>=3&&ds.length>=3)t.push({text:"Covering "+rr.length+" regions — lots of driving. Group by region.",type:"warn"});return t}
+function getTips(ds){const t=[],ids=ds.map(s=>s.id);pairings.forEach(p=>{if(ids.includes(p.a)&&ids.includes(p.b))t.push({text:p.tip,type:p.type})});if(ds.length>=4)t.push({text:"4+ stops is ambitious with tastings. Consider moving one.",type:"warn"});if(ds.length>=5)t.push({text:"5 stops will be exhausting. Trim this day.",type:"warn"});ds.forEach(s=>{if(BW[s.id])t.push({text:BW[s.id],type:"info"})});const rr=[...new Set(ds.map(s=>grp(s.region)))];if(rr.length>=3&&ds.length>=3)t.push({text:"Covering "+rr.length+" regions - lots of driving. Group by region.",type:"warn"});return t}
 
 let trip={1:[],2:[],3:[]},aDay=1,tDays=3,MM={},rLines=[],map,aRF='all',regMk=[];
 
@@ -473,7 +473,7 @@ function calcDr(a,b){const R=3959,dL=(b.lat-a.lat)*Math.PI/180,dG=(b.lng-a.lng)*
 function renderStops(){
   const area=document.getElementById('stopsArea'),stops=trip[aDay]||[];
   for(let d=1;d<=tDays;d++){const el=document.getElementById('count-'+d);if(el)el.textContent=(trip[d]||[]).length}
-  if(!stops.length){const allEmpty=Object.values(trip).every(d=>!d.length);area.innerHTML=allEmpty?'<div class="empty-guide"><svg class="empty-guide-icon" width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><div class="empty-guide-title">Your trip starts here</div><div class="empty-guide-sub">Build a day-by-day itinerary across 59 distilleries and 5 regions.</div><div class="empty-guide-steps"><div class="empty-guide-step"><div class="empty-guide-num">1</div><div class="empty-guide-text"><strong>Pick a region</strong> — click any region button on the map</div></div><div class="empty-guide-step"><div class="empty-guide-num">2</div><div class="empty-guide-text"><strong>Add stops</strong> — hit + on any distillery card to add it to your day</div></div><div class="empty-guide-step"><div class="empty-guide-num">3</div><div class="empty-guide-text"><strong>Email your plan</strong> — export the full itinerary when you’re done</div></div></div></div>':'<div class="empty-state"><svg width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><h3>No stops on Day '+aDay+'</h3><p>Browse distilleries and click + to add</p></div>';document.getElementById('sidebarFooter').style.display='none';return}
+  if(!stops.length){const allEmpty=Object.values(trip).every(d=>!d.length);area.innerHTML=allEmpty?'<div class="empty-guide"><svg class="empty-guide-icon" width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><div class="empty-guide-title">Your trip starts here</div><div class="empty-guide-sub">Build a day-by-day itinerary across 59 distilleries and 5 regions.</div><div class="empty-guide-steps"><div class="empty-guide-step"><div class="empty-guide-num">1</div><div class="empty-guide-text"><strong>Pick a region</strong>: click any region button on the map</div></div><div class="empty-guide-step"><div class="empty-guide-num">2</div><div class="empty-guide-text"><strong>Add stops</strong>: hit + on any distillery card to add it to your day</div></div><div class="empty-guide-step"><div class="empty-guide-num">3</div><div class="empty-guide-text"><strong>Email your plan</strong>: export the full itinerary when you’re done</div></div></div></div>':'<div class="empty-state"><svg width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><h3>No stops on Day '+aDay+'</h3><p>Browse distilleries and click + to add</p></div>';document.getElementById('sidebarFooter').style.display='none';return}
   document.getElementById('sidebarFooter').style.display='';
   let h='';
   stops.forEach((s,i)=>{
@@ -529,7 +529,7 @@ function buildItineraryText(){
   s+=all.length+' stops · '+activeDays+' day'+(activeDays>1?'s':'')+' · ~$'+totalCost+' in tour costs\n\n';
   if(activeDays>=2){
     s+='NEED A PLACE TO STAY?\n';
-    s+='The New Hope Bourbon Stop — top-rated rental near Bardstown\n';
+    s+='The New Hope Bourbon Stop - top-rated rental near Bardstown\n';
     s+='Book: www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fnew-hope-bourbon-stop-new-hope.html\n';
     s+='Airbnb: airbnb.com/rooms/1133406907482529297\n';
     s+='VRBO: vrbo.com/affiliate/VD0a4b2\n\n';
