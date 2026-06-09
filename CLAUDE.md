@@ -273,7 +273,7 @@ The 5 pages with embedded MailerLite forms (index.html, 3-day-bourbon-trail-itin
 - `CliYpr` → `method: 'pdf_map'`
 - `WD5yKI` → `method: 'checklist'`
 
-**If adding a new page with a MailerLite form**, copy the observer one-liner from any existing form page's GA4 init block and add it there. The dataLayer.push interception approach was tried first and confirmed broken — MailerLite does not push `form_submit` to the dataLayer for `ml-embedded` forms.
+**If adding a new page with a MailerLite form**, copy the observer one-liner from any existing form page's GA4 init block and add it there. The dataLayer.push interception approach was tried first and confirmed broken — MailerLite does not push `form_submit` to the dataLayer for `ml-embedded` forms. Ensure the `gtag` call inside the observer is guarded with `if(typeof gtag==='function'){...}`.
 
 `trip_builder_complete` fires in `openEmailModal()` in trip-builder.html with the stop count as `{'stops': N}`.
 
@@ -286,7 +286,8 @@ The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-co
 ## Known Gotchas
 - **Notepad++ Find in Files** was previously used for batch changes — with Claude Code, this is no longer needed. Just describe the batch change and Claude Code will handle it.
 - **MailerLite universal script** must be on every new page (after GA script, before closing body tag)
-- **GA script** must be on every new page (in head)
+- **GA script** must be on every new page (in head) — use exactly two separate `<script>` tags: (1) `<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVK4D6KJJP"></script>` and (2) `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DVK4D6KJJP');</script>`. Never embed one `<script>` tag inside another — the HTML parser will misread it, the JS will throw a syntax error, and `gtag` will be undefined on the whole page.
+- **All `gtag(...)` calls must be guarded** — always wrap as `if(typeof gtag==='function'){gtag(...)}` so a tracker failure can never abort a user-facing action (e.g. opening a modal or firing a mailto link)
 - **iOS Safari text inflation** — all pages need `-webkit-text-size-adjust: 100%` in the html CSS rule
 - **No OverlappingMarkerSpiderfier** — was removed from the trip builder, don't re-add it
 - **Barton 1792** — not open to the public; profile file exists (`distillery-barton-1792.html`) but is intentionally excluded from the site. Do NOT add to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`
