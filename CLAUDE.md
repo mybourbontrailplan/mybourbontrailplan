@@ -283,6 +283,26 @@ Homepage and itinerary page have a unified "Free Trip Planning Resources" sectio
 ## Google Drive Artifact Files
 The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-cock (1).html`, `guides (1).html`). These are Google Drive sync duplicates — identical to the originals, not separate pages. Also `.tmp.driveupload/` folder accumulates Google Drive temp files. Neither should be edited or referenced; they can be cleaned up by deleting them, but they're harmless if left in place.
 
+## Copy Style
+
+### Em Dashes
+Do not use em dashes (`—` or `&mdash;`) anywhere in site content. The site was fully de-em-dashed in June 2026 (1,018 instances). Use context-appropriate punctuation instead:
+
+| Context | Replacement |
+|---|---|
+| `<title>`, `og:title`, JSON-LD `headline` (Title — Subtitle) | `: ` |
+| H1–H6 heading with no existing colon | `: ` |
+| H1–H6 heading that already contains `: ` | `, ` |
+| `<strong>Label</strong> — Description` (itinerary/day-stop lists, trip builder instructions) | `: ` |
+| Body copy, card descriptions, meta descriptions | `, ` |
+| Short connective phrases where comma reads awkwardly | ` - ` (regular hyphen with spaces) |
+
+If a batch of em dashes ever needs removing (e.g. after importing copy from another source), run `python scripts/remove_em_dashes.py` from the project root.
+
+### Other Punctuation
+- Regular hyphens (` - `) are acceptable when a comma would create an awkward run-on in body copy
+- No smart/curly quotes in HTML — use straight quotes or HTML entities
+
 ## Known Gotchas
 - **Notepad++ Find in Files** was previously used for batch changes — with Claude Code, this is no longer needed. Just describe the batch change and Claude Code will handle it.
 - **MailerLite universal script** must be on every new page (after GA script, before closing body tag)
