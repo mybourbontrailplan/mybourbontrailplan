@@ -108,7 +108,7 @@ All named `distillery-{name}.html`. All use the standardized template (white fro
 ### Other
 - `sitemap.xml` — 76 URLs, all using `mybourbontrailplan.com` domain
 - `bourbon-trail-planning-checklist.pdf` — Lead magnet delivered via MailerLite
-- `bourbon-trail-map.pdf` — Printable/downloadable bourbon trail map; linked from homepage and map.html
+- `bourbon-trail-map.pdf` — Printable/downloadable bourbon trail map; linked from homepage and map.html. There is no HTML/source file for this PDF, it's edited directly in place with PyMuPDF. Use `scripts/pdf_map_add_distillery.py` to add a new distillery (map dot + checklist row) — see that script's docstring for how it works, including the row-shifting it does when a section isn't the last one in its column.
 - `images/` — Distillery photos, named `{distillery}-1.jpg`, `{distillery}-2.jpg`, etc. All photos are EXIF-rotation-fixed and optimized for web (max 1200px, ~80% JPEG quality)
 
 ## Nav & Footer Template (ALL pages)
@@ -220,6 +220,7 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 5. Update region counts in the code if applicable
 6. Also add to `distilleries.html` and `sitemap.xml`
 7. Add `TouristAttraction` JSON-LD schema to the new profile's `<head>` — include `address`, `geo`, `telephone`, `openingHours`, `url`, `sameAs` (see `scripts/add_schema.py` for the exact structure). Do NOT include a `review` block.
+8. Add it to `bourbon-trail-map.pdf` too: `python scripts\pdf_map_add_distillery.py --name "..." --location "City, KY" --region "..."` (region must exactly match one of the six section headers, e.g. `"Frankfort"`, `"Bardstown & New Hope"`)
 
 ## SEO Notes
 - All canonical URLs must point to `https://mybourbontrailplan.com/filename.html`

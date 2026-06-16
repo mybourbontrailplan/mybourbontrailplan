@@ -1,4 +1,7 @@
-".claude/" 
+".claude/"
 
 # Local Netlify folder
 .netlify
+
+# Python bytecode cache
+__pycache__/
