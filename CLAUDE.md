@@ -63,8 +63,8 @@ After running the IndexNow script, paste the output back to the user so they can
 ## Tech Stack
 - Static HTML/CSS/JS
 - Fonts: DM Sans (body) + Fraunces (display/headings)
-- Maps: Leaflet.js with CartoDB Light tiles
-- Analytics: Google Analytics (G-DVK4D6KJJP) on all pages; custom events: `email_signup` (MailerLite form success) and `trip_builder_complete` (itinerary export)
+- Maps: Leaflet.js with CartoDB Light tiles; SortableJS 1.15.6 (trip-builder drag-to-reorder, loaded from unpkg after Leaflet)
+- Analytics: Google Analytics (G-DVK4D6KJJP) on all pages; custom events: `email_signup` (MailerLite form success), `trip_builder_complete` (itinerary export), `share_link_copied` (Copy Trip Link button, includes stop count), `plan_loaded_from_link` (shared `?plan=` URL opened, includes stop count)
 - Email marketing: MailerLite (account ID 2164831, universal script on every page after GA script)
 - Affiliate links: CJ Affiliate/Booking.com (kqzyfj.com/anrdoezrs.net/tkqlhce.com/jdoqocy.com tracking domains), CJ Affiliate/VRBO, direct Airbnb
 - Email obfuscation: Contact and About pages use JS-rendered email to prevent mangling
@@ -82,7 +82,7 @@ After running the IndexNow script, paste the output back to the user so they can
 - `index.html` — Homepage
 - `3-day-bourbon-trail-itinerary.html` — Flagship SEO page with 2/3/4-day trip selector
 - `distilleries.html` — Directory with 59 filterable cards (region, type, booking) + sort by rating/A-Z; count is dynamically set on load via `applyFilters()`
-- `map.html` — Static interactive map with 59+ distilleries; height is `calc(100vh - 120px)` so content below is visible on scroll. PDF map CTA card opens a modal (no `#pdf-signup` inline section — that was removed). Features: distillery search box in sidebar (dropdown autocomplete, fly-to on click), collapsible region legend on mobile (collapsed by default), Kentucky state border rendered via `L.geoJSON()` fetched from PublicaMundi US states GeoJSON (fails silently if unavailable), pin labels visible at zoom 9+. **URL deep-link support** via `applyDeepLink()` at end of script — supports `?region=` (fits bounds to region, activates filter button) and `?distillery=` (flies to marker at zoom 14, opens popup); both params together apply region filter then highlight distillery (falls back to distillery-only if distillery isn't in that region). Region param values: `louisville`, `bardstown`, `frankfort`, `lexington`, `other`; `northern`/`central`/`western` all normalize to `other`. Distillery slug matches the `distillery-{slug}.html` filename pattern. Note: map.html uses `marker.addTo(map)` / `map.removeLayer()` for filter toggling (unlike trip-builder.html which uses setOpacity).
+- `map.html` — Static interactive map with 59+ distilleries; height is `calc(100vh - 120px)` so content below is visible on scroll. PDF map CTA card opens a modal (no `#pdf-signup` inline section — that was removed). Features: distillery search box in sidebar (dropdown autocomplete, fly-to on click), collapsible region legend on mobile (collapsed by default), Kentucky state border rendered via `L.geoJSON()` fetched from PublicaMundi US states GeoJSON (fails silently if unavailable), pin labels visible at zoom 9+. **URL deep-link support** via `applyDeepLink()` at end of script — supports `?region=` (fits bounds to region, activates filter button) and `?distillery=` (flies to marker at zoom 14, opens popup); both params together apply region filter then highlight distillery (falls back to distillery-only if distillery isn't in that region). Region param values: `louisville`, `bardstown`, `frankfort`, `lexington`, `other`; `northern`/`central`/`western` all normalize to `other`. Distillery slug matches the `distillery-{slug}.html` filename pattern. Note: map.html uses `marker.addTo(map)` / `map.removeLayer()` for filter toggling. trip-builder.html also uses `marker.addTo(map)` / `marker.removeFrom(map)` via `_addPin()`/`_removePin()` (not setOpacity).
 - `trip-builder.html` — Interactive trip builder (see Trip Builder section below)
 - `bourbon-trail-booking-guide.html` — 10-step booking checklist
 - `bourbon-trail-budget-guide.html` — Per-person cost breakdown
@@ -151,9 +151,8 @@ All 59 profiles have a standardized Contact section. Order must be:
 
 ### Architecture
 - 60 distilleries with Leaflet.js markers, region filters, smart pairing tips
-- Markers are added to the map ONCE and never removed from the DOM
-- Visibility is controlled via `setOpacity(1/0)` and `pointerEvents` toggling
-- **NEVER use `marker.addTo(map)` / `marker.removeFrom(map)` for showing/hiding** — this destroys DOM elements and breaks click handlers after repeated interactions
+- **Distillery dots** are managed via `_addPin(id)` / `_removePin(id)`, which call `marker.addTo(map)` and `marker.removeFrom(map)`. A `_onMap` boolean flag prevents duplicate adds/removes. Click handlers survive DOM recreation because they're attached to the Leaflet marker object, not the DOM element. Trip stop dots (added to the trip) are always kept on the map — `_addPin` is called for them regardless of zoom.
+- **Region overlay markers** are always on the map. When zoomed in (`show=true`), they're hidden by setting `opacity:0` and `pointer-events:none` on **both** the Leaflet icon wrapper (`m._icon`) **and** the inner `.region-overlay` child element — setting it on the wrapper alone is not sufficient because CSS `pointer-events:auto` on the child overrides the parent's inline `none` in HTML. Regions where this matters: Louisville (Old Forester, Evan Williams, Buzzard's Roost), Bardstown (Chicken Cock), Frankfort (Buffalo Trace, Castle & Key), Lexington (Fresh Bourbon).
 
 ### Mobile Layout
 - Breakpoint: 900px
@@ -180,6 +179,12 @@ All 59 profiles have a standardized Contact section. Order must be:
 - Desktop hover shows label on mouseover at any zoom (`@media (hover:hover)` so it doesn't fire on touch)
 - `filterRegion()` calls `handleZoom()` at the end so labels update immediately when the filter changes
 
+### handleZoom() vs updateZoomUI() — Important Split
+Two functions handle zoom-level changes:
+- **`updateZoomUI()`** — fires **immediately** on every `zoomend` and `moveend` event. Updates: back button visibility, region overlay opacity/pointer-events, map label class (`show-labels`). No debounce. This ensures UI elements never lag behind map movement.
+- **`handleZoom()`** — debounced 200ms after each `zoomend`/`moveend`. Calls `updateZoomUI()` first, then runs the expensive `_addPin`/`_removePin` loop over all 60 distilleries. The debounce prevents thrashing during fast zooming.
+- `filterRegion()` calls `handleZoom()` directly (not debounced) at the end so dots and labels update immediately when a region is selected.
+
 ### handleZoom() Thresholds (all filter-aware)
 - **Dot threshold** (`showThr`): `Math.min(10, RD[aRF].zoom)` when filtered, `10` when "All" — dots appear at the region's flyTo zoom
 - **Label threshold** (`labelZoom`): same formula as dot threshold — labels and dots appear together
@@ -205,9 +210,45 @@ All 59 profiles have a standardized Contact section. Order must be:
 - Detection: `const isMobile = window.innerWidth < 900` at map init time
 
 ### Mobile Back Button ("← All Regions")
-- `position:absolute; top:24px; left:12px` on mobile (bumped from 12px to 24px)
-- The fixed action bar (`top:56px`, ~58px tall) bottoms out at ~114px; `.app` starts at 100px; old `top:12px` put the button at 112px — directly under the action bar
+- `position:absolute; top:24px; left:54px` — `top:24px` clears the fixed action bar; `left:54px` clears the Leaflet zoom controls (~36px wide at left edge). Previous `left:12px` placed it directly behind the zoom control.
 - `z-index:600` — stays below the action bar (800); the extra `top` clearance keeps it visually below, not z-fighting above
+
+### Trip State Persistence (localStorage)
+- Key: `btp-plan`; stores `{trip, tDays, aDay}` as JSON
+- `saveState()` is called by every mutator (add stop, remove stop, drag reorder, clear, switch day, change day count)
+- `loadState()` returns `true` if valid saved data was found and applied
+- Both use a try/catch wrapper matching the existing `btp-seen` pattern — localStorage failure (private mode, quota) is always silent
+- On restore, `fitBounds()` zooms the map to fit all trip markers: `{padding:[60,60], maxZoom:13, animate:false}`. For a single stop, `setView` at zoom 13. This is required because the back button only appears at the region zoom threshold — restoring a trip at the default overview zoom would otherwise hide it.
+- `rebuildDayTabs()` handles 4-day restored plans: removes any tabs > 3 then recreates them up to `tDays`. Uses IIFE closures in `onclick` to correctly capture day number.
+
+### Shareable Trip URL (`?plan=` parameter)
+- Encoding: slugs comma-joined per day, days semicolon-separated. Example: `day1slug1,day1slug2;day2slug1;day3slug1,day3slug2`
+- `getShareURL()` builds the full URL; `getPlanString()` produces just the encoded plan portion
+- `importPlan(str)` decodes and populates `trip[]`; unknown slugs are silently skipped (forward-compatible)
+- After import, `history.replaceState` strips the `?plan=` param so subsequent edits don't re-import the original on refresh
+- Plan is immediately saved to localStorage after import so it persists if the user refreshes
+- `rebuildDayTabs()` is called after import to support shared 4-day plans
+- GA4 event `plan_loaded_from_link` fires on import (with stop count)
+
+### Copy Trip Link Button
+- Element: `.share-btn#shareBtn` in sidebar footer, between the email button and clear button
+- Disabled alongside `#exportBtn` when no stops are added (`updateStats()` drives both)
+- `copyShareLink()` tries `navigator.clipboard.writeText()` first, falls back to `fallbackCopy()` (textarea select/exec)
+- On success, shows a non-blocking fixed toast (`#shareToast`, z-index 1900) with a 5s auto-dismiss and an inline link to open the email modal
+- GA4 event `share_link_copied` fires on copy (with stop count)
+
+### Drag-to-Reorder Stops
+- SortableJS 1.15.6 is loaded from unpkg after the Leaflet script tag
+- Drag handle: `.drag-handle` div at the start of each `.stop-card` (six-dot SVG icon)
+- `Sortable.create(area, {...})` is called at the end of `renderStops()` after `innerHTML` is set. If a Sortable already exists on the element (`area._sortable`), it's destroyed first to prevent double-init
+- `delay:150` + `delayOnTouchOnly:true` — prevents drag from firing during normal scroll on touch; desktop drag starts immediately
+- `onEnd` handler reads the DOM order of `.stop-card[data-id]` elements, rebuilds `trip[aDay]` from that order, then calls `refreshIcons(); renderStops(); drawRoutes(); updateStats(); saveState()`
+- Do NOT use `delayOnTouchOnly:false` or remove `delay` — this causes the drag handle to intercept vertical scroll on mobile
+
+### Onboarding and Empty-State Copy
+- **Never hardcode distillery counts or region counts** in the onboarding badge or empty-state subhead — these numbers change as distilleries are added and become stale immediately.
+- Current onboarding badge: "Explore Kentucky distilleries · free to use" (no count)
+- Current empty-state subhead: "across Kentucky's best distilleries" (no count)
 
 ### Why Bottom Buttons Were Abandoned
 iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-area-inset-bottom)`. Multiple attempts with increased bottom values, dvh units, and @supports fallbacks all failed across iPhone 16 Pro and 17 Pro simultaneously. Top action bar eliminates all bottom-edge issues permanently.
@@ -217,7 +258,7 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 2. Check for pin overlap with nearby distilleries at zoom 14 — pins must be 28px+ apart
 3. Add to the distilleries array in trip-builder.html
 4. Add smart pairing tip if there's a nearby distillery within 5 min drive
-5. Update region counts in the code if applicable
+5. Update the region count in the relevant region overlay button HTML (e.g. "Western · 8 distilleries")
 6. Also add to `distilleries.html` and `sitemap.xml`
 7. Add `TouristAttraction` JSON-LD schema to the new profile's `<head>` — include `address`, `geo`, `telephone`, `openingHours`, `url`, `sameAs` (see `scripts/add_schema.py` for the exact structure). Do NOT include a `review` block.
 8. Add it to `bourbon-trail-map.pdf` too: `python scripts\pdf_map_add_distillery.py --name "..." --location "City, KY" --region "..."` (region must exactly match one of the six section headers, e.g. `"Frankfort"`, `"Bardstown & New Hope"`)
