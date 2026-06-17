@@ -9,10 +9,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="google-site-verification" content="xBRQpYUAaKc9LyyM8bvl9jPKPpNy57MIPW6Wdhwg_4c" />
 <title>Bourbon Trail Trip Builder: Plan Your Custom Route | Bourbon Trail Planner</title>
-<meta name="description" content="Build your perfect Kentucky Bourbon Trail itinerary. Add distilleries, see drive times, get smart tips, and export your plan. Free, no account needed.">
+<meta name="description" content="Plan your Kentucky Bourbon Trail trip free. Add distilleries, see drive times, get smart tips, then save, share, or email your itinerary, no account needed.">
 <link rel="canonical" href="https://mybourbontrailplan.com/trip-builder.html">
 <meta property="og:title" content="Bourbon Trail Trip Builder: Plan Your Custom Route">
-<meta property="og:description" content="Build a custom Kentucky Bourbon Trail itinerary. Add distilleries, see drive times, get smart pacing tips. Free, no account needed.">
+<meta property="og:description" content="Plan your Kentucky Bourbon Trail trip free. Add distilleries, see drive times, get smart tips, then save, share, or email your itinerary, no account needed.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mybourbontrailplan.com/trip-builder.html">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&display=swap" rel="stylesheet">
@@ -59,7 +59,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 .region-overlay{position:absolute;cursor:pointer;z-index:500;background:#fff;border-radius:10px;padding:10px 16px;text-align:center;box-shadow:var(--shadow-md);transition:transform .15s,box-shadow .15s;border:2px solid transparent;pointer-events:auto}
 .region-overlay:hover{transform:scale(1.06);box-shadow:var(--shadow-lg);border-color:var(--primary-light)}
 .region-overlay-name{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--primary-dark)}.region-overlay-count{font-size:11px;color:var(--text-light);margin-top:1px}
-.back-overview{position:absolute;top:12px;left:12px;z-index:600;padding:8px 14px;border-radius:8px;background:#fff;border:1.5px solid var(--border);font-family:var(--font-body);font-size:12.5px;font-weight:600;color:var(--text-secondary);cursor:pointer;box-shadow:var(--shadow-sm);display:none}.back-overview:hover{border-color:var(--primary-light);color:var(--primary)}
+.back-overview{position:absolute;top:12px;left:54px;z-index:600;padding:8px 14px;border-radius:8px;background:#fff;border:1.5px solid var(--border);font-family:var(--font-body);font-size:12.5px;font-weight:600;color:var(--text-secondary);cursor:pointer;box-shadow:var(--shadow-sm);display:none}.back-overview:hover{border-color:var(--primary-light);color:var(--primary)}
 .distillery-label{position:absolute;left:calc(100% + 4px);top:50%;transform:translateY(-50%);white-space:nowrap;background:rgba(255,255,255,.92);border:1px solid var(--border);border-radius:4px;padding:2px 6px;font-size:11px;font-family:var(--font-body);font-weight:600;color:var(--text);box-shadow:0 1px 3px rgba(0,0,0,.1);pointer-events:none;display:none}
 #map.show-labels .distillery-label{display:block}
 @media(hover:hover){.custom-marker:hover .distillery-label{display:block}}
@@ -183,6 +183,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 }
 .nav-links.mobile-open{display:flex;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:#fff;padding:16px 24px 24px;border-bottom:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,.08);gap:4px;z-index:1100}
 .nav-links.mobile-open li{width:100%}.nav-links.mobile-open a{display:block;padding:10px 0;font-size:16px;border-bottom:1px solid var(--border)}.nav-links.mobile-open a.nav-cta{text-align:center;margin-top:8px;border-bottom:none;border-radius:8px;padding:12px}
+.drag-handle{width:18px;height:20px;display:flex;align-items:center;justify-content:center;cursor:grab;color:var(--text-light);flex-shrink:0;border-radius:4px;transition:color .15s;-webkit-tap-highlight-color:transparent;touch-action:none}
+.drag-handle:hover{color:var(--text-secondary)}.drag-handle:active{cursor:grabbing}
+.share-btn{display:block;width:100%;padding:10px;border-radius:8px;border:1.5px solid var(--primary);background:#fff;color:var(--primary);font-family:var(--font-body);font-size:13.5px;font-weight:600;cursor:pointer;margin-top:6px;transition:background .15s}
+.share-btn:hover{background:var(--bg-subtle)}.share-btn:disabled{border-color:var(--border);color:var(--text-light);cursor:default;background:#fff}
+.share-toast{position:fixed;bottom:24px;right:24px;z-index:1900;background:#fff;border-radius:10px;padding:14px 32px 14px 16px;box-shadow:0 8px 28px rgba(0,0,0,.15);border:1px solid var(--border);max-width:260px;animation:popIn .2s ease-out;transition:opacity .3s}
+.share-toast-title{font-size:13.5px;font-weight:700;color:var(--primary-dark);margin-bottom:3px}
+.share-toast-sub{font-size:12px;color:var(--text-secondary);line-height:1.5}
+.share-toast-sub button{background:none;border:none;color:var(--primary-light);font-size:12px;font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
+.share-toast-close{position:absolute;top:6px;right:8px;background:none;border:none;color:var(--text-light);font-size:17px;cursor:pointer;line-height:1;padding:2px}.share-toast-close:hover{color:var(--text)}
 </style>
 
 <script type="application/ld+json">
@@ -190,7 +199,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Bourbon Trail Trip Builder",
-  "description": "Build your perfect Kentucky Bourbon Trail itinerary. Add distilleries, see drive times, get smart tips, and export your plan. Free, no account needed.",
+  "description": "Build your perfect Kentucky Bourbon Trail itinerary. Add distilleries, see drive times, and get smart tips, then save your plan, share a link to your live map, or email it. Free, no account needed.",
   "url": "https://mybourbontrailplan.com/trip-builder.html",
   "applicationCategory": "TravelApplication",
   "operatingSystem": "Web",
@@ -236,7 +245,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
   <div class="map-panel">
     <div id="map"></div>
     <button class="back-overview" id="backBtn" onclick="zoomOverview()">&#8592; All Regions</button>
-    <div class="onboard-overlay" id="onboard"><div class="onboard-card"><h2>Build Your Trip</h2><div class="onboard-badge">59 distilleries &middot; 5 regions &middot; free to use</div><div class="onboard-steps"><div class="onboard-step"><div class="onboard-step-num">1</div><div class="onboard-step-text"><div class="onboard-step-label">Pick a region</div><div class="onboard-step-desc">Tap any region button on the map, or use Browse to search all 59 distilleries by name, rating, or booking difficulty</div></div></div><div class="onboard-step"><div class="onboard-step-num">2</div><div class="onboard-step-text"><div class="onboard-step-label">Add stops to your days</div><div class="onboard-step-desc">Hit + on any distillery card to add it. Use the Day 1, 2, 3 tabs to spread stops across multiple days</div></div></div><div class="onboard-step"><div class="onboard-step-num">3</div><div class="onboard-step-text"><div class="onboard-step-label">Get tips and export</div><div class="onboard-step-desc">We flag smart pairings and drive-time estimates as you build. Email yourself the full plan when you&rsquo;re ready</div></div></div></div><button class="onboard-start" onclick="dismissOnboard()">Start Building &rarr;</button><button class="onboard-skip" onclick="dismissOnboard()">I&rsquo;ve been here before</button></div></div>
+    <div class="onboard-overlay" id="onboard"><div class="onboard-card"><h2>Build Your Trip</h2><div class="onboard-badge">59 distilleries &middot; 5 regions &middot; free to use</div><div class="onboard-steps"><div class="onboard-step"><div class="onboard-step-num">1</div><div class="onboard-step-text"><div class="onboard-step-label">Pick a region</div><div class="onboard-step-desc">Tap any region button on the map, or use Browse to search all 59 distilleries by name, rating, or booking difficulty</div></div></div><div class="onboard-step"><div class="onboard-step-num">2</div><div class="onboard-step-text"><div class="onboard-step-label">Add stops to your days</div><div class="onboard-step-desc">Hit + on any distillery card to add it. Use the Day 1, 2, 3 tabs to spread stops across multiple days</div></div></div><div class="onboard-step"><div class="onboard-step-num">3</div><div class="onboard-step-text"><div class="onboard-step-label">Save, share, and export</div><div class="onboard-step-desc">We flag smart pairings and drive times as you build. When you&rsquo;re ready, save your plan, share a link to the live map, or email the full itinerary.</div></div></div></div><button class="onboard-start" onclick="dismissOnboard()">Start Building &rarr;</button><button class="onboard-skip" onclick="dismissOnboard()">I&rsquo;ve been here before</button></div></div>
   </div>
   <button class="mobile-browse-btn" id="mobileBrowseBtn" onclick="toggleMobileBrowse()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Browse</button>
   <button class="mobile-trip-toggle" id="mobileTripBtn" onclick="toggleMobileTrip()">Your Trip <span class="toggle-badge" id="tripBadge">0</span></button>
@@ -245,7 +254,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
     <div class="sidebar-header"><div class="sidebar-title">Your Trip</div><button class="sidebar-close-btn" onclick="toggleMobileTrip()">&times;</button><div class="sidebar-sub">Add stops from the browse panel or map</div><div class="sidebar-header-actions"><button class="mobile-export-btn" id="mobileExportBtn" onclick="openEmailModal()" disabled>Email Me This Itinerary</button><button class="mobile-clear-btn" onclick="clearTrip()">Clear</button></div></div>
     <div class="day-tabs" id="dayTabs"><button class="day-tab active" data-day="1" onclick="switchDay(1)">Day 1 <span class="tab-count" id="count-1">0</span></button><button class="day-tab" data-day="2" onclick="switchDay(2)">Day 2 <span class="tab-count" id="count-2">0</span></button><button class="day-tab" data-day="3" onclick="switchDay(3)">Day 3 <span class="tab-count" id="count-3">0</span></button><button class="add-day-btn" id="addDayBtn" onclick="addDay()">+ Day</button></div>
     <div class="stops-area" id="stopsArea"><div class="empty-guide"><svg class="empty-guide-icon" width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><div class="empty-guide-title">Your trip starts here</div><div class="empty-guide-sub">Build a day-by-day itinerary across 59 distilleries and 5 regions.</div><div class="empty-guide-steps"><div class="empty-guide-step"><div class="empty-guide-num">1</div><div class="empty-guide-text"><strong>Pick a region</strong>: click any region button on the map</div></div><div class="empty-guide-step"><div class="empty-guide-num">2</div><div class="empty-guide-text"><strong>Add stops</strong>: hit + on any distillery card to add it to your day</div></div><div class="empty-guide-step"><div class="empty-guide-num">3</div><div class="empty-guide-text"><strong>Email your plan</strong>: export the full itinerary when you&rsquo;re done</div></div></div></div></div>
-    <div class="sidebar-footer" id="sidebarFooter" style="display:none"><div class="trip-stats"><div class="trip-stat"><div class="trip-stat-val" id="statStops">0</div><div class="trip-stat-label">Stops</div></div><div class="trip-stat"><div class="trip-stat-val" id="statDrive">—</div><div class="trip-stat-label">Drive (today)</div></div><div class="trip-stat"><div class="trip-stat-val" id="statCost">$0</div><div class="trip-stat-label">Tour cost</div></div><div class="trip-stat"><div class="trip-stat-val" id="statDays">—</div><div class="trip-stat-label">Days</div></div></div><button class="export-btn" id="exportBtn" onclick="openEmailModal()" disabled>Email Me This Itinerary</button><button class="clear-btn" onclick="clearTrip()">Clear all stops</button></div>
+    <div class="sidebar-footer" id="sidebarFooter" style="display:none"><div class="trip-stats"><div class="trip-stat"><div class="trip-stat-val" id="statStops">0</div><div class="trip-stat-label">Stops</div></div><div class="trip-stat"><div class="trip-stat-val" id="statDrive">—</div><div class="trip-stat-label">Drive (today)</div></div><div class="trip-stat"><div class="trip-stat-val" id="statCost">$0</div><div class="trip-stat-label">Tour cost</div></div><div class="trip-stat"><div class="trip-stat-val" id="statDays">—</div><div class="trip-stat-label">Days</div></div></div><button class="export-btn" id="exportBtn" onclick="openEmailModal()" disabled>Email Me This Itinerary</button><button class="share-btn" id="shareBtn" onclick="copyShareLink()" disabled>Copy Trip Link</button><button class="clear-btn" onclick="clearTrip()">Clear all stops</button></div>
   </div>
 </div>
 
@@ -265,6 +274,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
   </div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/sortablejs@1.15.6/Sortable.min.js"></script>
 <script>const D=[
 {id:"angels-envy",name:"Angel's Envy",lat:38.2561,lng:-85.7370,region:"Louisville",type:"Major",cost:"$25–$50",costAvg:37,booking:"Hard",profile:"distillery-angels-envy.html",desc:"Port-finished bourbon, stunning Whiskey Row facility, rooftop bar.",rating:8.8,bookWeeks:"4–6 weeks"},
 {id:"old-forester",name:"Old Forester",lat:38.2563,lng:-85.7523,region:"Louisville",type:"Major",cost:"$20–$75",costAvg:35,booking:"Moderate",profile:"distillery-old-forester.html",desc:"Best-designed tour on Whiskey Row. Bottle Your Own experience.",rating:8.9,bookWeeks:"3–4 weeks"},
@@ -393,24 +403,26 @@ function initMap(){
     marker.on('click',function(){openPopup(d)});
     MM[d.id]={marker,data:d,_onMap:false};
   });
-  map.on('zoomend',function(){clearTimeout(window._hzTimer);window._hzTimer=setTimeout(handleZoom,200)});
-  map.on('moveend',function(){clearTimeout(window._hzTimer);window._hzTimer=setTimeout(handleZoom,200)});
+  map.on('zoomend',function(){updateZoomUI();clearTimeout(window._hzTimer);window._hzTimer=setTimeout(handleZoom,200)});
+  map.on('moveend',function(){updateZoomUI();clearTimeout(window._hzTimer);window._hzTimer=setTimeout(handleZoom,200)});
   handleZoom();
 }
 
 function _addPin(id){var m=MM[id];if(!m||m._onMap)return;m.marker.addTo(map);m._onMap=true}
 function _removePin(id){var m=MM[id];if(!m||!m._onMap)return;m.marker.removeFrom(map);m._onMap=false}
 
+function updateZoomUI(){
+  var z=map.getZoom(),st=aRF&&aRF!=='all'&&RD[aRF]?Math.min(10,RD[aRF].zoom):10,show=z>=st;
+  document.getElementById('backBtn').style.display=show?'block':'none';
+  regMk.forEach(function(m){if(m._icon){m._icon.style.opacity=show?'0':'1';m._icon.style.pointerEvents=show?'none':'auto';var ro=m._icon.querySelector('.region-overlay');if(ro)ro.style.pointerEvents=show?'none':'auto';}});
+  var lz=aRF&&aRF!=='all'&&RD[aRF]?Math.min(10,RD[aRF].zoom):12;
+  map.getContainer().classList.toggle('show-labels',z>=lz);
+}
 function handleZoom(){
-  var z=map.getZoom(),showThr=aRF&&aRF!=='all'&&RD[aRF]?Math.min(10,RD[aRF].zoom):10,show=z>=showThr;
-  regMk.forEach(m=>{if(m._icon){m._icon.style.opacity=show?'0':'1';m._icon.style.pointerEvents=show?'none':'auto'}});
+  updateZoomUI();
+  var z=map.getZoom(),st=aRF&&aRF!=='all'&&RD[aRF]?Math.min(10,RD[aRF].zoom):10,show=z>=st;
   var tripIds=new Set(Object.values(trip).flat().map(s=>s.id));
-  D.forEach(function(d){
-    if(tripIds.has(d.id)||show){_addPin(d.id)}else{_removePin(d.id)}
-  });
-  document.getElementById('backBtn').style.display=z>=showThr?'block':'none';
-  var labelZoom=aRF&&aRF!=='all'&&RD[aRF]?Math.min(10,RD[aRF].zoom):12;
-  map.getContainer().classList.toggle('show-labels',z>=labelZoom);
+  D.forEach(function(d){if(tripIds.has(d.id)||show){_addPin(d.id)}else{_removePin(d.id)}});
 }
 
 function zoomToRegion(n){const r=RD[n];if(!r)return;map.flyTo([r.lat,r.lng],r.zoom,{duration:.5});filterRegion(n,document.querySelector('.region-pill[data-region="'+n+'"]'))}
@@ -458,10 +470,10 @@ function highlightOnMap(id){const d=D.find(x=>x.id===id);if(!d)return;window._hl
 // TRIP
 function addStop(id){
   const d=D.find(x=>x.id===id);if(!d||Object.values(trip).flat().some(s=>s.id===id))return;
-  trip[aDay].push({...d});setTripIcon(id,aDay);map.closePopup();renderStops();renderBrowseList();updateStats();drawRoutes();updateTripBadge();
+  trip[aDay].push({...d});setTripIcon(id,aDay);map.closePopup();renderStops();renderBrowseList();updateStats();drawRoutes();updateTripBadge();saveState();
 }
-function removeStop(id){for(let dy in trip)trip[dy]=trip[dy].filter(s=>s.id!==id);resetIcon(id);renderStops();renderBrowseList();updateStats();drawRoutes();updateTripBadge()}
-function moveStop(id,to){let s=null;for(let dy in trip){const i=trip[dy].findIndex(x=>x.id===id);if(i!==-1){s=trip[dy].splice(i,1)[0];break}}if(s){trip[to].push(s);refreshIcons();renderStops();updateStats();drawRoutes()}}
+function removeStop(id){for(let dy in trip)trip[dy]=trip[dy].filter(s=>s.id!==id);resetIcon(id);renderStops();renderBrowseList();updateStats();drawRoutes();updateTripBadge();saveState()}
+function moveStop(id,to){let s=null;for(let dy in trip){const i=trip[dy].findIndex(x=>x.id===id);if(i!==-1){s=trip[dy].splice(i,1)[0];break}}if(s){trip[to].push(s);refreshIcons();renderStops();updateStats();drawRoutes();saveState()}}
 
 const DC={1:'#2980B9',2:'#D4A03C',3:'#2E8B57',4:'#8E44AD'};
 function setTripIcon(id,dy){const m=MM[id];if(!m)return;const idx=trip[dy].findIndex(s=>s.id===id)+1;m.marker.setIcon(L.divIcon({className:'custom-marker',html:'<div style="position:relative;width:36px;height:36px"><div style="position:absolute;left:3px;top:3px"><div style="width:30px;height:30px;border-radius:50%;background:'+DC[dy]+';border:2.5px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;font-family:DM Sans,sans-serif;position:relative">'+idx+'<span class="distillery-label">'+m.data.name+'</span></div></div></div>',iconSize:[36,36],iconAnchor:[18,18],popupAnchor:[0,-17]}));_addPin(id)}
@@ -476,24 +488,25 @@ function calcDr(a,b){const R=3959,dL=(b.lat-a.lat)*Math.PI/180,dG=(b.lng-a.lng)*
 function renderStops(){
   const area=document.getElementById('stopsArea'),stops=trip[aDay]||[];
   for(let d=1;d<=tDays;d++){const el=document.getElementById('count-'+d);if(el)el.textContent=(trip[d]||[]).length}
-  if(!stops.length){const allEmpty=Object.values(trip).every(d=>!d.length);area.innerHTML=allEmpty?'<div class="empty-guide"><svg class="empty-guide-icon" width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><div class="empty-guide-title">Your trip starts here</div><div class="empty-guide-sub">Build a day-by-day itinerary across 59 distilleries and 5 regions.</div><div class="empty-guide-steps"><div class="empty-guide-step"><div class="empty-guide-num">1</div><div class="empty-guide-text"><strong>Pick a region</strong>: click any region button on the map</div></div><div class="empty-guide-step"><div class="empty-guide-num">2</div><div class="empty-guide-text"><strong>Add stops</strong>: hit + on any distillery card to add it to your day</div></div><div class="empty-guide-step"><div class="empty-guide-num">3</div><div class="empty-guide-text"><strong>Email your plan</strong>: export the full itinerary when you’re done</div></div></div></div>':'<div class="empty-state"><svg width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><h3>No stops on Day '+aDay+'</h3><p>Browse distilleries and click + to add</p></div>';document.getElementById('sidebarFooter').style.display='none';return}
+  if(!stops.length){const allEmpty=Object.values(trip).every(d=>!d.length);area.innerHTML=allEmpty?'<div class="empty-guide"><svg class="empty-guide-icon" width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><div class="empty-guide-title">Your trip starts here</div><div class="empty-guide-sub">Build a day-by-day itinerary across 59 distilleries and 5 regions.</div><div class="empty-guide-steps"><div class="empty-guide-step"><div class="empty-guide-num">1</div><div class="empty-guide-text"><strong>Pick a region</strong>: click any region button on the map</div></div><div class="empty-guide-step"><div class="empty-guide-num">2</div><div class="empty-guide-text"><strong>Add stops</strong>: hit + on any distillery card to add it to your day</div></div><div class="empty-guide-step"><div class="empty-guide-num">3</div><div class="empty-guide-text"><strong>Save and share</strong>: keep your plan, send a link to your live map, or email the full itinerary</div></div></div></div>':'<div class="empty-state"><svg width="40" height="40" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="20" r="8" stroke="#8B92A8" stroke-width="2"/><path d="M24 4C15 4 8 11 8 20C8 33 24 44 24 44C24 44 40 33 40 20C40 11 33 4 24 4Z" stroke="#8B92A8" stroke-width="2"/></svg><h3>No stops on Day '+aDay+'</h3><p>Browse distilleries and click + to add</p></div>';document.getElementById('sidebarFooter').style.display='none';return}
   document.getElementById('sidebarFooter').style.display='';
   let h='';
   stops.forEach((s,i)=>{
     if(i>0){const mn=calcDr(stops[i-1],s);h+='<div class="drive-info"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#8B92A8" stroke-width="2"><path d="M12 5v14"/></svg>'+mn+' min drive</div>'}
     let mo='';for(let d=1;d<=tDays;d++){if(d!==aDay)mo+='<option value="'+d+'">&rarr; Day '+d+'</option>'}
-    h+='<div class="stop-card" data-day="'+aDay+'"><div class="stop-top"><div class="stop-num">'+(i+1)+'</div><div class="stop-info"><div class="stop-name">'+s.name+'</div><div class="stop-meta">'+s.region+' &middot; '+s.cost+' &middot; '+s.booking+'</div></div><div class="stop-actions"><select class="stop-move" onchange="moveStop(\''+s.id+'\',parseInt(this.value));this.selectedIndex=0"><option selected disabled>Move</option>'+mo+'</select><button class="stop-remove" onclick="removeStop(\''+s.id+'\')">&times;</button></div></div></div>';
+    h+='<div class="stop-card" data-day="'+aDay+'" data-id="'+s.id+'"><div class="stop-top"><div class="drag-handle"><svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><circle cx="4" cy="3.5" r="1.2"/><circle cx="10" cy="3.5" r="1.2"/><circle cx="4" cy="7" r="1.2"/><circle cx="10" cy="7" r="1.2"/><circle cx="4" cy="10.5" r="1.2"/><circle cx="10" cy="10.5" r="1.2"/></svg></div><div class="stop-num">'+(i+1)+'</div><div class="stop-info"><div class="stop-name">'+s.name+'</div><div class="stop-meta">'+s.region+' &middot; '+s.cost+' &middot; '+s.booking+'</div></div><div class="stop-actions"><select class="stop-move" onchange="moveStop(\''+s.id+'\',parseInt(this.value));this.selectedIndex=0"><option selected disabled>Move</option>'+mo+'</select><button class="stop-remove" onclick="removeStop(\''+s.id+'\')">&times;</button></div></div></div>';
   });
   getTips(stops).forEach(t=>{const ic=t.type==='good'?'&#10003;':t.type==='warn'?'&#9888;':'&#8505;';h+='<div class="smart-tip tip-'+t.type+'"><span class="smart-tip-icon">'+ic+'</span><span>'+t.text+'</span></div>'});
   area.innerHTML=h;
+  if(window.Sortable){if(area._sortable)area._sortable.destroy();area._sortable=Sortable.create(area,{draggable:'.stop-card',handle:'.drag-handle',animation:150,delay:150,delayOnTouchOnly:true,onEnd:function(){var ids=[].slice.call(area.querySelectorAll('.stop-card')).map(function(el){return el.dataset.id});trip[aDay]=ids.map(function(id){return trip[aDay].find(function(s){return s.id===id})}).filter(Boolean);refreshIcons();renderStops();drawRoutes();updateStats();saveState();}});}
 }
 
 // DAYS
-function switchDay(d){aDay=d;document.querySelectorAll('.day-tab').forEach(t=>t.classList.toggle('active',parseInt(t.dataset.day)===d));renderStops();updateStats()}
-function addDay(){if(tDays>=4)return;tDays++;trip[tDays]=[];const tabs=document.getElementById('dayTabs'),btn=document.getElementById('addDayBtn');const t=document.createElement('button');t.className='day-tab';t.dataset.day=tDays;t.onclick=function(){switchDay(tDays)};t.innerHTML='Day '+tDays+' <span class="tab-count" id="count-'+tDays+'">0</span>';tabs.insertBefore(t,btn);if(tDays>=4)btn.style.display='none';switchDay(tDays)}
+function switchDay(d){aDay=d;document.querySelectorAll('.day-tab').forEach(t=>t.classList.toggle('active',parseInt(t.dataset.day)===d));renderStops();updateStats();saveState()}
+function addDay(){if(tDays>=4)return;tDays++;trip[tDays]=[];const tabs=document.getElementById('dayTabs'),btn=document.getElementById('addDayBtn');const t=document.createElement('button');t.className='day-tab';t.dataset.day=tDays;t.onclick=function(){switchDay(tDays)};t.innerHTML='Day '+tDays+' <span class="tab-count" id="count-'+tDays+'">0</span>';tabs.insertBefore(t,btn);if(tDays>=4)btn.style.display='none';switchDay(tDays);saveState()}
 
 // STATS
-function updateStats(){const all=Object.values(trip).flat();document.getElementById('statStops').textContent=all.length;const ds=trip[aDay]||[];let mn=0;for(let i=1;i<ds.length;i++)mn+=calcDr(ds[i-1],ds[i]);document.getElementById('statDrive').textContent=mn>0?mn+' min':'—';const c=all.reduce((s,x)=>s+(x.costAvg||0),0);document.getElementById('statCost').textContent=c>0?'$'+c:'Free';const ad=Object.keys(trip).filter(d=>trip[d].length>0).length;document.getElementById('statDays').textContent=ad||'—';document.getElementById('exportBtn').disabled=!all.length;document.getElementById('mobileExportBtn').disabled=!all.length;document.getElementById('sidebarFooter').style.display=all.length?'':'none'}
+function updateStats(){const all=Object.values(trip).flat();document.getElementById('statStops').textContent=all.length;const ds=trip[aDay]||[];let mn=0;for(let i=1;i<ds.length;i++)mn+=calcDr(ds[i-1],ds[i]);document.getElementById('statDrive').textContent=mn>0?mn+' min':'—';const c=all.reduce((s,x)=>s+(x.costAvg||0),0);document.getElementById('statCost').textContent=c>0?'$'+c:'Free';const ad=Object.keys(trip).filter(d=>trip[d].length>0).length;document.getElementById('statDays').textContent=ad||'—';document.getElementById('exportBtn').disabled=!all.length;document.getElementById('mobileExportBtn').disabled=!all.length;var sb=document.getElementById('shareBtn');if(sb)sb.disabled=!all.length;document.getElementById('sidebarFooter').style.display=all.length?'':'none'}
 
 // EMAIL MODAL + ITINERARY EXPORT
 function buildItineraryText(){
@@ -569,7 +582,19 @@ function fallbackCopy(text){
 function closeEmailModal(){document.getElementById('emailOverlay').classList.remove('open')}
 
 function exportTrip(){var itin=buildItineraryText();if(!itin)return;var btn=document.getElementById('exportBtn'),o=btn.textContent;if(navigator.clipboard){navigator.clipboard.writeText(itin).then(function(){btn.textContent='\u2713 Copied!';setTimeout(function(){btn.textContent=o},2500)})}}
-function clearTrip(){if(!confirm('Clear all stops?'))return;for(let d in trip)trip[d]=[];refreshIcons();renderStops();renderBrowseList();updateStats();drawRoutes();updateTripBadge()}
+function clearTrip(){if(!confirm('Clear all stops?'))return;for(let d in trip)trip[d]=[];refreshIcons();renderStops();renderBrowseList();updateStats();drawRoutes();updateTripBadge();saveState()}
+
+// SAVE / RESTORE
+function saveState(){try{localStorage.setItem('btp-plan',JSON.stringify({trip:trip,tDays:tDays,aDay:aDay}));}catch(e){}}
+function loadState(){try{var o=JSON.parse(localStorage.getItem('btp-plan'));if(!o||!o.trip)return false;trip=o.trip;tDays=o.tDays||3;aDay=o.aDay||1;return true;}catch(e){return false;}}
+
+// SHARE URL
+function getPlanString(){var segs=[];for(var d=1;d<=tDays;d++){segs.push((trip[d]||[]).map(function(s){return s.id}).join(','));}while(segs.length>3&&segs[segs.length-1]==='')segs.pop();return segs.join(';')}
+function getShareURL(){return location.origin+location.pathname+'?plan='+encodeURIComponent(getPlanString())}
+function importPlan(str){var segs=decodeURIComponent(str).split(';');tDays=Math.max(3,segs.length);for(var d=1;d<=tDays;d++)trip[d]=[];segs.forEach(function(seg,i){if(!seg)return;seg.split(',').forEach(function(id){var match=D.find(function(x){return x.id===id});if(match)trip[i+1].push(Object.assign({},match));});})}
+function rebuildDayTabs(){var tabs=document.getElementById('dayTabs'),btn=document.getElementById('addDayBtn');tabs.querySelectorAll('.day-tab').forEach(function(t){if(parseInt(t.dataset.day)>3)t.remove();});for(var d=4;d<=tDays;d++){var t=document.createElement('button');t.className='day-tab';t.dataset.day=d;t.onclick=(function(dd){return function(){switchDay(dd)}})(d);t.innerHTML='Day '+d+' <span class="tab-count" id="count-'+d+'">0</span>';tabs.insertBefore(t,btn);}if(tDays>=4)btn.style.display='none';}
+function copyShareLink(){var url=getShareURL();function done(){showShareToast();if(typeof gtag==='function')gtag('event','share_link_copied',{stops:Object.values(trip).flat().length});}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(function(){fallbackCopy(url);done()});}else{fallbackCopy(url);done();}}
+function showShareToast(){var existing=document.getElementById('shareToast');if(existing)existing.remove();var el=document.createElement('div');el.id='shareToast';el.className='share-toast';el.innerHTML='<button class="share-toast-close" onclick="document.getElementById(\'shareToast\').remove()">&times;</button><div class="share-toast-title">Link copied</div><div class="share-toast-sub">Want it emailed too? <button onclick="document.getElementById(\'shareToast\').remove();openEmailModal()">Email your itinerary</button></div>';document.body.appendChild(el);setTimeout(function(){var t=document.getElementById('shareToast');if(t){t.style.opacity='0';setTimeout(function(){var t2=document.getElementById('shareToast');if(t2)t2.remove();},300);}},5000);}
 
 // ONBOARDING / MOBILE
 function dismissOnboard(){document.getElementById('onboard').style.display='none';try{localStorage.setItem('btp-seen','1')}catch(e){}}
@@ -598,7 +623,12 @@ function updateTripBadge(){
 
 window.addEventListener('DOMContentLoaded',()=>{
   try{if(localStorage.getItem('btp-seen'))document.getElementById('onboard').style.display='none'}catch(e){}
-  initMap();renderBrowseList();renderStops();updateStats();updateTripBadge();
+  var loaded=false,p=new URLSearchParams(location.search).get('plan');
+  if(p){importPlan(p);loaded=true;saveState();history.replaceState(null,'',location.pathname);try{localStorage.setItem('btp-seen','1')}catch(e){}document.getElementById('onboard').style.display='none';if(typeof gtag==='function')gtag('event','plan_loaded_from_link',{stops:Object.values(trip).flat().length});}else{loaded=loadState();}
+  initMap();
+  if(loaded){rebuildDayTabs();refreshIcons();drawRoutes();var allPts=Object.values(trip).flat();if(allPts.length>1){try{map.fitBounds(allPts.map(function(s){return[s.lat,s.lng]}),{padding:[60,60],maxZoom:13,animate:false});}catch(e){}}else if(allPts.length===1){map.setView([allPts[0].lat,allPts[0].lng],13,{animate:false});}}
+  renderBrowseList();renderStops();updateStats();updateTripBadge();
+  if(loaded)switchDay(aDay);
 });
 document.querySelector('.mobile-menu-btn').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('mobile-open')});
 document.getElementById('map').addEventListener('click',()=>{document.getElementById('browsePanel').classList.remove('mobile-open')});
