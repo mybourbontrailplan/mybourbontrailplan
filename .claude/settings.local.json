@@ -18,7 +18,10 @@
       "WebFetch(domain:pensivedistilling.com)",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "WebFetch(domain:nominatim.openstreetmap.org)",
+      "Bash(python -c ' *)",
+      "WebFetch(domain:www.louisvillebourboninn.com)"
     ]
   }
 }

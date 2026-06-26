@@ -108,7 +108,7 @@ All named `distillery-{name}.html`. All use the standardized template (white fro
 ### Other
 - `sitemap.xml` — 76 URLs, all using `mybourbontrailplan.com` domain
 - `bourbon-trail-planning-checklist.pdf` — Lead magnet delivered via MailerLite
-- `bourbon-trail-map.pdf` — Printable/downloadable bourbon trail map; linked from homepage and map.html. There is no HTML/source file for this PDF, it's edited directly in place with PyMuPDF. Use `scripts/pdf_map_add_distillery.py` to add a new distillery (map dot + checklist row) — see that script's docstring for how it works, including the row-shifting it does when a section isn't the last one in its column.
+- `bourbon-trail-map.pdf` — Printable/downloadable bourbon trail map; linked from homepage and map.html. Generated from data by `scripts/generate_pdf_map.py`, which lays out both pages from scratch on every run. The source of truth is the live site itself: the script reads the `const D=[...]` array in `trip-builder.html` (name, lat, lng, region, type, cost, booking) and the cards in `distilleries.html` (city, Official Trail vs Craft tag), joins them on the profile filename, and assigns map numbers. Page 1 is a landscape hero map (statewide outline, region-colored numbered pins, a zoomed Central Corridor inset, region legend, QR to the Trip Builder). Page 2 is a landscape four-column reference list grouped by region (number, city, Trail/Craft, booking difficulty, tour cost) plus a drive-times table, a booking-ease index, and a second QR. There is no separate data file to maintain; `scripts/pdf_map_data.json` is written by the script as a readable snapshot of what it derived, for inspection only (not an input). Assets live in `scripts/assets/` (Kentucky outline GeoJSON, DM Sans + Fraunces TTFs). The old `scripts/pdf_map_add_distillery.py` in-place editor is obsolete and should not be used.
 - `images/` — Distillery photos, named `{distillery}-1.jpg`, `{distillery}-2.jpg`, etc. All photos are EXIF-rotation-fixed and optimized for web (max 1200px, ~80% JPEG quality)
 
 ## Nav & Footer Template (ALL pages)
@@ -193,14 +193,18 @@ Two functions handle zoom-level changes:
 
 ### RG City-to-Region Mapping (trip-builder.html)
 - `Newport:'Northern'` — New Riff and Pensive are both in Newport; they appear under the Northern filter
-- Most other Northern KY cities (Independence, Ludlow, Sparta, Maysville, Paris, Burlington, Augusta) also map to `Northern`
-- `Danville`, `Lebanon`, `Radcliff` map to `Other` (no dedicated region flyTo — shown only in "All" view)
+- Most other Northern KY cities (Independence, Ludlow, Sparta, Maysville, Burlington, Augusta) also map to `Northern`
+- `Paris:'Lexington'` — Paris is 17 mi from Lexington distilleries, a natural Lexington-day add-on (closer to Lexington than to the Northern KY cluster)
+- `Danville:'Lexington'`, `Lawrenceburg:'Lexington'` — these towns sit in the Lexington/Lawrenceburg corridor and appear under the Lexington filter
+- `Shelbyville:'Louisville'`, `Crestwood:'Louisville'` — I-64/I-71 corridor distilleries grouped with Louisville per the PDF map regions
+- `Lebanon:'Bardstown'`, `Radcliff:'Bardstown'` — grouped with Bardstown per the PDF map regions
 
 ### Region Data (RD) — flyTo destinations
 - `Louisville`, `Bardstown`, `Frankfort`: zoom 14
 - `Lexington`: zoom 11
-- `Central`, `Northern`: zoom 10
+- `Northern`: zoom 10
 - **`Western`: lat 37.13, lng -87.59, zoom 8** — spans 2+ degrees of longitude; zoom 10 is too close for mobile to see all 8 distilleries; center is midpoint of extremes (not geographic mean) for best viewport fit
+- `Central` region was removed — all formerly-Central distilleries (Bulleit, Jeptha Creed, Kentucky Artisan, Larrikin) are now in Louisville or Lexington per PDF regions
 
 ### Western Button Mobile Repositioning
 - On desktop the Western button marker sits at the `RD` flyTo center (–87.59), which is visible in the wide desktop viewport
@@ -261,7 +265,7 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 5. Update the region count in the relevant region overlay button HTML (e.g. "Western · 8 distilleries")
 6. Also add to `distilleries.html` and `sitemap.xml`
 7. Add `TouristAttraction` JSON-LD schema to the new profile's `<head>` — include `address`, `geo`, `telephone`, `openingHours`, `url`, `sameAs` (see `scripts/add_schema.py` for the exact structure). Do NOT include a `review` block.
-8. Add it to `bourbon-trail-map.pdf` too: `python scripts\pdf_map_add_distillery.py --name "..." --location "City, KY" --region "..."` (region must exactly match one of the six section headers, e.g. `"Frankfort"`, `"Bardstown & New Hope"`)
+8. Regenerate the printable map: `python scripts\generate_pdf_map.py`. No map-specific arguments are needed. Because the generator reads `trip-builder.html` and `distilleries.html`, the new distillery flows in automatically once steps above have added it to those two files (pins renumber, the checklist reflows, the region counts update). Commit the regenerated `bourbon-trail-map.pdf` with the rest of the deploy. Note: the trip-builder `region` value can be one of the legacy buckets (`Other`); the generator remaps those to the six display regions by city. If you ever add a distillery in a brand-new city that maps to `Other`, the script prints a one-line warning telling you to add a `_CITY_REGION` entry near the top of `generate_pdf_map.py`.
 
 ## SEO Notes
 - All canonical URLs must point to `https://mybourbontrailplan.com/filename.html`
