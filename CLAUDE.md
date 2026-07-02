@@ -100,21 +100,56 @@ After running the IndexNow script, paste the output back to the user so they can
 - `louisville-whiskey-row-walking-guide.html` — Louisville Whiskey Row self-guided walking tour
 - `bourbon-trail-transportation-guide.html` — How to get around: DIY driving, guided tours, designated driver strategies
 - `kentucky-bourbonfest.html` — Kentucky BourbonFest guide: dates, tickets, 60+ distilleries, 200+ bourbons, what to expect
+- `kentucky-whiskey-trail.html` — Whiskey Trail vs Bourbon Trail explainer; same destinations, why both names exist, Jun 2026
+- `bourbon-trail-bachelor-party-guide.html` — Bachelor party planning: best distilleries for groups, 2-day itinerary, budget, May 2026
+- `buffalo-trace-gift-shop-guide.html` — Honest guide to what's in stock, allocated rotation, purchase limits, timing tips, Apr 2026
 
-### Distillery Profiles (59 active)
+### Distillery Profiles (60 active)
 All named `distillery-{name}.html`. All use the standardized template (white frosted nav, snapshot cards, tour card headers, rating bars, verdict box, sidebar with quick details). Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdict, nearby pairings with links, GA tracking, mobile menu, MailerLite universal script, OG tags, correct canonical URL.
-- 60 HTML files exist in repo, but `distillery-garrard-county.html` is intentionally excluded — Garrard County Distilling Co. is shut down. Do NOT add it to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`.
+- 62 distillery HTML files exist in repo, but `distillery-garrard-county.html` (shut down) and `distillery-barton-1792.html` (not open to public) are intentionally excluded. Do NOT add either to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`.
 
 ### Other
-- `sitemap.xml` — 76 URLs, all using `mybourbontrailplan.com` domain
+- `sitemap.xml` — URL count changes as pages are added; regenerate with `python scripts\generate_sitemap.py` when adding/removing pages. All URLs use `mybourbontrailplan.com` domain.
 - `bourbon-trail-planning-checklist.pdf` — Lead magnet delivered via MailerLite
 - `bourbon-trail-map.pdf` — Printable/downloadable bourbon trail map; linked from homepage and map.html. Generated from data by `scripts/generate_pdf_map.py`, which lays out both pages from scratch on every run. The source of truth is the live site itself: the script reads the `const D=[...]` array in `trip-builder.html` (name, lat, lng, region, type, cost, booking) and the cards in `distilleries.html` (city, Official Trail vs Craft tag), joins them on the profile filename, and assigns map numbers. Page 1 is a landscape hero map (statewide outline, region-colored numbered pins, a zoomed Central Corridor inset, region legend, QR to the Trip Builder). Page 2 is a landscape four-column reference list grouped by region (number, city, Trail/Craft, booking difficulty, tour cost) plus a drive-times table, a booking-ease index, and a second QR. There is no separate data file to maintain; `scripts/pdf_map_data.json` is written by the script as a readable snapshot of what it derived, for inspection only (not an input). Assets live in `scripts/assets/` (Kentucky outline GeoJSON, DM Sans + Fraunces TTFs). The old `scripts/pdf_map_add_distillery.py` in-place editor is obsolete and should not be used.
 - `images/` — Distillery photos, named `{distillery}-1.jpg`, `{distillery}-2.jpg`, etc. All photos are EXIF-rotation-fixed and optimized for web (max 1200px, ~80% JPEG quality)
 
+### Quick reference: editing the PDF map later
+- **Add or edit a distillery:** make the normal site edits (`trip-builder.html`, `distilleries.html`, etc.), then run `python scripts/generate_pdf_map.py`.
+- **Change a drive time, the booking-ease descriptions, or the QR target:** edit the `drives` list, the `gloss` list, or `TRIP_BUILDER_URL` near the top of `build_page2` / the script header.
+- **Change brand colors, region colors, or fonts:** the palette and `REGION_COLORS` dict are at the top of the script; fonts are in `scripts/assets/fonts/`.
+- **Move a town to a different region:** two dicts near the top of the script control this, and both feed the map pin color and the page-2 list section. Use `_CITY_REGION` for legacy `Central`/`Other` towns (e.g. Shelbyville's Bulleit + Jeptha Creed are mapped to Louisville, the I-64 corridor, rather than Lexington/Lawrenceburg). Use `_REGION_OVERRIDE` when the site already tags a real region but it is geographically misleading for planning (e.g. Paris is tagged Northern KY on the site but sits ~17 mi from the Lexington distilleries, so it is overridden to Lexington/Lawrenceburg). Geographic outliers that sit apart from their region's other pins (Shelbyville, Danville, Paris) get a small town label in the inset so they read clearly; that list is in `build_page1`.
+- **Page orientation:** both pages are currently US Letter landscape. Page sizes are set at the top of `build_page1` and `build_page2` (`W,H = 792,612`) if you ever want page 2 back in portrait.
+
 ## Nav & Footer Template (ALL pages)
 - **Top nav links (in order):** Plan Your Trip → Distilleries → Map → Where to Stay → Eat & Drink → Trip Builder → Guides → Booking Guide (CTA style)
-- **Footer links (in order):** Home, Plan Your Trip, Distilleries, Map, Trip Builder, Guides, Where to Stay, Booking Guide, About, Contact — plus Instagram handle line and copyright
 - Map must be a nav item on every new page created
+
+### Footer variants
+Two footer patterns exist — use the one that matches the page type:
+
+**Homepage footer** (`index.html` only): Multi-column grid with Plan / Explore / Resources sections, inline brand description, and a `.footer-bottom` bar. Uses custom CSS classes (`.footer-inner`, `.footer-col`, etc.).
+
+**Interior page footer** (all other pages): Single-row flexbox with all nav links inline, Instagram handle line, and standard copyright. No custom footer CSS needed — uses inline styles:
+```html
+<footer>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin-bottom:16px;font-size:13px;">
+    <a href="index.html">Home</a>
+    <a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a>
+    <a href="distilleries.html">Distilleries</a>
+    <a href="map.html">Map</a>
+    <a href="trip-builder.html">Trip Builder</a>
+    <a href="guides.html">Guides</a>
+    <a href="where-to-stay-bourbon-trail.html">Where to Stay</a>
+    <a href="bourbon-trail-booking-guide.html">Booking Guide</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div style="margin-bottom:12px;font-size:13px;"><a href="https://www.instagram.com/mybourbontrailplan" target="_blank" rel="noopener">@mybourbontrailplan on Instagram</a></div>
+  <p>&copy; 2026 <a href="index.html">Bourbon Trail Planner</a>. Not affiliated with the Kentucky Distillers' Association.</p>
+</footer>
+```
+The footer element itself needs the background/color styles from the page's CSS (`.footer` or `footer` selector). Copy from any interior page like `distilleries.html`.
 
 ## Distillery Profile Template Rules
 When creating or editing distillery profiles:
@@ -135,7 +170,7 @@ When creating or editing distillery profiles:
 - After creating a new profile: add it to `distilleries.html`, `trip-builder.html`, `map.html`, and `sitemap.xml`
 
 ### Sidebar Contact Section — Standard Structure
-All 59 profiles have a standardized Contact section. Order must be:
+All 60 active profiles have a standardized Contact section. Order must be:
 1. `<a href="map.html?distillery={slug}" class="sidebar-link">See on Map &rarr;</a>` — always first
 2. Phone row (`<div class="sidebar-row">`) — in Contact only, NOT in Quick Details
 3. Official Website link
@@ -375,3 +410,10 @@ If a batch of em dashes ever needs removing (e.g. after importing copy from anot
 - **Pensive Distilling Co.** (file: `distillery-pensive.html`) — Newport, KY craft distillery in a historic Prohibition-era building. Speakeasy tasting room requires a password (provided at booking). Named after Pensive, the 1944 Kentucky Derby/Preakness winner. On-site kitchen is award-winning (City Beat Top 10 NKY Restaurants); every menu item named after a racehorse. Live music Fridays. Tours $15–$25, easy booking via Peek. Rating 8.0. Pair with New Riff (5 min, same city). Trip builder pin: lat 38.9928, lng -84.4969. Region: Northern (Newport maps to Northern in RG).
 - **Stitzel-Weller gift shop accuracy** — Old Fitzgerald is now a Heaven Hill brand (produced in Bardstown); it is NOT available at Stitzel-Weller. Gift shop reliably carries Blade & Bow, I.W. Harper, and Bulleit. Orphan Barrel releases show up occasionally but cannot be counted on — do not present as a reliable find. The Old Fitz history is fine to mention as historical context (it was produced there), but don't imply visitors can buy it there.
 - **WhistlePig The Vault** — Louisville tasting room at 403 E Market St (NuLu, near Angel's Envy), opened 2026. Vermont-based brand (rye-focused, not a KY distillery). NOT added as a distillery profile — it's a brand experience room, not a production facility. Covered as a callout card in the "Speakeasies & New Openings" section of `louisville-whiskey-row-walking-guide.html`. Key detail: original 1911 bank pneumatic tube system is used to mix and deliver drinks — visibly in action from your seat. Tasting tiers: $50 hosted (groups 4–10), $250 Vault Collection, $300 Vault Experience (up to 6 guests). Hours: Tue–Sat 10am–5pm. Cocktail bar is walk-in; seated tastings require reservation.
+- **The Rickhouse Restaurant & Lounge** — is in BARDSTOWN at 112 Xavier Dr. Dinner only, closed Mondays. It is a legitimate bourbon-forward dinner spot. NEVER present it as a Frankfort option.
+- **Rick's White Light Diner (Frankfort)** — appears closed as of late 2025. Do not recommend.
+- **Bourbon on Main (Frankfort)** — verified Frankfort lunch option, bourbon-focused. Used as the Day 3 lunch recommendation replacing the nonexistent "Rick House" in Frankfort. Appears in itinerary, eat-and-drink, where-to-stay, and castle-key nearby card.
+- **General George Stillhouse** — distillery card badge is "Official Trail" (joined KBT January 2026). The CLAUDE.md entry above this one predates that badge change; both are accurate: it is a craft producer AND on the official trail.
+- **Pensive Distilling Co.** — distillery card badge is "Official Trail" (confirmed July 2026, not a craft-only listing). data-type stays "craft" in distilleries.html since it's a small producer; only the display badge is "Official Trail".
+- **Region taxonomy decision (July 2026):** Public-facing copy on the site uses SIX regions: Louisville, Bardstown, Frankfort, Lexington/Lawrenceburg, Northern Kentucky, Western Kentucky. However, `map.html` filter buttons are Louisville/Bardstown/Frankfort/Lexington/Other (Northern and Western both normalize to "Other" on the map). `trip-builder.html` has more granular region buttons. Do NOT write copy telling users to "tap Western" or "tap Northern" on the map — those buttons do not exist there. Reference the Trip Builder instead for those regions.
+- **Hardcoded distillery count policy:** Prefer removing hardcoded counts from all copy (onboarding, meta descriptions, etc.). Where a number is unavoidable, use the rounded "60+" form. Never hardcode exact counts in onboarding or empty-state copy in trip-builder.html — those numbers change when distilleries are added and go stale immediately.
