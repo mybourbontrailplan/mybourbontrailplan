@@ -288,18 +288,6 @@
       "num": 23
     },
     {
-      "id": "the-bard",
-      "name": "The Bard Distillery",
-      "city": "Bardstown",
-      "region": "Bardstown & New Hope",
-      "lat": 37.813,
-      "lng": -85.474,
-      "trail": "Craft",
-      "booking": "Easy",
-      "cost": "$10–$20",
-      "num": 24
-    },
-    {
       "id": "willett",
       "name": "Willett Distillery",
       "city": "Bardstown",
@@ -309,7 +297,7 @@
       "trail": "Craft",
       "booking": "Moderate",
       "cost": "$15–$35",
-      "num": 25
+      "num": 24
     },
     {
       "id": "buffalo-trace",
@@ -321,7 +309,7 @@
       "trail": "Independent",
       "booking": "Hard",
       "cost": "Free",
-      "num": 26
+      "num": 25
     },
     {
       "id": "castle-key",
@@ -333,7 +321,7 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$15–$40",
-      "num": 27
+      "num": 26
     },
     {
       "id": "glenns-creek",
@@ -345,7 +333,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$25",
-      "num": 28
+      "num": 27
     },
     {
       "id": "j-mattingly",
@@ -357,7 +345,7 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$15–$75",
-      "num": 29
+      "num": 28
     },
     {
       "id": "whiskey-thief-franklin",
@@ -369,7 +357,7 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$5–$35",
-      "num": 30
+      "num": 29
     },
     {
       "id": "barrel-house",
@@ -381,7 +369,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$15",
-      "num": 31
+      "num": 30
     },
     {
       "id": "bluegrass",
@@ -393,7 +381,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$15–$25",
-      "num": 32
+      "num": 31
     },
     {
       "id": "dark-arts",
@@ -405,7 +393,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "Varies",
-      "num": 33
+      "num": 32
     },
     {
       "id": "four-roses",
@@ -417,7 +405,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$30",
-      "num": 34
+      "num": 33
     },
     {
       "id": "fresh-bourbon",
@@ -429,7 +417,7 @@
       "trail": "Trail",
       "booking": "Moderate",
       "cost": "$20–$40",
-      "num": 35
+      "num": 34
     },
     {
       "id": "hartfield",
@@ -441,7 +429,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$15",
-      "num": 36
+      "num": 35
     },
     {
       "id": "james-e-pepper",
@@ -453,7 +441,7 @@
       "trail": "Trail",
       "booking": "Moderate",
       "cost": "$15–$30",
-      "num": 37
+      "num": 36
     },
     {
       "id": "larrikin",
@@ -465,7 +453,7 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$10–$20",
-      "num": 38
+      "num": 37
     },
     {
       "id": "rd1-spirits",
@@ -477,7 +465,7 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$15–$40",
-      "num": 39
+      "num": 38
     },
     {
       "id": "town-branch",
@@ -489,7 +477,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$30",
-      "num": 40
+      "num": 39
     },
     {
       "id": "wild-turkey",
@@ -501,7 +489,7 @@
       "trail": "Trail",
       "booking": "Moderate",
       "cost": "$15–$35",
-      "num": 41
+      "num": 40
     },
     {
       "id": "wilderness-trail",
@@ -513,7 +501,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$30",
-      "num": 42
+      "num": 41
     },
     {
       "id": "woodford-reserve",
@@ -525,7 +513,7 @@
       "trail": "Trail",
       "booking": "Moderate",
       "cost": "$20–$80",
-      "num": 43
+      "num": 42
     },
     {
       "id": "augusta",
@@ -537,7 +525,7 @@
       "trail": "Craft",
       "booking": "Moderate",
       "cost": "$29–$99",
-      "num": 44
+      "num": 43
     },
     {
       "id": "baker-bird",
@@ -549,7 +537,7 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$10–$20",
-      "num": 45
+      "num": 44
     },
     {
       "id": "boone-county",
@@ -561,7 +549,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$20",
-      "num": 46
+      "num": 45
     },
     {
       "id": "neeley-family",
@@ -573,7 +561,7 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$10–$15",
-      "num": 47
+      "num": 46
     },
     {
       "id": "new-riff",
@@ -585,7 +573,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "Free–$25",
-      "num": 48
+      "num": 47
     },
     {
       "id": "old-pogue",
@@ -597,7 +585,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$20",
-      "num": 49
+      "num": 48
     },
     {
       "id": "pensive",
@@ -609,7 +597,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$15–$25",
-      "num": 50
+      "num": 49
     },
     {
       "id": "second-sight",
@@ -621,7 +609,7 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$10–$20",
-      "num": 51
+      "num": 50
     },
     {
       "id": "wenzel",
@@ -633,19 +621,19 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$10–$20",
-      "num": 52
+      "num": 51
     },
     {
       "id": "bh-james",
       "name": "B.H. James Distillery",
-      "city": "Whitesville",
+      "city": "Adairville",
       "region": "Western KY",
       "lat": 36.6678,
       "lng": -86.8538,
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$10–$20",
-      "num": 53
+      "num": 52
     },
     {
       "id": "casey-jones",
@@ -657,7 +645,7 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$20",
-      "num": 54
+      "num": 53
     },
     {
       "id": "dueling-grounds",
@@ -669,7 +657,7 @@
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$10–$15",
-      "num": 55
+      "num": 54
     },
     {
       "id": "general-george",
@@ -681,19 +669,19 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "See website",
-      "num": 56
+      "num": 55
     },
     {
       "id": "golden-pond",
       "name": "Golden Pond Distillery",
-      "city": "Eddyville",
+      "city": "Cadiz",
       "region": "Western KY",
       "lat": 36.7981,
       "lng": -87.9633,
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$10–$20",
-      "num": 57
+      "num": 56
     },
     {
       "id": "green-river",
@@ -705,19 +693,19 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$10–$25",
-      "num": 58
+      "num": 57
     },
     {
       "id": "jackson-purchase",
       "name": "Jackson Purchase Distillery",
-      "city": "Murray",
+      "city": "Hickman",
       "region": "Western KY",
       "lat": 36.54,
       "lng": -89.1451,
       "trail": "Craft",
       "booking": "Easy",
       "cost": "$5–$15",
-      "num": 59
+      "num": 58
     },
     {
       "id": "mb-roland",
@@ -729,6 +717,18 @@
       "trail": "Trail",
       "booking": "Easy",
       "cost": "$5–$15",
+      "num": 59
+    },
+    {
+      "id": "the-bard",
+      "name": "The Bard Distillery",
+      "city": "Graham",
+      "region": "Western KY",
+      "lat": 37.243,
+      "lng": -87.2768,
+      "trail": "Craft",
+      "booking": "Easy",
+      "cost": "$10–$20",
       "num": 60
     }
   ]
