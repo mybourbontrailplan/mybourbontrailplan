@@ -318,7 +318,7 @@
       "region": "Frankfort",
       "lat": 38.2112,
       "lng": -84.8735,
-      "trail": "Trail",
+      "trail": "Independent",
       "booking": "Hard",
       "cost": "Free",
       "num": 26
@@ -678,7 +678,7 @@
       "region": "Western KY",
       "lat": 37.5607,
       "lng": -86.5326,
-      "trail": "Craft",
+      "trail": "Trail",
       "booking": "Easy",
       "cost": "See website",
       "num": 56

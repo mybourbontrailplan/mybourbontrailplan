@@ -108,6 +108,7 @@ def _cards(html):
         for m in meta:
             if m.strip()=="Official Trail": trail="Trail"
             elif m.strip()=="Craft": trail="Craft"
+            elif m.strip()=="Independent": trail="Independent"
         city=loc.group(1).split(",")[0].strip() if loc else None
         out[href]={"city":city,"trail":trail}
     return out
@@ -494,7 +495,7 @@ def build_page2(doc, data, ky):
             nm=nm[:-2]
         if nm!=d["name"]: nm=nm.rstrip()+"\u2026"
         text(page, x+31, y[c], nm, font="dm-med", size=8.1, color=INK)
-        tag="Trail" if d["trail"]=="Trail" else "Craft"
+        tag={"Trail":"Trail","Independent":"Independent"}.get(d["trail"],"Craft")
         cost=d["cost"] if d["cost"] else "Free"
         text(page, x+31, y[c]+9, f"{d['city']}  \u00b7  {tag}  \u00b7  {cost}",
              font="dm", size=6.9, color=MUTED)
