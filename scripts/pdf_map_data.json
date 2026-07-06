@@ -211,7 +211,7 @@
       "lat": 37.8124,
       "lng": -85.4648,
       "trail": "Trail",
-      "booking": "Moderate",
+      "booking": "Easy",
       "cost": "$20–$50",
       "num": 17
     },
@@ -499,7 +499,7 @@
       "lat": 38.002,
       "lng": -84.828,
       "trail": "Trail",
-      "booking": "Easy",
+      "booking": "Moderate",
       "cost": "$15–$35",
       "num": 41
     },
