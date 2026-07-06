@@ -82,7 +82,7 @@ _CITY_REGION = {"Shelbyville":"Louisville","Crestwood":"Louisville",
 # sits ~17 mi from the Lexington distilleries, a natural Lexington-day add-on.
 _REGION_OVERRIDE = {"Paris":"Lexington / Lawrenceburg"}
 # distilleries that are official KBT members but lack the tag in the cards markup
-_TRAIL_FIX = {"stitzel-weller":"Trail"}
+_TRAIL_FIX = {}
 
 def _js_array(html, varname):
     i = html.find(f"const {varname}=[")
