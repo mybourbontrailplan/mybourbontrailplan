@@ -200,6 +200,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 .share-toast-sub{font-size:12px;color:var(--text-secondary);line-height:1.5}
 .share-toast-sub button{background:none;border:none;color:var(--primary-light);font-size:12px;font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
 .share-toast-close{position:absolute;top:6px;right:8px;background:none;border:none;color:var(--text-light);font-size:17px;cursor:pointer;line-height:1;padding:2px}.share-toast-close:hover{color:var(--text)}
+
+  @media (max-width:900px){.logo-lockup{width:min(72vw,300px)!important;height:auto!important;}}
 </style>
 
 <script type="application/ld+json">
@@ -225,7 +227,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(255,255,255
 </head>
 <body>
 <nav><div class="nav-inner">
-  <a href="index.html" class="logo"><picture><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
+  <a href="index.html" class="logo"><picture><source media="(max-width:900px)" srcset="images/bourbon-trail-planner-nav.svg?v=4"><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
   <ul class="nav-links">
     <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>
     <li><a href="distilleries.html">Distilleries</a></li>

@@ -573,6 +573,8 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
+
+  @media (max-width:640px){.logo-lockup{width:min(72vw,300px)!important;height:auto!important;}}
 </style>
 </head>
 <body>
@@ -581,7 +583,7 @@
 <nav id="nav">
   <div class="nav-inner">
     <a href="index.html" class="logo">
-      <picture><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture>
+      <picture><source media="(max-width:640px)" srcset="images/bourbon-trail-planner-nav.svg?v=4"><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture>
     </a>
     <ul class="nav-links">
       <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>

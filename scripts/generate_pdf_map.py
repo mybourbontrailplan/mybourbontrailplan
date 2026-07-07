@@ -260,13 +260,15 @@ def draw_pin(page, x, y, num, color, r=7.2, fs=7.2, anchor=None):
     text(page, x, y+fs*0.34, str(num), font="dm-bold", size=fs, color=WHITE, align="center")
 
 # ---------- header / footer ----------
+LOGO_PNG = os.path.join(ROOT, "images", "nav-2x.png")   # full brand lockup (pin + wordmark)
+_LOGO_AR = 2040 / 272                                    # raster width / height
+
 def logo(page, x, y, scale=1.0):
-    s=14*scale
-    rrect(page, fitz.Rect(x, y-s, x+s, y), 3, fill=PRIMARY)
-    text(page, x+s/2, y-s*0.27, "B", font="fr-black", size=10*scale, color=WHITE, align="center")
-    text(page, x+s+6, y-s*0.18, "Bourbon Trail", font="fr-bold", size=12*scale, color=INK)
-    w=_tl(page, "Bourbon Trail", "fr-bold", 12*scale)
-    text(page, x+s+6+w, y-s*0.18, "Planner", font="fr-bold", size=12*scale, color=GOLD)
+    # New brand lockup (pin + "Bourbon Trail Planner"). `y` is the baseline;
+    # the raster sits directly above it, matching the live-site header logo.
+    h = 22 * scale
+    w = h * _LOGO_AR
+    page.insert_image(fitz.Rect(x, y - h, x + w, y), filename=LOGO_PNG, keep_proportion=True)
 
 def header(page, W, right_label):
     M=40

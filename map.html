@@ -481,13 +481,15 @@
   @media (max-width: 480px) {
     .footer-grid { grid-template-columns: 1fr; }
   }
+
+  @media (max-width:900px){.logo-lockup{width:min(72vw,300px)!important;height:auto!important;}}
 </style>
 </head>
 <body>
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="logo"><picture><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
+    <a href="index.html" class="logo"><picture><source media="(max-width:900px)" srcset="images/bourbon-trail-planner-nav.svg?v=4"><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
     <ul class="nav-links">
       <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>
       <li><a href="distilleries.html">Distilleries</a></li>
