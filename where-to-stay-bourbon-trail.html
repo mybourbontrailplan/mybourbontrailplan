@@ -16,6 +16,9 @@
 <meta name="description" content="Best hotels, Airbnbs, and lodging near Kentucky Bourbon Trail distilleries. Insider picks by region with honest recommendations.">
 <meta name="keywords" content="where to stay bourbon trail, bourbon trail hotels, bourbon trail airbnb, bardstown hotels, bourbon trail lodging">
 <link rel="canonical" href="https://mybourbontrailplan.com/where-to-stay-bourbon-trail.html">
+<link rel="icon" type="image/svg+xml" href="/images/bourbon-trail-planner-icon.svg?v=4">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180.png?v=4">
 
 <meta property="og:title" content="Where to Stay on the Kentucky Bourbon Trail (2026)">
 <meta property="og:description" content="Best hotels, Airbnbs, and unique stays near every major distillery cluster on the Bourbon Trail.">
@@ -78,7 +81,7 @@
   .logo-icon { width: 36px; height: 36px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-display); }
   .logo-text { font-family: var(--font-display); font-weight: 600; font-size: 20px; letter-spacing: -0.3px; }
   .logo-text span { color: var(--accent); }
-  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links { display: flex; align-items: center; gap: 26px; list-style: none; }
   .nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 14.5px; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover { color: var(--primary); }
   .nav-cta { background: var(--primary); color: white !important; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; }
@@ -206,6 +209,8 @@
   .lodging-link-btn.btn-booking:hover { background: rgba(0,53,128,0.12); }
   .lodging-link-btn.btn-direct { background: rgba(27,79,114,0.07); color: var(--primary); border: 1px solid rgba(27,79,114,0.2); }
   .lodging-link-btn.btn-direct:hover { background: rgba(27,79,114,0.14); }
+  .lodging-link-btn.btn-direct-primary { background: var(--primary); color: #fff; border: 1px solid var(--primary); }
+  .lodging-link-btn.btn-direct-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
 
   /* COMPARISON TABLE */
   .compare-table-wrap { margin: 28px 0; overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
@@ -290,8 +295,7 @@
 <nav id="nav">
   <div class="nav-inner">
     <a href="index.html" class="logo">
-      <div class="logo-icon">B</div>
-      <div class="logo-text">Bourbon Trail<span>Planner</span></div>
+      <picture><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture>
     </a>
     <ul class="nav-links">
       <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>
@@ -338,6 +342,8 @@
     <p>Lodging strategy matters more on the Bourbon Trail than most people realize. The distilleries are spread across four main regions of Kentucky, with anywhere from 20 minutes to 3+ hours between clusters. Where you sleep each night determines how much driving you do, which distilleries you can comfortably visit, and whether you spend your mornings relaxed or rushing.</p>
     <p>The biggest mistake I see: people book a single hotel in Louisville for the entire trip and drive 1–2 hours each way to visit distilleries in Bardstown or Frankfort. You end up spending half your trip in a car and can't enjoy tastings because you're always driving back. Instead, <strong>move your base with your itinerary</strong>: sleep near the distilleries you're visiting the next day.</p>
     <p>For a <a href="3-day-bourbon-trail-itinerary.html">3-day trip</a>, that typically means one night in Louisville, one night in the Bardstown area, and optionally one night in Frankfort. For a weekend trip, Louisville + Bardstown covers the most ground.</p>
+
+    <p class="affiliate-disclosure" style="font-size:13px;line-height:1.6;color:var(--text-secondary);background:var(--bg-subtle);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin:20px 0;">Heads up: some links on this page are affiliate links, meaning we may earn a small commission if you book through them. It costs you nothing extra, and it never changes which places we recommend. One listing below is a property we own, and it's labeled as ours.</p>
 
     <h2 id="region-comparison">Region-by-Region Comparison</h2>
     <p>Here's a quick overview of what each region offers before we dive into specific recommendations:</p>
@@ -576,15 +582,16 @@
           </div>
           <div class="lodging-desc">One of the highest-rated properties on VRBO in the Bardstown area and a top-rated Airbnb. Located in New Hope, about 15–20 minutes south of Bardstown and roughly a mile from <a href="distillery-log-still.html">Log Still Distillery</a>. This is the kind of stay that makes a Bourbon Trail trip feel like a real getaway, you're in the countryside, surrounded by the landscape that defines Kentucky bourbon, instead of staring at a hotel parking lot. Great for couples and groups. The location is one of the best-positioned lodging options on the entire trail: close enough to Bardstown for dinner, close enough to Maker's Mark and the craft distilleries to minimize morning driving, and set up for a clean drive to Frankfort on Day 3.</div>
           <div class="lodging-tags">
-            <span class="lodging-tag tag-featured">&#9733; Featured Stay</span>
+            <span class="lodging-tag tag-featured">&#9733; Our Property</span>
             <span class="lodging-tag tag-groups">Great for groups</span>
             <span class="lodging-tag tag-featured">Top-rated on VRBO</span>
             <span class="lodging-tag tag-location">1 mi from Log Still</span>
           </div>
+          <p class="lodging-owner-note" style="font-size:13px;line-height:1.6;color:var(--text-secondary);background:var(--bg-subtle);border:1px solid var(--border);border-radius:8px;padding:12px 16px;margin:0 0 14px;">Full disclosure: this one is ours. We're the hosts, and hosting bourbon travelers here is a big part of why this site exists. We've kept it surrounded by plenty of alternatives so you can compare honestly, but if you stay with us, you're supporting the site directly.</p>
           <div class="lodging-links">
-            <a href="https://www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fnew-hope-bourbon-stop-new-hope.html" target="_blank" rel="noopener" class="lodging-link-btn btn-booking">Book on Booking.com &rarr;</a>
-            <a href="https://www.airbnb.com/rooms/1133406907482529297" target="_blank" rel="noopener" class="lodging-link-btn btn-airbnb">View on Airbnb &rarr;</a>
-            <a href="https://vrbo.com/affiliate/VD0a4b2" target="_blank" rel="noopener" class="lodging-link-btn btn-vrbo">View on VRBO &rarr;</a>
+            <a href="https://bourbonstopky.com/?utm_source=mybourbontrailplan&utm_medium=referral&utm_campaign=where_to_stay" target="_blank" rel="noopener" class="lodging-link-btn btn-direct-primary" onclick="if(typeof gtag==='function'){gtag('event','affiliate_click',{'method':'newhope_direct'})}">Book Direct (best rate) &rarr;</a>
+            <a href="https://www.airbnb.com/rooms/1133406907482529297" target="_blank" rel="noopener" class="lodging-link-btn btn-airbnb" onclick="if(typeof gtag==='function'){gtag('event','affiliate_click',{'method':'newhope_airbnb'})}">View on Airbnb &rarr;</a>
+            <a href="https://vrbo.com/affiliate/VD0a4b2" target="_blank" rel="noopener" class="lodging-link-btn btn-vrbo" onclick="if(typeof gtag==='function'){gtag('event','affiliate_click',{'method':'newhope_vrbo'})}">View on VRBO &rarr;</a>
           </div>
         </div>
       </div>

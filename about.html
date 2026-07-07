@@ -18,6 +18,9 @@
 <meta name="description" content="Bourbon Trail Planner was built by people who've actually done the Kentucky Bourbon Trail, multiple times. We share what we've learned so your trip is better than ours was.">
 <meta property="og:description" content="Bourbon Trail Planner was built by people who've actually done the Kentucky Bourbon Trail, multiple times. We share what we've learned so your trip is better than ours was.">
 <link rel="canonical" href="https://mybourbontrailplan.com/about.html">
+<link rel="icon" type="image/svg+xml" href="/images/bourbon-trail-planner-icon.svg?v=4">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180.png?v=4">
 <meta property="og:type" content="website">
 <meta property="og:title" content="About Bourbon Trail Planner | Built by Trail Veterans">
 <meta property="og:description" content="Bourbon Trail Planner was built by people who've done the trail multiple times. Honest reviews, real experience.">
@@ -36,7 +39,7 @@
   .logo-icon { width: 36px; height: 36px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; font-family: var(--font-display); }
   .logo-text { font-family: var(--font-display); font-weight: 600; font-size: 20px; }
   .logo-text span { color: var(--accent); }
-  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links { display: flex; align-items: center; gap: 26px; list-style: none; }
   .nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 14.5px; font-weight: 500; }
   .nav-links a:hover { color: var(--primary); }
   .nav-cta { background: var(--primary); color: white !important; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; }
@@ -55,11 +58,6 @@
   .content strong { color: var(--text); font-weight: 600; }
   .content a { color: var(--primary-light); text-decoration: underline; text-decoration-color: rgba(41,128,185,0.3); }
 
-  .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 32px 0; }
-  .stat-card { background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center; }
-  .stat-number { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--accent); }
-  .stat-label { font-size: 14px; color: var(--text-secondary); margin-top: 4px; }
-
   .value-card { background: rgba(212,160,60,0.04); border: 1px solid rgba(212,160,60,0.12); border-radius: var(--radius); padding: 24px; margin: 28px 0; }
   .value-card h3 { font-family: var(--font-display); font-size: 18px; font-weight: 600; color: var(--primary-dark); margin-bottom: 8px; }
   .value-card p { font-size: 15px; margin: 0; }
@@ -67,7 +65,7 @@
   footer { padding: 40px 24px; background: var(--primary-dark); color: rgba(255,255,255,0.6); text-align: center; font-size: 14px; }
   footer a { color: var(--accent); text-decoration: none; }
 
-  @media (max-width: 640px) { .nav-links { display: none; } .mobile-menu-btn { display: block; } .stat-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .nav-links { display: none; } .mobile-menu-btn { display: block; } }
 
   .nav-links.mobile-open { display: flex; flex-direction: column; position: absolute; top: 68px; left: 0; right: 0; background: white; padding: 16px 24px 24px; border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); gap: 4px; z-index: 99; }
   .nav-links.mobile-open li { width: 100%; }
@@ -94,7 +92,7 @@
 <body>
 
 <nav><div class="nav-inner">
-  <a href="index.html" class="logo"><div class="logo-icon">B</div><div class="logo-text">Bourbon Trail<span>Planner</span></div></a>
+  <a href="index.html" class="logo"><picture><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
   <ul class="nav-links">
     <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>
     <li><a href="distilleries.html">Distilleries</a></li>
@@ -122,12 +120,6 @@
 
 <p>Along the way we learned things that aren't obvious from the distillery websites: which tours are actually worth the money, which "must-book" experiences you can walk up to on a Tuesday, where the allocated bottles really are, and why your Day 2 pacing matters more than your Day 1 itinerary.</p>
 
-<div class="stat-grid">
-  <div class="stat-card"><div class="stat-number">50+</div><div class="stat-label">Distilleries reviewed & rated</div></div>
-  <div class="stat-card"><div class="stat-number">7</div><div class="stat-label">Complete trail trips taken</div></div>
-  <div class="stat-card"><div class="stat-number">All 7</div><div class="stat-label">Trail regions, every major stop covered</div></div>
-</div>
-
 <h2>What We Believe</h2>
 
 <div class="value-card">
@@ -147,7 +139,7 @@
 
 <h2>How This Site Makes Money</h2>
 <p>Transparency matters. Here's how we keep the lights on:</p>
-<p>Some lodging recommendations on this site include properties we own or have a relationship with. These are always clearly marked and surrounded by legitimate alternatives so you can make an informed choice. As the site grows, we plan to incorporate affiliate links for lodging bookings, tour reservations, and featured distillery partnerships. Distilleries and tour companies may pay for premium placement or featured listings on this site.</p>
+<p>One lodging recommendation on this site is a property we own (the New Hope Bourbon Stop, near Bardstown). It's labeled "Our Property" wherever it appears, and it's always listed alongside plenty of alternatives so you can make an informed choice. This site uses affiliate links for lodging bookings. If you book a hotel or rental through one of our links, we may earn a small commission at no extra cost to you. We also plan to add tour booking links and featured distillery partnerships as the site grows. Distilleries and tour companies may pay for premium placement or featured listings on this site.</p>
 <p>Here's the important distinction: <strong>our editorial reviews and ratings are never for sale.</strong> A distillery can pay for a featured listing, but they can't pay us to change a rating from a 7.5 to a 9.0. Every review reflects our real experience. If a place isn't worth recommending on its merits, a paid placement won't change that, and we'll always clearly label what's sponsored vs. what's editorial. We think you can tell the difference, and we respect that.</p>
 
 <h2>Get in Touch</h2>

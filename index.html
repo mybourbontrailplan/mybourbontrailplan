@@ -23,6 +23,9 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mybourbontrailplan.com/">
 <link rel="canonical" href="https://mybourbontrailplan.com/">
+<link rel="icon" type="image/svg+xml" href="/images/bourbon-trail-planner-icon.svg?v=4">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180.png?v=4">
 
 <!-- Schema Markup -->
 <script type="application/ld+json">
@@ -112,7 +115,7 @@
     letter-spacing: -0.3px;
   }
   .logo-text span { color: var(--accent); }
-  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
+  .nav-links { display: flex; align-items: center; gap: 26px; list-style: none; }
   .nav-links a {
     text-decoration: none; color: var(--text-secondary);
     font-size: 14.5px; font-weight: 500;
@@ -529,6 +532,7 @@
   "@type": "Organization",
   "name": "Bourbon Trail Planner",
   "url": "https://mybourbontrailplan.com/",
+  "logo": "https://mybourbontrailplan.com/images/icon-512.png",
   "description": "Independent trip planning resource for the Kentucky Bourbon Trail.",
   "founder": {
     "@type": "Person",
@@ -543,8 +547,7 @@
 <nav id="nav">
   <div class="nav-inner">
     <a href="/" class="logo">
-      <div class="logo-icon">B</div>
-      <div class="logo-text">Bourbon Trail<span>Planner</span></div>
+      <picture><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture>
     </a>
     <ul class="nav-links">
       <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>
@@ -784,8 +787,7 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <a href="/" class="logo" style="margin-bottom:4px;">
-        <div class="logo-icon">B</div>
-        <div class="logo-text" style="color:white;">Bourbon Trail<span>Planner</span></div>
+        <img src="images/bourbon-trail-planner-nav-reversed.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:36px;width:auto;display:block">
       </a>
       <p>Independent trip planning resource for the Kentucky Bourbon Trail. Built by someone who's done the trail multiple times and wants to help you skip the headaches.</p>
     </div>

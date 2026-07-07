@@ -125,6 +125,22 @@ All named `distillery-{name}.html`. All use the standardized template (white fro
 - **Top nav links (in order):** Plan Your Trip → Distilleries → Map → Where to Stay → Eat & Drink → Trip Builder → Guides → Booking Guide (CTA style)
 - Map must be a nav item on every new page created
 
+### Header logo (ALL pages)
+- **Brand assets** live in `images/`: `bourbon-trail-planner-nav.svg` (wide lockup, ~1020×136, renders ~300px at height 40px), `bourbon-trail-planner-icon.svg` (pin-only mark, square `viewBox="74 88 364 364"`, renders 40×40 at height 40px), plus `-nav-reversed.svg` / `-lockup*.svg` variants. The homepage footer uses `-nav-reversed.svg` at height 36px — leave it alone when batch-editing the header.
+- **Responsive logo swap:** the header logo is wrapped in a `<picture>` so it swaps to the compact pin icon below 1200px. This is a pure-markup swap (no page CSS/JS). Exact structure on every page:
+  ```html
+  <a href="index.html" class="logo"><picture><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
+  ```
+  ≥1200px shows the full lockup; <1200px shows the 40px pin. Why: `.nav-inner` is capped at `max-width:1200px`, so the lockup only ever has ~1152px to share with the 8 nav links; the icon frees ~260px so the nav stays on one line on narrower desktops/tablets before the 640px mobile hamburger kicks in.
+- **`.nav-links` gap is `26px` (not 32px)** site-wide. This was tightened from 32px specifically so the wide lockup + all 8 links clear one line inside the 1200px cap with ~38px of slack at 1280/1440/1920. Do NOT bump it back to 32px — the lockup nav wraps to two lines above ~1200px if you do.
+- **Favicon chain** (in every page `<head>`, SVG primary + PNG fallbacks, versioned with `?v=`):
+  ```html
+  <link rel="icon" type="image/svg+xml" href="/images/bourbon-trail-planner-icon.svg?v=4">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180.png?v=4">
+  ```
+  Bump the `?v=` query on all three (and the `<picture>` srcset) together when the icon art changes, to bust caches.
+
 ### Footer variants
 Two footer patterns exist — use the one that matches the page type:
 
