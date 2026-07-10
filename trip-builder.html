@@ -380,8 +380,7 @@ const pairings=[
 {a:"casey-jones",b:"dueling-grounds",tip:"Casey Jones and Dueling Grounds are both near the TN border - combine them.",type:"good"},
 {a:"mb-roland",b:"casey-jones",tip:"MB Roland and Casey Jones make a Western KY craft day.",type:"good"},
 {a:"green-river",b:"bh-james",tip:"Green River and B.H. James are both in the Owensboro area.",type:"good"},
-{a:"bulleit",b:"jeptha-creed",tip:"Bulleit and Jeptha Creed are both in Shelbyville - 15 min apart.",type:"good"},
-{a:"chicken-cock",b:"the-bard",tip:"Chicken Cock and The Bard are a 3-min walk in downtown Bardstown.",type:"good"}
+{a:"bulleit",b:"jeptha-creed",tip:"Bulleit and Jeptha Creed are both in Shelbyville - 15 min apart.",type:"good"}
 ];
 const BW={"buffalo-trace":"Buffalo Trace's calendar opens 8 weeks out (new dates Wednesdays 10 AM ET) and prime slots go quickly. Book first.","angels-envy":"Angel's Envy sells out weekends. Book 4–6 weeks ahead.","makers-mark":"Maker's Mark hand-dip books out. Reserve 4–6 weeks ahead."};
 function getTips(ds){const t=[],ids=ds.map(s=>s.id);pairings.forEach(p=>{if(ids.includes(p.a)&&ids.includes(p.b))t.push({text:p.tip,type:p.type})});if(ds.length>=4)t.push({text:"4+ stops is ambitious with tastings. Consider moving one.",type:"warn"});if(ds.length>=5)t.push({text:"5 stops will be exhausting. Trim this day.",type:"warn"});ds.forEach(s=>{if(BW[s.id])t.push({text:BW[s.id],type:"info"})});const rr=[...new Set(ds.map(s=>grp(s.region)))];if(rr.length>=3&&ds.length>=3)t.push({text:"Covering "+rr.length+" regions - lots of driving. Group by region.",type:"warn"});return t}
