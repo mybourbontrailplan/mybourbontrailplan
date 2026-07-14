@@ -354,14 +354,16 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
 - `scripts/add_schema.py` — bulk schema utility; use as the reference template when writing TouristAttraction schema for a new distillery profile
 - Sitemap at `sitemap.xml` — update when adding any new page
 
-### Updating a guide's date — BOTH surfaces, every time
-Whenever you make a **content change** to a guide or article page, bump **both** of these in the same edit. They live far apart in the file and it is easy to change one and forget the other:
+### Updating a guide's date — THREE surfaces, every time
+Whenever you make a **content change** to a guide or article page, bump **all three** of these. They live in two different files and it is easy to change one and forget the others (this has already happened twice):
 
-1. **The JSON-LD `dateModified`** in the `<head>` schema block (ISO 8601, `-05:00`).
-2. **The visible "Updated {Month} {Year}" line** in the `.article-meta` bar under the H1 (next to the calendar SVG, alongside the "N min read" item).
+1. **The JSON-LD `dateModified`** in the page's `<head>` schema block (ISO 8601, `-05:00`).
+2. **The visible "Updated {Month} {Year}" line** in the page's `.article-meta` bar under the H1 (next to the calendar SVG, alongside the "N min read" item).
+3. **The `.guide-date` span on that guide's card in `guides.html`** — the guides index. This is the one everyone forgets because it lives in a different file entirely. Note the existing spans are inconsistent: most show a bare **publish** month (`Jun 2026`) that matches the page's `datePublished`, while a few are prefixed `Updated `. If a card says `Updated `, keep that prefix and bump the month. If it shows a bare publish date, leave it alone unless you're deliberately converting it.
 
 - Leave `datePublished` alone. It records original publication and never changes.
-- The two surfaces **drift**: in July 2026 the itinerary page had a schema `dateModified` of April while its visible line still read February, because an earlier pass updated the schema only. Check both.
+- These surfaces **drift**, and they have: in July 2026 the itinerary page had a schema `dateModified` of April while its visible line still read February, and the Whiskey Row guide shipped a full rewrite while its `guides.html` card still advertised "Updated Apr 2026". Check all three.
+- **`guides.html` card copy goes stale too.** The card's `<p>` summary duplicates claims from the page (counts, "6+ distilleries", route direction). When you materially change a guide, reread its card blurb, not just its date.
 - Skip the bump for pure style/markup edits with no content change (CSS tweaks, nav/footer template updates, favicon versions). Bump it for anything a reader would notice: new facts, corrections, rewritten copy, added or removed sections.
 - **Distillery profiles have neither surface** — `TouristAttraction` schema carries no `dateModified` and profiles have no `.article-meta` bar. Nothing to bump there. Do not add date fields to a profile just to have them.
 - Every guide's `.article-meta` bar should carry both a read-time item and an Updated item. Read time is computed at roughly **200 words per minute** over the body copy.
