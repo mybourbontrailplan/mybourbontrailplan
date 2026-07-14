@@ -174,6 +174,9 @@
   .tag-craft { background: rgba(155,89,182,0.06); color: #8E44AD; }
   .tag-trail { background: rgba(212,160,60,0.08); color: #B8860B; }
   .tag-independent { background: rgba(14,47,68,0.07); color: var(--primary-dark); }
+  /* Production type: solid fills, deliberately heavier than the soft status tags above */
+  .tag-distillery { background: var(--accent); color: var(--primary-dark); font-weight: 700; }
+  .tag-tasting { background: var(--primary-dark); color: var(--accent); font-weight: 700; }
   .dist-card-link {
     display: inline-flex; align-items: center; gap: 4px;
     margin-top: 12px; font-size: 13.5px; font-weight: 600;
@@ -260,10 +263,22 @@
       <button class="filter-pill" data-value="hard">Hard</button>
     </div>
   </div>
+  <div class="filter-group">
+    <div class="filter-label">Production</div>
+    <div class="filter-pills" data-filter="production">
+      <button class="filter-pill active" data-value="all">All</button>
+      <button class="filter-pill" data-value="distillery">Working Distillery</button>
+      <button class="filter-pill" data-value="tasting">Tasting Room</button>
+    </div>
+  </div>
 </div>
 
+<p style="max-width:var(--max-width);margin:0 auto 20px;padding:0 24px;font-size:14.5px;color:var(--text-secondary);line-height:1.6;">
+  <strong>Working Distillery</strong> means the whiskey is made in that building: mash, still, and production you can actually see. <strong>Tasting Room</strong> means the brand pours and sells there, but the spirit is distilled elsewhere. Both are worth visiting for different reasons, and knowing which is which keeps you from booking five of the same thing.
+</p>
+
 <div class="filter-count">
-  <span>Showing <strong id="count">60</strong> distilleries</span>
+  <span>Showing <strong id="count">60</strong> distilleries &amp; tasting rooms</span>
   <div class="sort-control">
     <label for="sort-select">Sort by:</label>
     <select id="sort-select">
@@ -277,7 +292,7 @@
   <div class="directory-grid" id="grid">
 
     <!-- BUFFALO TRACE -->
-    <a href="distillery-buffalo-trace.html" class="dist-card" data-region="frankfort" data-type="major" data-booking="hard">
+    <a href="distillery-buffalo-trace.html" class="dist-card" data-production="distillery" data-region="frankfort" data-type="major" data-booking="hard">
       <div class="dist-card-top">
         <div class="dist-card-name">Buffalo Trace Distillery</div>
         <div class="dist-card-rating">9.2</div>
@@ -285,6 +300,7 @@
       <div class="dist-card-region">Frankfort, KY</div>
       <div class="dist-card-desc">The most iconic distillery in Kentucky, and famously not on the official trail: Sazerac left the KDA in 2009. Home to Pappy Van Winkle, Blanton's, and Eagle Rare. Free tours, National Historic Landmark, and the hardest booking to get.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-free">Free tours</span>
         <span class="dist-tag tag-hard">Hard booking</span>
         <span class="dist-tag tag-independent">Independent</span>
@@ -293,7 +309,7 @@
     </a>
 
     <!-- MAKER'S MARK -->
-    <a href="distillery-makers-mark.html" class="dist-card" data-region="bardstown" data-type="major" data-booking="moderate">
+    <a href="distillery-makers-mark.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="major" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Maker's Mark Distillery</div>
         <div class="dist-card-rating">9.0</div>
@@ -301,6 +317,7 @@
       <div class="dist-card-region">Loretto, KY (near Bardstown)</div>
       <div class="dist-card-desc">The postcard stop of the Bourbon Trail. National Historic Landmark campus with the signature red wax hand-dipping experience. Beautiful grounds, creek-side setting.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$18–$75</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -309,7 +326,7 @@
     </a>
 
     <!-- ANGEL'S ENVY -->
-    <a href="distillery-angels-envy.html" class="dist-card" data-region="louisville" data-type="major" data-booking="hard">
+    <a href="distillery-angels-envy.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="major" data-booking="hard">
       <div class="dist-card-top">
         <div class="dist-card-name">Angel's Envy Distillery</div>
         <div class="dist-card-rating">8.8</div>
@@ -317,6 +334,7 @@
       <div class="dist-card-region">Louisville, KY (Whiskey Row)</div>
       <div class="dist-card-desc">Stunning restored industrial building with a rooftop bar overlooking the Louisville skyline. Port-finished bourbon tasting is the highlight. Most polished experience on Whiskey Row.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$25–$50</span>
         <span class="dist-tag tag-hard">Hard booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -325,7 +343,7 @@
     </a>
 
     <!-- OLD FORESTER -->
-    <a href="distillery-old-forester.html" class="dist-card" data-region="louisville" data-type="major" data-booking="moderate">
+    <a href="distillery-old-forester.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="major" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Old Forester Distillery</div>
         <div class="dist-card-rating">8.9</div>
@@ -333,6 +351,7 @@
       <div class="dist-card-region">Louisville, KY (Whiskey Row)</div>
       <div class="dist-card-desc">One of the best-designed modern distilleries in the country. Multi-story tour through full production process. The "Bottle Your Own" experience is the standout premium offering.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$20–$75</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -341,7 +360,7 @@
     </a>
 
     <!-- WOODFORD RESERVE -->
-    <a href="distillery-woodford-reserve.html" class="dist-card" data-region="lexington" data-type="major" data-booking="moderate">
+    <a href="distillery-woodford-reserve.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="major" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Woodford Reserve Distillery</div>
         <div class="dist-card-rating">8.7</div>
@@ -349,6 +368,7 @@
       <div class="dist-card-region">Versailles, KY</div>
       <div class="dist-card-desc">Postcard-perfect campus in horse country. Copper pot stills, stone warehouses, creek-side setting. "Corn to Cork" is their premium deep-dive. Can feel similar to Maker's Mark.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$20–$80</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -357,7 +377,7 @@
     </a>
 
     <!-- HEAVEN HILL -->
-    <a href="distillery-heaven-hill.html" class="dist-card" data-region="bardstown" data-type="major" data-booking="easy">
+    <a href="distillery-heaven-hill.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="major" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Heaven Hill Bourbon Experience</div>
         <div class="dist-card-rating">8.5</div>
@@ -365,6 +385,7 @@
       <div class="dist-card-region">Bardstown, KY</div>
       <div class="dist-card-desc">Newer facility with one of the best-designed visitor experiences on the trail. "You Do Bourbon" tasting is the best educational experience available. Great gift shop with distillery exclusives.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$20–$50</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -373,7 +394,7 @@
     </a>
 
     <!-- EVAN WILLIAMS -->
-    <a href="distillery-evan-williams.html" class="dist-card" data-region="louisville" data-type="major" data-booking="easy">
+    <a href="distillery-evan-williams.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="major" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Evan Williams Bourbon Experience</div>
         <div class="dist-card-rating">7.8</div>
@@ -381,6 +402,7 @@
       <div class="dist-card-region">Louisville, KY (Whiskey Row)</div>
       <div class="dist-card-desc">Most affordable tour on Whiskey Row with a solid bourbon history overview. Underground artisan still and guided tasting. Good starter tour, cocktail lounge downstairs is a nice bonus.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$18</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -389,7 +411,7 @@
     </a>
 
     <!-- WILD TURKEY -->
-    <a href="distillery-wild-turkey.html" class="dist-card" data-region="lexington" data-type="major" data-booking="easy">
+    <a href="distillery-wild-turkey.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="major" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Wild Turkey Distillery</div>
         <div class="dist-card-rating">8.3</div>
@@ -397,6 +419,7 @@
       <div class="dist-card-region">Lawrenceburg, KY</div>
       <div class="dist-card-desc">Perched on a Kentucky River bluff with dramatic views. Home of Jimmy Russell, the longest-tenured master distiller in the world. Modern visitor center with solid tours.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$45</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -405,7 +428,7 @@
     </a>
 
     <!-- JIM BEAM -->
-    <a href="distillery-jim-beam.html" class="dist-card" data-region="bardstown" data-type="major" data-booking="easy">
+    <a href="distillery-jim-beam.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="major" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Jim Beam</div>
         <div class="dist-card-rating">7.5</div>
@@ -413,6 +436,7 @@
       <div class="dist-card-region">Clermont, KY (near Bardstown)</div>
       <div class="dist-card-desc">The world's best-selling bourbon brand. Large campus with multiple experience options. Standard tour is solid but not distinctive. The Knob Creek Experience and Bourbon & BBQ Cookhouse are the upgrades worth considering.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$16–$75</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -421,7 +445,7 @@
     </a>
 
     <!-- FOUR ROSES -->
-    <a href="distillery-four-roses.html" class="dist-card" data-region="lexington" data-type="major" data-booking="easy">
+    <a href="distillery-four-roses.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="major" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Four Roses Distillery</div>
         <div class="dist-card-rating">8.1</div>
@@ -429,6 +453,7 @@
       <div class="dist-card-region">Lawrenceburg, KY</div>
       <div class="dist-card-desc">Beautiful Spanish Mission-style distillery, architecturally unique on the trail. Known for their 10 distinct bourbon recipes. Relaxed vibe, smaller crowds, and a very knowledgeable team.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$30</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -437,7 +462,7 @@
     </a>
 
     <!-- LOG STILL -->
-    <a href="distillery-log-still.html" class="dist-card" data-region="bardstown" data-type="craft" data-booking="easy">
+    <a href="distillery-log-still.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Log Still Distillery</div>
         <div class="dist-card-rating">8.4</div>
@@ -445,6 +470,7 @@
       <div class="dist-card-region">New Haven, KY</div>
       <div class="dist-card-desc">One of the best craft additions to a Bardstown day. Restored historic distillery site with a relaxed campus feel. Monk's Road bourbon is excellent. Uncrowded and genuinely craft-focused.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$35</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -453,7 +479,7 @@
     </a>
 
     <!-- PRESERVATION -->
-    <a href="distillery-preservation.html" class="dist-card" data-region="bardstown" data-type="craft" data-booking="easy">
+    <a href="distillery-preservation.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Preservation Distillery</div>
         <div class="dist-card-rating">8.6</div>
@@ -461,6 +487,7 @@
       <div class="dist-card-region">Bardstown, KY</div>
       <div class="dist-card-desc">A craft distillery doing some of the best bourbon in the region. Smaller, more personal operation where you're likely to meet the people actually making the whiskey. Outstanding bourbon quality.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$30</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -469,7 +496,7 @@
     </a>
 
     <!-- CASTLE & KEY -->
-    <a href="distillery-castle-key.html" class="dist-card" data-region="frankfort" data-type="craft" data-booking="easy">
+    <a href="distillery-castle-key.html" class="dist-card" data-production="distillery" data-region="frankfort" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Castle &amp; Key Distillery</div>
         <div class="dist-card-rating">8.3</div>
@@ -477,6 +504,7 @@
       <div class="dist-card-region">Frankfort, KY</div>
       <div class="dist-card-desc">Beautifully restored pre-Prohibition distillery with stunning sunken garden and stone architecture. Excellent gin and growing bourbon program. Outstanding cocktails on-site.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$30</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -485,7 +513,7 @@
     </a>
 
     <!-- LUX ROW -->
-    <a href="distillery-lux-row.html" class="dist-card" data-region="bardstown" data-type="craft" data-booking="easy">
+    <a href="distillery-lux-row.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Lux Row Distillers</div>
         <div class="dist-card-rating">8.0</div>
@@ -493,6 +521,7 @@
       <div class="dist-card-region">Bardstown, KY</div>
       <div class="dist-card-desc">Modern craft facility minutes from downtown Bardstown. Home to Ezra Brooks, Rebel, and Blood Oath. Clean, well-designed tasting room with solid smaller-batch bourbons.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$40</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -501,7 +530,7 @@
     </a>
 
     <!-- BARDSTOWN BOURBON CO -->
-    <a href="distillery-bardstown-bourbon-co.html" class="dist-card" data-region="bardstown" data-type="major" data-booking="moderate">
+    <a href="distillery-bardstown-bourbon-co.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="major" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Bardstown Bourbon Company</div>
         <div class="dist-card-rating">8.5</div>
@@ -509,6 +538,7 @@
       <div class="dist-card-region">Bardstown, KY</div>
       <div class="dist-card-desc">State-of-the-art facility with a collaborative distilling program. On-site Bottle &amp; Bond restaurant is the best upscale dining in Bardstown. Behind the Barrel tour is a deep dive.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$25–$80</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -517,7 +547,7 @@
     </a>
 
     <!-- WILLETT -->
-    <a href="distillery-willett.html" class="dist-card" data-region="bardstown" data-type="craft" data-booking="moderate">
+    <a href="distillery-willett.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="craft" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Willett Distillery</div>
         <div class="dist-card-rating">8.2</div>
@@ -525,6 +555,7 @@
       <div class="dist-card-region">Bardstown, KY</div>
       <div class="dist-card-desc">Family-owned since 1936 with an iconic pot still-shaped building. Cult following for their Family Estate bottles, the gift shop is a destination in itself.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$35</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -533,7 +564,7 @@
     </a>
 
     <!-- RABBIT HOLE -->
-    <a href="distillery-rabbit-hole.html" class="dist-card" data-region="louisville" data-type="craft" data-booking="easy">
+    <a href="distillery-rabbit-hole.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Rabbit Hole Distillery</div>
         <div class="dist-card-rating">7.9</div>
@@ -541,6 +572,7 @@
       <div class="dist-card-region">Louisville, KY (NuLu)</div>
       <div class="dist-card-desc">Ultra-modern distillery in NuLu with unique grain bills and an art-gallery aesthetic. Founded by two psychologists. Dareringer PX sherry finish is a standout.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$18–$50</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -549,7 +581,7 @@
     </a>
 
     <!-- MICHTER'S -->
-    <a href="distillery-michters.html" class="dist-card" data-region="louisville" data-type="major" data-booking="moderate">
+    <a href="distillery-michters.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="major" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Michter's Fort Nelson</div>
         <div class="dist-card-rating">8.6</div>
@@ -557,6 +589,7 @@
       <div class="dist-card-region">Louisville, KY (Whiskey Row)</div>
       <div class="dist-card-desc">Premium small-batch distillery on Whiskey Row. Bar 8314 upstairs serves some of the best cocktails in Louisville, worth a visit even without the tour.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$25–$50</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -565,7 +598,7 @@
     </a>
 
     <!-- BUZZARD'S ROOST -->
-    <a href="distillery-buzzards-roost.html" class="dist-card" data-region="louisville" data-type="craft" data-booking="easy">
+    <a href="distillery-buzzards-roost.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Buzzard's Roost</div>
         <div class="dist-card-rating">7.5</div>
@@ -573,6 +606,7 @@
       <div class="dist-card-region">Louisville, KY</div>
       <div class="dist-card-desc">Woman-led craft distillery on Whiskey Row. Known for double-oaked secondary maturation and 17 proprietary barrel types. Great bar vibe, walk-ins welcome.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$100</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -581,7 +615,7 @@
     </a>
 
     <!-- PEERLESS -->
-    <a href="distillery-peerless.html" class="dist-card" data-region="louisville" data-type="craft" data-booking="easy">
+    <a href="distillery-peerless.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Kentucky Peerless Distilling</div>
         <div class="dist-card-rating">8.2</div>
@@ -589,6 +623,7 @@
       <div class="dist-card-region">Louisville, KY</div>
       <div class="dist-card-desc">True grain-to-glass craft distillery a few blocks from Whiskey Row. Award-winning rye whiskey and barrel-proof bourbon. Small, personal tours.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$35</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -597,7 +632,7 @@
     </a>
 
     <!-- PENSIVE DISTILLING -->
-    <a href="distillery-pensive.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-pensive.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Pensive Distilling Co.</div>
         <div class="dist-card-rating">8.0</div>
@@ -605,6 +640,7 @@
       <div class="dist-card-region">Newport, KY (Northern Kentucky)</div>
       <div class="dist-card-desc">Historic Prohibition-era building with a password-entry speakeasy tasting room, award-winning kitchen, and knowledgeable small-group tours. A genuine bright spot in Northern Kentucky.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$25</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -613,7 +649,7 @@
     </a>
 
     <!-- NEW RIFF -->
-    <a href="distillery-new-riff.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-new-riff.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">New Riff Distilling</div>
         <div class="dist-card-rating">8.4</div>
@@ -621,6 +657,7 @@
       <div class="dist-card-region">Newport, KY (Northern Kentucky)</div>
       <div class="dist-card-desc">Award-winning distillery with free tours, bottled-in-bond everything, and a rooftop bar overlooking Cincinnati. One of the best values on the entire trail.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-free">Free tours</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -629,7 +666,7 @@
     </a>
 
     <!-- WILDERNESS TRAIL -->
-    <a href="distillery-wilderness-trail.html" class="dist-card" data-region="lexington" data-type="craft" data-booking="easy">
+    <a href="distillery-wilderness-trail.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Wilderness Trail Distillery</div>
         <div class="dist-card-rating">8.3</div>
@@ -637,6 +674,7 @@
       <div class="dist-card-region">Danville, KY</div>
       <div class="dist-card-desc">Science-driven distillery using a rare sweet mash process. Run by a microbiologist and chemical engineer, the nerdiest and one of the tastiest stops on the trail.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$30</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -645,7 +683,7 @@
     </a>
 
     <!-- TOWN BRANCH -->
-    <a href="distillery-town-branch.html" class="dist-card" data-region="lexington" data-type="major" data-booking="easy">
+    <a href="distillery-town-branch.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="major" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Town Branch Distillery</div>
         <div class="dist-card-rating">7.4</div>
@@ -653,6 +691,7 @@
       <div class="dist-card-region">Lexington, KY</div>
       <div class="dist-card-desc">Kentucky's only combined distillery and brewery. Solid bourbon alongside craft beer, the most versatile stop for mixed groups. Downtown Lexington location.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$30</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -661,7 +700,7 @@
     </a>
 
     <!-- WHISKEY THIEF LOUISVILLE -->
-    <a href="distillery-whiskey-thief.html" class="dist-card" data-region="louisville" data-type="craft" data-booking="easy">
+    <a href="distillery-whiskey-thief.html" class="dist-card" data-production="tasting" data-region="louisville" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Whiskey Thief (Louisville Tasting Room)</div>
         <div class="dist-card-rating">7.5</div>
@@ -669,6 +708,7 @@
       <div class="dist-card-region">Louisville, KY</div>
       <div class="dist-card-desc">Urban tasting room and listening lounge in NuLu. Barrel tastings, cocktails, and live music. The actual distilling happens at their Franklin County farm.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-tasting">Tasting Room</span>
         <span class="dist-tag tag-easy">Easy / walk-in</span>
         <span class="dist-tag tag-craft">Craft</span>
       </div>
@@ -676,7 +716,7 @@
     </a>
 
     <!-- WHISKEY THIEF FRANKLIN COUNTY FARM -->
-    <a href="distillery-whiskey-thief-franklin.html" class="dist-card" data-region="frankfort" data-type="craft" data-booking="easy">
+    <a href="distillery-whiskey-thief-franklin.html" class="dist-card" data-production="distillery" data-region="frankfort" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Whiskey Thief (Franklin County Farm)</div>
         <div class="dist-card-rating">8.2</div>
@@ -684,6 +724,7 @@
       <div class="dist-card-region">Frankfort, KY</div>
       <div class="dist-card-desc">The original Whiskey Thief site: a 127-acre working farm growing its own grain. Thieve and bottle your own pour, live music, food truck Thu–Sun.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$5–$35</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -692,7 +733,7 @@
     </a>
 
     <!-- FRESH BOURBON -->
-    <a href="distillery-fresh-bourbon.html" class="dist-card" data-region="lexington" data-type="craft" data-booking="moderate">
+    <a href="distillery-fresh-bourbon.html" class="dist-card" data-production="tasting" data-region="lexington" data-type="craft" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Fresh Bourbon Distillery</div>
         <div class="dist-card-rating">8.0</div>
@@ -700,6 +741,7 @@
       <div class="dist-card-region">Lexington, KY (Downtown)</div>
       <div class="dist-card-desc">One of the most unique stops on the trail, a multi-sensory bourbon experience in downtown Lexington. Beautiful tasting room, interactive mixology, and real historical significance.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-tasting">Tasting Room</span>
         <span class="dist-tag tag-paid">$25–$40</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -708,7 +750,7 @@
     </a>
 
     <!-- COPPER & KINGS -->
-    <a href="distillery-copper-and-kings.html" class="dist-card" data-region="louisville" data-type="craft" data-booking="moderate">
+    <a href="distillery-copper-and-kings.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="craft" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Copper &amp; Kings American Brandy Co.</div>
         <div class="dist-card-rating">8.5</div>
@@ -716,6 +758,7 @@
       <div class="dist-card-region">Louisville, KY (Butchertown)</div>
       <div class="dist-card-desc">Louisville's most unique distillery experience, American brandy with a sonic aging cellar and a rooftop bar with skyline views. The perfect palate cleanser after days of bourbon.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$35</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -724,7 +767,7 @@
     </a>
 
     <!-- KENTUCKY ARTISAN -->
-    <a href="distillery-kentucky-artisan.html" class="dist-card" data-region="louisville" data-type="craft" data-booking="moderate">
+    <a href="distillery-kentucky-artisan.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="craft" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Kentucky Artisan Distillery</div>
         <div class="dist-card-rating">8.5</div>
@@ -732,6 +775,7 @@
       <div class="dist-card-region">Crestwood, KY</div>
       <div class="dist-card-desc">Home of Jefferson's Ocean bourbon. One of the most personal, educational tours on the trail with small-group format and behind-the-scenes access that exceeds major distilleries. Hidden gem.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$30</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -740,7 +784,7 @@
     </a>
 
     <!-- GREEN RIVER -->
-    <a href="distillery-green-river.html" class="dist-card" data-region="other" data-type="major" data-booking="easy">
+    <a href="distillery-green-river.html" class="dist-card" data-production="distillery" data-region="other" data-type="major" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Green River Distilling Co.</div>
         <div class="dist-card-rating">8.2</div>
@@ -748,6 +792,7 @@
       <div class="dist-card-region">Owensboro, KY</div>
       <div class="dist-card-desc">One of Kentucky's oldest distilleries, beautifully revived in Owensboro. Passionate guides, easy booking, and world-class BBQ nearby. Best reason to venture into Western Kentucky.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$30</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -756,7 +801,7 @@
     </a>
 
     <!-- GENERAL GEORGE STILLHOUSE -->
-    <a href="distillery-general-george.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-general-george.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">General George Stillhouse</div>
         <div class="dist-card-rating">7.0</div>
@@ -764,6 +809,7 @@
       <div class="dist-card-region">Falls of Rough, KY (Western Kentucky)</div>
       <div class="dist-card-desc">Craft distillery on a historic farm once owned by George Washington. Founding Fox bourbon, gin, and vodka from native ingredients. Ambassador's barrel-thieving tour is the standout experience. Joined the official trail in 2026.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">See website</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -772,7 +818,7 @@
     </a>
 
     <!-- JEPTHA CREED -->
-    <a href="distillery-jeptha-creed.html" class="dist-card" data-region="louisville" data-type="craft" data-booking="easy">
+    <a href="distillery-jeptha-creed.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Jeptha Creed Distillery</div>
         <div class="dist-card-rating">8.2</div>
@@ -780,6 +826,7 @@
       <div class="dist-card-region">Shelbyville, KY</div>
       <div class="dist-card-desc">The most authentic farm-to-bottle experience on the trail. Bloody Butcher corn grown on-site, ground-to-glass production, and a beautiful Shelbyville setting. Pairs naturally with Bulleit.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -788,7 +835,7 @@
     </a>
 
     <!-- LIMESTONE BRANCH -->
-    <a href="distillery-limestone-branch.html" class="dist-card" data-region="bardstown" data-type="craft" data-booking="easy">
+    <a href="distillery-limestone-branch.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Limestone Branch Distillery</div>
         <div class="dist-card-rating">8.0</div>
@@ -796,6 +843,7 @@
       <div class="dist-card-region">Lebanon, KY</div>
       <div class="dist-card-desc">Beam family heritage distillery producing Yellowstone bourbon and Minor Case rye. Intimate, family-run tours in small-town Kentucky. Pairs perfectly with Maker's Mark for a day south of Bardstown.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$15</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -804,7 +852,7 @@
     </a>
 
     <!-- BULLEIT -->
-    <a href="distillery-bulleit.html" class="dist-card" data-region="louisville" data-type="major" data-booking="moderate">
+    <a href="distillery-bulleit.html" class="dist-card" data-production="distillery" data-region="louisville" data-type="major" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Bulleit Distilling Co.</div>
         <div class="dist-card-rating">8.0</div>
@@ -812,6 +860,7 @@
       <div class="dist-card-region">Shelbyville, KY</div>
       <div class="dist-card-desc">Modern, design-forward facility on 300 acres between Louisville and Lexington. Multi-sensory tasting, outstanding gift shop, and sustainability focus. Pairs well with Jeptha Creed.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$20–$25</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -820,7 +869,7 @@
     </a>
 
     <!-- BLUEGRASS DISTILLERS -->
-    <a href="distillery-bluegrass.html" class="dist-card" data-region="lexington" data-type="craft" data-booking="easy">
+    <a href="distillery-bluegrass.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Bluegrass Distillers (Elkwood Farm)</div>
         <div class="dist-card-rating">7.8</div>
@@ -828,6 +877,7 @@
       <div class="dist-card-region">Midway, KY (near Lexington)</div>
       <div class="dist-card-desc">Beautiful 62-acre horse country farm setting near Midway. Grain-to-glass bourbon with pastoral views that rival Woodford Reserve. Great complement to a Lexington-area day.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$25</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -836,7 +886,7 @@
     </a>
 
     <!-- GLENNS CREEK -->
-    <a href="distillery-glenns-creek.html" class="dist-card" data-region="frankfort" data-type="craft" data-booking="easy">
+    <a href="distillery-glenns-creek.html" class="dist-card" data-production="distillery" data-region="frankfort" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Glenns Creek Distilling</div>
         <div class="dist-card-rating">7.8</div>
@@ -844,6 +894,7 @@
       <div class="dist-card-region">Frankfort, KY</div>
       <div class="dist-card-desc">Historic Old Crow distillery grounds with visible ruins from bourbon's golden age. Intimate craft tours and genuine history. Pair with Buffalo Trace and Castle &amp; Key for a Frankfort day.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -852,7 +903,7 @@
     </a>
 
     <!-- JAMES E. PEPPER -->
-    <a href="distillery-james-e-pepper.html" class="dist-card" data-region="lexington" data-type="craft" data-booking="moderate">
+    <a href="distillery-james-e-pepper.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="craft" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">James E. Pepper Distillery</div>
         <div class="dist-card-rating">7.8</div>
@@ -860,6 +911,7 @@
       <div class="dist-card-region">Lexington, KY (Distillery District)</div>
       <div class="dist-card-desc">Walkable Distillery District location with Old Fashioned cocktail history. More about the neighborhood experience than a jaw-dropping tour, but the history is genuinely interesting.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$25</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -868,7 +920,7 @@
     </a>
 
     <!-- DARK ARTS WHISKEY HOUSE -->
-    <a href="distillery-dark-arts.html" class="dist-card" data-region="lexington" data-type="craft" data-booking="easy">
+    <a href="distillery-dark-arts.html" class="dist-card" data-production="tasting" data-region="lexington" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Dark Arts Whiskey House</div>
         <div class="dist-card-rating">8.0</div>
@@ -876,6 +928,7 @@
       <div class="dist-card-region">Lexington, KY (Distillery District)</div>
       <div class="dist-card-desc">The most theatrical stop on the trail, a blending and finishing house where you taste straight from the barrel, bottle your own selection, and drink craft cocktails surrounded by medieval armor. Completely unlike any traditional distillery tour.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-tasting">Tasting Room</span>
         <span class="dist-tag tag-paid">Varies</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -884,7 +937,7 @@
     </a>
 
     <!-- CASEY JONES -->
-    <a href="distillery-casey-jones.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-casey-jones.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Casey Jones Distillery</div>
         <div class="dist-card-rating">7.8</div>
@@ -892,6 +945,7 @@
       <div class="dist-card-region">Hopkinsville, KY</div>
       <div class="dist-card-desc">Third-generation moonshine-to-bourbon operation in Western Kentucky. Raw, authentic, no corporate gloss, just real family heritage and a genuinely memorable experience.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$15</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -900,7 +954,7 @@
     </a>
 
     <!-- BOONE COUNTY -->
-    <a href="distillery-boone-county.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-boone-county.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Boone County Distilling Co.</div>
         <div class="dist-card-rating">7.8</div>
@@ -908,6 +962,7 @@
       <div class="dist-card-region">Independence, KY (Northern Kentucky)</div>
       <div class="dist-card-desc">Reviving pre-Prohibition Northern Kentucky bourbon heritage. 15 minutes from Cincinnati, essential for Northern KY visitors. Pair with New Riff for a full day in the region.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$25</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -916,7 +971,7 @@
     </a>
 
     <!-- HARTFIELD & CO -->
-    <a href="distillery-hartfield.html" class="dist-card" data-region="lexington" data-type="craft" data-booking="easy">
+    <a href="distillery-hartfield.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Hartfield &amp; Co. Distillery</div>
         <div class="dist-card-rating">7.5</div>
@@ -924,6 +979,7 @@
       <div class="dist-card-region">Paris, KY (Bourbon County)</div>
       <div class="dist-card-desc">First distillery in Bourbon County since Prohibition, sipping whiskey in the county that gave bourbon its name. Genuine history and charming small-town Paris setting.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -932,7 +988,7 @@
     </a>
 
     <!-- OLD POGUE -->
-    <a href="distillery-old-pogue.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-old-pogue.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">The Old Pogue Distillery</div>
         <div class="dist-card-rating">7.5</div>
@@ -940,6 +996,7 @@
       <div class="dist-card-region">Maysville, KY</div>
       <div class="dist-card-desc">Off-the-beaten-path gem along the Ohio River. Pre-Prohibition family heritage, same limestone water source, and a beautiful river town to explore. Rewarding for the dedicated trail explorer.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$15</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -948,7 +1005,7 @@
     </a>
 
     <!-- MB ROLAND -->
-    <a href="distillery-mb-roland.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-mb-roland.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">MB Roland Distillery</div>
         <div class="dist-card-rating">7.5</div>
@@ -956,6 +1013,7 @@
       <div class="dist-card-region">Pembroke, KY</div>
       <div class="dist-card-desc">Small pot-still operation in a converted tobacco barn. Uncut, unfiltered bourbon, the antidote to bourbon trail fatigue. Exceptional value and genuine craft education.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$5–$10</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -964,7 +1022,7 @@
     </a>
 
     <!-- SECOND SIGHT -->
-    <a href="distillery-second-sight.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-second-sight.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Second Sight Spirits</div>
         <div class="dist-card-rating">7.5</div>
@@ -972,6 +1030,7 @@
       <div class="dist-card-region">Ludlow, KY (Northern Kentucky)</div>
       <div class="dist-card-desc">Creative wild card on the Northern KY trail with experimental spirits and an arts-forward vibe. Refreshing change of pace from traditional bourbon tours. Pair with New Riff and Boone County.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -980,7 +1039,7 @@
     </a>
 
     <!-- BARREL HOUSE -->
-    <a href="distillery-barrel-house.html" class="dist-card" data-region="lexington" data-type="craft" data-booking="easy">
+    <a href="distillery-barrel-house.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Barrel House Distilling Co.</div>
         <div class="dist-card-rating">7.2</div>
@@ -988,6 +1047,7 @@
       <div class="dist-card-region">Lexington, KY (Distillery District)</div>
       <div class="dist-card-desc">Casual, affordable Distillery District add-on. Pair with James E. Pepper and lunch at a district restaurant for a relaxed half-day. Solid bonus stop in the neighborhood.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$15</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -996,7 +1056,7 @@
     </a>
 
     <!-- DUELING GROUNDS -->
-    <a href="distillery-dueling-grounds.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-dueling-grounds.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Dueling Grounds Distillery</div>
         <div class="dist-card-rating">7.2</div>
@@ -1004,6 +1064,7 @@
       <div class="dist-card-region">Franklin, KY</div>
       <div class="dist-card-desc">Solid Western Kentucky stop near the Tennessee border. Good for Nashville-area visitors wanting a quick bourbon trail taste. Pair with Casey Jones or MB Roland for a craft day.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$15</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1012,7 +1073,7 @@
     </a>
 
     <!-- BOUNDARY OAK -->
-    <a href="distillery-boundary-oak.html" class="dist-card" data-region="bardstown" data-type="craft" data-booking="easy">
+    <a href="distillery-boundary-oak.html" class="dist-card" data-production="distillery" data-region="bardstown" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Boundary Oak Distillery</div>
         <div class="dist-card-rating">7.0</div>
@@ -1020,6 +1081,7 @@
       <div class="dist-card-region">Radcliff, KY (near Fort Knox)</div>
       <div class="dist-card-desc">Family-owned craft operation near Fort Knox with military-themed bourbons and a natural limestone spring. Walk-in tours, affordable tastings, and a great add-on near Jim Beam.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$8–$30</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -1028,7 +1090,7 @@
     </a>
 
     <!-- NEELEY FAMILY -->
-    <a href="distillery-neeley-family.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-neeley-family.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Neeley Family Distillery</div>
         <div class="dist-card-rating">7.0</div>
@@ -1036,6 +1098,7 @@
       <div class="dist-card-region">Sparta, KY</div>
       <div class="dist-card-desc">Quick, affordable I-71 corridor stop between Louisville and Cincinnati. Small family craft operation, not a destination on its own but a pleasant surprise on the drive north.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$15</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1044,7 +1107,7 @@
     </a>
 
     <!-- STITZEL-WELLER -->
-    <a href="distillery-stitzel-weller.html" class="dist-card" data-region="louisville" data-type="major" data-booking="moderate">
+    <a href="distillery-stitzel-weller.html" class="dist-card" data-production="tasting" data-region="louisville" data-type="major" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Stitzel-Weller Distillery</div>
         <div class="dist-card-rating">8.6</div>
@@ -1052,6 +1115,7 @@
       <div class="dist-card-region">Shively (Louisville), KY</div>
       <div class="dist-card-desc">One of bourbon's true cathedrals, the historic home of Pappy Van Winkle and the Stitzel-Weller wheated bourbon legacy. Now a Diageo visitor experience featuring Blade & Bow and I.W. Harper.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-tasting">Tasting Room</span>
         <span class="dist-tag tag-paid">$10–$25</span>
         <span class="dist-tag tag-mod">Moderate booking</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -1060,7 +1124,7 @@
     </a>
 
     <!-- THE BARD -->
-    <a href="distillery-the-bard.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-the-bard.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">The Bard Distillery</div>
         <div class="dist-card-rating">7.4</div>
@@ -1068,6 +1132,7 @@
       <div class="dist-card-region">Graham, KY (Muhlenberg County)</div>
       <div class="dist-card-desc">Small-batch craft distillery in a restored 1920s schoolhouse in Graham, deep in western Kentucky. Founded by a descendant of the man who named Bardstown.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1076,7 +1141,7 @@
     </a>
 
     <!-- CHICKEN COCK -->
-    <a href="distillery-chicken-cock.html" class="dist-card" data-region="bardstown" data-type="craft" data-booking="moderate">
+    <a href="distillery-chicken-cock.html" class="dist-card" data-production="tasting" data-region="bardstown" data-type="craft" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Chicken Cock Whiskey Circa 1856</div>
         <div class="dist-card-rating">7.0</div>
@@ -1084,6 +1149,7 @@
       <div class="dist-card-region">Bardstown, KY</div>
       <div class="dist-card-desc">Upscale bar, tasting room, and micro-distillery on Stephen Foster Avenue, right across from Talbott Tavern. Official Bourbon Trail stop with guided flights and craft cocktails.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-tasting">Tasting Room</span>
         <span class="dist-tag tag-paid">$15–$30</span>
         <span class="dist-tag tag-moderate">Book via Resy</span>
         <span class="dist-tag tag-trail">Official Trail</span>
@@ -1092,7 +1158,7 @@
     </a>
 
     <!-- J. MATTINGLY 1845 -->
-    <a href="distillery-j-mattingly.html" class="dist-card" data-region="frankfort" data-type="craft" data-booking="easy">
+    <a href="distillery-j-mattingly.html" class="dist-card" data-production="distillery" data-region="frankfort" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">J. Mattingly 1845 Distillery</div>
         <div class="dist-card-rating">7.9</div>
@@ -1100,6 +1166,7 @@
       <div class="dist-card-region">Frankfort, KY</div>
       <div class="dist-card-desc">Custom barrel blending experience in downtown Frankfort. Hands-on and personal, the opposite of a big-brand production tour. Great add-on to a Buffalo Trace day.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$75</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1108,7 +1175,7 @@
     </a>
 
     <!-- RD1 SPIRITS -->
-    <a href="distillery-rd1-spirits.html" class="dist-card" data-region="lexington" data-type="craft" data-booking="easy">
+    <a href="distillery-rd1-spirits.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">RD1 Spirits</div>
         <div class="dist-card-rating">8.4</div>
@@ -1116,6 +1183,7 @@
       <div class="dist-card-region">Lexington, KY</div>
       <div class="dist-card-desc">Sourcing-first distillery in Lexington with standout blending experiences. Known for curating excellent barrels and creating unique expressions.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$15–$40</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1124,7 +1192,7 @@
     </a>
 
     <!-- LARRIKIN -->
-    <a href="distillery-larrikin.html" class="dist-card" data-region="lexington" data-type="craft" data-booking="easy">
+    <a href="distillery-larrikin.html" class="dist-card" data-production="distillery" data-region="lexington" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Larrikin Distillery</div>
         <div class="dist-card-rating">7.3</div>
@@ -1132,6 +1200,7 @@
       <div class="dist-card-region">Lawrenceburg, KY</div>
       <div class="dist-card-desc">Australian-born distillers making bourbon in the heart of Kentucky whiskey country. Unique international perspective on American craft spirits.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy / walk-up</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1140,7 +1209,7 @@
     </a>
 
     <!-- WENZEL WHISKEY -->
-    <a href="distillery-wenzel.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-wenzel.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Wenzel Whiskey</div>
         <div class="dist-card-rating">7.3</div>
@@ -1148,6 +1217,7 @@
       <div class="dist-card-region">Burlington, KY (Northern Kentucky)</div>
       <div class="dist-card-desc">Small-batch Northern KY craft whiskey. Good pairing with New Riff and Boone County for a Northern Kentucky bourbon day.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1156,7 +1226,7 @@
     </a>
 
     <!-- AUGUSTA DISTILLERY -->
-    <a href="distillery-augusta.html" class="dist-card" data-region="other" data-type="craft" data-booking="moderate">
+    <a href="distillery-augusta.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="moderate">
       <div class="dist-card-top">
         <div class="dist-card-name">Augusta Distillery</div>
         <div class="dist-card-rating">8.1</div>
@@ -1164,6 +1234,7 @@
       <div class="dist-card-region">Augusta, KY (Northern Kentucky)</div>
       <div class="dist-card-desc">Award-winning Northern KY distillery producing Buckner's bourbon, Best Bourbon at the 2023 SF World Spirits Competition. River Proof Barrel Experience is one of the trail's most original tastings.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">From $29</span>
         <span class="dist-tag tag-moderate">Book ahead</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1172,7 +1243,7 @@
     </a>
 
     <!-- BAKER-BIRD -->
-    <a href="distillery-baker-bird.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-baker-bird.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Becker & Bird Distillery</div>
         <div class="dist-card-rating">7.5</div>
@@ -1180,6 +1251,7 @@
       <div class="dist-card-region">Augusta, KY</div>
       <div class="dist-card-desc">Historic Augusta winery and distillery combo perched on the Ohio River. Scenic setting with wine and spirits, a different kind of Kentucky trail stop.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1188,7 +1260,7 @@
     </a>
 
     <!-- B.H. JAMES -->
-    <a href="distillery-bh-james.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-bh-james.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">B.H. James Distillery</div>
         <div class="dist-card-rating">7.2</div>
@@ -1196,6 +1268,7 @@
       <div class="dist-card-region">Adairville, KY (southern Kentucky)</div>
       <div class="dist-card-desc">Small craft distillery in Adairville near the Tennessee line, a short hop from Dueling Grounds in Franklin. An off-the-beaten-path stop at the trail's southern edge.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1204,7 +1277,7 @@
     </a>
 
     <!-- GOLDEN POND -->
-    <a href="distillery-golden-pond.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-golden-pond.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Golden Pond Distillery</div>
         <div class="dist-card-rating">7.1</div>
@@ -1212,6 +1285,7 @@
       <div class="dist-card-region">Cadiz, KY (near Land Between the Lakes)</div>
       <div class="dist-card-desc">Remote Western Kentucky distillery near Land Between the Lakes. Moonshine and bourbon in a scenic lakeside setting far from the usual trail route.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$10–$20</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1220,7 +1294,7 @@
     </a>
 
     <!-- JACKSON PURCHASE -->
-    <a href="distillery-jackson-purchase.html" class="dist-card" data-region="other" data-type="craft" data-booking="easy">
+    <a href="distillery-jackson-purchase.html" class="dist-card" data-production="distillery" data-region="other" data-type="craft" data-booking="easy">
       <div class="dist-card-top">
         <div class="dist-card-name">Jackson Purchase Distillery</div>
         <div class="dist-card-rating">7.3</div>
@@ -1228,6 +1302,7 @@
       <div class="dist-card-region">Hickman, KY (far Western Kentucky)</div>
       <div class="dist-card-desc">Kentucky's westernmost craft distillery, in Hickman on the Mississippi River. Corn whiskey roots and small-batch bourbon in a part of the state most trail visitors never see.</div>
       <div class="dist-card-meta">
+        <span class="dist-tag tag-distillery">Working Distillery</span>
         <span class="dist-tag tag-paid">$5–$15</span>
         <span class="dist-tag tag-easy">Easy booking</span>
         <span class="dist-tag tag-craft">Craft</span>
@@ -1259,7 +1334,7 @@
   window.addEventListener('scroll', () => { document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20); });
 
   // Filtering
-  const filters = { region: 'all', type: 'all', booking: 'all' };
+  const filters = { region: 'all', type: 'all', booking: 'all', production: 'all' };
   const grid = document.getElementById('grid');
   const cards = Array.from(document.querySelectorAll('.dist-card'));
   const countEl = document.getElementById('count');
@@ -1301,7 +1376,8 @@
       const regionMatch = filters.region === 'all' || card.dataset.region === filters.region;
       const typeMatch = filters.type === 'all' || card.dataset.type === filters.type;
       const bookingMatch = filters.booking === 'all' || card.dataset.booking === filters.booking;
-      const show = regionMatch && typeMatch && bookingMatch;
+      const productionMatch = filters.production === 'all' || card.dataset.production === filters.production;
+      const show = regionMatch && typeMatch && bookingMatch && productionMatch;
       card.style.display = show ? '' : 'none';
       if (show) visible++;
     });
