@@ -39,11 +39,29 @@
     "logo": "https://mybourbontrailplan.com/images/icon-512.png"
   },
   "datePublished": "2026-04-07T00:00:00-05:00",
-  "dateModified": "2026-04-07T00:00:00-05:00",
+  "dateModified": "2026-07-14T00:00:00-05:00",
   "url": "https://mybourbontrailplan.com/louisville-whiskey-row-walking-guide.html",
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "https://mybourbontrailplan.com/louisville-whiskey-row-walking-guide.html"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Louisville Whiskey Row Aerial Flyover: Distilleries & Tasting Rooms",
+  "description": "Aerial flyover of Louisville's Whiskey Row on West Main Street, passing the distilleries and tasting rooms from Angel's Envy to Kentucky Peerless.",
+  "thumbnailUrl": "https://mybourbontrailplan.com/videos/whiskey-row-flyover-poster.jpg",
+  "contentUrl": "https://mybourbontrailplan.com/videos/whiskey-row-flyover-web.mp4",
+  "uploadDate": "2026-07-13T00:00:00-05:00",
+  "duration": "PT52S",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Bourbon Trail Planner",
+    "logo": "https://mybourbontrailplan.com/images/icon-512.png"
   }
 }
 </script>
@@ -107,10 +125,20 @@
   .stop-number { width: 32px; height: 32px; min-width: 32px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px; font-family: var(--font-display); margin-right: 4px; }
   .stop-title-group { display: flex; align-items: center; gap: 12px; flex: 1; }
   .stop-card h3 { font-family: var(--font-display); font-size: 21px; font-weight: 700; color: var(--primary-dark); margin: 0; }
+  .stop-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
   .stop-badge { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; padding: 4px 10px; border-radius: 100px; white-space: nowrap; }
   .badge-walkin { background: rgba(46,139,87,0.08); color: #2E8B57; }
   .badge-reserve { background: rgba(192,57,43,0.07); color: #C0392B; }
   .badge-new { background: rgba(212,160,60,0.1); color: #B8860B; }
+  /* Venue type: solid fills, deliberately heavier than the soft status badges above */
+  .badge-distillery { background: var(--accent); color: var(--primary-dark); }
+  .badge-tasting { background: var(--primary-dark); color: var(--accent); }
+
+  /* FLYOVER VIDEO (vertical 9:16, narrow column on desktop) */
+  .flyover-embed { max-width: 400px; margin: 32px auto; }
+  .flyover-embed video { width: 100%; border-radius: var(--radius); display: block; box-shadow: var(--shadow-md); }
+  .flyover-caption { text-align: center; font-size: 14px; color: var(--text-light); margin-top: 10px; }
+  @media (max-width: 640px) { .flyover-embed { max-width: 100%; } }
   .stop-meta { font-size: 13.5px; color: var(--text-light); margin-bottom: 14px; display: flex; gap: 16px; flex-wrap: wrap; }
   .stop-meta span { display: flex; align-items: center; gap: 4px; }
   .stop-card p { font-size: 16px; margin-bottom: 12px; }
@@ -213,74 +241,76 @@
 
 <div class="article-content">
 
-  <p>Louisville's Whiskey Row on West Main Street is the most walkable bourbon experience in Kentucky. You can hit 6+ distillery tasting rooms, eat outstanding food, shop for bottles you actually can't find at home, and squeeze in the Louisville Slugger Museum for the non-bourbon-drinkers in your group, all in a single day on foot. No car, no designated driver logistics, no driving between rural distilleries.</p>
+  <p>Louisville's Whiskey Row on West Main Street is the most walkable bourbon experience in Kentucky. The Main Street corridor alone packs in a dozen-odd distilleries and tasting rooms, and you can work through them, eat outstanding food, shop for bottles you actually can't find at home, and squeeze in the Louisville Slugger Museum for the non-bourbon-drinkers in your group, all in a single day on foot. No car, no designated driver logistics, no driving between rural distilleries.</p>
   <p><a href="map.html?region=louisville" style="color:var(--primary-light);font-weight:500;">View all Louisville distilleries on the interactive map →</a></p>
 
   <p>This is also one of the most exciting stretches of bourbon real estate in the country right now. Several new tasting rooms and speakeasies have opened since 2024, and the NuLu neighborhood just east of Main Street keeps adding destinations worth the 10-minute walk. The corridor from the west end of Whiskey Row to the east end of NuLu is roughly 1.5 miles and contains more bourbon per square foot than anywhere outside of a warehouse.</p>
 
   <div class="route-summary">
     <h3>The Recommended Route</h3>
+    <p style="font-size:15px;color:var(--text-secondary);margin-bottom:16px;">Walk it east to west. Main Street's numbers climb as you head west, so this order is a straight line rather than a zigzag: you start at Angel's Envy on East Main and finish at Kentucky Peerless on 10th. The route works fine in reverse if your tour times demand it, but book Evan Williams and Old Forester for the morning either way.</p>
     <div class="route-steps">
-      <div class="route-step"><div class="route-step-dot"></div><span><strong>Start west:</strong> Evan Williams Bourbon Experience (528 W Main), book this tour in advance, do it first while your palate is fresh</span></div>
-      <div class="route-step"><div class="route-step-dot"></div><span><strong>Walk east:</strong> Michter's Fort Nelson bar (801 W Main) → Old Forester (119 W Main) → Buzzard's Roost (624 W Main)</span></div>
-      <div class="route-step"><div class="route-step-dot"></div><span><strong>Break:</strong> Louisville Slugger Museum (800 W Main), right on Whiskey Row, perfect palate reset</span></div>
-      <div class="route-step"><div class="route-step-dot"></div><span><strong>Newer spots:</strong> Green River Distilling Co. and Bardstown Bourbon Company tasting room</span></div>
-      <div class="route-step"><div class="route-step-dot"></div><span><strong>Walk to NuLu:</strong> 10 minutes east on Market Street, Chicken Cock, Whiskey Thief, Angel's Envy, Rabbit Hole</span></div>
+      <div class="route-step"><div class="route-step-dot"></div><span><strong>Start east:</strong> Angel's Envy (500 E Main), book ahead, one of the best tours in the city and a strong opener while your palate is fresh</span></div>
+      <div class="route-step"><div class="route-step-dot"></div><span><strong>Morning tours:</strong> Old Forester (119 W Main) then Evan Williams (528 W Main), book both in advance, they fill up</span></div>
+      <div class="route-step"><div class="route-step-dot"></div><span><strong>Lunch:</strong> Monk's Road Boiler House (131 W Main) for a proper sit-down meal, or Doc Crow's for BBQ</span></div>
+      <div class="route-step"><div class="route-step-dot"></div><span><strong>Afternoon walk-ins:</strong> Buzzard's Roost (624 W Main) → Green River (714 W Main) → Pursuit Spirits (722 W Main) → Bardstown Bourbon Co. (730 W Main)</span></div>
+      <div class="route-step"><div class="route-step-dot"></div><span><strong>Break:</strong> Louisville Slugger Museum (800 W Main), perfect palate reset, with Big Bat Bourbon's blending class in the same building</span></div>
+      <div class="route-step"><div class="route-step-dot"></div><span><strong>Finish west:</strong> Michter's Fort Nelson bar (801 W Main), then Kentucky Peerless (120 N 10th St), one block north</span></div>
+      <div class="route-step"><div class="route-step-dot"></div><span><strong>Back east to NuLu:</strong> rideshare or a 15-minute walk from the west end, Chicken Cock, Whiskey Thief, and Rabbit Hole are all here</span></div>
       <div class="route-step"><div class="route-step-dot"></div><span><strong>Bottle shopping:</strong> Evergreen Liquors (720 E Market St, NuLu), do this before dinner</span></div>
       <div class="route-step"><div class="route-step-dot"></div><span><strong>Dinner:</strong> La Bodeguita de Mima (725 E Market St), make a reservation</span></div>
     </div>
   </div>
 
-  <h2>The Whiskey Row Distilleries</h2>
-  <p>Walk these west to east along Main Street. All are clustered within about six blocks. Addresses are approximate, the numbers aren't perfectly sequential on Main Street, but everything is visible from the sidewalk.</p>
+  <div class="flyover-embed">
+    <video autoplay muted loop playsinline preload="metadata"
+           poster="/videos/whiskey-row-flyover-poster.jpg"
+           aria-label="Aerial flyover of Louisville's Whiskey Row on West Main Street">
+      <source src="/videos/whiskey-row-flyover-web.mp4" type="video/mp4">
+    </video>
+    <p class="flyover-caption">Whiskey Row from above: the whole walk in under a minute. Follow <a href="https://www.instagram.com/mybourbontrailplan" target="_blank" rel="noopener">@mybourbontrailplan</a> for more.</p>
+  </div>
+
+  <h2>The Whiskey Row Distilleries &amp; Tasting Rooms</h2>
+  <p>Walk these east to west along Main Street. The street numbers climb as you head west, so the order below is a straight line rather than a zigzag, and once you're on West Main everything sits within about six blocks.</p>
+  <p>One distinction worth understanding before you go: some of these stops actually distill on Main Street and can show you production, while others are brand tasting rooms whose whiskey is made elsewhere in Kentucky and trucked in. Neither is a lesser visit, they're just different. A working distillery gets you the mash, the still, and the smell of fermentation. A tasting room usually gets you a better bar, a deeper pour list, and staff with time to talk. We've badged every stop below so you can build a day that mixes both instead of accidentally booking five of the same thing.</p>
 
   <div class="stop-card">
     <div class="stop-card-header">
       <div class="stop-title-group">
         <div class="stop-number">1</div>
-        <h3>Evan Williams Bourbon Experience</h3>
+        <h3>Angel's Envy</h3>
       </div>
-      <span class="stop-badge badge-reserve">Book Ahead</span>
+      <div class="stop-badges">
+        <span class="stop-badge badge-distillery">Working Distillery</span>
+        <span class="stop-badge badge-reserve">Book Ahead</span>
+      </div>
     </div>
     <div class="stop-meta">
-      <span>528 W Main St</span>
-      <span>~$18–25 per person</span>
+      <span>500 E Main St</span>
+      <span>Tours and tastings</span>
     </div>
-    <p>Heaven Hill's museum-style attraction on Whiskey Row is the best starting point on the strip. The Traditional Tour walks you through a recreation of Evan Williams' original 1783 distillery and into the working artisanal still on-site, it's genuinely educational and not just marketing theater. The Speakeasy Tour ($25) takes you into a period-accurate 1920s speakeasy tasting room for cocktails and small-batch pours.</p>
-    <p>Book online before your trip, this one fills up, especially on weekends. Do it first while your palate hasn't been destroyed by the rest of the day.</p>
-    <a href="distillery-evan-williams.html" class="stop-link">Full Evan Williams profile &rarr;</a>
+    <p>The east end of the corridor and the right place to start. Angel's Envy distills on-site in a restored 19th-century building, and the tour is one of the best in the city, partly because the port-cask finishing gives them something genuinely distinctive to talk about rather than the same grain-to-barrel story you'll hear four more times today.</p>
+    <p>Book ahead. It's a popular tour and walk-up availability is unreliable, especially on weekends. Doing it first means you hit the most technical tour of the day while your palate and your attention are both still fresh.</p>
+    <a href="distillery-angels-envy.html" class="stop-link">Full Angel's Envy profile &rarr;</a>
   </div>
 
   <div class="stop-card">
     <div class="stop-card-header">
       <div class="stop-title-group">
         <div class="stop-number">2</div>
-        <h3>Michter's Fort Nelson</h3>
-      </div>
-      <span class="stop-badge badge-walkin">Walk-In Friendly</span>
-    </div>
-    <div class="stop-meta">
-      <span>801 W Main St</span>
-      <span>Tours available + cocktail bar</span>
-    </div>
-    <p>The most beautiful building on Whiskey Row. Michter's restored the historic Fort Nelson building into a working distillery with one of the better cocktail bars in the city upstairs. You don't need a tour ticket to visit the Fort Nelson Bar, walk in for a cocktail and stay as long as you like. The bar program is serious, the space is stunning, and they pour well-aged Michter's products you won't find at the grocery store.</p>
-    <p>If you want the full distillery tour, book ahead, it's a smaller operation and tour times are limited. But the bar alone is worth the stop.</p>
-    <a href="distillery-michters.html" class="stop-link">Full Michter's Fort Nelson profile &rarr;</a>
-  </div>
-
-  <div class="stop-card">
-    <div class="stop-card-header">
-      <div class="stop-title-group">
-        <div class="stop-number">3</div>
         <h3>Old Forester Distilling Co.</h3>
       </div>
-      <span class="stop-badge badge-reserve">Book Ahead</span>
+      <div class="stop-badges">
+        <span class="stop-badge badge-distillery">Working Distillery</span>
+        <span class="stop-badge badge-reserve">Book Ahead</span>
+      </div>
     </div>
     <div class="stop-meta">
       <span>119 W Main St</span>
       <span>Tours and tastings</span>
     </div>
-    <p>America's first bottled bourbon, and they lean into the history hard, the original 1882 storefront is recreated right inside. This is a fully working distillery (one of the few on Whiskey Row that actually produces on-site), so tour visits feel legitimate rather than theatrical. You can watch the production process through glass walls, which is more than most Whiskey Row stops offer.</p>
+    <p>America's first bottled bourbon, and they lean into the history hard, the original 1882 storefront is recreated right inside. This is a fully working distillery, so tour visits feel legitimate rather than theatrical. You can watch the production process through glass walls, which is more than most Whiskey Row stops offer, and they run their own cooperage on-site.</p>
     <p>The gift shop has Old Forester Birthday Bourbon and other limited releases if you're lucky on timing. Book tours in advance. The tasting room is walk-in friendly for pours without a tour.</p>
     <a href="distillery-old-forester.html" class="stop-link">Full Old Forester profile &rarr;</a>
   </div>
@@ -288,33 +318,78 @@
   <div class="stop-card">
     <div class="stop-card-header">
       <div class="stop-title-group">
-        <div class="stop-number">4</div>
-        <h3>Buzzard's Roost</h3>
+        <div class="stop-number">3</div>
+        <h3>Monk's Road Boiler House</h3>
       </div>
-      <span class="stop-badge badge-walkin">Walk-In Friendly</span>
+      <div class="stop-badges">
+        <span class="stop-badge badge-tasting">Tasting Room</span>
+        <span class="stop-badge badge-new">Opened July 2024</span>
+      </div>
     </div>
     <div class="stop-meta">
-      <span>624 W Main St</span>
-      <span>Opened 2023</span>
+      <span>131 W Main St</span>
+      <span>Fine dining + tasting room</span>
     </div>
-    <p>One of the newer additions to Whiskey Row, and a good one. Buzzard's Roost has a cool, approachable vibe, speakeasy lounge downstairs, a 75-gallon pot still on-site, and staff who actually know their stuff. They're known for double-oaked secondary maturation, which shows up in the whiskey's flavor profile if you're paying attention.</p>
-    <p>I visited and the atmosphere carries the experience. The whiskey itself is solid but unremarkable, where Buzzard's Roost earns its stop on the route is the space and the people behind the bar. Walk-ins welcome, no reservation needed.</p>
-    <a href="distillery-buzzards-roost.html" class="stop-link">Full Buzzard's Roost profile &rarr;</a>
+    <p>Log Still Distillery's Louisville outpost is the upscale option on Whiskey Row. Monk's Road Boiler House opened in July 2024 in a beautifully restored industrial space and operates as both a serious restaurant and a tasting room for Log Still's lineup. The whiskey itself is distilled down at Log Still in New Haven, about an hour south, so this is a place to eat and pour rather than a production stop.</p>
+    <p>If you want a proper sit-down meal in the Whiskey Row corridor rather than bar snacks between pours, this is it, and its position early in the walk makes it a natural lunch. Prices match the setting, plan accordingly.</p>
+  </div>
+
+  <div class="stop-card">
+    <div class="stop-card-header">
+      <div class="stop-title-group">
+        <div class="stop-number">4</div>
+        <h3>Evan Williams Bourbon Experience</h3>
+      </div>
+      <div class="stop-badges">
+        <span class="stop-badge badge-distillery">Working Distillery</span>
+        <span class="stop-badge badge-reserve">Book Ahead</span>
+      </div>
+    </div>
+    <div class="stop-meta">
+      <span>528 W Main St</span>
+      <span>~$18–25 per person</span>
+    </div>
+    <p>Heaven Hill's museum-style attraction on Whiskey Row. The Traditional Tour walks you through a recreation of Evan Williams' original 1783 distillery and into the working artisanal still on-site, it's genuinely educational and not just marketing theater. The Speakeasy Tour ($25) takes you into a period-accurate 1920s speakeasy tasting room for cocktails and small-batch pours.</p>
+    <p>Book online before your trip, this one fills up, especially on weekends. Pair it with Old Forester as your second morning tour, before lunch and before your palate has been worked over by the afternoon.</p>
+    <a href="distillery-evan-williams.html" class="stop-link">Full Evan Williams profile &rarr;</a>
   </div>
 
   <div class="stop-card">
     <div class="stop-card-header">
       <div class="stop-title-group">
         <div class="stop-number">5</div>
-        <h3>Green River Distilling Co.</h3>
+        <h3>Buzzard's Roost</h3>
       </div>
-      <span class="stop-badge badge-new">Opened 2025</span>
+      <div class="stop-badges">
+        <span class="stop-badge badge-distillery">Working Distillery</span>
+        <span class="stop-badge badge-walkin">Walk-In Friendly</span>
+      </div>
     </div>
     <div class="stop-meta">
-      <span>Main Street near 21c Hotel</span>
+      <span>624 W Main St</span>
+      <span>Opened 2023</span>
+    </div>
+    <p>One of the newer additions to Whiskey Row, and a good one. Buzzard's Roost has a cool, approachable vibe, a speakeasy lounge downstairs, a 75-gallon pot still on-site, and staff who actually know their stuff. They're known for double-oaked secondary maturation, built on 17 proprietary barrel types with specific char and toast levels, which is the most interesting production story on this block.</p>
+    <p>The atmosphere and the people behind the bar are what earn this stop on the route. Order the old fashioned flight, it's the thing to get. Walk-ins welcome, no reservation needed.</p>
+    <a href="distillery-buzzards-roost.html" class="stop-link">Full Buzzard's Roost profile &rarr;</a>
+  </div>
+
+  <div class="stop-card">
+    <div class="stop-card-header">
+      <div class="stop-title-group">
+        <div class="stop-number">6</div>
+        <h3>Green River Distilling Co.</h3>
+      </div>
+      <div class="stop-badges">
+        <span class="stop-badge badge-tasting">Tasting Room</span>
+        <span class="stop-badge badge-new">Opened 2025</span>
+      </div>
+    </div>
+    <div class="stop-meta">
+      <span>714 W Main St</span>
       <span>Walk-in friendly</span>
     </div>
-    <p>One of the most interesting new openings on the strip. Green River built a genuinely fun tasting room here: horseshoe-shaped bar, retail section with bottle engraving, and a hidden speakeasy entrance that's worth finding. The "Fill-Your-Spirits" experience lets you fill a jug directly from a barrel at barrel strength, the kind of thing you can't do at a standard distillery tour.</p>
+    <p>One of the most interesting new openings on the strip. Green River built a genuinely fun tasting room here: horseshoe-shaped bar, retail section with bottle engraving, and a hidden speakeasy entrance that's worth finding. The "Fill-Your-Spirits" experience lets you fill a jug directly from a barrel at barrel strength, the kind of thing you can't do at a standard distillery tour. The whiskey is distilled at Green River's home plant in Owensboro, out in Western Kentucky.</p>
     <p>Green River's whiskey has been well-regarded for years and the Louisville tasting room finally gives it a flagship presence it deserves. Stop in for a pour and at minimum get your name on a bottle.</p>
     <a href="distillery-green-river.html" class="stop-link">Full Green River profile &rarr;</a>
   </div>
@@ -322,37 +397,110 @@
   <div class="stop-card">
     <div class="stop-card-header">
       <div class="stop-title-group">
-        <div class="stop-number">6</div>
-        <h3>Bardstown Bourbon Company Tasting Room</h3>
+        <div class="stop-number">7</div>
+        <h3>Pursuit Spirits</h3>
       </div>
-      <span class="stop-badge badge-walkin">Walk-In Friendly</span>
+      <div class="stop-badges">
+        <span class="stop-badge badge-tasting">Tasting Room</span>
+        <span class="stop-badge badge-new">Opened 2025</span>
+        <span class="stop-badge badge-reserve">Book Ahead</span>
+      </div>
     </div>
     <div class="stop-meta">
-      <span>Main Street</span>
+      <span>722 W Main St</span>
+      <span>Tasting rooms + cocktail lounge</span>
+    </div>
+    <p>The team behind the Bourbon Pursuit podcast built a 7,600-square-foot, two-story home on Whiskey Row, and it's an unusual one. Pursuit doesn't distill: they're blenders, sourcing from award-winning distilleries and building expressions from the barrels they select. Their production facility is over on Mellwood Avenue and isn't open to visitors, so what you get on Main Street is the front of house, and they've made it the point rather than an apology.</p>
+    <p>Upstairs is a set of tasting rooms plus the podcast studio; downstairs is Trial + Error, a cocktail lounge with a deep pour list of Pursuit expressions. The experiences lean hands-on, barrel picks and bottling straight from the source. Booking ahead is recommended. Slot it in with Green River and Bardstown Bourbon Co. and you have three tasting rooms in a hundred feet, which is the densest stretch of the whole walk.</p>
+  </div>
+
+  <div class="stop-card">
+    <div class="stop-card-header">
+      <div class="stop-title-group">
+        <div class="stop-number">8</div>
+        <h3>Bardstown Bourbon Company Tasting Room</h3>
+      </div>
+      <div class="stop-badges">
+        <span class="stop-badge badge-tasting">Tasting Room</span>
+        <span class="stop-badge badge-walkin">Walk-In Friendly</span>
+      </div>
+    </div>
+    <div class="stop-meta">
+      <span>730 W Main St</span>
       <span>Interactive tastings, exclusive releases</span>
     </div>
-    <p>Bardstown Bourbon Company's Louisville outpost gives you access to the collaborative whiskeys and exclusive releases they're known for, without the drive down to Bardstown. The tasting room has a modern, approachable feel and the staff does a good job guiding you through what makes BBC's sourcing-heavy model unusual in the industry. Worth stopping in if you haven't been to the main facility, or if you want to try releases only available here.</p>
+    <p>Bardstown Bourbon Company's Louisville outpost gives you access to the collaborative whiskeys and exclusive releases they're known for, without the drive down to Bardstown, where the whiskey is actually made. The tasting room has a modern, approachable feel and the staff does a good job guiding you through what makes BBC's sourcing-heavy model unusual in the industry. Worth stopping in if you haven't been to the main facility, or if you want to try releases only available here.</p>
     <a href="distillery-bardstown-bourbon-co.html" class="stop-link">Full Bardstown Bourbon Co. profile &rarr;</a>
   </div>
 
   <div class="stop-card">
     <div class="stop-card-header">
       <div class="stop-title-group">
-        <div class="stop-number">7</div>
-        <h3>Monk's Road Boiler House</h3>
+        <div class="stop-number">9</div>
+        <h3>Big Bat Bourbon</h3>
       </div>
-      <span class="stop-badge badge-new">Opened July 2024</span>
+      <div class="stop-badges">
+        <span class="stop-badge badge-tasting">Tasting Room</span>
+        <span class="stop-badge badge-reserve">Book Ahead</span>
+      </div>
     </div>
     <div class="stop-meta">
-      <span>W Main St near 2nd St Bridge</span>
-      <span>Fine dining + tasting room</span>
+      <span>800 W Main St (Louisville Slugger Museum)</span>
+      <span>~45 min blending class</span>
     </div>
-    <p>Log Still Distillery's Louisville outpost is the upscale option on Whiskey Row. Monk's Road Boiler House opened in July 2024 in a beautifully restored industrial space near the 2nd Street Bridge and operates as both a serious restaurant and a tasting room for Log Still's lineup. If you want a proper sit-down meal in the Whiskey Row corridor rather than bar snacks between pours, this is it. Prices match the setting, plan accordingly.</p>
+    <p>Tucked into the Louisville Slugger Museum building, Big Bat is the one stop on the Row where you don't taste someone else's blend, you make your own. The 45-minute class walks you through blending from six sourced bourbons, then you bottle and label what you built and take it home. Nothing is distilled here; the whiskey comes in from elsewhere and the craft on offer is the blending itself.</p>
+    <p>It pairs naturally with the Slugger factory tour in the same building, which makes this block the obvious mid-route break: one person does the bat factory, another builds a bourbon, and everybody's palate gets an hour off. Book the class ahead, it's small-group and time-slotted.</p>
+  </div>
+
+  <div class="stop-card">
+    <div class="stop-card-header">
+      <div class="stop-title-group">
+        <div class="stop-number">10</div>
+        <h3>Michter's Fort Nelson</h3>
+      </div>
+      <div class="stop-badges">
+        <span class="stop-badge badge-distillery">Working Distillery</span>
+        <span class="stop-badge badge-walkin">Walk-In Friendly</span>
+      </div>
+    </div>
+    <div class="stop-meta">
+      <span>801 W Main St</span>
+      <span>Tours available + cocktail bar</span>
+    </div>
+    <p>The most beautiful building on Whiskey Row. Michter's restored the historic Fort Nelson building into a working distillery, running the restored Pennsylvania pot still system from their legacy operation, with one of the better cocktail bars in the city upstairs. You don't need a tour ticket to visit the Fort Nelson Bar, walk in for a cocktail and stay as long as you like. The bar program is serious, the space is stunning, and they pour well-aged Michter's products you won't find at the grocery store.</p>
+    <p>If you want the full distillery tour, book ahead, it's a smaller operation and tour times are limited. But the bar alone is worth the stop, and it's the right place to land in the late afternoon.</p>
+    <a href="distillery-michters.html" class="stop-link">Full Michter's Fort Nelson profile &rarr;</a>
+  </div>
+
+  <div class="info-box">
+    <div class="info-box-header">The Official Trail Starting Point: KBT Welcome Center</div>
+    <p>Two doors west of Michter's, inside the Frazier History Museum at <strong>829 W Main St</strong>, is the official Kentucky Bourbon Trail Welcome Center. It's the designated starting point for the whole trail, with staff who can talk through distillery logistics across the state, plus exhibits worth an hour if bourbon history interests you. It costs nothing to walk into the Welcome Center itself. Treat it as a natural first stop if you're beginning your entire Kentucky trip in Louisville, or as a last one on this walk since it sits between Michter's and Peerless.</p>
+  </div>
+
+  <div class="stop-card">
+    <div class="stop-card-header">
+      <div class="stop-title-group">
+        <div class="stop-number">11</div>
+        <h3>Kentucky Peerless Distilling Co.</h3>
+      </div>
+      <div class="stop-badges">
+        <span class="stop-badge badge-distillery">Working Distillery</span>
+        <span class="stop-badge badge-reserve">Book Ahead</span>
+      </div>
+    </div>
+    <div class="stop-meta">
+      <span>120 N 10th St</span>
+      <span>One block north of Main</span>
+    </div>
+    <p>The west anchor of the Row, and the stop most walking guides leave off because it's one block north of Main rather than on it. That's a mistake. Peerless is fully grain-to-bottle: they mill, mash, ferment, distill, age, and bottle their rye and bourbon in the same building, which makes it one of the most complete production tours in the corridor and a real contrast to the tasting rooms you just walked past.</p>
+    <p>The family history is the hook, a pre-Prohibition distillery revived by the founder's descendants with the original distilled spirits plant number. Book ahead; it's a working floor and group sizes are limited. If you only have room for two proper tours on Whiskey Row, Peerless and Angel's Envy are the bookends to pick.</p>
+    <a href="distillery-peerless.html" class="stop-link">Full Kentucky Peerless profile &rarr;</a>
   </div>
 
   <h2>The Louisville Slugger Museum &amp; Factory</h2>
   <p>800 W Main St, right on Whiskey Row. You cannot miss it: there's a 120-foot steel baseball bat leaning against the building. The factory tour walks you through how bats are made, from the wood turning to the branding, and every visitor gets a mini bat souvenir on the way out. It runs about 60–90 minutes.</p>
   <p>This is the perfect strategic break between morning tours and afternoon tastings. Your palate gets a reset, your feet get off the pavement, and non-bourbon-drinking travel companions get something that's actually great on its own terms. Ticket prices are reasonable. If you have kids or are traveling with someone who's been politely tolerating bourbon experiences all day, do not skip this.</p>
+  <p>Worth knowing: <strong>Big Bat Bourbon</strong> (listed above) runs its custom blending class out of this same building, so the group can split for an hour and reconvene. One half tours the bat factory, the other half blends and bottles a bourbon, and nobody has to pretend to enjoy something they didn't want to do.</p>
 
   <div class="tip-box">
     <div class="tip-box-header">Strategic Timing</div>
@@ -426,7 +574,7 @@
 
   <div class="info-box">
     <div class="info-box-header">NuLu Distilleries</div>
-    <p><strong><a href="distillery-angels-envy.html">Angel's Envy</a></strong> (E Main St), technically walkable, and one of the best distillery experiences in Louisville. The port-cask finishing is genuinely distinctive. <strong><a href="distillery-rabbit-hole.html">Rabbit Hole</a></strong> (NuLu), modern architecture, stunning building, tours worth booking. <strong><a href="distillery-copper-and-kings.html">Copper &amp; Kings</a></strong> (Butchertown, short rideshare), American brandy operation, completely different from everything else on this list, worth the trip if you want to break out of the bourbon bubble.</p>
+    <p><strong><a href="distillery-rabbit-hole.html">Rabbit Hole</a></strong> (NuLu), modern architecture, stunning building, tours worth booking. <strong><a href="distillery-copper-and-kings.html">Copper &amp; Kings</a></strong> (Butchertown, short rideshare), American brandy operation, completely different from everything else on this list, worth the trip if you want to break out of the bourbon bubble. <strong><a href="distillery-angels-envy.html">Angel's Envy</a></strong> sits at the NuLu end of Main Street too, but it opens the walking route above rather than working as an add-on.</p>
   </div>
 
   <h2>Where to Eat &amp; Drink</h2>
@@ -470,7 +618,7 @@
     <li><strong>Car-free day:</strong> This is the one place on the Bourbon Trail where you genuinely don't need a car for the day. Uber and Lyft are abundant in Louisville. Start at your hotel, spend the whole day on foot, take a rideshare to dinner.</li>
     <li><strong>Wear comfortable shoes.</strong> You'll walk 2–3 miles total. The pavement on Main Street is uneven in places, this isn't a flip-flop situation.</li>
     <li><strong>Cap yourself at 3–4 tasting stops.</strong> More than that and your palate stops working. Quality over quantity, four good tastings beats seven mediocre ones.</li>
-    <li><strong>Book in advance:</strong> Evan Williams and Old Forester fill up, especially on weekends. Everything else on this list is walk-in friendly. Go Tuesday–Thursday if you can.</li>
+    <li><strong>Book in advance:</strong> Angel's Envy, Old Forester, Evan Williams, Peerless, Pursuit Spirits, and the Big Bat blending class all want a reservation, and the first three fill up on weekends. Buzzard's Roost, Green River, Bardstown Bourbon Co., and the Michter's bar are walk-in friendly, which makes them the right afternoon flex. Go Tuesday–Thursday if you can.</li>
     <li><strong>Pacing matters:</strong> Morning tours at the big distilleries → Louisville Slugger break → afternoon walk-in tastings at the newer spots → Evergreen for bottles → dinner. This order works.</li>
     <li><strong>Two days is better than one.</strong> If you're staying in Louisville for a weekend, split the Whiskey Row stops across two days. You'll get more out of each experience when you're not rushing.</li>
   </ul>
@@ -478,7 +626,6 @@
   <h2>Nearby Louisville Distilleries (Short Rideshare)</h2>
   <p>These don't fit on a pure walking route but are close enough to work as an add-on if you have extra time or a car:</p>
   <ul>
-    <li><strong><a href="distillery-angels-envy.html">Angel's Envy</a></strong> (E Main St), technically walkable from NuLu, and one of the best tours in Louisville. Do it if you have time.</li>
     <li><strong><a href="distillery-rabbit-hole.html">Rabbit Hole</a></strong> (NuLu), modern architecture, worth booking a tour. A short walk from Evergreen.</li>
     <li><strong><a href="distillery-copper-and-kings.html">Copper &amp; Kings</a></strong> (Butchertown), American brandy, completely different from the rest of the strip. Short rideshare from NuLu. Worth it for the novelty alone.</li>
     <li><strong><a href="distillery-stitzel-weller.html">Stitzel-Weller</a></strong> (Shively), historic distillery about 10 minutes by car. Go for the grounds and history; the gift shop reliably carries Blade &amp; Bow, and you may get lucky with an Orphan Barrel release, but don't count on it.</li>

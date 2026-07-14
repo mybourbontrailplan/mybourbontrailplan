@@ -190,6 +190,21 @@ When creating or editing distillery profiles:
 - Sidebar region guides link to `guides.html`
 - After creating a new profile: add it to `distilleries.html`, `trip-builder.html`, `map.html`, and `sitemap.xml`
 
+### Rating Categories — the standard six (DO NOT deviate)
+Every profile's "Our Honest Ratings" block uses **exactly these six bars, in this order**:
+
+1. Tour Quality
+2. Value for Money
+3. Campus &amp; Grounds
+4. Gift Shop
+5. Booking Ease
+6. Crowd Level
+
+- **Ratings score the VISIT, never the whiskey.** Do not add a "Whiskey Quality" bar, and do not grade how the bourbon tastes in the body copy or the verdict either. We rate every distillery on the visitor experience; singling out one distillery for a taste knock is unfair to it and inconsistent with the other 59. If the whiskey is genuinely the story (a signature pour, a flight worth ordering), mention it as a *recommendation* ("the old fashioned flight is the thing to order"), not as a score or a criticism. Buzzard's Roost and Dark Arts both had a "Whiskey Quality" bar; a reader emailed to point out the inconsistency and both were normalized in July 2026.
+- **Non-distillery venues still use the six.** Urban tasting rooms and blending houses with no rickhouse or grounds (e.g. Dark Arts) still get all six bars: score Tour Quality on their guided experiences and Campus & Grounds on the interior space. Do not drop bars or invent new labels.
+- **Known exception:** `distillery-pensive.html` uses "Food &amp; Dining" in place of "Gift Shop" because the award-winning on-site kitchen is the actual reason to go. This is a deliberate one-off, not a precedent.
+- The headline rating in the snapshot card (`Our Rating`, e.g. `7.5 / 10`) is **editorial, not the average of the six bars**. Changing the bars does not require changing the headline. Changing the headline *does* require updating the matching rating on the card in `distilleries.html`.
+
 ### Sidebar Contact Section — Standard Structure
 All 60 active profiles have a standardized Contact section. Order must be:
 1. `<a href="map.html?distillery={slug}" class="sidebar-link">See on Map &rarr;</a>` — always first
@@ -335,9 +350,21 @@ iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-a
   - Homepage: `WebSite` + `Organization` (two separate schema blocks)
   - Trip builder: `WebApplication`; About: `AboutPage`; Contact: `ContactPage`
 - **author/publisher**: always `{"@type": "Organization", "name": "Bourbon Trail Planner"}` — never `Person`, never a different name string
-- **datePublished/dateModified**: always ISO 8601 with Eastern offset, e.g. `2026-02-22T00:00:00-05:00` — never bare `YYYY-MM-DD`
+- **datePublished/dateModified**: always ISO 8601 with Eastern offset, e.g. `2026-02-22T00:00:00-05:00` — never bare `YYYY-MM-DD`. The site stamps `-05:00` year-round for consistency, including summer dates that are technically EDT (`-04:00`). Match the existing convention; do not "fix" some to `-04:00` and leave a mixed pattern.
 - `scripts/add_schema.py` — bulk schema utility; use as the reference template when writing TouristAttraction schema for a new distillery profile
 - Sitemap at `sitemap.xml` — update when adding any new page
+
+### Updating a guide's date — BOTH surfaces, every time
+Whenever you make a **content change** to a guide or article page, bump **both** of these in the same edit. They live far apart in the file and it is easy to change one and forget the other:
+
+1. **The JSON-LD `dateModified`** in the `<head>` schema block (ISO 8601, `-05:00`).
+2. **The visible "Updated {Month} {Year}" line** in the `.article-meta` bar under the H1 (next to the calendar SVG, alongside the "N min read" item).
+
+- Leave `datePublished` alone. It records original publication and never changes.
+- The two surfaces **drift**: in July 2026 the itinerary page had a schema `dateModified` of April while its visible line still read February, because an earlier pass updated the schema only. Check both.
+- Skip the bump for pure style/markup edits with no content change (CSS tweaks, nav/footer template updates, favicon versions). Bump it for anything a reader would notice: new facts, corrections, rewritten copy, added or removed sections.
+- **Distillery profiles have neither surface** — `TouristAttraction` schema carries no `dateModified` and profiles have no `.article-meta` bar. Nothing to bump there. Do not add date fields to a profile just to have them.
+- Every guide's `.article-meta` bar should carry both a read-time item and an Updated item. Read time is computed at roughly **200 words per minute** over the body copy.
 
 ## Affiliate Links — DO NOT modify these URLs
 - Booking.com links use CJ Affiliate tracking URLs — migrated from Awin/tidd.ly in June 2026
