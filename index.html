@@ -323,13 +323,12 @@
   }
   .feature-icon {
     width: 56px; height: 56px;
-    background: rgba(27,79,114,0.05);
-    border-radius: 14px;
+    background: #F6F0E4;
+    border-radius: 11px;
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 20px;
   }
-  .feature-icon svg { width: 30px; height: 30px; }
-  .feature-icon.gold { background: rgba(212,160,60,0.07); }
+  .feature-icon img { width: 34px; height: 34px; display: block; }
   .feature-card h3 {
     font-size: 17px; font-weight: 600;
     margin-bottom: 10px; color: var(--text);
@@ -367,25 +366,30 @@
   .guide-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
   .guide-img {
     height: 180px;
-    background: linear-gradient(135deg, var(--primary-dark), var(--primary-light));
-    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #0E2F44, #1B4761);
+    display: flex; align-items: flex-start;
+    padding: 22px 24px;
     position: relative; overflow: hidden;
   }
-  .guide-img-label {
-    font-family: var(--font-display);
-    font-size: 42px; font-weight: 700;
-    color: rgba(255,255,255,0.15);
-    position: absolute;
-  }
-  .guide-img-icon {
+  .guide-img-eyebrow {
     position: relative; z-index: 1;
-    width: 52px; height: 52px;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1.2px;
+    color: var(--accent);
+  }
+  .guide-img-ghost {
+    position: absolute;
+    right: 14px; top: 50%; transform: translateY(-46%);
+    width: 116px; height: 116px;
+    opacity: 0.3; pointer-events: none;
+  }
+  .guide-img-ghost svg { width: 100%; height: 100%; display: block; }
+  .guide-img-trail {
+    position: absolute; left: 0; bottom: 0;
+    width: 100%; height: 16px;
+    opacity: 0.7; pointer-events: none;
   }
   .guide-body { padding: 24px; }
-  .guide-category {
-    font-size: 11px; font-weight: 600; text-transform: uppercase;
-    letter-spacing: 1px; color: var(--primary-light); margin-bottom: 8px;
-  }
   .guide-body h3 {
     font-size: 17px; font-weight: 600; margin-bottom: 8px;
     line-height: 1.35;
@@ -653,37 +657,37 @@
   </div>
   <div class="features-grid">
     <div class="feature-card animate-on-scroll">
-      <div class="feature-icon"><svg viewBox="0 0 30 30" fill="none"><circle cx="7" cy="6" r="3" stroke="#1B4F72" stroke-width="1.5" fill="rgba(27,79,114,0.06)"/><circle cx="23" cy="24" r="3" stroke="#D4A03C" stroke-width="1.5" fill="rgba(212,160,60,0.06)"/><circle cx="24" cy="9" r="2.2" stroke="#1B4F72" stroke-width="1.3" fill="rgba(27,79,114,0.04)"/><path d="M9.5 8C12 12.5 19 11 22.5 11.5" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="2.5 2.5"/><path d="M24.5 12C24.5 17 20 20 21.5 22.5" stroke="#D4A03C" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="2.5 2.5"/><circle cx="7" cy="6" r="1.2" fill="#1B4F72"/><circle cx="23" cy="24" r="1.2" fill="#D4A03C"/><circle cx="24" cy="9" r="1" fill="#1B4F72"/></svg></div>
+      <div class="feature-icon"><img src="images/icons/icon-route.svg" alt="" width="34" height="34" loading="lazy"></div>
       <h3>Ready-Made Itineraries</h3>
       <p>Optimized routes for 1-day, weekend, and week-long trips. Every itinerary includes drive times, booking links, restaurant picks, and lodging options.</p>
       <a href="3-day-bourbon-trail-itinerary.html" class="feature-link">View itineraries <span>&rarr;</span></a>
     </div>
     <div class="feature-card animate-on-scroll">
-      <div class="feature-icon gold"><svg viewBox="0 0 30 30" fill="none"><path d="M9 4H21L18.5 20H11.5L9 4Z" stroke="#1B4F72" stroke-width="1.5" fill="rgba(212,160,60,0.08)" stroke-linejoin="round"/><path d="M11 11H19" stroke="#D4A03C" stroke-width="1.3" stroke-linecap="round"/><path d="M15 20V25" stroke="#1B4F72" stroke-width="1.5" stroke-linecap="round"/><path d="M11 25H19" stroke="#1B4F72" stroke-width="1.5" stroke-linecap="round"/><path d="M11.5 7.5C13 9 17 9 18.5 7.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.45"/></svg></div>
+      <div class="feature-icon"><img src="images/icons/icon-barrel.svg" alt="" width="34" height="34" loading="lazy"></div>
       <h3>Honest Distillery Guides</h3>
       <p>In-depth profiles of every distillery on the trail. Which tours are worth it, which are repetitive, and what the other guides won't tell you.</p>
       <a href="distilleries.html" class="feature-link">Browse distilleries <span>&rarr;</span></a>
     </div>
     <div class="feature-card animate-on-scroll">
-      <div class="feature-icon"><svg viewBox="0 0 30 30" fill="none"><rect x="5" y="4" width="20" height="22" rx="2.5" stroke="#1B4F72" stroke-width="1.5" fill="rgba(27,79,114,0.03)"/><path d="M5 10H25" stroke="#1B4F72" stroke-width="1.3"/><rect x="11" y="5.5" width="8" height="3" rx="1.5" fill="rgba(212,160,60,0.15)" stroke="#D4A03C" stroke-width="1"/><path d="M10 15L12.5 17.5L19 11" stroke="#D4A03C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 21H21" stroke="#1B4F72" stroke-width="1.1" stroke-linecap="round" opacity="0.35"/></svg></div>
+      <div class="feature-icon"><img src="images/icons/icon-calendar.svg" alt="" width="34" height="34" loading="lazy"></div>
       <h3>Booking Strategy</h3>
       <p>Know exactly when booking windows open, which tours sell out fastest, and how to snag spots at hard-to-get distilleries like Buffalo Trace and Angel's Envy.</p>
       <a href="bourbon-trail-booking-guide.html" class="feature-link">Read the guide <span>&rarr;</span></a>
     </div>
     <div class="feature-card animate-on-scroll">
-      <div class="feature-icon gold"><svg viewBox="0 0 30 30" fill="none"><path d="M4 18H26" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round"/><path d="M7 18L9 12H21L23 18" stroke="#1B4F72" stroke-width="1.5" stroke-linejoin="round" fill="rgba(27,79,114,0.04)"/><path d="M9 12L10 8H20L21 12" stroke="#D4A03C" stroke-width="1.3" stroke-linejoin="round" fill="rgba(212,160,60,0.06)"/><circle cx="9.5" cy="21" r="2" stroke="#1B4F72" stroke-width="1.3" fill="rgba(27,79,114,0.06)"/><circle cx="20.5" cy="21" r="2" stroke="#1B4F72" stroke-width="1.3" fill="rgba(27,79,114,0.06)"/><path d="M11.5 21H18.5" stroke="#1B4F72" stroke-width="1" stroke-linecap="round" opacity="0.3"/></svg></div>
+      <div class="feature-icon"><img src="images/icons/icon-car.svg" alt="" width="34" height="34" loading="lazy"></div>
       <h3>Transportation Sorted</h3>
       <p>DIY driving routes, guided tour options, designated driver strategies, and why you shouldn't count on Uber outside Louisville.</p>
       <a href="bourbon-trail-transportation-guide.html" class="feature-link">Plan transport <span>&rarr;</span></a>
     </div>
     <div class="feature-card animate-on-scroll">
-      <div class="feature-icon"><svg viewBox="0 0 30 30" fill="none"><path d="M7 5V25" stroke="#1B4F72" stroke-width="1.5" stroke-linecap="round"/><path d="M7 5C7 5 7 11 7 13C7 15 10 15 10 13V5" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="rgba(212,160,60,0.06)"/><path d="M8.5 5V11" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.5"/><path d="M16 15H25V19C25 20.1 24.1 21 23 21H18C16.9 21 16 20.1 16 19V15Z" stroke="#1B4F72" stroke-width="1.3" fill="rgba(27,79,114,0.04)"/><path d="M16 15C16 12 17 10 20.5 10C24 10 25 12 25 15" stroke="#D4A03C" stroke-width="1.3" stroke-linecap="round"/><path d="M16 21V25" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round"/><path d="M25 21V25" stroke="#1B4F72" stroke-width="1.3" stroke-linecap="round"/></svg></div>
+      <div class="feature-icon"><img src="images/icons/icon-eat-stay.svg" alt="" width="34" height="34" loading="lazy"></div>
       <h3>Where to Eat &amp; Stay</h3>
       <p>Hand-picked restaurants, bars, hotels, and unique lodging near every major distillery cluster. Including a few spots only locals know about.</p>
       <a href="where-to-stay-bourbon-trail.html" class="feature-link">See recommendations <span>&rarr;</span></a>
     </div>
     <div class="feature-card animate-on-scroll">
-      <div class="feature-icon gold"><svg viewBox="0 0 30 30" fill="none"><path d="M15 3C10.5 3 8 6.5 8 10C8 13 10 14.5 11 16.5C11.5 17.5 12 18.5 12 20H18C18 18.5 18.5 17.5 19 16.5C20 14.5 22 13 22 10C22 6.5 19.5 3 15 3Z" stroke="#1B4F72" stroke-width="1.5" fill="rgba(212,160,60,0.06)"/><path d="M12 20V22C12 23.1 12.9 24 14 24H16C17.1 24 18 23.1 18 22V20" stroke="#D4A03C" stroke-width="1.3"/><path d="M12 20H18" stroke="#1B4F72" stroke-width="1.2"/><path d="M13 24V25.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.6"/><path d="M17 24V25.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.6"/><path d="M15 3V1" stroke="#D4A03C" stroke-width="1.2" stroke-linecap="round"/><path d="M22 5L23.5 3.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.4"/><path d="M8 5L6.5 3.5" stroke="#D4A03C" stroke-width="1" stroke-linecap="round" opacity="0.4"/></svg></div>
+      <div class="feature-icon"><img src="images/icons/icon-lightbulb.svg" alt="" width="34" height="34" loading="lazy"></div>
       <h3>Insider Tips</h3>
       <p>First-timer mistakes to avoid, seasonal advice, the best gift shop exclusives, how the bottle lottery works, and things you'll only learn from experience.</p>
       <a href="guides.html" class="feature-link">Browse all guides <span>&rarr;</span></a>
@@ -700,12 +704,12 @@
   </div>
   <div class="guides-grid">
     <a href="3-day-bourbon-trail-itinerary.html" class="guide-card animate-on-scroll">
-      <div class="guide-img" style="background: linear-gradient(135deg, #0E2F44, #2980B9);">
-        <span class="guide-img-label">3D</span>
-        <span class="guide-img-icon"><svg viewBox="0 0 52 52" fill="none"><path d="M26 8C19 8 14 13 14 20C14 30 26 42 26 42C26 42 38 30 38 20C38 13 33 8 26 8Z" stroke="white" stroke-width="2" fill="rgba(255,255,255,0.12)"/><circle cx="26" cy="20" r="5" stroke="#D4A03C" stroke-width="1.8" fill="rgba(212,160,60,0.2)"/></svg></span>
+      <div class="guide-img">
+        <span class="guide-img-eyebrow">Itinerary</span>
+        <span class="guide-img-ghost"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="16" cy="50" r="4" fill="#D4A03C"/><path d="M20,45.5 C30,36 36,42 43,27" fill="none" stroke="#D4A03C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 5"/><path d="M48,30 c-4.5,-5 -7,-8.5 -7,-12 a7,7 0 1 1 14,0 c0,3.5 -2.5,7 -7,12 z" fill="none" stroke="#D4A03C" stroke-width="3" stroke-linejoin="round"/><circle cx="48" cy="17.5" r="2.4" fill="#D4A03C"/></svg></span>
+        <svg class="guide-img-trail" viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M0,11 C70,4 130,15 200,9 C270,3 330,13 400,7" fill="none" stroke="#D4A03C" stroke-width="2" stroke-dasharray="7 6" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
       </div>
       <div class="guide-body">
-        <div class="guide-category">Itinerary</div>
         <h3>The Ultimate 3-Day Bourbon Trail Itinerary</h3>
         <p>The best way to experience the trail if you have a long weekend. Covers Louisville, Bardstown, and Frankfort with 7 distillery stops.</p>
         <div class="guide-meta">
@@ -716,12 +720,12 @@
       </div>
     </a>
     <a href="distillery-buffalo-trace.html" class="guide-card animate-on-scroll">
-      <div class="guide-img" style="background: linear-gradient(135deg, #1B4F72, #D4A03C);">
-        <span class="guide-img-label">BT</span>
-        <span class="guide-img-icon"><svg viewBox="0 0 52 52" fill="none"><path d="M26 6L30 18H42L32 26L36 38L26 30L16 38L20 26L10 18H22L26 6Z" stroke="white" stroke-width="1.8" fill="rgba(255,255,255,0.1)"/><circle cx="26" cy="24" r="4" stroke="#D4A03C" stroke-width="1.5" fill="rgba(212,160,60,0.2)"/></svg></span>
+      <div class="guide-img">
+        <span class="guide-img-eyebrow">Distillery Guide</span>
+        <span class="guide-img-ghost"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M22,13.5 C15,21 15,43 22,50.5 H42 C49,43 49,21 42,13.5 Z" fill="none" stroke="#D4A03C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.2,25.5 H46.8" fill="none" stroke="#D4A03C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.2,38.5 H46.8" fill="none" stroke="#D4A03C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <svg class="guide-img-trail" viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M0,11 C70,4 130,15 200,9 C270,3 330,13 400,7" fill="none" stroke="#D4A03C" stroke-width="2" stroke-dasharray="7 6" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
       </div>
       <div class="guide-body">
-        <div class="guide-category">Distillery Guide</div>
         <h3>Buffalo Trace: How to Actually Get a Tour</h3>
         <p>The most in-demand tour on the trail. Here's when to book, which tour to pick, and what to do if it's sold out.</p>
         <div class="guide-meta">
@@ -732,12 +736,12 @@
       </div>
     </a>
     <a href="bourbon-trail-budget-guide.html" class="guide-card animate-on-scroll">
-      <div class="guide-img" style="background: linear-gradient(135deg, #2C3E50, #1ABC9C);">
-        <span class="guide-img-label">$$</span>
-        <span class="guide-img-icon"><svg viewBox="0 0 52 52" fill="none"><rect x="8" y="14" width="36" height="24" rx="4" stroke="white" stroke-width="1.8" fill="rgba(255,255,255,0.08)"/><circle cx="26" cy="26" r="7" stroke="#D4A03C" stroke-width="1.5" fill="rgba(212,160,60,0.15)"/><path d="M26 22V30" stroke="white" stroke-width="1.3" stroke-linecap="round"/><path d="M23 24.5H28C28 24.5 29.5 24.5 29.5 26C29.5 27.5 28 27.5 28 27.5H23" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <div class="guide-img">
+        <span class="guide-img-eyebrow">Planning</span>
+        <span class="guide-img-ghost"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="8.5" y="22" width="47" height="22" rx="3.5" fill="none" stroke="#D4A03C" stroke-width="3"/><path d="M32,33 m-7,0 a7,7 0 1 0 14,0 a7,7 0 1 0 -14,0" fill="none" stroke="#D4A03C" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="17.5" cy="33" r="1.8" fill="#D4A03C"/><circle cx="46.5" cy="33" r="1.8" fill="#D4A03C"/></svg></span>
+        <svg class="guide-img-trail" viewBox="0 0 400 16" preserveAspectRatio="none" aria-hidden="true"><path d="M0,11 C70,4 130,15 200,9 C270,3 330,13 400,7" fill="none" stroke="#D4A03C" stroke-width="2" stroke-dasharray="7 6" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
       </div>
       <div class="guide-body">
-        <div class="guide-category">Planning</div>
         <h3>What Does a Bourbon Trail Trip Actually Cost?</h3>
         <p>A realistic budget breakdown covering tours, tastings, food, lodging, and transportation, for budget and premium trips.</p>
         <div class="guide-meta">

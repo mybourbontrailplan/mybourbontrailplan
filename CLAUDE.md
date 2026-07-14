@@ -74,7 +74,30 @@ After running the IndexNow script, paste the output back to the user so they can
 - Colors: Primary blue `#1B4F72`, accent gold `#D4A03C`, dark `#0E2F44`
 - CSS variables: `--primary`, `--primary-light`, `--primary-dark`, `--accent`, `--accent-light`, `--font-display`, `--font-body`, `--text`, `--text-secondary`, `--text-light`, `--border`, `--bg-subtle`
 - Style: Modern, clean, SaaS-inspired. White backgrounds, subtle shadows, rounded corners (12px)
-- Icons: Custom two-tone SVGs (blue + gold) inside rounded-square containers on homepage. No emojis.
+- Icons: see the Brand Icon System section below.
+
+## Brand Icon System
+
+Shared two-tone SVGs (dark `#0E2F44` + gold `#D4A03C`, 64x64 viewBox) live in **`images/icons/`**. Reference them with `<img src="images/icons/icon-{name}.svg" alt="" width="N" height="N" loading="lazy">` — `alt=""` because they are always decorative next to a text label.
+
+- **The folder is lowercase `icons`, not `Icons`.** Windows will happily serve either; Netlify is case-sensitive and will 404 the wrong casing in production. It shipped as `Icons/` once and was renamed.
+- **Current icons (11):** `route`, `barrel`, `calendar`, `car`, `cost`, `eat-stay`, `lightbulb`, `city`, `hotel`, `house`, `star`.
+- **Missing icons that block the rest of the emoji migration (see below):** `clock`/duration, `pin`/location, `trophy`/award, `trail-badge` (Official Trail), `park`, `horse`, `building`, `shuttle`.
+
+### Chip style (the standard container)
+Icons sit centered in a "chip": background `#F6F0E4`, border-radius ~20% of chip size, icon ~60% of chip width.
+- Homepage `.feature-icon`: 56px chip, 11px radius, 34px icon.
+- Where-to-stay `.lodging-icon`: 64px chip, 13px radius, 38px icon.
+
+Keep those proportions when adding a chip elsewhere. Do not reintroduce per-card background tints (the old `.feature-icon.gold` alternating variant was removed) — every chip is `#F6F0E4`.
+
+### Homepage guide card headers (`.guide-img`)
+Background is `linear-gradient(135deg, #0E2F44, #1B4761)` for **all** cards (the old per-card blue/gold/teal inline gradients are gone). Each header contains, in order:
+1. `.guide-img-eyebrow` — the category, gold `var(--accent)`, uppercase, `letter-spacing:1.2px`. This replaced the old body-level `.guide-category` div; the category lives in the header now, not the body.
+2. `.guide-img-ghost` — a large category icon, right-aligned, `opacity:0.3`, **inlined SVG with all strokes recolored to `#D4A03C`** (the file versions are dark-on-light and vanish against the navy, so they can't be used via `<img>` here).
+3. `.guide-img-trail` — a gold dashed trail curve across the bottom, `stroke-dasharray`, `opacity:0.7`, `vector-effect="non-scaling-stroke"` so the stretch to card width doesn't distort the stroke.
+
+The old `.guide-img-label` (the ghosted "3D"/"BT"/"$$" two-character mark) is gone. Do not re-add it.
 
 ## File Structure
 
@@ -443,6 +466,20 @@ If a batch of em dashes ever needs removing (e.g. after importing copy from anot
 - **No OverlappingMarkerSpiderfier** — was removed from the trip builder, don't re-add it
 - **Barton 1792** — not open to the public; profile file exists (`distillery-barton-1792.html`) but is intentionally excluded from the site. Do NOT add to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`
 - **Log Still is in New Haven, KY** (not New Hope) — Kyle's Airbnb is in New Hope, these are different places
+- **Site emoji are HTML numeric entities, not raw characters.** They are written as `&#128197;` / `&#9201;`, so grepping for the literal glyph (or a Unicode-range regex) returns **zero hits and looks like the site is emoji-free. It is not.** To find them, grep for the entity form: `grep -oE '&#x?[0-9A-Fa-f]+;' *.html`, then decode codepoints above `0x2000`. This exact trap produced a confidently wrong "there are no emoji on this site" audit in July 2026. The old CLAUDE.md line claiming "No emojis" reinforced it — it described the homepage icon style, not the site.
+
+## Emoji-to-Icon Migration (in progress)
+
+Migrating emoji UI icons to the brand icon system. **Done:** homepage feature cards (6), homepage guide card headers (3), where-to-stay lodging cards (10 hotel + 4 house).
+
+**Not done, and why.** Two blocks are blocked on missing icons, and both must be migrated *as a set* — the glyphs sit side by side in the same row, so swapping the covered ones and leaving the rest as emoji looks broken, not partial:
+
+- **Where-to-stay region headers** (`.region-icon`, 4 instances): city / national park / horse / classical building. Only `icon-city` exists.
+- **All 60 distillery profiles** (~800 instances): a shared 7-glyph vocabulary in `.snap-icon` and `.tour-meta-item` — calendar (204), stopwatch (170), pin (120), money (117), star (73), trophy (65), horse-racing (59). Covered: calendar → `icon-calendar`, money → `icon-cost`, star → `icon-star`. **Uncovered: stopwatch, pin, trophy, horse-racing (414 instances).**
+
+Do **not** force-map the uncovered glyphs onto near-miss icons (stopwatch → calendar, pin → route). Duration and location would stop being visually distinct, which is the whole point of the row.
+
+There is also a long tail of ~30 one-off thematic `badge-trail` flavor emoji, one per distillery (horse, corn, crossed swords, ship, fire, palette, bridge, family, AU/US flags...). These are **deliberately left alone** — they're distillery-flavor marks with no counterpart in a trip-planning icon set, and mapping them would destroy their meaning.
 
 ## Content Accuracy Notes
 - **KDA Passport program ended July 2025** — do NOT reference the Kentucky Bourbon Trail Passport, stamp program, or KDA companion app anywhere on the site. The program is discontinued. If a page mentions it, remove the reference.
