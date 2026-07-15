@@ -81,8 +81,9 @@ After running the IndexNow script, paste the output back to the user so they can
 Shared two-tone SVGs (dark `#0E2F44` + gold `#D4A03C`, 64x64 viewBox) live in **`images/icons/`**. Reference them with `<img src="images/icons/icon-{name}.svg" alt="" width="N" height="N" loading="lazy">` — `alt=""` because they are always decorative next to a text label.
 
 - **The folder is lowercase `icons`, not `Icons`.** Windows will happily serve either; Netlify is case-sensitive and will 404 the wrong casing in production. It shipped as `Icons/` once and was renamed.
-- **Current icons (11):** `route`, `barrel`, `calendar`, `car`, `cost`, `eat-stay`, `lightbulb`, `city`, `hotel`, `house`, `star`.
-- **Missing icons that block the rest of the emoji migration (see below):** `clock`/duration, `pin`/location, `trophy`/award, `trail-badge` (Official Trail), `park`, `horse`, `building`, `shuttle`.
+- **Current icons (17):** `route`, `barrel`, `calendar`, `car`, `cost`, `eat-stay`, `lightbulb`, `city`, `hotel`, `house`, `star`, `badge`, `building`, `clock`, `park`, `pin`, `trophy`.
+- **Meaning is fixed, do not merge these two:** `badge` (shield+check) = official-trail / trail designation. `trophy` = awards and honors. A distillery being *on the trail* is `badge`; a distillery *winning an award* is `trophy`. Never swap them.
+- **Still no icon for:** `shuttle` (transportation uses `car`), `horse`, and the various one-off distillery flavor glyphs (corn, fire, ship, flags, crossed swords, music, family...). No warning/check-mark icon either.
 
 ### Chip style (the standard container)
 Icons sit centered in a "chip": background `#F6F0E4`, border-radius ~20% of chip size, icon ~60% of chip width.
@@ -90,6 +91,13 @@ Icons sit centered in a "chip": background `#F6F0E4`, border-radius ~20% of chip
 - Where-to-stay `.lodging-icon`: 64px chip, 13px radius, 38px icon.
 
 Keep those proportions when adding a chip elsewhere. Do not reintroduce per-card background tints (the old `.feature-icon.gold` alternating variant was removed) — every chip is `#F6F0E4`.
+
+**Small inline chip (entity listing cards):** where-to-stay `.type-chip` is a 28px chip / 8px radius / 17px icon, sitting inline to the **left of the eyebrow label** inside `.lodging-type` (a flex row, gap 8px). These cards have **no hero panel** — the card body starts at the eyebrow row. The navy gradient panel treatment is reserved for guide cards only; entity listing cards (lodging, and restaurant cards on eat-and-drink) never get a hero panel.
+
+**Inline badge/pill icons:** inside a pill (`.badge`, `.lodging-tag`, `.rc-tag`, `.tour-card-rec`) the icon is a bare 16px `<img>` with `style="vertical-align:-3px;margin-right:4px"` — no chip, no wrapper, no per-page CSS. Mapping: award/honor pill → `trophy`; top-pick pill → `star`; official-trail/craft/independent pill → `badge`.
+
+### Region banner (where-to-stay `.region-header`)
+Navy panel (`--primary-dark`). **No icon chip** — the text block sits at the left padding. The city name (`<h3>`) is wrapped in a `<span>` carrying a gold dashed "trail underline" (`border-bottom: 3px dashed #D4A03C; padding-bottom: 10px`) with a 9px gold dot at each end (`::before`/`::after`, `bottom: -3px` to center the dots on the 3px line). The descriptor `<p>` is unchanged. eat-and-drink's `.region-header` is a *different* component (a bordered underline header with a colored `.region-dot`) and was left alone — it is not the navy banner.
 
 ### Homepage guide card headers (`.guide-img`)
 Background is `linear-gradient(135deg, #0E2F44, #1B4761)` for **all** cards (the old per-card blue/gold/teal inline gradients are gone). Each header contains, in order:
@@ -470,16 +478,16 @@ If a batch of em dashes ever needs removing (e.g. after importing copy from anot
 
 ## Emoji-to-Icon Migration (in progress)
 
-Migrating emoji UI icons to the brand icon system. **Done:** homepage feature cards (6), homepage guide card headers (3), where-to-stay lodging cards (10 hotel + 4 house).
+Migrating emoji UI icons to the brand icon system.
 
-**Not done, and why.** Two blocks are blocked on missing icons, and both must be migrated *as a set* — the glyphs sit side by side in the same row, so swapping the covered ones and leaving the rest as emoji looks broken, not partial:
+**Done:** homepage feature cards (6) and guide card headers (3); where-to-stay lodging cards (hero slots removed, 28px inline `.type-chip` at the eyebrow); where-to-stay region banners (icon chip removed, trail-underline city name); where-to-stay's two lightbulb callouts (`icon-lightbulb`); and the **site-wide badge-pill sweep** — official/craft/independent `badge-trail` pills → `icon-badge` (58), `badge-landmark` award pills → `icon-trophy` (4), `tour-card-rec rec-top` and `rc-tag tag-must` top-pick pills → `icon-star` (69). All inline 16px `<img>`, no per-page CSS.
 
-- **Where-to-stay region headers** (`.region-icon`, 4 instances): city / national park / horse / classical building. Only `icon-city` exists.
-- **All 60 distillery profiles** (~800 instances): a shared 7-glyph vocabulary in `.snap-icon` and `.tour-meta-item` — calendar (204), stopwatch (170), pin (120), money (117), star (73), trophy (65), horse-racing (59). Covered: calendar → `icon-calendar`, money → `icon-cost`, star → `icon-star`. **Uncovered: stopwatch, pin, trophy, horse-racing (414 instances).**
+**Not done (the snapshot/tour-meta system, ~611 instances across 60 profiles).** Each profile's `.snap-icon` cards and `.tour-meta-item` rows share a glyph vocabulary: calendar (204), stopwatch (170), pin (120), money (117), trophy-as-rating (60), busts/crowd (14). Icons now exist for all of these (`calendar`, `clock`, `pin`, `cost`, `trophy`), so this is unblocked — it just wasn't in the badge-pill scope. It's a distillery-template pass: change the shared snapshot/tour-meta markup once and roll it across all profiles. Do **not** force-map onto near-miss icons; the mapping is stopwatch→`clock`, pin→`pin`, money→`cost`, calendar→`calendar`.
 
-Do **not** force-map the uncovered glyphs onto near-miss icons (stopwatch → calendar, pin → route). Duration and location would stop being visually distinct, which is the whole point of the row.
-
-There is also a long tail of ~30 one-off thematic `badge-trail` flavor emoji, one per distillery (horse, corn, crossed swords, ship, fire, palette, bridge, family, AU/US flags...). These are **deliberately left alone** — they're distillery-flavor marks with no counterpart in a trip-planning icon set, and mapping them would destroy their meaning.
+**Deliberately left as emoji (survivors):**
+- ~30 one-off `badge-trail` **flavor** glyphs, one per distillery (horse, corn, crossed swords, ship, fire, palette, bridge, family, AU/US flags...). No counterpart in a trip-planning icon set; mapping them would destroy the meaning.
+- Callout/status glyphs with no mapped icon: warning `⚠` in `.warning-box` headers (9), check marks `✓` in booking checklists (16), and assorted inline content emoji in guide body copy (thermometer, fork-and-knife, bottle, etc.).
+- Lightbulb `💡` callouts on pages **other than** where-to-stay (12, same `.tip-box-header` pattern) — trivially convertible to `icon-lightbulb` in a follow-up, just not in the named scope of this pass.
 
 ## Content Accuracy Notes
 - **KDA Passport program ended July 2025** — do NOT reference the Kentucky Bourbon Trail Passport, stamp program, or KDA companion app anywhere on the site. The program is discontinued. If a page mentions it, remove the reference.

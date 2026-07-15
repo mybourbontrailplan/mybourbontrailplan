@@ -120,21 +120,25 @@
 
   /* REGION HEADER */
   .region-header {
-    display: flex; align-items: center; gap: 16px;
-    padding: 20px 24px; margin: 40px 0 24px;
+    padding: 22px 24px 20px; margin: 40px 0 24px;
     background: var(--primary-dark); border-radius: var(--radius);
     color: white;
   }
-  .region-icon {
-    width: 48px; height: 48px; flex-shrink: 0;
-    background: rgba(255,255,255,0.1); border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
-  }
   .region-header-text h3 {
     font-family: var(--font-display); font-size: 22px;
-    font-weight: 700; color: white; margin: 0 0 2px;
+    font-weight: 700; color: white; margin: 0 0 16px;
   }
+  .region-header-text h3 span {
+    display: inline-block; position: relative;
+    padding-bottom: 10px; border-bottom: 3px dashed #D4A03C;
+  }
+  .region-header-text h3 span::before,
+  .region-header-text h3 span::after {
+    content: ""; position: absolute; bottom: -3px;
+    width: 9px; height: 9px; border-radius: 50%; background: #D4A03C;
+  }
+  .region-header-text h3 span::before { left: -2px; }
+  .region-header-text h3 span::after { right: -2px; }
   .region-header-text p {
     font-size: 14px; color: rgba(255,255,255,0.6); margin: 0;
   }
@@ -146,26 +150,8 @@
     margin: 16px 0; transition: all 0.2s;
   }
   .lodging-card:hover { box-shadow: var(--shadow-md); }
-  .lodging-card-inner {
-    display: flex; gap: 0;
-  }
-  .lodging-visual {
-    width: 200px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background: var(--bg-subtle);
-    border-right: 1px solid var(--border);
-  }
-  .lodging-icon {
-    width: 64px; height: 64px;
-    background: #F6F0E4;
-    border-radius: 13px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .lodging-icon img { width: 38px; height: 38px; display: block; }
   .lodging-body {
-    flex: 1; padding: 22px 24px;
+    padding: 22px 24px;
     display: flex; flex-direction: column;
     min-width: 0;
   }
@@ -186,9 +172,16 @@
     font-family: var(--font-body); font-weight: 400;
   }
   .lodging-type {
+    display: flex; align-items: center; gap: 8px;
     font-size: 12px; font-weight: 600; text-transform: uppercase;
     letter-spacing: 0.8px; color: var(--text-light); margin-bottom: 8px;
   }
+  .type-chip {
+    width: 28px; height: 28px; flex-shrink: 0;
+    background: #F6F0E4; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .type-chip img { width: 17px; height: 17px; display: block; }
   .lodging-desc {
     font-size: 14.5px; color: var(--text-secondary);
     line-height: 1.6; flex: 1; overflow-wrap: break-word;
@@ -259,8 +252,6 @@
   @media (max-width: 960px) {
     .article-layout { grid-template-columns: 1fr; }
     .toc-sidebar { display: none; }
-    .lodging-card-inner { flex-direction: column; }
-    .lodging-visual { width: 100%; height: 100px; }
     .lodging-card { max-width: 100%; }
   }
   @media (max-width: 640px) {
@@ -403,9 +394,8 @@
 
     <!-- LOUISVILLE -->
     <div class="region-header" id="louisville">
-      <div class="region-icon">&#127961;&#65039;</div>
       <div class="region-header-text">
-        <h3>Louisville</h3>
+        <h3><span>Louisville</span></h3>
         <p>Night 1, Whiskey Row, downtown, restaurants &amp; nightlife</p>
       </div>
     </div>
@@ -416,13 +406,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Boutique Hotel</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Boutique Hotel</div>
               <div class="lodging-name">Hotel Distil</div>
             </div>
             <div style="text-align:right;">
@@ -432,8 +419,8 @@
           </div>
           <div class="lodging-desc">Bourbon-themed boutique hotel directly on Whiskey Row, set in the old J.T.S. Brown &amp; Sons barreling warehouse. In July 2026, Marriott named it <strong>Hotel of the Year for the U.S. and Canada</strong>, its top hospitality honor, so this is no longer just our pick, it's Marriott's too. You can walk to all three Louisville distilleries in under 5 minutes. Rooms are modern and well-designed, the Society 1933 speakeasy is downstairs, and Repeal Oak-Fired Steakhouse is on-site. This is the most convenient location for Day 1 on our <a href="3-day-bourbon-trail-itinerary.html">3-day itinerary</a>. Worth booking early, an award like this tends to tighten availability.</div>
           <div class="lodging-tags">
-            <span class="lodging-tag tag-featured">&#127942; Marriott Hotel of the Year 2026</span>
-            <span class="lodging-tag tag-best">&#9733; Top Pick for Louisville</span>
+            <span class="lodging-tag tag-featured"><img src="images/icons/icon-trophy.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:4px">Marriott Hotel of the Year 2026</span>
+            <span class="lodging-tag tag-best"><img src="images/icons/icon-star.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:4px">Top Pick for Louisville</span>
             <span class="lodging-tag tag-location">On Whiskey Row</span>
           </div>
           <div class="lodging-links">
@@ -445,13 +432,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Luxury Hotel</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Luxury Hotel</div>
               <div class="lodging-name">Omni Louisville</div>
             </div>
             <div style="text-align:right;">
@@ -473,13 +457,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Art Hotel</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Art Hotel</div>
               <div class="lodging-name">21c Museum Hotel</div>
             </div>
             <div style="text-align:right;">
@@ -501,13 +482,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Budget Hotel</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Budget Hotel</div>
               <div class="lodging-name">Hampton Inn Downtown Louisville</div>
             </div>
             <div style="text-align:right;">
@@ -529,13 +507,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-house.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Bed &amp; Breakfast &bull; Historic Mansion</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-house.svg" alt="" width="17" height="17" loading="lazy"></span>Bed &amp; Breakfast &bull; Historic Mansion</div>
               <div class="lodging-name">Louisville Bourbon Inn</div>
             </div>
             <div style="text-align:right;">
@@ -545,7 +520,7 @@
           </div>
           <div class="lodging-desc">The #1-ranked B&amp;B in the United States for 2025 and 2026 (TripAdvisor), and the most bourbon-immersive place to sleep in Louisville. Set in an 1880s Richardsonian Romanesque mansion in Old Louisville, with 8 luxury suites split between the main mansion and a carriage house. Gourmet breakfast is included every morning, an in-house Bourbon Library stocks 17+ brands for tasting flights, and if you want a guided day on the trail, they offer bourbon trail packages with a private driver. The trade-off: it's in Old Louisville, about 10 minutes by Uber to Whiskey Row, so you won't be walking to distilleries. If that's fine with you, this is the best B&amp;B stay on the entire trail. Only 8 suites, so book early.</div>
           <div class="lodging-tags">
-            <span class="lodging-tag tag-best">&#9733; #1 B&amp;B in the U.S. (TripAdvisor)</span>
+            <span class="lodging-tag tag-best"><img src="images/icons/icon-star.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:4px">#1 B&amp;B in the U.S. (TripAdvisor)</span>
             <span class="lodging-tag tag-luxury">Breakfast Included</span>
             <span class="lodging-tag tag-location">Old Louisville</span>
           </div>
@@ -557,15 +532,14 @@
     </div>
 
     <div class="tip-box">
-      <div class="tip-box-header">&#128161; Louisville Booking Tip</div>
+      <div class="tip-box-header"><img src="images/icons/icon-lightbulb.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:5px">Louisville Booking Tip</div>
       <p>Avoid Derby week (first Saturday in May). Hotel prices in Louisville triple or quadruple, and everything downtown is booked months ahead. If your trip falls anywhere near Derby, book lodging immediately. The Kentucky Bourbon Festival (September, Bardstown) has a much smaller impact on Louisville hotel prices.</p>
     </div>
 
     <!-- BARDSTOWN / NEW HOPE -->
     <div class="region-header" id="bardstown">
-      <div class="region-icon">&#127966;&#65039;</div>
       <div class="region-header-text">
-        <h3>Bardstown &amp; New Hope</h3>
+        <h3><span>Bardstown &amp; New Hope</span></h3>
         <p>Night 2, Bourbon capital, countryside, craft distilleries</p>
       </div>
     </div>
@@ -576,13 +550,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-house.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Airbnb &bull; VRBO &bull; Countryside</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-house.svg" alt="" width="17" height="17" loading="lazy"></span>Airbnb &bull; VRBO &bull; Countryside</div>
               <div class="lodging-name">The New Hope Bourbon Stop</div>
             </div>
             <div style="text-align:right;">
@@ -592,7 +563,7 @@
           </div>
           <div class="lodging-desc">One of the highest-rated properties on VRBO in the Bardstown area and a top-rated Airbnb. Located in New Hope, about 15–20 minutes south of Bardstown and roughly a mile from <a href="distillery-log-still.html">Log Still Distillery</a>. This is the kind of stay that makes a Bourbon Trail trip feel like a real getaway, you're in the countryside, surrounded by the landscape that defines Kentucky bourbon, instead of staring at a hotel parking lot. Great for couples and groups. The location is one of the best-positioned lodging options on the entire trail: close enough to Bardstown for dinner, close enough to Maker's Mark and the craft distilleries to minimize morning driving, and set up for a clean drive to Frankfort on Day 3.</div>
           <div class="lodging-tags">
-            <span class="lodging-tag tag-featured">&#9733; Our Property</span>
+            <span class="lodging-tag tag-featured"><img src="images/icons/icon-star.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:4px">Our Property</span>
             <span class="lodging-tag tag-groups">Great for groups</span>
             <span class="lodging-tag tag-featured">Top-rated on VRBO</span>
             <span class="lodging-tag tag-location">1 mi from Log Still</span>
@@ -609,13 +580,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Boutique Inn</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Boutique Inn</div>
               <div class="lodging-name">The Bardstown Motor Lodge</div>
             </div>
             <div style="text-align:right;">
@@ -637,13 +605,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Historic Inn &bull; Restaurant</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Historic Inn &bull; Restaurant</div>
               <div class="lodging-name">Old Talbott Tavern &amp; Inn</div>
             </div>
             <div style="text-align:right;">
@@ -653,7 +618,7 @@
           </div>
           <div class="lodging-desc">One of the oldest inns in America, right on the Bardstown town square. The restaurant and bar downstairs are a destination in their own right, classic Southern cooking and a deep bourbon list. Walking distance to shops and nightlife. If you want the full Bardstown experience without driving anywhere at night, this is the spot.</div>
           <div class="lodging-tags">
-            <span class="lodging-tag tag-best">&#9733; Best In-Town Stay</span>
+            <span class="lodging-tag tag-best"><img src="images/icons/icon-star.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:4px">Best In-Town Stay</span>
             <span class="lodging-tag tag-location">On Town Square</span>
           </div>
           <div class="lodging-links">
@@ -665,13 +630,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Boutique Hotel &bull; Official KBT Partner</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Boutique Hotel &bull; Official KBT Partner</div>
               <div class="lodging-name">The Trail Hotel</div>
             </div>
             <div style="text-align:right;">
@@ -694,13 +656,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-house.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Airbnb &bull; In-Town</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-house.svg" alt="" width="17" height="17" loading="lazy"></span>Airbnb &bull; In-Town</div>
               <div class="lodging-name">Bardstown Downtown Airbnbs</div>
             </div>
             <div style="text-align:right;">
@@ -718,15 +677,14 @@
     </div>
 
     <div class="tip-box">
-      <div class="tip-box-header">&#128161; Why New Hope Works</div>
+      <div class="tip-box-header"><img src="images/icons/icon-lightbulb.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:5px">Why New Hope Works</div>
       <p>Staying in the New Hope area instead of downtown Bardstown gives you three advantages: you're closer to Maker's Mark (saving morning drive time), you're next door to <a href="distillery-log-still.html">Log Still Distillery</a> for a late afternoon craft visit, and you get the countryside setting that makes a Bourbon Trail trip feel like a trip instead of a commute between tasting rooms.</p>
     </div>
 
     <!-- FRANKFORT -->
     <div class="region-header" id="frankfort">
-      <div class="region-icon">&#127963;&#65039;</div>
       <div class="region-header-text">
-        <h3>Frankfort</h3>
+        <h3><span>Frankfort</span></h3>
         <p>Optional Night 3, Buffalo Trace, state capital, quiet evenings</p>
       </div>
     </div>
@@ -736,13 +694,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Boutique Hotel</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Boutique Hotel</div>
               <div class="lodging-name">Capital Plaza Hotel</div>
             </div>
             <div style="text-align:right;">
@@ -764,13 +719,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-house.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Airbnb / B&amp;B</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-house.svg" alt="" width="17" height="17" loading="lazy"></span>Airbnb / B&amp;B</div>
               <div class="lodging-name">Frankfort Area Airbnbs</div>
             </div>
             <div style="text-align:right;">
@@ -790,9 +742,8 @@
 
     <!-- LEXINGTON -->
     <div class="region-header" id="lexington">
-      <div class="region-icon">&#128014;</div>
       <div class="region-header-text">
-        <h3>Lexington</h3>
+        <h3><span>Lexington</span></h3>
         <p>Extended trips, horse country, dining, gateway to eastern trail</p>
       </div>
     </div>
@@ -803,13 +754,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Boutique Hotel</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Boutique Hotel</div>
               <div class="lodging-name">21c Museum Hotel Lexington</div>
             </div>
             <div style="text-align:right;">
@@ -831,13 +779,10 @@
 
     <div class="lodging-card">
       <div class="lodging-card-inner">
-        <div class="lodging-visual">
-          <span class="lodging-icon"><img src="images/icons/icon-hotel.svg" alt="" width="38" height="38" loading="lazy"></span>
-        </div>
         <div class="lodging-body">
           <div class="lodging-top">
             <div>
-              <div class="lodging-type">Mid-Range Hotel</div>
+              <div class="lodging-type"><span class="type-chip"><img src="images/icons/icon-hotel.svg" alt="" width="17" height="17" loading="lazy"></span>Mid-Range Hotel</div>
               <div class="lodging-name">Hilton Lexington Downtown</div>
             </div>
             <div style="text-align:right;">
