@@ -241,18 +241,23 @@ When creating or editing distillery profiles:
 - Sidebar region guides link to `guides.html`
 - After creating a new profile: add it to `distilleries.html`, `trip-builder.html`, `map.html`, and `sitemap.xml`
 
-### Rating Categories — the standard six (DO NOT deviate)
-Every profile's "Our Honest Ratings" block uses **exactly these six bars, in this order**:
+### Rating Categories — always six bars, two label sets (DO NOT otherwise deviate)
+Every profile's "Our Honest Ratings" block uses **exactly six bars, in this order**. Bars 2, 4, 5, 6 are identical everywhere; **only bars 1 and 3 change** depending on the venue class:
 
-1. Tour Quality
-2. Value for Money
-3. Campus &amp; Grounds
-4. Gift Shop
-5. Booking Ease
-6. Crowd Level
+| # | Working distillery | Urban tasting room |
+|---|---|---|
+| 1 | Tour Quality | **Experience Quality** |
+| 2 | Value for Money | Value for Money |
+| 3 | Campus &amp; Grounds | **Space &amp; Atmosphere** |
+| 4 | Gift Shop | Gift Shop |
+| 5 | Booking Ease | Booking Ease |
+| 6 | Crowd Level | Crowd Level |
 
-- **Ratings score the VISIT, never the whiskey.** Do not add a "Whiskey Quality" bar, and do not grade how the bourbon tastes in the body copy or the verdict either. We rate every distillery on the visitor experience; singling out one distillery for a taste knock is unfair to it and inconsistent with the other 59. If the whiskey is genuinely the story (a signature pour, a flight worth ordering), mention it as a *recommendation* ("the old fashioned flight is the thing to order"), not as a score or a criticism. Buzzard's Roost and Dark Arts both had a "Whiskey Quality" bar; a reader emailed to point out the inconsistency and both were normalized in July 2026.
-- **Non-distillery venues still use the six.** Urban tasting rooms and blending houses with no rickhouse or grounds (e.g. Dark Arts) still get all six bars: score Tour Quality on their guided experiences and Campus & Grounds on the interior space. Do not drop bars or invent new labels.
+- **Which set to use is an editorial judgment, NOT `data-production`.** Use the tasting-room labels only for an **urban room with no grounds and no tour** (a bar, lounge, or tasting counter). `data-production="tasting"` is *not* the trigger: `distillery-stitzel-weller.html` is tagged `tasting` but is a historic campus with real grounds and real tours, so it correctly keeps the **distillery** labels. Currently on the tasting-room labels: Dark Arts, Whiskey Thief (Louisville), Fresh Bourbon, Chicken Cock.
+- **Why two sets (July 2026).** The old rule forced all six distillery labels onto every venue and told you to silently reinterpret them ("score Campus &amp; Grounds on the interior space"). That produced Dark Arts scoring **9.0 for "Campus &amp; Grounds"** at a blending house with no campus: the number was right, the label was lying. Relabeling bars 1 and 3 makes the label say what the score already meant. Four of six bars stay identical **on purpose** so headline ratings stay comparable across all venues and readers don't have to learn two systems. Do not widen this into a fully separate tasting-room scale.
+- **Relabeling does not mean re-rating.** When the two label sets were introduced, the four existing urban rooms had their labels changed and their **scores left untouched**, because the scores already encoded the reinterpreted meaning. If you move a venue between label sets, change the label and leave the number alone unless you have a real reason.
+- **Ratings score the VISIT, never the whiskey.** Do not add a "Whiskey Quality" bar, and do not grade how the bourbon tastes in the body copy or the verdict either. We rate every venue on the visitor experience; singling one out for a taste knock is unfair to it and inconsistent with the rest. If the whiskey is genuinely the story (a signature pour, a flight worth ordering), mention it as a *recommendation* ("the old fashioned flight is the thing to order"), not as a score or a criticism. Buzzard's Roost and Dark Arts both had a "Whiskey Quality" bar; a reader emailed to point out the inconsistency and both were normalized in July 2026.
+- **Never invent a rating.** Every card carries a numeric rating and every profile carries six bars plus a verdict; these are Kyle's editorial judgments from real visits and are the entire premise of the site. If Kyle has not visited a venue, do not ship a guessed score, do not average other venues, and do not infer one from press coverage. Leave it as an explicit TODO and ask him.
 - **Known exception:** `distillery-pensive.html` uses "Food &amp; Dining" in place of "Gift Shop" because the award-winning on-site kitchen is the actual reason to go. This is a deliberate one-off, not a precedent.
 - The headline rating in the snapshot card (`Our Rating`, e.g. `7.5 / 10`) is **editorial, not the average of the six bars**. Changing the bars does not require changing the headline. Changing the headline *does* require updating the matching rating on the card in `distilleries.html`.
 
@@ -378,6 +383,14 @@ Two functions handle zoom-level changes:
 
 ### Why Bottom Buttons Were Abandoned
 iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-area-inset-bottom)`. Multiple attempts with increased bottom values, dvh units, and @supports fallbacks all failed across iPhone 16 Pro and 17 Pro simultaneously. Top action bar eliminates all bottom-edge issues permanently.
+
+### Urban tasting rooms are DIRECTORY-ONLY (no trip builder, no map, no PDF)
+New urban tasting rooms get a **profile page + a card in `distilleries.html` only**. Do **not** add them to `trip-builder.html` or `map.html`, and therefore they never reach `bourbon-trail-map.pdf` (the generator iterates the trip-builder `D` array and looks up `distilleries.html` by profile filename, so a card with no `D` entry is simply skipped — no code change, no warning).
+
+- **Why:** the map and trip builder plan a *driving* route between destinations. These rooms are walk-up sub-stops of a block that is already pinned, and they physically cannot be pinned. Measured at zoom 14: Green River (714 W Main), Pursuit (722), and Bardstown Bourbon Co. (730) fall **3.5–7px apart**, against the 28px minimum in the section below. Big Bat (800) is ~12px from BBC. They would render as one unreadable blob, and OverlappingMarkerSpiderfier was deliberately removed and must not come back. The 700 block is already represented on the map by Buzzard's Roost (624) and Michter's Fort Nelson (801).
+- **This is not a blanket "tasting rooms are excluded" rule.** The five older tasting venues (Stitzel-Weller, Dark Arts, Fresh Bourbon, Chicken Cock, Whiskey Thief Louisville) **are** in the trip builder and map and should stay there: they are spaced fine (Whiskey Thief Louisville sits 37px from Angel's Envy) and are drive-to destinations. Do not "consistency-fix" them by removing their pins.
+- If a *future* tasting room is a genuine drive-to destination and clears 28px from every existing pin, it can have a pin. The test is spacing and routability, not `data-production`.
+- Known pre-existing violation: Evan Williams and Buzzard's Roost already sit 22.3px apart. Left alone; don't make it worse.
 
 ### Adding a New Distillery to Trip Builder
 1. Verify coordinates on Google Maps (right-click → copy coordinates)
@@ -521,6 +534,7 @@ Migrating emoji UI icons to the brand icon system.
 - Budget guide uses per-person pricing
 - Three Boys Farm Distillery is now Whiskey Thief Distilling Co.
 - **Chicken Cock rating is 7.0** — bar is smaller than expected, accessible area limited to bar + two front gift shop rooms. Old fashioned flight is a highlight worth mentioning.
+- **Chicken Cock has TWO venues, and they get confused.** (1) **Circa 1856 Bardstown**, 103 E Stephen Foster Ave, Bardstown — the main venue and the one `distillery-chicken-cock.html` covers; opened 2024. (2) **"The Coupe"**, NuLu, Louisville — a speakeasy/cocktail destination, relaunched March 2026, a separate venue that is *not* the Bardstown one. The main venue is in **Bardstown, not Lawrenceburg** (Lawrenceburg is Wild Turkey); the Whiskey Row guide asserted "the Lawrenceburg tasting room" and was corrected July 2026. Nothing is distilled at either: Chicken Cock is "crafted in partnership with Bardstown Bourbon Company", which is why the Bardstown venue is `data-production="tasting"` despite the card calling it a micro-distillery.
 - **Heaven's to Betsy Bakery** added to eat-and-drink page (On the Road section) and Wild Turkey nearby cards — Lawrenceburg, outstanding Reuben sandwich
 - **Becker & Bird Distillery** (file: `distillery-baker-bird.html`) — the distillery's official KBT name is Becker & Bird; the winery on the same property is called Baker-Bird. File name stays as-is for URL continuity.
 - **Augusta Distillery** (file: `distillery-augusta.html`) — separate from Becker & Bird, also in Augusta, KY at 207 Seminary Ave. Produces Buckner's bourbon (Best Bourbon at 2023 SFWSC). Wed–Sat 11–5 only. Rating 8.1. River Proof Barrel Experience ($29) is their signature tour. Trip builder pin: lat 38.7731, lng -83.9968. Smart pairing: Augusta + Becker & Bird (5-min walk).
@@ -528,7 +542,7 @@ Migrating emoji UI icons to the brand icon system.
 - **Garrard County Distilling Co.** — SHUT DOWN. File `distillery-garrard-county.html` remains in repo but must NOT be added to the site anywhere.
 - **Pensive Distilling Co.** (file: `distillery-pensive.html`) — Newport, KY craft distillery in a historic Prohibition-era building. Speakeasy tasting room requires a password (provided at booking). Named after Pensive, the 1944 Kentucky Derby/Preakness winner. On-site kitchen is award-winning (City Beat Top 10 NKY Restaurants); every menu item named after a racehorse. Live music Fridays. Tours $15–$25, easy booking via Peek. Rating 8.0. Pair with New Riff (5 min, same city). Trip builder pin: lat 39.09, lng -84.4923 (corrected July 2026 to the 720 Monmouth St, Newport address; was 38.9928, -84.4969, which sat ~6.7 mi south of Newport). Region: Northern (Newport maps to Northern in RG).
 - **Stitzel-Weller gift shop accuracy** — Old Fitzgerald is now a Heaven Hill brand (produced in Bardstown); it is NOT available at Stitzel-Weller. Gift shop reliably carries Blade & Bow, I.W. Harper, and Bulleit. Orphan Barrel releases show up occasionally but cannot be counted on — do not present as a reliable find. The Old Fitz history is fine to mention as historical context (it was produced there), but don't imply visitors can buy it there.
-- **WhistlePig The Vault** — Louisville tasting room at 403 E Market St (NuLu, near Angel's Envy), opened 2026. Vermont-based brand (rye-focused, not a KY distillery). NOT added as a distillery profile — it's a brand experience room, not a production facility. Covered as a callout card in the "Speakeasies & New Openings" section of `louisville-whiskey-row-walking-guide.html`. Key detail: original 1911 bank pneumatic tube system is used to mix and deliver drinks — visibly in action from your seat. Tasting tiers: $50 hosted (groups 4–10), $250 Vault Collection, $300 Vault Experience (up to 6 guests). Hours: Tue–Sat 10am–5pm. Cocktail bar is walk-in; seated tastings require reservation.
+- **WhistlePig The Vault** — Louisville tasting room at 403 E Market St (NuLu, near Angel's Envy), opened 2026. Vermont-based brand (rye-focused, not a KY distillery). **Now in scope for a tasting-room profile + card** (decision reversed July 2026). It was previously excluded on the grounds that it's "a brand experience room, not a production facility" — but that is exactly what `data-production="tasting"` now encodes, so the reason for excluding it expired once the directory could represent the distinction. Directory-only, like every urban tasting room: no trip-builder or map pin. Also covered as a callout card in the "Speakeasies & New Openings" section of `louisville-whiskey-row-walking-guide.html`. Key detail: original 1911 bank pneumatic tube system is used to mix and deliver drinks — visibly in action from your seat. Tasting tiers: $50 hosted (groups 4–10), $250 Vault Collection, $300 Vault Experience (up to 6 guests). Hours: Tue–Sat 10am–5pm. Cocktail bar is walk-in; seated tastings require reservation.
 - **The Rickhouse Restaurant & Lounge** — is in BARDSTOWN at 112 Xavier Dr. Dinner only, closed Mondays. It is a legitimate bourbon-forward dinner spot. NEVER present it as a Frankfort option.
 - **Rick's White Light Diner (Frankfort)** — appears closed as of late 2025. Do not recommend.
 - **Bourbon on Main (Frankfort)** — verified Frankfort lunch option, bourbon-focused. Used as the Day 3 lunch recommendation replacing the nonexistent "Rick House" in Frankfort. Appears in itinerary, eat-and-drink, where-to-stay, and castle-key nearby card.
