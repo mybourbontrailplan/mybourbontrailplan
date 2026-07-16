@@ -60,6 +60,12 @@ python scripts\indexnow_submit_changed.py
 
 This pings Bing (and other IndexNow-participating search engines) with the URLs of files changed in the most recent commit, triggering faster recrawl. The site relies heavily on Bing traffic, so this step is non-negotiable for deploys that include HTML changes.
 
+### Gotcha: back-to-back commits silently drop URLs
+
+`indexnow_submit_changed.py` hardcodes `git diff --name-only HEAD~1 HEAD`, so it only ever sees the **most recent commit**. If you push a deploy and a second commit lands before you run the script (a follow-up fix, a review catch), the first commit's URLs are **never submitted and nothing warns you**. This happened July 2026: a naming fix landed between the push and the ping, and three URLs from the previous deploy were silently skipped.
+
+Run the script **immediately after each push**, before making further edits. If two commits have already landed, submit the missed URLs manually rather than assuming the script covered them: import the real script and reuse its own `submit()` / `load_key()` so the key and payload stay identical, e.g. `m.submit(["https://mybourbontrailplan.com/foo.html"], m.load_key())`.
+
 ### When to skip IndexNow
 
 Skip the IndexNow ping only if:
