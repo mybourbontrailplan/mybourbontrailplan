@@ -38,6 +38,13 @@ $r = Invoke-WebRequest -Uri "https://mybourbontrailplan.com/{page}.html?cachebus
 $r.Content -match '{a string your change added}'
 ```
 
+**Verify against VISIBLE TEXT, not markup.** Netlify post-processes the HTML it serves, so the deployed source is not byte-identical to the repo. Confirmed July 2026:
+- **`.html` extensions are stripped** (pretty URLs): `href="distillery-green-river-louisville.html"` is served as `href='/distillery-green-river-louisville'`.
+- **`href="index.html"` becomes `href='/'`**.
+- **Double quotes become single quotes** and **attributes get reordered**: `<a href="index.html" class="logo">` is served as `<a class='logo' href='/'>`.
+
+So `grep 'href="foo.html"'` or `grep 'class="stop-link"'` against the live site returns **zero and looks like a failed deploy when the deploy was fine**. This burned a whole debugging cycle. Grep for prose the change introduced ("Bardstown tasting room"), a rendered label, or an extension-less fragment (`green-river-louisville`) instead.
+
 Notes:
 - **Do NOT run `netlify deploy --prod --dir=.`.** The Netlify CLI is not installed on this machine (`netlify` is not on PATH), and it isn't needed. This step used to be documented here and always failed; the push had already deployed the site. The stale `.netlify/` folder is leftover state from a one-time CLI use, not an active config. There is no `netlify.toml`.
 - Stage files explicitly rather than `git add .` — the working tree usually carries local-only noise (`.claude/settings.local.json`, `.claude/worktrees/`) that should not be committed.
