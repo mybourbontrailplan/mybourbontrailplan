@@ -19,13 +19,29 @@ python scripts\generate_sitemap.py
 
 This scans root-level HTML files, applies the blocklist and noindex exclusions, and writes a fresh `sitemap.xml`. Run it before deploying so the updated sitemap ships in the same deploy. Skip if the deploy contains no HTML page additions or removals (e.g. CSS-only or content-only edits to existing pages).
 
-If the sitemap changed, stage and commit it with the rest of the deploy files before running the Netlify command.
+If the sitemap changed, stage and commit it with the rest of the deploy files so it ships in the same push.
 
-### Step 2 — Deploy
+### Step 2 — Deploy (push to `main`)
+
+**Deploying is just pushing.** Netlify auto-builds from GitHub on every push to `main`; there is no separate deploy command to run.
 
 ```
-netlify deploy --prod --dir=.
+git add <the files you changed>
+git commit -m "message"
+git push origin main
 ```
+
+The site goes live within roughly a minute. Confirm it actually landed before moving on, by fetching the changed page and grepping for something the edit introduced:
+
+```
+$r = Invoke-WebRequest -Uri "https://mybourbontrailplan.com/{page}.html?cachebust=$(Get-Random)" -UseBasicParsing
+$r.Content -match '{a string your change added}'
+```
+
+Notes:
+- **Do NOT run `netlify deploy --prod --dir=.`.** The Netlify CLI is not installed on this machine (`netlify` is not on PATH), and it isn't needed. This step used to be documented here and always failed; the push had already deployed the site. The stale `.netlify/` folder is leftover state from a one-time CLI use, not an active config. There is no `netlify.toml`.
+- Stage files explicitly rather than `git add .` — the working tree usually carries local-only noise (`.claude/settings.local.json`, `.claude/worktrees/`) that should not be committed.
+- Wait for the live check to pass **before** running IndexNow. Pinging IndexNow tells crawlers to fetch the URL now; if the deploy hasn't finished, they'll re-index the old content.
 
 ### Step 3 — Submit to IndexNow
 
