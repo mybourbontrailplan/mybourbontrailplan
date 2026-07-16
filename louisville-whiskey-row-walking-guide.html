@@ -136,7 +136,26 @@
 
   /* FLYOVER VIDEO (vertical 9:16, narrow column on desktop) */
   .flyover-embed { max-width: 400px; margin: 32px auto; }
+  .flyover-video-wrap { position: relative; line-height: 0; }
   .flyover-embed video { width: 100%; border-radius: var(--radius); display: block; box-shadow: var(--shadow-md); }
+  .flyover-toggle {
+    position: absolute; bottom: 12px; right: 12px;
+    width: 38px; height: 38px; padding: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(14,47,68,0.72); border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 50%; cursor: pointer; color: var(--accent);
+    -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+  .flyover-toggle:hover { background: rgba(14,47,68,0.92); transform: scale(1.06); }
+  .flyover-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  /* Author display rules beat the UA [hidden] rule, so hiding is done with explicit
+     classes. SVG elements also have no .hidden IDL property, so never toggle it in JS. */
+  .flyover-toggle[hidden] { display: none; }
+  .flyover-toggle svg { display: block; }
+  .flyover-toggle .flyover-icon-play { display: none; }
+  .flyover-toggle.is-paused .flyover-icon-pause { display: none; }
+  .flyover-toggle.is-paused .flyover-icon-play { display: block; }
   .flyover-caption { text-align: center; font-size: 14px; color: var(--text-light); margin-top: 10px; }
   @media (max-width: 640px) { .flyover-embed { max-width: 100%; } }
   .stop-meta { font-size: 13.5px; color: var(--text-light); margin-bottom: 14px; display: flex; gap: 16px; flex-wrap: wrap; }
@@ -263,13 +282,41 @@
   </div>
 
   <div class="flyover-embed">
-    <video autoplay muted loop playsinline preload="metadata"
-           poster="/videos/whiskey-row-flyover-poster.jpg"
-           aria-label="Aerial flyover of Louisville's Whiskey Row on West Main Street">
-      <source src="/videos/whiskey-row-flyover-web.mp4" type="video/mp4">
-    </video>
+    <div class="flyover-video-wrap">
+      <video id="flyoverVideo" autoplay muted loop playsinline preload="metadata"
+             poster="/videos/whiskey-row-flyover-poster.jpg"
+             aria-label="Aerial flyover of Louisville's Whiskey Row on West Main Street">
+        <source src="/videos/whiskey-row-flyover-web.mp4" type="video/mp4">
+      </video>
+      <button type="button" id="flyoverToggle" class="flyover-toggle" aria-label="Pause video" aria-pressed="false" hidden>
+        <svg class="flyover-icon-pause" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><rect x="3" y="2" width="3.6" height="12" rx="1.2"/><rect x="9.4" y="2" width="3.6" height="12" rx="1.2"/></svg>
+        <svg class="flyover-icon-play" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M4.5 2.4a1 1 0 0 1 1.53-.85l7.2 4.6a1 1 0 0 1 0 1.7l-7.2 4.6a1 1 0 0 1-1.53-.85z"/></svg>
+      </button>
+    </div>
     <p class="flyover-caption">Whiskey Row from above: the whole walk in under a minute. Follow <a href="https://www.instagram.com/mybourbontrailplan" target="_blank" rel="noopener">@mybourbontrailplan</a> for more.</p>
   </div>
+  <script>
+  (function(){
+    var v = document.getElementById('flyoverVideo');
+    var btn = document.getElementById('flyoverToggle');
+    if (!v || !btn) return;
+    btn.hidden = false;
+    function sync(){
+      var paused = v.paused;
+      btn.classList.toggle('is-paused', paused);
+      btn.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+    }
+    btn.addEventListener('click', function(){
+      if (v.paused) { var p = v.play(); if (p && p.catch) { p.catch(function(){}); } }
+      else { v.pause(); }
+    });
+    v.addEventListener('play', sync);
+    v.addEventListener('pause', sync);
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) { v.pause(); }
+    sync();
+  })();
+  </script>
 
   <h2>The Whiskey Row Distilleries &amp; Tasting Rooms</h2>
   <p>Walk these east to west along Main Street. The street numbers climb as you head west, so the order below is a straight line rather than a zigzag, and once you're on West Main everything sits within about six blocks.</p>
