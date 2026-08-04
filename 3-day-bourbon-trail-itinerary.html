@@ -1399,5 +1399,9 @@ function openChecklistModal(){document.getElementById('checklist-modal').style.d
 function closeChecklistModal(){document.getElementById('checklist-modal').style.display='none';document.body.style.overflow='';}
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePdfModal();closeChecklistModal();}});
 </script>
+<script>
+/* affiliate_click GA4 tracking (delegated) */
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.href||'';var t=null;if(/kqzyfj\.com|anrdoezrs\.net|tkqlhce\.com|jdoqocy\.com/.test(href))t='booking_com';else if(/vrbo\.com\/affiliate/.test(href))t='vrbo';else if(/bourbonstopky\.com/.test(href))t='direct_booking';else if(/airbnb\./.test(href))t='airbnb';if(!t)return;var n=a.getAttribute('data-property')||(a.textContent||'').replace(/\s+/g,' ').trim().slice(0,100)||'unknown';if(typeof gtag==='function'){gtag('event','affiliate_click',{page_path:location.pathname,property_name:n,link_type:t});}},true);
+</script>
 </body>
 </html>
