@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVK4D6KJJP"></script>
+   <script>(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account','2164831');</script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DVK4D6KJJP');
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Bourbon Trail Map Widget: Embed It on Your Site (2026)</title>
+<meta name="description" content="Free embeddable Kentucky Bourbon Trail map for lodging, B&amp;B, and visitor bureau sites. Copy one snippet, no account or API key, and it stays current on its own.">
+<meta name="keywords" content="bourbon trail map widget, embed bourbon trail map, kentucky bourbon trail map embed, free distillery map widget, airbnb guest guide map">
+<link rel="canonical" href="https://mybourbontrailplan.com/embed-bourbon-trail-map.html">
+<link rel="icon" type="image/svg+xml" href="/images/bourbon-trail-planner-icon.svg?v=4">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180.png?v=4">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Free Bourbon Trail Map Widget: Embed It on Your Site (2026)">
+<meta property="og:description" content="Give your guests an interactive Kentucky distillery map. One copy-paste snippet, free, no account needed, and it updates itself as distilleries change.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mybourbontrailplan.com/embed-bourbon-trail-map.html">
+
+<!-- Schema Markup -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Free Bourbon Trail Map Widget: Embed It on Your Site",
+  "description": "A free embeddable interactive map of Kentucky Bourbon Trail distilleries for lodging hosts, bed and breakfasts, visitor bureaus, and event venues. Generates a copy-paste embed snippet with no account or API key required.",
+  "url": "https://mybourbontrailplan.com/embed-bourbon-trail-map.html",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Bourbon Trail Planner"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mybourbontrailplan.com/embed-bourbon-trail-map.html"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the bourbon trail map widget really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. There is no cost, no account, no API key, and no usage limit. The only thing we ask is that you keep the attribution link that comes with the snippet, since that link is how the widget pays for itself."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to update the map when distilleries change?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The widget loads the live map from mybourbontrailplan.com, so when a distillery opens, closes, changes tour pricing, or moves, your page reflects it without you touching anything."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will the map widget slow down my website?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The snippet includes loading=\"lazy\" on the iframe, so nothing loads until a visitor scrolls near it. Map tiles load only for the area actually on screen. On modern browsers the widget runs in its own process, so its JavaScript does not block your page."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I show only the distilleries near my property?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Pick a region in the generator and the widget opens already zoomed to that cluster. Guests can still switch to any other region or search all distilleries from inside the widget."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the widget work on Squarespace, Wix, or WordPress?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. It is plain HTML with no scripts to install. Paste it into a WordPress Custom HTML block, a Squarespace Code block, a Wix Embed HTML element, or any page where you can add raw HTML."
+      }
+    }
+  ]
+}
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #1B4F72;
+    --primary-light: #2980B9;
+    --primary-dark: #0E2F44;
+    --accent: #D4A03C;
+    --accent-light: #F0D78C;
+    --bg: #FFFFFF;
+    --bg-subtle: #F7F9FC;
+    --text: #1A1A2E;
+    --text-secondary: #5A6178;
+    --text-light: #8B92A8;
+    --border: #E4E8F0;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+    --radius: 12px;
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --max-width: 1200px;
+    --content-width: 760px;
+    --success: #2E8B57;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body { font-family: var(--font-body); color: var(--text); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+  nav.scrolled { box-shadow: var(--shadow-sm); }
+  .nav-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-dark); }
+  .nav-links { display: flex; align-items: center; gap: 26px; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--text-secondary); font-size: 14.5px; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-cta { background: var(--primary); color: white !important; padding: 9px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+  .mobile-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; color: var(--text); }
+
+  /* HERO */
+  .hero { padding: 120px 24px 44px; background: linear-gradient(168deg, var(--bg) 0%, var(--bg-subtle) 100%); }
+  .hero-inner { max-width: var(--content-width); margin: 0 auto; }
+  .breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-light); margin-bottom: 22px; flex-wrap: wrap; }
+  .breadcrumb a { color: var(--primary-light); text-decoration: none; }
+  .eyebrow { display: inline-block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: var(--accent); margin-bottom: 14px; }
+  .hero h1 { font-family: var(--font-display); font-size: clamp(31px, 4.4vw, 43px); font-weight: 700; line-height: 1.15; color: var(--primary-dark); letter-spacing: -0.5px; margin-bottom: 18px; }
+  .hero-sub { font-size: 18px; line-height: 1.65; color: var(--text-secondary); }
+  .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .hero-badge { font-size: 12.5px; font-weight: 600; padding: 6px 13px; border-radius: 100px; background: rgba(46,139,87,0.08); color: var(--success); }
+
+  /* LAYOUT */
+  .wrap { max-width: var(--content-width); margin: 0 auto; padding: 44px 24px 96px; }
+  .wrap h2 { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--primary-dark); letter-spacing: -0.3px; margin: 56px 0 18px; scroll-margin-top: 90px; }
+  .wrap h2:first-child { margin-top: 0; }
+  .wrap h3 { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--text); margin: 34px 0 12px; }
+  .wrap p { font-size: 16.5px; line-height: 1.75; color: var(--text-secondary); margin-bottom: 18px; }
+  .wrap strong { color: var(--text); font-weight: 600; }
+  .wrap a { color: var(--primary-light); text-decoration: underline; text-decoration-color: rgba(41,128,185,0.3); text-underline-offset: 2px; }
+  .wrap ul { margin: 0 0 20px 22px; }
+  .wrap li { font-size: 16.5px; line-height: 1.7; color: var(--text-secondary); margin-bottom: 9px; }
+
+  /* WHO IT'S FOR */
+  .who-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 26px 0 30px; }
+  .who-card { border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; background: white; }
+  .who-card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
+  .who-chip { width: 34px; height: 34px; flex-shrink: 0; background: #F6F0E4; border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+  .who-chip img { width: 20px; height: 20px; display: block; }
+  .who-card h4 { font-size: 15.5px; font-weight: 600; color: var(--text); }
+  .who-card p { font-size: 14px; line-height: 1.6; margin: 0; color: var(--text-secondary); }
+
+  /* BUILDER */
+  .builder { border: 1px solid var(--border); border-radius: 16px; background: var(--bg-subtle); padding: 26px; margin: 28px 0 34px; }
+  .builder-row { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 22px; }
+  .builder-field { flex: 1 1 200px; min-width: 0; }
+  .builder-field label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); margin-bottom: 7px; }
+  .builder-field select, .builder-field input {
+    width: 100%; padding: 10px 12px; font-family: var(--font-body); font-size: 14.5px;
+    color: var(--text); background: white; border: 1px solid var(--border);
+    border-radius: 8px; -webkit-appearance: none; appearance: none;
+  }
+  .builder-field select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238B92A8' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; }
+  .builder-field select:focus, .builder-field input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(41,128,185,0.1); }
+  .builder-hint { font-size: 12.5px; color: var(--text-light); margin-top: 6px; line-height: 1.5; }
+
+  .snippet-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+  .snippet-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); }
+  .copy-btn {
+    display: inline-flex; align-items: center; gap: 7px; cursor: pointer;
+    background: var(--primary); color: white; border: 1px solid var(--primary);
+    padding: 9px 18px; border-radius: 8px; font-family: var(--font-body);
+    font-size: 14px; font-weight: 600; transition: all 0.15s;
+  }
+  .copy-btn:hover { background: var(--primary-dark); border-color: var(--primary-dark); }
+  .copy-btn.copied { background: var(--success); border-color: var(--success); }
+  .copy-btn svg { display: block; }
+  #snippet {
+    width: 100%; min-height: 168px; resize: vertical;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; line-height: 1.65; color: var(--text);
+    background: white; border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 15px; white-space: pre; overflow-wrap: normal; overflow-x: auto;
+  }
+  #snippet:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(41,128,185,0.1); }
+
+  /* PREVIEW */
+  .preview-frame-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: white; box-shadow: var(--shadow-sm); }
+  .preview-frame-wrap iframe { display: block; width: 100%; border: 0; }
+  .preview-attrib { font-size: 14px; color: var(--text-secondary); margin: 9px 0 0; }
+  .preview-attrib a { color: var(--primary-light); }
+
+  /* TIP / NOTE BOXES */
+  .tip-box { background: rgba(212,160,60,0.06); border: 1px solid rgba(212,160,60,0.15); border-left: 3px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; padding: 19px 23px; margin: 26px 0; }
+  .tip-box-header { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--accent); margin-bottom: 7px; display: flex; align-items: center; gap: 6px; }
+  .tip-box p { font-size: 15px; color: var(--text-secondary); margin: 0; line-height: 1.65; }
+  .tip-box p + p { margin-top: 10px; }
+
+  /* FAQ */
+  .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-item h3 { font-family: var(--font-body); font-size: 16.5px; font-weight: 600; color: var(--text); margin: 0 0 7px; }
+  .faq-item p { font-size: 15.5px; margin: 0; }
+
+  /* NEXT */
+  .next-articles { margin-top: 60px; padding-top: 44px; border-top: 1px solid var(--border); }
+  .next-articles h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--primary-dark); margin-bottom: 22px; }
+  .next-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .next-card { display: block; padding: 22px; border: 1px solid var(--border); border-radius: var(--radius); text-decoration: none; transition: all 0.2s; }
+  .next-card:hover { border-color: var(--primary-light); box-shadow: var(--shadow-sm); }
+  .next-card-cat { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--primary-light); margin-bottom: 7px; }
+  .next-card h4 { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .next-card p { font-size: 13.5px; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+
+  footer { padding: 40px 24px; background: var(--primary-dark); color: rgba(255,255,255,0.6); text-align: center; font-size: 14px; }
+  footer a { color: var(--accent); text-decoration: none; }
+
+  .nav-links.mobile-open { display: flex; flex-direction: column; position: absolute; top: 56px; left: 0; right: 0; background: white; padding: 16px 24px 24px; border-bottom: 1px solid var(--border); box-shadow: 0 8px 24px rgba(0,0,0,0.08); gap: 4px; z-index: 99; }
+  .nav-links.mobile-open li { width: 100%; }
+  .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
+  .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
+
+  @media (max-width: 720px) {
+    .who-grid { grid-template-columns: 1fr; }
+    .next-grid { grid-template-columns: 1fr; }
+    .hero { padding: 100px 16px 32px; }
+    .hero h1 { font-size: 28px; }
+    .hero-sub { font-size: 15.5px; }
+    .wrap { padding: 32px 16px 76px; }
+    .wrap h2 { font-size: 22px; margin: 40px 0 14px; }
+    .wrap p, .wrap li { font-size: 15.5px; }
+    .builder { padding: 18px; }
+    .builder-row { gap: 14px; }
+  }
+
+  @media (max-width:900px){.nav-links{display:none;}.mobile-menu-btn{display:block;}.nav-inner{height:56px;padding:0 16px;}.logo-lockup{width:min(72vw,300px)!important;height:auto!important;}}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><picture><source media="(max-width:900px)" srcset="images/bourbon-trail-planner-nav.svg?v=4"><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
+    <ul class="nav-links">
+      <li><a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a></li>
+      <li><a href="distilleries.html">Distilleries</a></li>
+      <li><a href="map.html">Map</a></li>
+      <li><a href="where-to-stay-bourbon-trail.html">Where to Stay</a></li>
+      <li><a href="eat-and-drink-bourbon-trail.html">Eat &amp; Drink</a></li>
+      <li><a href="trip-builder.html">Trip Builder</a></li>
+      <li><a href="guides.html">Guides</a></li>
+      <li><a href="bourbon-trail-booking-guide.html" class="nav-cta">Booking Guide</a></li>
+    </ul>
+    <button class="mobile-menu-btn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="breadcrumb">
+      <a href="index.html">Home</a><span>/</span>
+      <a href="map.html">Bourbon Trail Map</a><span>/</span>
+      <span>Embed the Map</span>
+    </div>
+    <span class="eyebrow">Free Widget for Hosts &amp; Venues</span>
+    <h1>Put the Kentucky Bourbon Trail Map on Your Own Website</h1>
+    <p class="hero-sub">Your guests are going to ask which distilleries are close, how far apart they are, and which ones need a reservation. This gives them an interactive map that answers all of it, right on your page. Copy one snippet and you're done.</p>
+    <div class="hero-badges">
+      <span class="hero-badge">Free forever</span>
+      <span class="hero-badge">No account or API key</span>
+      <span class="hero-badge">Updates itself</span>
+      <span class="hero-badge">Works on any site builder</span>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+
+  <h2 id="generator">Build Your Embed Snippet</h2>
+  <p>Pick your region and size, copy the snippet, and paste it wherever you can add HTML. The preview below is the real widget, not a screenshot, so what you see is what your visitors get.</p>
+
+  <div class="builder">
+    <div class="builder-row">
+      <div class="builder-field">
+        <label for="regionSel">Open the map on</label>
+        <select id="regionSel">
+          <option value="">All of Kentucky</option>
+          <option value="louisville">Louisville</option>
+          <option value="bardstown">Bardstown</option>
+          <option value="frankfort">Frankfort</option>
+          <option value="lexington">Lexington</option>
+          <option value="other">Northern &amp; Western Kentucky</option>
+        </select>
+        <p class="builder-hint">Starts zoomed to your area. Guests can still browse every region from inside the map.</p>
+      </div>
+      <div class="builder-field">
+        <label for="heightSel">Height</label>
+        <select id="heightSel">
+          <option value="620">620px, recommended</option>
+          <option value="520">520px, compact</option>
+          <option value="720">720px, tall</option>
+          <option value="820">820px, full page</option>
+        </select>
+        <p class="builder-hint">Width is always 100%, so it fits whatever column you drop it into.</p>
+      </div>
+    </div>
+
+    <div class="snippet-head">
+      <span class="snippet-label">Your snippet</span>
+      <button type="button" class="copy-btn" id="copyBtn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        <span id="copyBtnText">Copy snippet</span>
+      </button>
+    </div>
+    <textarea id="snippet" readonly spellcheck="false" aria-label="Embed code snippet"></textarea>
+  </div>
+
+  <h3>Live preview</h3>
+  <div class="preview-frame-wrap">
+    <iframe id="previewFrame" src="map.html?embed=1" height="620" loading="lazy" title="Kentucky Bourbon Trail Map preview"></iframe>
+  </div>
+  <p class="preview-attrib">Interactive map by <a href="map.html">Bourbon Trail Planner</a>, free to embed on your site.</p>
+
+  <div class="tip-box">
+    <div class="tip-box-header"><img src="images/icons/icon-lightbulb.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:5px">Keep the credit line</div>
+    <p>The snippet includes a short text credit with a link underneath the map. Please leave it in. It is the entire reason we can give this away, and it is deliberately small and plain so it reads as a source note rather than an ad. Everything else in the snippet is yours to restyle.</p>
+  </div>
+
+  <h2 id="who-its-for">Who This Is For</h2>
+  <p>We built this for the people who keep getting asked bourbon questions they didn't sign up to answer.</p>
+
+  <div class="who-grid">
+    <div class="who-card">
+      <div class="who-card-head">
+        <span class="who-chip"><img src="images/icons/icon-house.svg" alt="" width="20" height="20" loading="lazy"></span>
+        <h4>Short-term rental hosts</h4>
+      </div>
+      <p>Every guest wants a local guide page and almost nobody wants to build one. Drop this into your listing's guidebook page or your own site and the biggest question answers itself.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-card-head">
+        <span class="who-chip"><img src="images/icons/icon-hotel.svg" alt="" width="20" height="20" loading="lazy"></span>
+        <h4>B&amp;Bs, cabins, and small inns</h4>
+      </div>
+      <p>You compete with hotels that have concierge desks. A map on your "things to do" page does a version of that job without staffing it.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-card-head">
+        <span class="who-chip"><img src="images/icons/icon-city.svg" alt="" width="20" height="20" loading="lazy"></span>
+        <h4>Visitor bureaus and chambers</h4>
+      </div>
+      <p>Nelson, Washington, Woodford, Franklin, and Anderson county visitors are mostly here for bourbon. Set the widget to your region and it becomes a county-level distillery map.</p>
+    </div>
+    <div class="who-card">
+      <div class="who-card-head">
+        <span class="who-chip"><img src="images/icons/icon-park.svg" alt="" width="20" height="20" loading="lazy"></span>
+        <h4>Venues, golf courses, and event spaces</h4>
+      </div>
+      <p>Wedding parties and golf groups travel in for bourbon and build the rest of the weekend around it. Give them something to plan with while they're already on your site.</p>
+    </div>
+  </div>
+
+  <h2 id="whats-included">What Your Visitors Get</h2>
+  <p>The widget is the same map we run on our own site, with our navigation and sign-up prompts stripped out. Inside it, a visitor can:</p>
+  <ul>
+    <li><strong>See every distillery we cover</strong> as a pin colored by region, official Kentucky Bourbon Trail stops and craft producers alike.</li>
+    <li><strong>Filter by region</strong> to cut the map down to the cluster they're actually driving to.</li>
+    <li><strong>Search by name</strong> and fly straight to a distillery.</li>
+    <li><strong>Tap any pin</strong> for tour pricing, booking difficulty, and our rating.</li>
+    <li><strong>Open the full profile</strong> for a distillery, which opens in a new tab so they never lose your page.</li>
+  </ul>
+  <p>That last point matters more than it sounds. Every link inside the widget opens in a new tab on purpose. Nobody ends up accidentally browsing our site inside a small box on yours.</p>
+
+  <h2 id="how-to-install">How to Install It</h2>
+  <p>There is no plugin, no script tag, and nothing to configure. It is one block of plain HTML.</p>
+  <ul>
+    <li><strong>WordPress:</strong> add a Custom HTML block and paste it in. In the classic editor, switch to the Text tab first.</li>
+    <li><strong>Squarespace:</strong> add a Code block and paste it in. Leave the type set to HTML.</li>
+    <li><strong>Wix:</strong> Add &rsaquo; Embed Code &rsaquo; Embed HTML, then choose Code and paste.</li>
+    <li><strong>Airbnb or VRBO listings:</strong> those platforms do not allow custom HTML, so put the widget on your own site or guidebook page and link guests to it from your listing.</li>
+    <li><strong>Anything else:</strong> if the page accepts raw HTML, it works.</li>
+  </ul>
+
+  <div class="tip-box">
+    <div class="tip-box-header"><img src="images/icons/icon-lightbulb.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:5px">On page speed</div>
+    <p>Nobody should have to trade their Core Web Vitals for a map, so the snippet ships with <strong>loading="lazy"</strong> already on it. The widget does not load at all until a visitor scrolls near it, which means it costs a page that nobody scrolls exactly nothing.</p>
+    <p>Beyond that, map tiles load only for the patch of Kentucky actually on screen, and because the widget sits on a different domain, current browsers give it its own process so its JavaScript never blocks yours. If you'd rather it not load automatically at all, put it behind a "See the distillery map" link on a dedicated page.</p>
+  </div>
+
+  <h2 id="faq">Questions Hosts Actually Ask</h2>
+
+  <div class="faq-item">
+    <h3>Is it really free, and is there a catch?</h3>
+    <p>It's free, and the catch is the credit line. No cost, no account, no API key, no view limit, and no expiration. We ask that you keep the small attribution link that comes with the snippet, because that link is what makes giving this away worth doing for us.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Do I have to maintain it when distilleries change?</h3>
+    <p>No, and this is the main reason to use a widget instead of building your own list. It loads the live map from our site, so when a distillery opens, closes, changes its tour pricing, or gets its booking difficulty re-rated, your page is current without you doing anything. A hand-built list on your site is accurate the week you write it and quietly wrong a year later.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Can I show only the distilleries near me?</h3>
+    <p>Yes. Choose a region in the generator above and the widget opens already centered on that cluster. Guests can still switch regions or search the whole state, so a Bardstown host isn't hiding Louisville from anyone, just leading with what's close.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Can I change the size, border, or corners?</h3>
+    <p>Yes. The height and the inline styles in the snippet are ordinary HTML and CSS, so edit them freely. Width is set to 100% so it adapts to your layout. We'd just ask you not to shrink it below about 400px tall, where the map stops being usable on a phone.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Does it work on mobile?</h3>
+    <p>Yes. Below 800px the widget stacks the filter panel above the map instead of beside it, and the region legend collapses. Pinch-zoom and pin taps work the way people expect.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Do you track anything about my visitors?</h3>
+    <p>We log that the widget loaded and, when the browser tells us, which domain it loaded on, so we can see where it's being used. That's it. No cookies are set for your visitors by the widget, we don't build profiles, and we don't sell anything to anyone.</p>
+  </div>
+  <div class="faq-item">
+    <h3>Something looks broken. Who do I tell?</h3>
+    <p>Us, please. <a href="contact.html">Get in touch</a> and tell us what site it's on and what you're seeing. We'd rather hear it from you than find out when it's been broken for a month.</p>
+  </div>
+
+  <h2 id="beyond">If You Want to Go Further</h2>
+  <p>The map is the easiest thing to hand a guest, but it isn't the only one. Our <a href="trip-builder.html">trip builder</a> lets someone assemble a day-by-day route with drive times and then email or share it, which is the natural next click after they've found the distilleries near you. Our <a href="printable-bourbon-trail-map.html">printable PDF map</a> is the one guests actually want in the car, since cell service in Nelson and Marion counties is genuinely bad. And if you'd like to link somewhere more specific than the map, <a href="distilleries.html">the distillery directory</a> and every individual profile are linkable directly.</p>
+  <p>Feel free to link to any of it. No permission needed and no attribution required for plain links, that request only applies to the embedded widget.</p>
+
+  <div class="next-articles">
+    <h3>Keep Planning</h3>
+    <div class="next-grid">
+      <a href="map.html" class="next-card">
+        <div class="next-card-cat">Map</div>
+        <h4>The Full Interactive Bourbon Trail Map</h4>
+        <p>Every distillery by region, with tour pricing and booking difficulty.</p>
+      </a>
+      <a href="trip-builder.html" class="next-card">
+        <div class="next-card-cat">Tool</div>
+        <h4>Bourbon Trail Trip Builder</h4>
+        <p>Build a route, see drive times, then save, share, or email it.</p>
+      </a>
+      <a href="printable-bourbon-trail-map.html" class="next-card">
+        <div class="next-card-cat">Printable</div>
+        <h4>Free Printable PDF Map</h4>
+        <p>Two pages built for the glovebox, where cell service quits.</p>
+      </a>
+      <a href="where-to-stay-bourbon-trail.html" class="next-card">
+        <div class="next-card-cat">Lodging</div>
+        <h4>Where to Stay on the Bourbon Trail</h4>
+        <p>Every property with walk or drive times to its nearest distillery.</p>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin-bottom:16px;font-size:13px;">
+    <a href="index.html">Home</a>
+    <a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a>
+    <a href="distilleries.html">Distilleries</a>
+    <a href="map.html">Map</a>
+    <a href="trip-builder.html">Trip Builder</a>
+    <a href="guides.html">Guides</a>
+    <a href="where-to-stay-bourbon-trail.html">Where to Stay</a>
+    <a href="bourbon-trail-booking-guide.html">Booking Guide</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+  <div style="margin-bottom:12px;font-size:13px;"><a href="https://www.instagram.com/mybourbontrailplan" target="_blank" rel="noopener">@mybourbontrailplan on Instagram</a></div>
+  <p>&copy; 2026 <a href="index.html">Bourbon Trail Planner</a>. Not affiliated with the Kentucky Distillers' Association.</p>
+</footer>
+
+<script>
+  window.addEventListener('scroll', function () {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+  });
+  document.querySelector('.mobile-menu-btn').addEventListener('click', function () {
+    document.querySelector('.nav-links').classList.toggle('mobile-open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      document.querySelector('.nav-links').classList.remove('mobile-open');
+    });
+  });
+</script>
+
+<script>
+/* ============================================
+   Embed snippet generator
+   Builds the snippet in JS rather than in the
+   HTML so we never have to think about double
+   entity escaping inside the textarea.
+   ============================================ */
+(function () {
+  const SITE = 'https://mybourbontrailplan.com';
+  const regionSel = document.getElementById('regionSel');
+  const heightSel = document.getElementById('heightSel');
+  const snippet   = document.getElementById('snippet');
+  const preview   = document.getElementById('previewFrame');
+  const copyBtn   = document.getElementById('copyBtn');
+  const copyText  = document.getElementById('copyBtnText');
+
+  function embedURL(region, escaped) {
+    let u = SITE + '/map.html?embed=1';
+    if (region) u += (escaped ? '&amp;' : '&') + 'region=' + region;
+    return u;
+  }
+
+  function build() {
+    const region = regionSel.value;
+    const h = heightSel.value;
+    /* The <a> lives in the parent page, outside the iframe, on purpose:
+       a link inside an iframe passes no equity to us, so an in-frame
+       credit would be decoration rather than the actual trade. */
+    return '<!-- Kentucky Bourbon Trail map, free widget from mybourbontrailplan.com -->\n'
+      + '<div style="max-width:100%;margin:0 auto">\n'
+      + '  <iframe\n'
+      + '    src="' + embedURL(region, true) + '"\n'
+      + '    title="Kentucky Bourbon Trail Distillery Map"\n'
+      + '    width="100%" height="' + h + '" loading="lazy"\n'
+      + '    style="display:block;width:100%;border:1px solid #e4e8f0;border-radius:12px">\n'
+      + '  </iframe>\n'
+      + '  <p style="margin:8px 0 0;font:14px/1.5 -apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif;color:#5a6178">\n'
+      + '    Interactive map by <a href="' + SITE + '/map.html" target="_blank" rel="noopener">Bourbon Trail Planner</a>,\n'
+      + '    free to embed on your site.\n'
+      + '  </p>\n'
+      + '</div>';
+  }
+
+  function refresh() {
+    snippet.value = build();
+    preview.height = heightSel.value;
+    /* Relative src so the preview works on any host, including local files. */
+    const rel = 'map.html?embed=1' + (regionSel.value ? '&region=' + regionSel.value : '');
+    if (preview.getAttribute('src') !== rel) preview.setAttribute('src', rel);
+  }
+
+  regionSel.addEventListener('change', refresh);
+  heightSel.addEventListener('change', refresh);
+  refresh();
+
+  function flash(msg, ok) {
+    copyText.textContent = msg;
+    copyBtn.classList.toggle('copied', !!ok);
+    setTimeout(function () {
+      copyText.textContent = 'Copy snippet';
+      copyBtn.classList.remove('copied');
+    }, 2400);
+  }
+
+  function fallbackCopy() {
+    snippet.removeAttribute('readonly');
+    snippet.select();
+    snippet.setSelectionRange(0, snippet.value.length);
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    snippet.setAttribute('readonly', 'readonly');
+    return ok;
+  }
+
+  function tracked() {
+    if (typeof gtag === 'function') {
+      gtag('event', 'embed_snippet_copied', {
+        embed_region: regionSel.value || 'all',
+        embed_height: heightSel.value
+      });
+    }
+  }
+
+  copyBtn.addEventListener('click', function () {
+    const text = snippet.value;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        tracked(); flash('Copied', true);
+      }).catch(function () {
+        if (fallbackCopy()) { tracked(); flash('Copied', true); }
+        else { flash('Press Ctrl+C to copy', false); }
+      });
+    } else if (fallbackCopy()) {
+      tracked(); flash('Copied', true);
+    } else {
+      flash('Press Ctrl+C to copy', false);
+    }
+  });
+})();
+</script>
+</body>
+</html>
