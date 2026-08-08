@@ -9,6 +9,17 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
+  /* In embed mode the page runs inside a partner's site, so it must not drop
+     cookies on their guests, which is what the embed page promises hosts.
+     Consent Mode with analytics_storage denied is the reliable way to get
+     cookieless GA4: events still send, nothing is written to storage.
+     (client_storage:'none' was tried first and GA recreated _ga_* anyway.)
+     Cost: embed views get no persistent client id, so they count as a new user
+     each time. We only need load counts and the host domain, so that is fine.
+     Must run before config. The normal map page is unaffected. */
+  if (window.BTP_EMBED) {
+    gtag('consent', 'default', { analytics_storage: 'denied' });
+  }
   gtag('js', new Date());
   gtag('config', 'G-DVK4D6KJJP');
   (function(){var f={};function s(id){if(f[id])return;f[id]=1;if(typeof gtag==='function'){gtag('event','email_signup',{'method':id==='CliYpr'?'pdf_map':'checklist'});}}function watch(){new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='attributes'&&m.attributeName==='style'){var el=m.target;if(el.className&&el.className.indexOf('ml-form-successBody')>=0&&el.style.display!=='none'){var c=el.closest('[data-form]');if(c)s(c.getAttribute('data-form'));}}});}).observe(document.body,{subtree:true,attributes:true,attributeFilter:['style']});}if(document.body){watch();}else{document.addEventListener('DOMContentLoaded',watch);}})();

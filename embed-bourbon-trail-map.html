@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Bourbon Trail Map Widget: Embed It on Your Site (2026)</title>
-<meta name="description" content="Free embeddable Kentucky Bourbon Trail map for lodging, B&amp;B, and visitor bureau sites. Copy one snippet, no account or API key, and it stays current on its own.">
+<meta name="description" content="Free Kentucky Bourbon Trail map for hosts: embed it on your site, or get a link and printable QR code for your guest binder. No website or account needed.">
 <meta name="keywords" content="bourbon trail map widget, embed bourbon trail map, kentucky bourbon trail map embed, free distillery map widget, airbnb guest guide map">
 <link rel="canonical" href="https://mybourbontrailplan.com/embed-bourbon-trail-map.html">
 <link rel="icon" type="image/svg+xml" href="/images/bourbon-trail-planner-icon.svg?v=4">
@@ -22,7 +22,7 @@
 
 <!-- Open Graph -->
 <meta property="og:title" content="Free Bourbon Trail Map Widget: Embed It on Your Site (2026)">
-<meta property="og:description" content="Give your guests an interactive Kentucky distillery map. One copy-paste snippet, free, no account needed, and it updates itself as distilleries change.">
+<meta property="og:description" content="Give your guests an interactive Kentucky distillery map. Embed it, or print a QR code for the welcome binder. Free, no account, and it updates itself.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mybourbontrailplan.com/embed-bourbon-trail-map.html">
 
@@ -87,6 +87,14 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Yes. It is plain HTML with no scripts to install. Paste it into a WordPress Custom HTML block, a Squarespace Code block, a Wix Embed HTML element, or any page where you can add raw HTML."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use the bourbon trail map without a website?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Choose the Link and QR code format and you get a link that opens the map zoomed to your area, plus a printable QR code card for a welcome binder, cabinet door, or fridge, and a ready-written message for an Airbnb check-in or house manual. No website or account is needed."
       }
     }
   ]
@@ -196,6 +204,73 @@
   }
   #snippet:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(41,128,185,0.1); }
 
+  /* FORMAT SWITCH */
+  .fmt-switch { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .fmt-opt { flex: 1 1 190px; min-width: 0; }
+  .fmt-opt input { position: absolute; opacity: 0; pointer-events: none; }
+  .fmt-opt span {
+    display: block; cursor: pointer; padding: 12px 14px;
+    background: white; border: 1px solid var(--border); border-radius: 10px;
+    font-size: 14px; font-weight: 600; color: var(--text-secondary);
+    transition: all 0.15s; line-height: 1.35;
+  }
+  .fmt-opt span small { display: block; font-weight: 400; font-size: 12.5px; color: var(--text-light); margin-top: 3px; }
+  .fmt-opt span:hover { border-color: var(--primary-light); }
+  .fmt-opt input:checked + span {
+    border-color: var(--primary); background: rgba(27,79,114,0.05);
+    color: var(--primary-dark); box-shadow: 0 0 0 1px var(--primary);
+  }
+  .fmt-opt input:focus-visible + span { outline: 2px solid var(--primary-light); outline-offset: 2px; }
+  .fmt-panel[hidden] { display: none; }
+
+  /* QR OUTPUT */
+  .qr-layout { display: flex; flex-wrap: wrap; gap: 22px; align-items: flex-start; }
+  .qr-figure { flex: 0 0 auto; text-align: center; }
+  .qr-figure canvas {
+    display: block; width: 190px; height: 190px;
+    background: #fff; border: 1px solid var(--border); border-radius: 10px; padding: 6px;
+  }
+  .qr-dl { display: flex; gap: 8px; margin-top: 10px; justify-content: center; flex-wrap: wrap; }
+  .btn-sm {
+    display: inline-flex; align-items: center; gap: 6px; cursor: pointer;
+    background: white; color: var(--primary); border: 1px solid var(--border);
+    padding: 7px 13px; border-radius: 8px; font-family: var(--font-body);
+    font-size: 13px; font-weight: 600; text-decoration: none; transition: all 0.15s;
+  }
+  .btn-sm:hover { border-color: var(--primary-light); background: var(--bg-subtle); }
+  .qr-fields { flex: 1 1 280px; min-width: 0; }
+  .out-row { margin-bottom: 16px; }
+  .out-row:last-child { margin-bottom: 0; }
+  .out-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+  .out-label span { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-light); }
+  .out-field {
+    width: 100%; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px; line-height: 1.6; color: var(--text);
+    background: white; border: 1px solid var(--border); border-radius: 9px;
+    padding: 11px 12px; resize: vertical;
+  }
+  .out-field:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 3px rgba(41,128,185,0.1); }
+  textarea.out-field { white-space: pre-wrap; }
+  .qr-note { font-size: 12.5px; color: var(--text-light); margin: 10px 0 0; line-height: 1.55; }
+
+  /* PLATFORM LIST */
+  .plat { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 12px; background: white; }
+  .plat h4 { font-size: 15.5px; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+  .plat p { font-size: 14px; line-height: 1.6; margin: 0; color: var(--text-secondary); }
+  .plat-tag { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; padding: 2px 8px; border-radius: 100px; background: rgba(27,79,114,0.07); color: var(--primary); margin-left: 7px; vertical-align: 2px; }
+
+  /* PRINT PLACARD (on-screen preview; print rules at the end of this sheet) */
+  .placard {
+    border: 1px dashed var(--border); border-radius: var(--radius);
+    padding: 26px 22px; margin-top: 20px; text-align: center; background: white;
+  }
+  .placard-logo { height: 30px; width: auto; display: block; margin: 0 auto 14px; }
+  .placard h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--primary-dark); margin: 0 0 4px; }
+  .placard-prop { font-size: 14.5px; color: var(--text-secondary); margin: 0 0 14px; }
+  .placard-qr { display: block; margin: 0 auto; width: 200px; height: 200px; }
+  .placard-url { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 10.5px; color: var(--text-light); word-break: break-all; margin: 12px auto 0; max-width: 340px; line-height: 1.5; }
+  .placard-credit { font-size: 11.5px; color: var(--text-light); margin: 9px 0 0; }
+
   /* PREVIEW */
   .preview-frame-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: white; box-shadow: var(--shadow-sm); }
   .preview-frame-wrap iframe { display: block; width: 100%; border: 0; }
@@ -246,6 +321,51 @@
   }
 
   @media (max-width:900px){.nav-links{display:none;}.mobile-menu-btn{display:block;}.nav-inner{height:56px;padding:0 16px;}.logo-lockup{width:min(72vw,300px)!important;height:auto!important;}}
+
+  /* ============================================
+     PRINT: everything collapses to one half-letter
+     placard card. A host prints this and tapes it
+     inside a cabinet door, so nothing else on the
+     page may appear.
+     ============================================ */
+  @media print {
+    /* Scoped to body.fmt-qr, which the generator sets only while the Link and
+       QR format is selected. Without that scope, a host hitting Ctrl+P while
+       looking at the embed snippet would get a near-blank page.
+
+       Hide everything, then re-show only the placard and its ancestor chain
+       (body > .wrap > .builder > #panelQR > .placard). Blanket-hiding by element
+       type instead would also catch .placard's own h3 and p. */
+    body.fmt-qr * { display: none !important; }
+    body.fmt-qr { background: #fff !important; }
+    body.fmt-qr > .wrap,
+    body.fmt-qr .wrap > .builder,
+    body.fmt-qr .builder > #panelQR { display: block !important; }
+    body.fmt-qr .wrap { padding: 0 !important; max-width: none !important; }
+    body.fmt-qr .builder { padding: 0 !important; margin: 0 !important; border: none !important; background: #fff !important; }
+
+    body.fmt-qr .placard { display: block !important; }
+    body.fmt-qr .placard-logo, body.fmt-qr .placard h3, body.fmt-qr .placard-prop,
+    body.fmt-qr .placard-qr, body.fmt-qr .placard-url,
+    body.fmt-qr .placard-credit { display: block !important; }
+    body.fmt-qr .placard-prop[hidden] { display: none !important; }
+
+    .placard {
+      border: none !important; margin: 0 !important;
+      padding: 0.45in 0.4in !important;
+      width: 8.5in; height: 5.5in;              /* half letter */
+      box-sizing: border-box;
+      page-break-after: avoid; page-break-inside: avoid;
+    }
+    .placard-logo { height: 0.42in !important; margin-bottom: 0.22in !important; }
+    .placard h3 { font-size: 30pt !important; margin-bottom: 0.05in !important; }
+    .placard-prop { font-size: 13pt !important; margin-bottom: 0.18in !important; }
+    /* 2in minimum so it scans from across a room */
+    .placard-qr { width: 2.35in !important; height: 2.35in !important; }
+    .placard-url { font-size: 8.5pt !important; max-width: 5in !important; margin-top: 0.16in !important; }
+    .placard-credit { font-size: 8.5pt !important; margin-top: 0.1in !important; }
+    @page { margin: 0.35in; }
+  }
 </style>
 </head>
 <body>
@@ -276,22 +396,38 @@
     </div>
     <span class="eyebrow">Free Widget for Hosts &amp; Venues</span>
     <h1>Put the Kentucky Bourbon Trail Map on Your Own Website</h1>
-    <p class="hero-sub">Your guests are going to ask which distilleries are close, how far apart they are, and which ones need a reservation. This gives them an interactive map that answers all of it, right on your page. Copy one snippet and you're done.</p>
+    <p class="hero-sub">Your guests are going to ask which distilleries are close, how far apart they are, and which ones need a reservation. This gives them an interactive map that answers all of it. Copy one snippet onto your site, or, if you don't have a site, <a href="#no-website" style="color:var(--primary-light)">print a QR code for the welcome binder</a> instead.</p>
     <div class="hero-badges">
       <span class="hero-badge">Free forever</span>
       <span class="hero-badge">No account or API key</span>
       <span class="hero-badge">Updates itself</span>
       <span class="hero-badge">Works on any site builder</span>
+      <span class="hero-badge">Works without a website</span>
     </div>
   </div>
 </section>
 
 <div class="wrap">
 
-  <h2 id="generator">Build Your Embed Snippet</h2>
-  <p>Pick your region and size, copy the snippet, and paste it wherever you can add HTML. The preview below is the real widget, not a screenshot, so what you see is what your visitors get.</p>
+  <h2 id="generator">Build Your Map</h2>
+  <p>Pick how you want to use it. If you have a website, take the embed snippet. If you don't, take the link and the printable QR code, which needs no website at all. The preview below is the real widget, not a screenshot, so what you see is what your guests get.</p>
 
   <div class="builder">
+    <div class="fmt-switch" role="radiogroup" aria-label="Choose an output format">
+      <label class="fmt-opt">
+        <input type="radio" name="fmt" value="embed" checked>
+        <span>Embed on a website<small>Copy-paste HTML</small></span>
+      </label>
+      <label class="fmt-opt">
+        <input type="radio" name="fmt" value="qr">
+        <span>Link and QR code<small>No website needed</small></span>
+      </label>
+      <label class="fmt-opt">
+        <input type="radio" name="fmt" value="guidebook">
+        <span>Guidebook platforms<small>Hostfully, Touch Stay, Hospitable</small></span>
+      </label>
+    </div>
+
     <div class="builder-row">
       <div class="builder-field">
         <label for="regionSel">Open the map on</label>
@@ -305,7 +441,7 @@
         </select>
         <p class="builder-hint">Starts zoomed to your area. Guests can still browse every region from inside the map.</p>
       </div>
-      <div class="builder-field">
+      <div class="builder-field" id="heightField">
         <label for="heightSel">Height</label>
         <select id="heightSel">
           <option value="620">620px, recommended</option>
@@ -315,16 +451,95 @@
         </select>
         <p class="builder-hint">Width is always 100%, so it fits whatever column you drop it into.</p>
       </div>
+      <div class="builder-field" id="propField" hidden>
+        <label for="propName">Property name <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></label>
+        <input type="text" id="propName" maxlength="40" autocomplete="off" spellcheck="false" placeholder="Willow Creek Farmhouse">
+        <p class="builder-hint">Printed on the card, and tags the link so you can tell your traffic apart from other hosts'. Max 40 characters.</p>
+      </div>
     </div>
 
-    <div class="snippet-head">
-      <span class="snippet-label">Your snippet</span>
-      <button type="button" class="copy-btn" id="copyBtn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-        <span id="copyBtnText">Copy snippet</span>
-      </button>
+    <!-- FORMAT A: embed snippet -->
+    <div class="fmt-panel" id="panelEmbed">
+      <div class="snippet-head">
+        <span class="snippet-label">Your snippet</span>
+        <button type="button" class="copy-btn" id="copyBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span id="copyBtnText">Copy snippet</span>
+        </button>
+      </div>
+      <textarea id="snippet" readonly spellcheck="false" aria-label="Embed code snippet"></textarea>
     </div>
-    <textarea id="snippet" readonly spellcheck="false" aria-label="Embed code snippet"></textarea>
+
+    <!-- FORMAT B: link, QR code, guest message, printable placard -->
+    <div class="fmt-panel" id="panelQR" hidden>
+      <div class="qr-layout">
+        <div class="qr-figure">
+          <canvas id="qrCanvas" width="1024" height="1024" aria-label="QR code for your map link"></canvas>
+          <div class="qr-dl">
+            <a class="btn-sm" id="qrPng" download="bourbon-trail-map-qr.png" href="#">Download PNG</a>
+            <a class="btn-sm" id="qrSvg" download="bourbon-trail-map-qr.svg" href="#">Download SVG</a>
+          </div>
+        </div>
+        <div class="qr-fields">
+          <div class="out-row">
+            <div class="out-label">
+              <span>Your link</span>
+              <button type="button" class="btn-sm" data-copy="qrUrl">Copy link</button>
+            </div>
+            <input type="text" class="out-field" id="qrUrl" readonly spellcheck="false">
+          </div>
+          <div class="out-row">
+            <div class="out-label">
+              <span>Message for guests</span>
+              <button type="button" class="btn-sm" data-copy="guestMsg">Copy message</button>
+            </div>
+            <textarea class="out-field" id="guestMsg" rows="5" readonly spellcheck="false"></textarea>
+            <p class="qr-note">Paste this into an Airbnb check-in message or your house manual. It uses a separate tag from the QR code, so we can tell you which one guests actually use.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="print-btn-row" style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <button type="button" class="copy-btn" id="printBtn">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+          Print this card
+        </button>
+        <span class="qr-note" style="margin:0">Prints as a single half-page card. Nothing else on this page prints.</span>
+      </div>
+
+      <div class="placard" id="placard">
+        <img class="placard-logo" src="images/bourbon-trail-planner-nav.svg?v=4" alt="Bourbon Trail Planner">
+        <h3>Distilleries Near You</h3>
+        <p class="placard-prop" id="placardProp" hidden></p>
+        <canvas class="placard-qr" id="placardQr" width="1024" height="1024" aria-label="QR code"></canvas>
+        <p class="placard-url" id="placardUrl"></p>
+        <p class="placard-credit">Interactive map by Bourbon Trail Planner, free to embed on your site.</p>
+      </div>
+    </div>
+
+    <!-- FORMAT C: guidebook platforms -->
+    <div class="fmt-panel" id="panelGuide" hidden>
+      <div class="out-row">
+        <div class="out-label">
+          <span>Link to paste into your guidebook</span>
+          <button type="button" class="btn-sm" data-copy="guideUrl">Copy link</button>
+        </div>
+        <input type="text" class="out-field" id="guideUrl" readonly spellcheck="false">
+      </div>
+      <div class="plat">
+        <h4>Hostfully <span class="plat-tag">Link card</span></h4>
+        <p>Add a house manual card and point it at the link above. Hostfully's guidebook cards are built for external links and PDFs, so a link card is the documented path rather than pasted HTML.</p>
+      </div>
+      <div class="plat">
+        <h4>Touch Stay <span class="plat-tag">Link card</span></h4>
+        <p>Drop the link into a topic. Touch Stay's Custom Elements are a curated list of named integrations rather than an open HTML field, so use the link instead of trying to embed the widget.</p>
+      </div>
+      <div class="plat">
+        <h4>Hospitable <span class="plat-tag">Link card</span></h4>
+        <p>Put the link in a guidebook section, or in a scheduled message alongside the guidebook shortcode. Hospitable shares guidebooks as links, so a link is the right shape here.</p>
+      </div>
+      <p class="qr-note">If your platform does give you a raw HTML field, switch to the embed format above and use that snippet instead. It works anywhere HTML is accepted.</p>
+    </div>
   </div>
 
   <h3>Live preview</h3>
@@ -347,14 +562,14 @@
         <span class="who-chip"><img src="images/icons/icon-house.svg" alt="" width="20" height="20" loading="lazy"></span>
         <h4>Short-term rental hosts</h4>
       </div>
-      <p>Every guest wants a local guide page and almost nobody wants to build one. Drop this into your listing's guidebook page or your own site and the biggest question answers itself.</p>
+      <p>Every guest asks which distilleries are close, and almost nobody wants to build a page to answer it. <strong>You don't need a website.</strong> Embed it if you have one, or use the <a href="#no-website">link and printable QR code</a> in your welcome binder, check-in message, or Airbnb guidebook.</p>
     </div>
     <div class="who-card">
       <div class="who-card-head">
         <span class="who-chip"><img src="images/icons/icon-hotel.svg" alt="" width="20" height="20" loading="lazy"></span>
         <h4>B&amp;Bs, cabins, and small inns</h4>
       </div>
-      <p>You compete with hotels that have concierge desks. A map on your "things to do" page does a version of that job without staffing it.</p>
+      <p>You compete with hotels that have concierge desks. A map on your "things to do" page, or a QR card at the breakfast table, does a version of that job without staffing it.</p>
     </div>
     <div class="who-card">
       <div class="who-card-head">
@@ -389,14 +604,36 @@
     <li><strong>WordPress:</strong> add a Custom HTML block and paste it in. In the classic editor, switch to the Text tab first.</li>
     <li><strong>Squarespace:</strong> add a Code block and paste it in. Leave the type set to HTML.</li>
     <li><strong>Wix:</strong> Add &rsaquo; Embed Code &rsaquo; Embed HTML, then choose Code and paste.</li>
-    <li><strong>Airbnb or VRBO listings:</strong> those platforms do not allow custom HTML, so put the widget on your own site or guidebook page and link guests to it from your listing.</li>
-    <li><strong>Anything else:</strong> if the page accepts raw HTML, it works.</li>
+    <li><strong>Airbnb or VRBO listings:</strong> those platforms accept neither custom HTML nor QR images, so the link is your way in. Put it in your guidebook or your check-in message. The <a href="#no-website">link and QR section</a> below writes both for you.</li>
+    <li><strong>Guidebook platforms</strong> (Hostfully, Touch Stay, Hospitable): use the link rather than the embed. Switch the generator to Guidebook platforms for the per-platform notes.</li>
+    <li><strong>No website at all:</strong> you still have a path. Skip to <a href="#no-website">the link and QR code</a>.</li>
+    <li><strong>Anything else:</strong> if the page accepts raw HTML, the embed works.</li>
   </ul>
 
   <div class="tip-box">
     <div class="tip-box-header"><img src="images/icons/icon-lightbulb.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:5px">On page speed</div>
     <p>Nobody should have to trade their Core Web Vitals for a map, so the snippet ships with <strong>loading="lazy"</strong> already on it. The widget does not load at all until a visitor scrolls near it, which means it costs a page that nobody scrolls exactly nothing.</p>
     <p>Beyond that, map tiles load only for the patch of Kentucky actually on screen, and because the widget sits on a different domain, current browsers give it its own process so its JavaScript never blocks yours. If you'd rather it not load automatically at all, put it behind a "See the distillery map" link on a dedicated page.</p>
+  </div>
+
+  <h2 id="no-website">No Website? Use the Link and QR Code Instead</h2>
+  <p>Most hosts do not have a website and do not want one. The map still works for you. Pick your area in the <a href="#generator">generator above</a> and switch the format to <strong>Link and QR code</strong>: you get a link that opens the map already zoomed to your distilleries, plus a QR code you can print.</p>
+  <p>Put it in the welcome binder. Tape it inside a cabinet door. Drop it in your check-in message, or add it to your Airbnb guidebook. Guests scan it with the camera app already on their phone and the map opens. Nothing to install, on your end or theirs.</p>
+
+  <p><a href="#generator" class="btn-sm" id="jumpToQr" style="padding:11px 18px;font-size:14.5px;background:var(--primary);color:#fff;border-color:var(--primary)">Get my link and QR code &rarr;</a></p>
+
+  <h3>Where hosts actually put it</h3>
+  <ul>
+    <li><strong>The welcome binder or house manual.</strong> Print the card, slide it in a sleeve, done. This is the one that gets used most, because guests are already flipping through it looking for the wifi password.</li>
+    <li><strong>Inside a cabinet door or on the fridge.</strong> Somewhere they will be standing anyway, coffee in hand, deciding what to do with the day.</li>
+    <li><strong>Your check-in message.</strong> Use the guest message the generator writes for you. It reads like a host talking, not a marketing blast.</li>
+    <li><strong>Your Airbnb or VRBO guidebook.</strong> Those platforms do not accept HTML or QR images, so the link is the way in. See the <a href="#how-to-install">install notes above</a> for the detail on that.</li>
+  </ul>
+
+  <div class="tip-box">
+    <div class="tip-box-header"><img src="images/icons/icon-lightbulb.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:5px">Printing a QR code that actually scans</div>
+    <p>Two things matter and both are handled for you. The code is generated at a high enough resolution that it stays crisp at print size, and it keeps its quiet zone, the plain white border around the outside. If you crop that border off to make the card tidier, the code stops scanning. Print it at <strong>two inches square or larger</strong> and leave the white margin alone.</p>
+    <p>Grayscale is fine. So is a cheap inkjet. What kills a QR code is a laminate with heavy glare, so if you laminate the card, use matte.</p>
   </div>
 
   <h2 id="faq">Questions Hosts Actually Ask</h2>
@@ -408,6 +645,10 @@
   <div class="faq-item">
     <h3>Do I have to maintain it when distilleries change?</h3>
     <p>No, and this is the main reason to use a widget instead of building your own list. It loads the live map from our site, so when a distillery opens, closes, changes its tour pricing, or gets its booking difficulty re-rated, your page is current without you doing anything. A hand-built list on your site is accurate the week you write it and quietly wrong a year later.</p>
+  </div>
+  <div class="faq-item">
+    <h3>I don't have a website. Can I still use this?</h3>
+    <p>Yes, and this is the most common situation we hear about. Switch the generator to <strong>Link and QR code</strong> and you get a link plus a printable QR card, no website involved. <a href="#no-website">Full details here.</a> Guests scan it with the camera app already on their phone.</p>
   </div>
   <div class="faq-item">
     <h3>Can I show only the distilleries near me?</h3>
@@ -423,7 +664,7 @@
   </div>
   <div class="faq-item">
     <h3>Do you track anything about my visitors?</h3>
-    <p>We log that the widget loaded and, when the browser tells us, which domain it loaded on, so we can see where it's being used. That's it. No cookies are set for your visitors by the widget, we don't build profiles, and we don't sell anything to anyone.</p>
+    <p>We log that the widget loaded and, when the browser tells us, which domain it loaded on, so we can see where it's being used. That's it. <strong>The widget sets no cookies and writes nothing to storage on your visitors' devices</strong>, because our analytics runs in cookieless mode inside the embed specifically so you don't inherit a cookie disclosure you didn't ask for. We don't build profiles and we don't sell anything to anyone. The QR code and link carry a plain tag identifying the map as yours; there is no tracker in them.</p>
   </div>
   <div class="faq-item">
     <h3>Something looks broken. Who do I tell?</h3>
@@ -493,6 +734,7 @@
   });
 </script>
 
+<script src="js/qr.js?v=1"></script>
 <script>
 /* ============================================
    Embed snippet generator
@@ -504,15 +746,41 @@
   const SITE = 'https://mybourbontrailplan.com';
   const regionSel = document.getElementById('regionSel');
   const heightSel = document.getElementById('heightSel');
+  const propName  = document.getElementById('propName');
   const snippet   = document.getElementById('snippet');
   const preview   = document.getElementById('previewFrame');
   const copyBtn   = document.getElementById('copyBtn');
   const copyText  = document.getElementById('copyBtnText');
 
+  /* ------------------------------------------------
+     One URL builder, three consumers.
+
+     embed:true adds ?embed=1, which strips our nav and
+     footer for iframe use. The QR and guidebook links
+     deliberately omit it: those open full screen on a
+     phone, where the full page is what you want.
+     ------------------------------------------------ */
+  function mapURL(opts) {
+    opts = opts || {};
+    const amp = opts.escaped ? '&amp;' : '&';
+    const parts = [];
+    if (opts.embed) parts.push('embed=1');
+    if (opts.region) parts.push('region=' + opts.region);
+    if (opts.medium) {
+      parts.push('utm_source=host', 'utm_medium=' + opts.medium, 'utm_campaign=guest-map');
+      const slug = slugify(opts.property || '');
+      if (slug) parts.push('utm_content=' + slug);
+    }
+    return SITE + '/map.html' + (parts.length ? '?' + parts.join(amp) : '');
+  }
+
+  /* Lowercase, non-alphanumerics collapsed to single hyphens, trimmed. */
+  function slugify(s) {
+    return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
   function embedURL(region, escaped) {
-    let u = SITE + '/map.html?embed=1';
-    if (region) u += (escaped ? '&amp;' : '&') + 'region=' + region;
-    return u;
+    return mapURL({ embed: true, region: region, escaped: escaped });
   }
 
   function build() {
@@ -536,17 +804,172 @@
       + '</div>';
   }
 
+  /* ------------------------------------------------
+     Format switching and the no-website outputs
+     ------------------------------------------------ */
+  const panels = {
+    embed: document.getElementById('panelEmbed'),
+    qr: document.getElementById('panelQR'),
+    guidebook: document.getElementById('panelGuide')
+  };
+  const heightField = document.getElementById('heightField');
+  const propField   = document.getElementById('propField');
+  const qrCanvas    = document.getElementById('qrCanvas');
+  const placardQr   = document.getElementById('placardQr');
+  const qrUrl       = document.getElementById('qrUrl');
+  const guideUrl    = document.getElementById('guideUrl');
+  const guestMsg    = document.getElementById('guestMsg');
+  const qrPng       = document.getElementById('qrPng');
+  const qrSvg       = document.getElementById('qrSvg');
+  const placardProp = document.getElementById('placardProp');
+  const placardUrl  = document.getElementById('placardUrl');
+
+  function currentFormat() {
+    const el = document.querySelector('input[name="fmt"]:checked');
+    return el ? el.value : 'embed';
+  }
+
+  const REGION_LABEL = {
+    '': 'Kentucky', louisville: 'Louisville', bardstown: 'Bardstown',
+    frankfort: 'Frankfort', lexington: 'Lexington', other: 'Kentucky'
+  };
+
+  function guestMessageFor(url, region) {
+    const where = REGION_LABEL[region] || 'Kentucky';
+    return 'Heading out to the distilleries? Here is an interactive map of the '
+      + where + ' bourbon trail, with tour prices and how far ahead each one needs '
+      + 'to be booked:\n\n' + url + '\n\n'
+      + 'Tap any pin for details. Book anything you really want well before you arrive, '
+      + 'the popular tours fill up.';
+  }
+
+  let svgBlobUrl = null;
+
+  function renderQR() {
+    const region = regionSel.value;
+    const prop = propName.value.trim();
+
+    const linkQr  = mapURL({ region: region, medium: 'qr', property: prop });
+    const linkMsg = mapURL({ region: region, medium: 'message', property: prop });
+    const linkGb  = mapURL({ region: region, medium: 'guidebook', property: prop });
+
+    qrUrl.value = linkQr;
+    guideUrl.value = linkGb;
+    guestMsg.value = guestMessageFor(linkMsg, region);
+
+    if (typeof QR === 'undefined') return;   /* qr.js failed to load; fields still work */
+
+    /* Level Q rather than the M minimum: these get printed once and then live in
+       a guest binder for years, picking up scuffs and coffee rings. */
+    const code = QR.encode(linkQr, { ecl: 'Q' });
+    QR.toCanvas(code, qrCanvas, { size: 1024, dark: '#0E2F44' });
+    QR.toCanvas(code, placardQr, { size: 1024, dark: '#0E2F44' });
+
+    qrPng.href = qrCanvas.toDataURL('image/png');
+    if (svgBlobUrl) URL.revokeObjectURL(svgBlobUrl);
+    svgBlobUrl = URL.createObjectURL(
+      new Blob([QR.toSVG(code, { dark: '#0E2F44' })], { type: 'image/svg+xml' })
+    );
+    qrSvg.href = svgBlobUrl;
+
+    const slug = slugify(prop);
+    qrPng.download = 'bourbon-trail-map-qr' + (slug ? '-' + slug : '') + '.png';
+    qrSvg.download = 'bourbon-trail-map-qr' + (slug ? '-' + slug : '') + '.svg';
+
+    placardProp.textContent = prop;
+    placardProp.hidden = !prop;
+    placardUrl.textContent = linkQr;
+  }
+
   function refresh() {
-    snippet.value = build();
-    preview.height = heightSel.value;
-    /* Relative src so the preview works on any host, including local files. */
-    const rel = 'map.html?embed=1' + (regionSel.value ? '&region=' + regionSel.value : '');
-    if (preview.getAttribute('src') !== rel) preview.setAttribute('src', rel);
+    const fmt = currentFormat();
+    Object.keys(panels).forEach(function (k) { panels[k].hidden = (k !== fmt); });
+    heightField.hidden = (fmt !== 'embed');
+    propField.hidden = (fmt === 'embed');
+    /* Gates the print stylesheet, so Ctrl+P on the other formats prints the
+       normal page rather than a near-blank sheet. */
+    document.body.classList.toggle('fmt-qr', fmt === 'qr');
+
+    if (fmt === 'embed') {
+      snippet.value = build();
+      preview.height = heightSel.value;
+      /* Relative src so the preview works on any host, including local files. */
+      const rel = 'map.html?embed=1' + (regionSel.value ? '&region=' + regionSel.value : '');
+      if (preview.getAttribute('src') !== rel) preview.setAttribute('src', rel);
+    } else {
+      renderQR();
+    }
   }
 
   regionSel.addEventListener('change', refresh);
   heightSel.addEventListener('change', refresh);
+  propName.addEventListener('input', refresh);
+  document.querySelectorAll('input[name="fmt"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      refresh();
+      if (typeof gtag === 'function') {
+        gtag('event', 'host_toolkit_generate', {
+          toolkit_format: currentFormat(),
+          toolkit_region: regionSel.value || 'all'
+        });
+      }
+    });
+  });
   refresh();
+
+  /* Jump link from the no-website section preselects the QR format. */
+  const jump = document.getElementById('jumpToQr');
+  if (jump) {
+    jump.addEventListener('click', function () {
+      const r = document.querySelector('input[name="fmt"][value="qr"]');
+      if (r && !r.checked) { r.checked = true; r.dispatchEvent(new Event('change')); }
+    });
+  }
+
+  document.getElementById('printBtn').addEventListener('click', function () {
+    if (typeof gtag === 'function') {
+      gtag('event', 'host_toolkit_generate', {
+        toolkit_format: 'placard_print',
+        toolkit_region: regionSel.value || 'all'
+      });
+    }
+    window.print();
+  });
+
+  /* Small copy buttons on the link and message fields. */
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      const field = document.getElementById(btn.getAttribute('data-copy'));
+      if (!field) return;
+      const restore = btn.textContent;
+      function done(ok) {
+        btn.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+        setTimeout(function () { btn.textContent = restore; }, 2200);
+        if (ok && typeof gtag === 'function') {
+          gtag('event', 'host_toolkit_generate', {
+            toolkit_format: btn.getAttribute('data-copy') === 'guestMsg' ? 'guest_message' : 'link',
+            toolkit_region: regionSel.value || 'all'
+          });
+        }
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(field.value).then(function () { done(true); })
+          .catch(function () { done(selectCopy(field)); });
+      } else {
+        done(selectCopy(field));
+      }
+    });
+  });
+
+  function selectCopy(field) {
+    field.removeAttribute('readonly');
+    field.select();
+    if (field.setSelectionRange) field.setSelectionRange(0, field.value.length);
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    field.setAttribute('readonly', 'readonly');
+    return ok;
+  }
 
   function flash(msg, ok) {
     copyText.textContent = msg;
