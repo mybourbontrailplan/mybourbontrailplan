@@ -267,9 +267,12 @@
   .placard-logo { height: 30px; width: auto; display: block; margin: 0 auto 14px; }
   .placard h3 { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--primary-dark); margin: 0 0 4px; }
   .placard-prop { font-size: 14.5px; color: var(--text-secondary); margin: 0 0 14px; }
-  .placard-qr { display: block; margin: 0 auto; width: 200px; height: 200px; }
-  .placard-url { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 10.5px; color: var(--text-light); word-break: break-all; margin: 12px auto 0; max-width: 340px; line-height: 1.5; }
+  .placard-qr { display: block; margin: 0 auto; width: 220px; height: 220px; }
+  .placard-scan { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); margin: 12px 0 0; }
+  .placard-url { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 11.5px; color: var(--text-light); margin: 6px auto 0; max-width: 340px; line-height: 1.5; }
   .placard-credit { font-size: 11.5px; color: var(--text-light); margin: 9px 0 0; }
+  /* The second card exists only for print. */
+  .placard-copy { display: none; }
 
   /* PREVIEW */
   .preview-frame-wrap { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: white; box-shadow: var(--shadow-sm); }
@@ -346,25 +349,37 @@
 
     body.fmt-qr .placard { display: block !important; }
     body.fmt-qr .placard-logo, body.fmt-qr .placard h3, body.fmt-qr .placard-prop,
-    body.fmt-qr .placard-qr, body.fmt-qr .placard-url,
+    body.fmt-qr .placard-qr, body.fmt-qr .placard-scan, body.fmt-qr .placard-url,
     body.fmt-qr .placard-credit { display: block !important; }
     body.fmt-qr .placard-prop[hidden] { display: none !important; }
 
     .placard {
       border: none !important; margin: 0 !important;
-      padding: 0.45in 0.4in !important;
-      width: 8.5in; height: 5.5in;              /* half letter */
+      padding: 0.22in 0.4in !important;
+      width: 8.5in; height: 5.5in;              /* half letter, two per sheet */
       box-sizing: border-box;
-      page-break-after: avoid; page-break-inside: avoid;
+      overflow: hidden;                          /* never bleed onto the next card */
+      page-break-inside: avoid;
     }
-    .placard-logo { height: 0.42in !important; margin-bottom: 0.22in !important; }
-    .placard h3 { font-size: 30pt !important; margin-bottom: 0.05in !important; }
-    .placard-prop { font-size: 13pt !important; margin-bottom: 0.18in !important; }
-    /* 2in minimum so it scans from across a room */
-    .placard-qr { width: 2.35in !important; height: 2.35in !important; }
-    .placard-url { font-size: 8.5pt !important; max-width: 5in !important; margin-top: 0.16in !important; }
-    .placard-credit { font-size: 8.5pt !important; margin-top: 0.1in !important; }
-    @page { margin: 0.35in; }
+    /* Second card takes the lower half of the same sheet, so the host gets one
+       for the binder and one for the fridge. */
+    .placard-copy { border-top: 1px dashed #bbb !important; }
+    .placard-logo { height: 0.3in !important; margin-bottom: 0.1in !important; }
+    .placard h3 { font-size: 24pt !important; line-height: 1.1 !important; margin-bottom: 0.03in !important; }
+    .placard-prop { font-size: 12pt !important; margin-bottom: 0.08in !important; }
+    /* Was 2.35in with a lot of dead space around it. The short /m/ link dropped
+       the QR from version 9 to 4-6, so a bigger code at the same module density
+       reads from across a room. Sized to leave the text below it room: at 3.1in
+       the URL and credit lines overflowed onto the second card. */
+    .placard-qr { width: 2.75in !important; height: 2.75in !important; }
+    .placard-scan { font-size: 10.5pt !important; margin-top: 0.09in !important; }
+    /* Sized so the longest possible link stays on one line: 22 chars of domain
+       plus /m/louisville/ plus a 40-char property slug is 76 characters, which
+       at 9.5pt monospace is about 6in inside a 7.7in content width. Letting it
+       wrap to two lines pushed the credit line off the bottom of the card. */
+    .placard-url { font-size: 9.5pt !important; max-width: 7.6in !important; white-space: nowrap !important; margin-top: 0.04in !important; }
+    .placard-credit { font-size: 8.5pt !important; margin-top: 0.07in !important; }
+    @page { size: letter portrait; margin: 0; }
   }
 </style>
 </head>
@@ -437,7 +452,10 @@
           <option value="bardstown">Bardstown</option>
           <option value="frankfort">Frankfort</option>
           <option value="lexington">Lexington</option>
-          <option value="other">Northern &amp; Western Kentucky</option>
+          <!-- Labelled "Other" to match the filter button and legend inside the
+               map itself. Northern and Western both normalise to Other there, so
+               naming them here made the live preview look like a mismatch. -->
+          <option value="other">Other (Western &amp; Northern)</option>
         </select>
         <p class="builder-hint">Starts zoomed to your area. Guests can still browse every region from inside the map.</p>
       </div>
@@ -504,16 +522,28 @@
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
           Print this card
         </button>
-        <span class="qr-note" style="margin:0">Prints as a single half-page card. Nothing else on this page prints.</span>
+        <span class="qr-note" style="margin:0">Prints two identical half-page cards on one sheet, one for the binder and one for the fridge. Nothing else on this page prints.</span>
       </div>
 
+      <!-- Two copies so one letter sheet yields two half-letter cards: one for
+           the welcome binder, one for the fridge. The second is print-only. -->
       <div class="placard" id="placard">
         <img class="placard-logo" src="images/bourbon-trail-planner-nav.svg?v=4" alt="Bourbon Trail Planner">
-        <h3>Distilleries Near You</h3>
+        <h3 id="placardHead">Distilleries Near You</h3>
         <p class="placard-prop" id="placardProp" hidden></p>
         <canvas class="placard-qr" id="placardQr" width="1024" height="1024" aria-label="QR code"></canvas>
+        <p class="placard-scan">Point your phone camera at the code</p>
         <p class="placard-url" id="placardUrl"></p>
-        <p class="placard-credit">Interactive map by Bourbon Trail Planner, free to embed on your site.</p>
+        <p class="placard-credit">Full map, tour prices and booking times at mybourbontrailplan.com</p>
+      </div>
+      <div class="placard placard-copy" id="placard2" aria-hidden="true">
+        <img class="placard-logo" src="images/bourbon-trail-planner-nav.svg?v=4" alt="">
+        <h3 id="placardHead2">Distilleries Near You</h3>
+        <p class="placard-prop" id="placardProp2" hidden></p>
+        <canvas class="placard-qr" id="placardQr2" width="1024" height="1024" aria-label=""></canvas>
+        <p class="placard-scan">Point your phone camera at the code</p>
+        <p class="placard-url" id="placardUrl2"></p>
+        <p class="placard-credit">Full map, tour prices and booking times at mybourbontrailplan.com</p>
       </div>
     </div>
 
@@ -632,7 +662,7 @@
 
   <div class="tip-box">
     <div class="tip-box-header"><img src="images/icons/icon-lightbulb.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:5px">Printing a QR code that actually scans</div>
-    <p>Two things matter and both are handled for you. The code is generated at a high enough resolution that it stays crisp at print size, and it keeps its quiet zone, the plain white border around the outside. If you crop that border off to make the card tidier, the code stops scanning. Print it at <strong>two inches square or larger</strong> and leave the white margin alone.</p>
+    <p>Three things matter and all three are handled for you. The code is generated at a high enough resolution to stay crisp at print size. It keeps its quiet zone, the plain white border around the outside, which stops scanning if you crop it off to tidy the card up. And the link inside it is deliberately short, which means fewer, chunkier squares and a code that reads from across a room rather than at arm's length. The card prints it at <strong>over three inches square</strong>.</p>
     <p>Grayscale is fine. So is a cheap inkjet. What kills a QR code is a laminate with heavy glare, so if you laminate the card, use matte.</p>
   </div>
 
@@ -779,6 +809,18 @@
     return String(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
 
+  /* Short link for the printed card. See _redirects for why this exists and why
+     those paths must never be removed: the tracking params live in the redirect
+     so the QR payload stays short, which lowers the QR version and makes the
+     printed code scan from further away. "ky" is the statewide slug, because a
+     bare /m/<property> would read the property name as a region. */
+  function shortURL(region, property) {
+    var parts = ['m', region || 'ky'];
+    var slug = slugify(property || '');
+    if (slug) parts.push(slug);
+    return SITE + '/' + parts.join('/');
+  }
+
   function embedURL(region, escaped) {
     return mapURL({ embed: true, region: region, escaped: escaped });
   }
@@ -823,6 +865,11 @@
   const qrSvg       = document.getElementById('qrSvg');
   const placardProp = document.getElementById('placardProp');
   const placardUrl  = document.getElementById('placardUrl');
+  const placardHead = document.getElementById('placardHead');
+  const placardQr2   = document.getElementById('placardQr2');
+  const placardProp2 = document.getElementById('placardProp2');
+  const placardUrl2  = document.getElementById('placardUrl2');
+  const placardHead2 = document.getElementById('placardHead2');
 
   function currentFormat() {
     const el = document.querySelector('input[name="fmt"]:checked');
@@ -832,6 +879,14 @@
   const REGION_LABEL = {
     '': 'Kentucky', louisville: 'Louisville', bardstown: 'Bardstown',
     frankfort: 'Frankfort', lexington: 'Lexington', other: 'Kentucky'
+  };
+  /* "other" spans Western and Northern, so there is no single place name to put
+     in a headline. Falls back to the generic wording. */
+  const REGION_HEADLINE = {
+    louisville: 'Distilleries Near Louisville',
+    bardstown: 'Distilleries Near Bardstown',
+    frankfort: 'Distilleries Near Frankfort',
+    lexington: 'Distilleries Near Lexington'
   };
 
   function guestMessageFor(url, region) {
@@ -849,21 +904,36 @@
     const region = regionSel.value;
     const prop = propName.value.trim();
 
-    const linkQr  = mapURL({ region: region, medium: 'qr', property: prop });
-    const linkMsg = mapURL({ region: region, medium: 'message', property: prop });
-    const linkGb  = mapURL({ region: region, medium: 'guidebook', property: prop });
+    /* The short link is what goes in the QR and on the printed card. The message
+       and guidebook links stay long: they are clicked, never typed or scanned,
+       so length costs nothing and they keep their own utm_medium. */
+    const linkShort = shortURL(region, prop);
+    const linkMsg   = mapURL({ region: region, medium: 'message', property: prop });
+    const linkGb    = mapURL({ region: region, medium: 'guidebook', property: prop });
 
-    qrUrl.value = linkQr;
+    qrUrl.value = linkShort;
     guideUrl.value = linkGb;
     guestMsg.value = guestMessageFor(linkMsg, region);
+
+    const headline = REGION_HEADLINE[region] || 'Distilleries Near You';
+    const shortDisplay = linkShort.replace(/^https?:\/\//, '');
+
+    [[placardHead, placardProp, placardUrl],
+     [placardHead2, placardProp2, placardUrl2]].forEach(function (set) {
+      set[0].textContent = headline;
+      set[1].textContent = prop;
+      set[1].hidden = !prop;
+      set[2].textContent = shortDisplay;
+    });
 
     if (typeof QR === 'undefined') return;   /* qr.js failed to load; fields still work */
 
     /* Level Q rather than the M minimum: these get printed once and then live in
        a guest binder for years, picking up scuffs and coffee rings. */
-    const code = QR.encode(linkQr, { ecl: 'Q' });
+    const code = QR.encode(linkShort, { ecl: 'Q' });
     QR.toCanvas(code, qrCanvas, { size: 1024, dark: '#0E2F44' });
     QR.toCanvas(code, placardQr, { size: 1024, dark: '#0E2F44' });
+    QR.toCanvas(code, placardQr2, { size: 1024, dark: '#0E2F44' });
 
     qrPng.href = qrCanvas.toDataURL('image/png');
     if (svgBlobUrl) URL.revokeObjectURL(svgBlobUrl);
@@ -875,10 +945,6 @@
     const slug = slugify(prop);
     qrPng.download = 'bourbon-trail-map-qr' + (slug ? '-' + slug : '') + '.png';
     qrSvg.download = 'bourbon-trail-map-qr' + (slug ? '-' + slug : '') + '.svg';
-
-    placardProp.textContent = prop;
-    placardProp.hidden = !prop;
-    placardUrl.textContent = linkQr;
   }
 
   function refresh() {
