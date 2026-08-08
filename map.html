@@ -1207,6 +1207,68 @@ function applyDeepLink() {
 applyDeepLink();
 
 /* ============================================
+   Re-frame once the container has a real size.
+
+   An iframed map (see ?embed=1) routinely initializes before the browser has
+   given the iframe its final dimensions, and loading="lazy" makes that the
+   normal case rather than the edge case. Leaflet then runs fitBounds against a
+   zero or wrong-sized container, and the widget opens on a world view instead
+   of the region the host asked for. Measured on a real third-party page: first
+   load showed the whole globe, reload showed all of Kentucky, neither showed
+   the requested Bardstown cluster.
+
+   So: watch the container, and the first time it reports a real size,
+   invalidateSize() and re-apply whatever view this load was supposed to open
+   on. Stops re-framing the moment the visitor touches the map or the filters,
+   so we never yank the view out from under them.
+   ============================================ */
+(function () {
+  const el = document.getElementById('map');
+  if (!el) return;
+
+  /* Re-framing is allowed only during a short settle window after this document
+     loads, and stops early if the visitor drags the map. Using a time window
+     rather than "has the user touched anything" is deliberate: a visitor
+     scrolling the host page moves the pointer across the widget and fires wheel
+     and pointer events on it without meaning to interact, which would cancel
+     the correction and leave them looking at a world map. Nobody has
+     meaningfully explored the map in the first three seconds, so a re-frame in
+     that window costs nothing and fixes the common case.
+
+     dragstart is the one reliable user-intent signal here. Leaflet does not
+     fire it for programmatic fitBounds or setView, unlike zoomstart. */
+  const SETTLE_MS = 3000;
+  const start = Date.now();
+  let userMoved = false;
+  map.on('dragstart', function () { userMoved = true; });
+
+  function frameToIntendedView() {
+    const params = new URLSearchParams(location.search);
+    if (params.get('region') || params.get('distillery')) { applyDeepLink(); return; }
+    const pts = markers.map(({ data }) => [data.lat, data.lng]);
+    if (pts.length) map.fitBounds(L.latLngBounds(pts).pad(0.05), { animate: false });
+  }
+
+  function onSize(w, h) {
+    if (!w || !h) return;
+    map.invalidateSize({ animate: false });
+    if (userMoved || Date.now() - start > SETTLE_MS) return;
+    frameToIntendedView();
+  }
+
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(function (entries) {
+      const r = entries[0].contentRect;
+      onSize(r.width, r.height);
+    }).observe(el);
+  }
+  /* For browsers without ResizeObserver, and for hosts whose layout settles
+     after first paint without changing the element's box. */
+  setTimeout(function () { onSize(el.clientWidth, el.clientHeight); }, 400);
+  setTimeout(function () { onSize(el.clientWidth, el.clientHeight); }, 1600);
+})();
+
+/* ============================================
    EMBED MODE behavior (?embed=1)
    ============================================ */
 if (window.BTP_EMBED) {
