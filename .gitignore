@@ -7,17 +7,30 @@
 __pycache__/
 
 # ---------------------------------------------------------------------------
-# Google Drive sync artefacts.
+# Raw photo and video drop box. Never committed.
 #
-# This repo currently lives inside a Drive-synced folder. Drive writes temp
-# files mid-sync and creates " (1)" duplicates on conflict, and a `git add .`
-# once swept 228 of them into a commit that ALSO restored older copies of
-# several HTML files over newer ones. That silently destroyed published content
-# (see the incident note in CLAUDE.md).
+# Put originals here straight off a phone or camera, at whatever size they
+# come. Site images are processed copies: images/{distillery}-N.jpg, max
+# 1200px on the long edge, ~80% JPEG, EXIF rotation baked into the pixels.
 #
-# These rules stop the junk reaching commits. They do NOT stop Drive
-# overwriting working files, which is the part that actually loses work. The
-# real fix is moving this repo out of the Drive folder.
+# The point of this folder is that git history is permanent. A 5MB original
+# committed by accident stays in the repo forever, even after the file is
+# shrunk or deleted later.
+# ---------------------------------------------------------------------------
+_inbox/
+
+# ---------------------------------------------------------------------------
+# Google Drive sync artefacts. Kept as a tripwire, not an active hazard.
+#
+# The repo used to live inside a Drive-synced folder. Drive wrote temp files
+# mid-sync and made " (1)" duplicates on conflict, and a `git add .` once
+# swept 228 of them into a commit that ALSO restored older copies of several
+# HTML files over newer ones, silently destroying published content (see the
+# incident note in CLAUDE.md).
+#
+# The repo moved out of Drive on 10 August 2026, so these should never match
+# anything again. If one does, something re-synced the repo into a cloud
+# folder and the working copy may not be what you think.
 # ---------------------------------------------------------------------------
 .tmp.driveupload/
 .tmp.drivedownload/
