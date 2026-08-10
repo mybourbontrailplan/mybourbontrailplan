@@ -33,8 +33,12 @@ def load_key():
 
 def get_changed_files():
     try:
+        # --diff-filter=d excludes deletions. Without it, removing or untracking
+        # a file submits its URL for recrawl, which then 404s. That happened in
+        # August 2026: untracking a Google Drive " (1)" duplicate submitted
+        # "distillery-chicken-cock (1).html", a URL that has never existed.
         result = subprocess.run(
-            ["git", "diff", "--name-only", "HEAD~1", "HEAD"],
+            ["git", "diff", "--name-only", "--diff-filter=d", "HEAD~1", "HEAD"],
             capture_output=True,
             text=True,
             check=True,
@@ -106,7 +110,7 @@ def main():
     key = load_key()
     changed = get_changed_files()
 
-    # TODO: handle deleted files (currently skipped; deleted URLs would 404 on recrawl)
+    # Deletions are excluded by --diff-filter=d in get_changed_files().
     html_files = [
         f for f in changed
         if f.endswith(".html") and f not in SKIP_FILES
