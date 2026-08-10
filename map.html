@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
 <!-- Embed mode (?embed=1). Set before anything else so the rest of the head can branch on it. -->
-<script>window.BTP_EMBED=/[?&]embed=1(?:&|$)/.test(location.search);if(window.BTP_EMBED){document.documentElement.className+=' embed-mode';}</script>
+<script>window.BTP_EMBED=/[?&]embed=1(?:&|$)/.test(location.search);if(window.BTP_EMBED){document.documentElement.className+=' embed-mode';}
+/* internal=1 marks an embed on one of our own pages (the regional map pages).
+   Different rules apply: no attribution badge, no GA from inside the frame, and
+   links navigate the whole page instead of opening a new tab. */
+window.BTP_EMBED_INTERNAL=window.BTP_EMBED&&/[?&]internal=1(?:&|$)/.test(location.search);
+if(window.BTP_EMBED_INTERNAL){document.documentElement.className+=' embed-internal';}</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DVK4D6KJJP"></script>
    <script>if(!window.BTP_EMBED){(function(w,d,e,u,f,l,n){w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},l=d.createElement(e),l.async=1,l.src=u,n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);})(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');ml('account','2164831');}</script>
@@ -17,11 +22,18 @@
      Cost: embed views get no persistent client id, so they count as a new user
      each time. We only need load counts and the host domain, so that is fine.
      Must run before config. The normal map page is unaffected. */
-  if (window.BTP_EMBED) {
-    gtag('consent', 'default', { analytics_storage: 'denied' });
+  /* An internal embed sends nothing. Our own regional map pages iframe this, and
+     their own page_view already counts the visit. Without this guard every
+     regional page view would also fire embed_load with embed_host set to our own
+     domain, which is exactly the metric meant to show which PARTNERS deployed
+     the widget, and would double-count map.html pageviews on top. */
+  if (!window.BTP_EMBED_INTERNAL) {
+    if (window.BTP_EMBED) {
+      gtag('consent', 'default', { analytics_storage: 'denied' });
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-DVK4D6KJJP');
   }
-  gtag('js', new Date());
-  gtag('config', 'G-DVK4D6KJJP');
   (function(){var f={};function s(id){if(f[id])return;f[id]=1;if(typeof gtag==='function'){gtag('event','email_signup',{'method':id==='CliYpr'?'pdf_map':'checklist'});}}function watch(){new MutationObserver(function(ms){ms.forEach(function(m){if(m.type==='attributes'&&m.attributeName==='style'){var el=m.target;if(el.className&&el.className.indexOf('ml-form-successBody')>=0&&el.style.display!=='none'){var c=el.closest('[data-form]');if(c)s(c.getAttribute('data-form'));}}});}).observe(document.body,{subtree:true,attributes:true,attributeFilter:['style']});}if(document.body){watch();}else{document.addEventListener('DOMContentLoaded',watch);}})();
 </script>
 <meta charset="UTF-8">
@@ -524,6 +536,8 @@
     text-decoration: none; line-height: 1.3; white-space: nowrap;
   }
   html.embed-mode .embed-attrib:hover { color: var(--primary); border-color: var(--primary-light); }
+  /* Crediting ourselves on our own regional map pages would be silly. */
+  html.embed-internal .embed-attrib { display: none !important; }
   html.embed-mode .embed-attrib span { color: var(--text-light); font-weight: 500; }
   @media (max-width: 800px) {
     html.embed-mode .map-page { flex-direction: column; height: 100vh; }
@@ -697,6 +711,7 @@
           </div>
           <p>Walkable Whiskey Row plus craft producers in NuLu and Butchertown. Best for first-timers and weekend trips. Hotel options are easy. Heavy hitters include <a href="distillery-old-forester.html">Old Forester</a>, <a href="distillery-angels-envy.html">Angel's Envy</a>, <a href="distillery-evan-williams.html">Evan Williams</a>, <a href="distillery-michters.html">Michter's Fort Nelson</a>, <a href="distillery-stitzel-weller.html">Stitzel-Weller</a>, and <a href="distillery-buzzards-roost.html">Buzzard's Roost</a>.</p>
           <div class="region-card-stats">13 distilleries · Most walkable region</div>
+          <p style="margin:10px 0 0"><a href="bourbon-trail-map-louisville.html" style="color:var(--primary-light);font-weight:600;font-size:14px;text-decoration:none">See the Louisville map &rarr;</a></p>
         </div>
 
         <div class="region-card">
@@ -705,7 +720,8 @@
             <h4>Bardstown & New Hope</h4>
           </div>
           <p>The "Bourbon Capital of the World" earns the title. Highest distillery density on the trail, including <a href="distillery-heaven-hill.html">Heaven Hill</a>, <a href="distillery-makers-mark.html">Maker's Mark</a>, <a href="distillery-jim-beam.html">Jim Beam</a>, <a href="distillery-willett.html">Willett</a>, <a href="distillery-log-still.html">Log Still</a>, and <a href="distillery-preservation.html">Preservation</a>. Plan two full days here at minimum.</p>
-          <div class="region-card-stats">12 distilleries · Best home base for serious planners</div>
+          <div class="region-card-stats">11 distilleries · Best home base for serious planners</div>
+          <p style="margin:10px 0 0"><a href="bourbon-trail-map-bardstown.html" style="color:var(--primary-light);font-weight:600;font-size:14px;text-decoration:none">See the Bardstown map &rarr;</a></p>
         </div>
 
         <div class="region-card">
@@ -715,6 +731,7 @@
           </div>
           <p>Home to <a href="distillery-buffalo-trace.html">Buffalo Trace</a>, the most iconic distillery on the trail and producer of Pappy Van Winkle, Blanton's, and Eagle Rare, plus the gorgeous restored grounds at <a href="distillery-castle-key.html">Castle & Key</a>, the historic Old Crow ruins at <a href="distillery-glenns-creek.html">Glenns Creek</a>, and the custom barrel blending experience at <a href="distillery-j-mattingly.html">J. Mattingly 1845</a>. Compact region you can knock out in a day, but Buffalo Trace tours are the hardest reservation on the trail.</p>
           <div class="region-card-stats">5 distilleries · Free Buffalo Trace tours</div>
+          <p style="margin:10px 0 0"><a href="bourbon-trail-map-frankfort.html" style="color:var(--primary-light);font-weight:600;font-size:14px;text-decoration:none">See the Frankfort map &rarr;</a></p>
         </div>
 
         <div class="region-card">
@@ -724,6 +741,7 @@
           </div>
           <p>Horse country meets bourbon country. <a href="distillery-woodford-reserve.html">Woodford Reserve</a> is the most scenic distillery on the trail, and <a href="distillery-wild-turkey.html">Wild Turkey</a> sits on a Kentucky River bluff. <a href="distillery-four-roses.html">Four Roses</a>, <a href="distillery-town-branch.html">Town Branch</a>, and <a href="distillery-wilderness-trail.html">Wilderness Trail</a> round out the region. Lexington's Distillery District is a great urban base.</p>
           <div class="region-card-stats">13 distilleries · Most scenic drives</div>
+          <p style="margin:10px 0 0"><a href="bourbon-trail-map-lexington.html" style="color:var(--primary-light);font-weight:600;font-size:14px;text-decoration:none">See the Lexington map &rarr;</a></p>
         </div>
 
         <div class="region-card">
@@ -741,7 +759,7 @@
             <h4>Western Kentucky</h4>
           </div>
           <p>The road less traveled. Owensboro, Hopkinsville, Land Between the Lakes, and the Pennyrile region. <a href="distillery-green-river.html">Green River</a>, <a href="distillery-mb-roland.html">MB Roland</a>, <a href="distillery-casey-jones.html">Casey Jones</a>, <a href="distillery-dueling-grounds.html">Dueling Grounds</a>, and several more reaching all the way to Paducah. Fewer crowds, more conversation with the people actually making the bourbon.</p>
-          <div class="region-card-stats">8 distilleries · Best for repeat visitors</div>
+          <div class="region-card-stats">9 distilleries · Best for repeat visitors</div>
         </div>
 
       </div>
@@ -1329,7 +1347,14 @@ if (window.BTP_EMBED) {
     const href = a.getAttribute('href') || '';
     if (href.charAt(0) === '#' || href.indexOf('javascript:') === 0) return;
     e.preventDefault();
-    window.open(a.href, '_blank', 'noopener');
+    if (window.BTP_EMBED_INTERNAL) {
+      /* Our own page: navigate the whole tab rather than spawning one. Opening a
+         new tab from our own regional page is needless, and loading a profile
+         inside the frame would render it in a 600px box. */
+      window.top.location.href = a.href;
+    } else {
+      window.open(a.href, '_blank', 'noopener');
+    }
   }, true);
 
   /* Log the load so we can see which domains actually deployed the widget.
@@ -1343,6 +1368,7 @@ if (window.BTP_EMBED) {
          Safari. Firefox does not implement it, so some loads will only
          ever report "(unknown)". We still count those. */
   (function () {
+    if (window.BTP_EMBED_INTERNAL) return;   /* see the GA guard above */
     let host = '(unknown)';
     try {
       const ao = window.location.ancestorOrigins;
