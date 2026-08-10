@@ -535,9 +535,12 @@ def build_page2(doc, data, ky):
     # booking ease index (center)
     cx0=M+316
     text(page, cx0, by+12, "BOOKING EASE", font="dm-bold", size=8.3, color=INK, tracking=1.0)
-    gloss=[("Easy","Walk-up or same-week reservation"),
-           ("Moderate","Book 1 to 3 weeks ahead"),
-           ("Hard","Reserve 4 or more weeks ahead")]
+    # Wording must match the booking tier definitions in CLAUDE.md. The old text
+    # ("same-week" / "1 to 3 weeks") predated the August 2026 restatement and did
+    # not match how the cards are actually tagged.
+    gloss=[("Easy","Walk-ups often work, 1-2 weeks"),
+           ("Moderate","Reserve 2 to 4 weeks ahead"),
+           ("Hard","Book 4+ weeks, opens ~8 out")]
     for i,(lab,desc) in enumerate(gloss):
         ry=by+30+i*15
         page.draw_circle(fitz.Point(cx0+4, ry-2.5), 4, color=None, fill=BOOK_COLORS[lab])

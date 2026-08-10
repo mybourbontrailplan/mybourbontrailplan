@@ -1,587 +1,361 @@
 # CLAUDE.md — mybourbontrailplan.com
 
-## What This Is
-Kyle's Kentucky Bourbon Trail trip planning website. Static HTML/CSS/JS site deployed on Netlify via GitHub auto-deploy. Also serves as a content marketing funnel for Kyle's Airbnb property (New Hope Bourbon Stop) near Bardstown, KY.
+Kyle's Kentucky Bourbon Trail trip-planning site. Static HTML/CSS/JS, deployed on Netlify via GitHub auto-deploy. Also a content funnel for Kyle's Airbnb (New Hope Bourbon Stop, near Bardstown).
+
+**This file is rules and workflow. Two companion files hold the detail:**
+
+| File | Read it when |
+|---|---|
+| `NOTES-distilleries.md` | Writing about any specific venue, restaurant or booking detail. Contains the corrections and traps. |
+| `NOTES-internals.md` | Working inside `trip-builder.html`, `map.html`, the icon system, or the PDF generator. |
+
+**Run `python scripts/check_site.py` before you commit.** It enforces most of the mechanical rules below (em dashes, title/meta lengths, canonicals, required scripts, schema shape, link integrity, excluded pages, rating drift). If a rule can be checked, it is checked there rather than relied on from memory.
+
+**Do not put counts in this file.** Numbers of distilleries, pages or icons go stale and this file has been wrong about all three. Derive them: `check_site.py` prints current counts.
+
+---
 
 ## Deployment
-- **Repo:** github.com/mybourbontrailplan/mybourbontrailplan
-- **Hosting:** Netlify with GitHub auto-deploy on push to `main`
-- **Workflow:** `git pull` → make changes → `git add .` → `git commit -m "message"` → `git push`
-- **No build tools, no framework, no CMS** — every page is a standalone HTML file at root level, with an `images/` subfolder for distillery photos
 
-## Deployment Workflow
+**Repo:** github.com/mybourbontrailplan/mybourbontrailplan. Workflow is `git pull` → make changes → stage → commit → push.
 
-### Step 1 — Regenerate sitemap (if any HTML pages were added, removed, or noindex-toggled)
+**Deploying is just pushing** — Netlify auto-builds on every push to `main`. There is no deploy command. **Do NOT run `netlify deploy --prod --dir=.`**; the CLI is not installed (`netlify` is not on PATH) and is not needed. That step used to be documented here and always failed, because the push had already deployed the site. The `.netlify/` folder is leftover state from a one-time CLI use, not active config.
 
+### 1. Regenerate the sitemap, if pages were added, removed or noindex-toggled
 ```
 python scripts\generate_sitemap.py
 ```
+Scans root-level HTML, applies the blocklist and noindex exclusions, writes a fresh `sitemap.xml`. Commit it with the rest of the deploy. Skip for CSS-only or content-only edits to existing pages.
 
-This scans root-level HTML files, applies the blocklist and noindex exclusions, and writes a fresh `sitemap.xml`. Run it before deploying so the updated sitemap ships in the same deploy. Skip if the deploy contains no HTML page additions or removals (e.g. CSS-only or content-only edits to existing pages).
-
-If the sitemap changed, stage and commit it with the rest of the deploy files so it ships in the same push.
-
-### Step 2 — Deploy (push to `main`)
-
-**Deploying is just pushing.** Netlify auto-builds from GitHub on every push to `main`; there is no separate deploy command to run.
-
+### 2. Push
 ```
 git add <the files you changed>
 git commit -m "message"
 git push origin main
 ```
+Stage files explicitly rather than `git add .` — the working tree usually carries local-only noise (`.claude/settings.local.json`, `.claude/worktrees/`).
 
-The site goes live within roughly a minute. Confirm it actually landed before moving on, by fetching the changed page and grepping for something the edit introduced:
-
+### 3. Verify it landed, against VISIBLE TEXT not markup
 ```
 $r = Invoke-WebRequest -Uri "https://mybourbontrailplan.com/{page}.html?cachebust=$(Get-Random)" -UseBasicParsing
 $r.Content -match '{a string your change added}'
 ```
 
-**Verify against VISIBLE TEXT, not markup.** Netlify post-processes the HTML it serves, so the deployed source is not byte-identical to the repo. Confirmed July 2026:
-- **`.html` extensions are stripped** (pretty URLs): `href="distillery-green-river-louisville.html"` is served as `href='/distillery-green-river-louisville'`.
-- **`href="index.html"` becomes `href='/'`**.
-- **Double quotes become single quotes** and **attributes get reordered**: `<a href="index.html" class="logo">` is served as `<a class='logo' href='/'>`.
+**Netlify post-processes the HTML it serves, so the deployed source is not byte-identical to the repo.** Confirmed repeatedly:
+- `.html` extensions are stripped: `href="distillery-x.html"` is served as `href='/distillery-x'`.
+- `href="index.html"` becomes `href='/'`.
+- Double quotes become single quotes, **and attributes get reordered**: `<a href="index.html" class="logo">` is served as `<a class='logo' href='/'>`.
 
-So `grep 'href="foo.html"'` or `grep 'class="stop-link"'` against the live site returns **zero and looks like a failed deploy when the deploy was fine**. This burned a whole debugging cycle. Grep for prose the change introduced ("Bardstown tasting room"), a rendered label, or an extension-less fragment (`green-river-louisville`) instead.
+So grepping for `href="foo.html"`, `class="dist-card"`, or an attribute pair in a particular order returns **zero and looks like a failed deploy when the deploy was fine.** This has burned multiple debugging cycles, most recently a live rating verification that appeared to fail because `class` now precedes `href`. Grep for **prose the change introduced**, a rendered label, or an extension-less fragment. Also beware strings that span a tag: `"not an official member"` fails if the copy is `not <strong>an official</strong> member`.
 
-Notes:
-- **Do NOT run `netlify deploy --prod --dir=.`.** The Netlify CLI is not installed on this machine (`netlify` is not on PATH), and it isn't needed. This step used to be documented here and always failed; the push had already deployed the site. The stale `.netlify/` folder is leftover state from a one-time CLI use, not an active config. There is no `netlify.toml`.
-- Stage files explicitly rather than `git add .` — the working tree usually carries local-only noise (`.claude/settings.local.json`, `.claude/worktrees/`) that should not be committed.
-- Wait for the live check to pass **before** running IndexNow. Pinging IndexNow tells crawlers to fetch the URL now; if the deploy hasn't finished, they'll re-index the old content.
-
-### Step 3 — Submit to IndexNow
-
-**IMPORTANT: After every successful deploy, immediately run the IndexNow submission script:**
-
+### 4. Submit to IndexNow, immediately
 ```
 python scripts\indexnow_submit_changed.py
 ```
+Non-negotiable for deploys with HTML changes; the site leans heavily on Bing. Wait for the step-3 live check to pass **first** — pinging before the deploy finishes makes crawlers re-index the old content. Paste the output back to the user; do not swallow it. HTTP 200 and 202 are both success; anything else, surface it.
 
-This pings Bing (and other IndexNow-participating search engines) with the URLs of files changed in the most recent commit, triggering faster recrawl. The site relies heavily on Bing traffic, so this step is non-negotiable for deploys that include HTML changes.
+**Skip only if:** no HTML changed (CSS/JS-only), the deploy is a rollback or no-op, or the script already ran for this commit.
 
-### Gotcha: back-to-back commits silently drop URLs
+**Use `python scripts\indexnow_bulk_submit.py` instead when 20+ HTML files changed** (site-wide template updates), to avoid per-URL rate limits. It submits every sitemap URL.
 
-`indexnow_submit_changed.py` hardcodes `git diff --name-only HEAD~1 HEAD`, so it only ever sees the **most recent commit**. If you push a deploy and a second commit lands before you run the script (a follow-up fix, a review catch), the first commit's URLs are **never submitted and nothing warns you**. This happened July 2026: a naming fix landed between the push and the ping, and three URLs from the previous deploy were silently skipped.
-
-Run the script **immediately after each push**, before making further edits. If two commits have already landed, submit the missed URLs manually rather than assuming the script covered them: import the real script and reuse its own `submit()` / `load_key()` so the key and payload stay identical, e.g. `m.submit(["https://mybourbontrailplan.com/foo.html"], m.load_key())`.
-
-### When to skip IndexNow
-
-Skip the IndexNow ping only if:
-- The deploy contains no HTML changes (CSS-only or JS-only changes that don't alter page content)
-- The deploy is a rollback or no-op
-- The script has already been run for this commit
-
-### When to run the bulk submission instead
-
-If a deploy includes 20+ changed HTML files (e.g., a site-wide template update or large refactor), use the bulk submission script instead to avoid hitting per-URL rate limits:
-
-```
-python scripts\indexnow_bulk_submit.py
+**Gotcha: back-to-back commits silently drop URLs.** The script hardcodes `git diff --name-only HEAD~1 HEAD`, so it only ever sees the **most recent commit**. If a second commit lands before you run it, the first commit's URLs are never submitted and nothing warns you. This has happened at least twice. Run it immediately after each push. If two commits already landed, submit the missed URLs manually, reusing the script's own functions so the key and payload stay identical:
+```python
+import importlib.util
+spec = importlib.util.spec_from_file_location("m", "scripts/indexnow_submit_changed.py")
+m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+m.submit(["https://mybourbontrailplan.com/foo.html"], m.load_key())
 ```
 
-### IndexNow response handling
+---
 
-HTTP 200 and HTTP 202 are both success responses. The scripts treat both as valid. If you see any other response code, surface the error to the user before continuing.
+## Tech stack
 
-### Verification
+- Static HTML/CSS/JS. **No build tools, no framework, no CMS** — every page is a standalone HTML file at root level.
+- Fonts: DM Sans (body) + Fraunces (display).
+- Maps: Leaflet.js with CartoDB Light tiles. SortableJS 1.15.6 for trip-builder drag-to-reorder, loaded from unpkg after Leaflet.
+- QR codes: `js/qr.js`, a vendored encoder. See "Printable QR cards" below.
+- Analytics: GA4 `G-DVK4D6KJJP` on all pages. Custom events: `email_signup`, `trip_builder_complete`, `share_link_copied`, `plan_loaded_from_link`, `affiliate_click`, `embed_load`, `embed_snippet_copied`, `host_toolkit_generate`.
+- Email: MailerLite, account 2164831, universal script on every page after the GA script.
+- Affiliates: CJ Affiliate for Booking.com and VRBO, direct Airbnb.
+- Contact and About render the email address in JS to prevent scraping/mangling.
+- Search Console verified via meta tag on all pages.
 
-After running the IndexNow script, paste the output back to the user so they can confirm the submission succeeded. Don't silently swallow the output.
+## Design system
 
-## Tech Stack
-- Static HTML/CSS/JS
-- Fonts: DM Sans (body) + Fraunces (display/headings)
-- Maps: Leaflet.js with CartoDB Light tiles; SortableJS 1.15.6 (trip-builder drag-to-reorder, loaded from unpkg after Leaflet)
-- Analytics: Google Analytics (G-DVK4D6KJJP) on all pages; custom events: `email_signup` (MailerLite form success), `trip_builder_complete` (itinerary export), `share_link_copied` (Copy Trip Link button, includes stop count), `plan_loaded_from_link` (shared `?plan=` URL opened, includes stop count)
-- Email marketing: MailerLite (account ID 2164831, universal script on every page after GA script)
-- Affiliate links: CJ Affiliate/Booking.com (kqzyfj.com/anrdoezrs.net/tkqlhce.com/jdoqocy.com tracking domains), CJ Affiliate/VRBO, direct Airbnb
-- Email obfuscation: Contact and About pages use JS-rendered email to prevent mangling
-- Search Console verified via meta tag on all pages
+- Primary blue `#1B4F72`, accent gold `#D4A03C`, dark `#0E2F44`.
+- CSS variables: `--primary`, `--primary-light`, `--primary-dark`, `--accent`, `--accent-light`, `--font-display`, `--font-body`, `--text`, `--text-secondary`, `--text-light`, `--border`, `--bg-subtle`.
+- Modern, clean, SaaS-inspired. White backgrounds, subtle shadows, 12px radius.
+- Icons: brand SVGs in `images/icons/`. Full rules in `NOTES-internals.md`.
 
-## Design System
-- Colors: Primary blue `#1B4F72`, accent gold `#D4A03C`, dark `#0E2F44`
-- CSS variables: `--primary`, `--primary-light`, `--primary-dark`, `--accent`, `--accent-light`, `--font-display`, `--font-body`, `--text`, `--text-secondary`, `--text-light`, `--border`, `--bg-subtle`
-- Style: Modern, clean, SaaS-inspired. White backgrounds, subtle shadows, rounded corners (12px)
-- Icons: see the Brand Icon System section below.
+---
 
-## Brand Icon System
+## File structure
 
-Shared two-tone SVGs (dark `#0E2F44` + gold `#D4A03C`, 64x64 viewBox) live in **`images/icons/`**. Reference them with `<img src="images/icons/icon-{name}.svg" alt="" width="N" height="N" loading="lazy">` — `alt=""` because they are always decorative next to a text label.
+Root-level HTML pages, an `images/` folder (distillery photos named `{distillery}-N.jpg`, EXIF-fixed, max 1200px, ~80% JPEG), `images/icons/` for brand SVGs, `js/` for vendored scripts, and `scripts/` for Python tooling.
 
-- **The folder is lowercase `icons`, not `Icons`.** Windows will happily serve either; Netlify is case-sensitive and will 404 the wrong casing in production. It shipped as `Icons/` once and was renamed.
-- **Current icons (17):** `route`, `barrel`, `calendar`, `car`, `cost`, `eat-stay`, `lightbulb`, `city`, `hotel`, `house`, `star`, `badge`, `building`, `clock`, `park`, `pin`, `trophy`.
-- **Meaning is fixed, do not merge these two:** `badge` (shield+check) = official-trail / trail designation. `trophy` = awards and honors. A distillery being *on the trail* is `badge`; a distillery *winning an award* is `trophy`. Never swap them.
-- **Still no icon for:** `shuttle` (transportation uses `car`), `horse`, and the various one-off distillery flavor glyphs (corn, fire, ship, flags, crossed swords, music, family...). No warning/check-mark icon either.
+**Core pages:** `index.html`, `3-day-bourbon-trail-itinerary.html` (flagship SEO page, 2/3/4-day selector), `distilleries.html` (filterable directory, sort by rating/A-Z; the count is set dynamically on load by `applyFilters()`), `map.html`, `trip-builder.html`, `bourbon-trail-booking-guide.html`, `bourbon-trail-budget-guide.html`, `where-to-stay-bourbon-trail.html`, `guides.html`.
 
-### Chip style (the standard container)
-Icons sit centered in a "chip": background `#F6F0E4`, border-radius ~20% of chip size, icon ~60% of chip width.
-- Homepage `.feature-icon`: 56px chip, 11px radius, 34px icon.
-- Where-to-stay `.lodging-icon`: 64px chip, 13px radius, 38px icon.
+**Content:** `eat-and-drink-bourbon-trail.html`, `about.html` (monetisation disclosure), `contact.html`.
 
-Keep those proportions when adding a chip elsewhere. Do not reintroduce per-card background tints (the old `.feature-icon.gold` alternating variant was removed) — every chip is `#F6F0E4`.
+**Guides:** `best-time-to-visit-bourbon-trail.html`, `bourbon-trail-non-bourbon-drinkers.html`, `louisville-whiskey-row-walking-guide.html`, `bourbon-trail-transportation-guide.html`, `kentucky-bourbonfest.html`, `kentucky-whiskey-trail.html`, `bourbon-trail-bachelor-party-guide.html`, `buffalo-trace-gift-shop-guide.html`.
 
-**Small inline chip (entity listing cards):** where-to-stay `.type-chip` is a 28px chip / 8px radius / 17px icon, sitting inline to the **left of the eyebrow label** inside `.lodging-type` (a flex row, gap 8px). These cards have **no hero panel** — the card body starts at the eyebrow row. The navy gradient panel treatment is reserved for guide cards only; entity listing cards (lodging, and restaurant cards on eat-and-drink) never get a hero panel.
+**Map pages:** `map.html` (full interactive), `printable-bourbon-trail-map.html` (PDF landing page), `embed-bourbon-trail-map.html` (widget + host toolkit), and four regional pages `bourbon-trail-map-{louisville,bardstown,frankfort,lexington}.html`.
 
-**Inline badge/pill icons:** inside a pill (`.badge`, `.lodging-tag`, `.rc-tag`, `.tour-card-rec`) the icon is a bare 16px `<img>` with `style="vertical-align:-3px;margin-right:4px"` — no chip, no wrapper, no per-page CSS. Mapping: award/honor pill → `trophy`; top-pick pill → `star`; official-trail/craft/independent pill → `badge`.
+**Distillery profiles:** `distillery-{name}.html`, one per venue. Two files exist but are **excluded from the site everywhere** (`distilleries.html`, `trip-builder.html`, `map.html`, `sitemap.xml`): `distillery-garrard-county.html` (shut down) and `distillery-barton-1792.html` (not open to the public).
 
-### Region banner (where-to-stay `.region-header`)
-Navy panel (`--primary-dark`). **No icon chip** — the text block sits at the left padding. Under each city-name `<h3>` sits a gold **inline-SVG "trail underline"**: a gentle dashed arc (`stroke-dasharray="9 8"`) with a filled dot at each end. It is `.trail-underline { display:block; margin-top:2px; max-width:100%; height:auto; }` so it scales down proportionally when the container narrows on mobile. The descriptor `<p>` follows (`margin-top:12px`). eat-and-drink's `.region-header` is a *different* component (a bordered underline header with a colored `.region-dot`) and was left alone — it is not the navy banner.
+**Other:** `sitemap.xml` (generated), `_redirects` (see below), `bourbon-trail-planning-checklist.pdf` (lead magnet), `bourbon-trail-map.pdf` (generated).
 
-- **The SVG's `width`/`viewBox`/path/circle coordinates are per-banner and hard-coded** to that heading's rendered text width. `W` = the heading's rendered **glyph** width **plus 4**; the path is `M5,10 Q {W/2},3 {W-5},8` and the right dot is at `cx={W-5}` (SVG attributes can't do math, so the numbers are pre-computed). Current values: Louisville `W=110`, Bardstown &amp; New Hope `W=266`, Frankfort `W=112`, Lexington `W=114`.
-- **Measure the glyph run, not the `<h3>` box.** The element box is wider than the letters and makes the arc overrun. Select the h3's text node and read a `Range.getBoundingClientRect().width` at desktop (22px Fraunces 700), e.g. `const r=document.createRange(); r.selectNodeContents(h3.firstChild); r.getBoundingClientRect().width`. Then `W = round(width) + 4`. The `+4` puts the end dot (`cx=W-5`) just under the last letter's right edge, mirroring the left dot (`cx=5`) under the first letter.
-- **If a region banner heading's text changes, re-measure that heading and regenerate its trail-underline SVG values** (`width`, `viewBox`, the `Q {W/2},3 {W-5},8` control/end points, and the end-dot `cx`). A stale width makes the arc under- or over-run the text. The other three banners are unaffected — only re-measure the one whose text changed.
+**Google Drive artefacts:** files with a ` (1)` suffix are Drive sync duplicates, identical to the originals, not separate pages. `.tmp.driveupload/` accumulates temp files. Never edit or reference either. Exclude them from any sweep — `git ls-files` is safer than a bare glob.
 
-### Homepage guide card headers (`.guide-img`)
-Background is `linear-gradient(135deg, #0E2F44, #1B4761)` for **all** cards (the old per-card blue/gold/teal inline gradients are gone). Each header contains, in order:
-1. `.guide-img-eyebrow` — the category, gold `var(--accent)`, uppercase, `letter-spacing:1.2px`. This replaced the old body-level `.guide-category` div; the category lives in the header now, not the body.
-2. `.guide-img-ghost` — a large category icon, right-aligned, `opacity:0.3`, **inlined SVG with all strokes recolored to `#D4A03C`** (the file versions are dark-on-light and vanish against the navy, so they can't be used via `<img>` here).
-3. `.guide-img-trail` — a gold dashed trail curve across the bottom, `stroke-dasharray`, `opacity:0.7`, `vector-effect="non-scaling-stroke"` so the stretch to card width doesn't distort the stroke.
+---
 
-The old `.guide-img-label` (the ghosted "3D"/"BT"/"$$" two-character mark) is gone. Do not re-add it.
+## Page templates
 
-## File Structure
+### Nav (every page)
+Order: Plan Your Trip → Distilleries → Map → Where to Stay → Eat & Drink → Trip Builder → Guides → Booking Guide (CTA style). **Map must be a nav item on every new page.**
 
-### Core Pages (9)
-- `index.html` — Homepage
-- `3-day-bourbon-trail-itinerary.html` — Flagship SEO page with 2/3/4-day trip selector
-- `distilleries.html` — Directory with 59 filterable cards (region, type, booking) + sort by rating/A-Z; count is dynamically set on load via `applyFilters()`
-- `map.html` — Static interactive map with 59+ distilleries; height is `calc(100vh - 120px)` so content below is visible on scroll. PDF map CTA card opens a modal (no `#pdf-signup` inline section — that was removed). Features: distillery search box in sidebar (dropdown autocomplete, fly-to on click), collapsible region legend on mobile (collapsed by default), Kentucky state border rendered via `L.geoJSON()` fetched from PublicaMundi US states GeoJSON (fails silently if unavailable), pin labels visible at zoom 9+. **URL deep-link support** via `applyDeepLink()` at end of script — supports `?region=` (fits bounds to region, activates filter button) and `?distillery=` (flies to marker at zoom 14, opens popup); both params together apply region filter then highlight distillery (falls back to distillery-only if distillery isn't in that region). Region param values: `louisville`, `bardstown`, `frankfort`, `lexington`, `other`; `northern`/`central`/`western` all normalize to `other`. Distillery slug matches the `distillery-{slug}.html` filename pattern. Note: map.html uses `marker.addTo(map)` / `map.removeLayer()` for filter toggling. trip-builder.html also uses `marker.addTo(map)` / `marker.removeFrom(map)` via `_addPin()`/`_removePin()` (not setOpacity).
-- `trip-builder.html` — Interactive trip builder (see Trip Builder section below)
-- `bourbon-trail-booking-guide.html` — 10-step booking checklist
-- `bourbon-trail-budget-guide.html` — Per-person cost breakdown
-- `where-to-stay-bourbon-trail.html` — Lodging guide with affiliate links
-- `guides.html` — Blog/guides index page
+**Hamburger breakpoint is 900px site-wide.** Every page collapses `.nav-links` and shows `.mobile-menu-btn` at `max-width:900px`. Some pages retain an older `@media (max-width:640px)` block with redundant but harmless duplicate collapse lines plus that page's content rules; leave those content rules at their breakpoint.
 
-### Content Pages
-- `eat-and-drink-bourbon-trail.html` — Restaurant/bar guide by region
-- `about.html` — Monetization disclosure, JS email rendering
-- `contact.html` — JS email rendering
+**`.nav-links` gap is `26px`, not 32px.** Tightened deliberately so the wide lockup plus all eight links clear one line inside the 1200px cap. Do not raise it — the nav wraps to two lines above ~1200px if you do.
 
-### Blog Posts / Guides
-- `best-time-to-visit-bourbon-trail.html` — Month-by-month seasonal guide
-- `bourbon-trail-non-bourbon-drinkers.html` — Guide for non-bourbon-drinking partners
-- `louisville-whiskey-row-walking-guide.html` — Louisville Whiskey Row self-guided walking tour
-- `bourbon-trail-transportation-guide.html` — How to get around: DIY driving, guided tours, designated driver strategies
-- `kentucky-bourbonfest.html` — Kentucky BourbonFest guide: dates, tickets, 60+ distilleries, 200+ bourbons, what to expect
-- `kentucky-whiskey-trail.html` — Whiskey Trail vs Bourbon Trail explainer; same destinations, why both names exist, Jun 2026
-- `bourbon-trail-bachelor-party-guide.html` — Bachelor party planning: best distilleries for groups, 2-day itinerary, budget, May 2026
-- `buffalo-trace-gift-shop-guide.html` — Honest guide to what's in stock, allocated rotation, purchase limits, timing tips, Apr 2026
-
-### Distillery Profiles (60 active)
-All named `distillery-{name}.html`. All use the standardized template (white frosted nav, snapshot cards, tour card headers, rating bars, verdict box, sidebar with quick details). Each has: rating, tour options/prices, booking difficulty, gift shop tips, verdict, nearby pairings with links, GA tracking, mobile menu, MailerLite universal script, OG tags, correct canonical URL.
-- 62 distillery HTML files exist in repo, but `distillery-garrard-county.html` (shut down) and `distillery-barton-1792.html` (not open to public) are intentionally excluded. Do NOT add either to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`.
-
-### Other
-- `sitemap.xml` — URL count changes as pages are added; regenerate with `python scripts\generate_sitemap.py` when adding/removing pages. All URLs use `mybourbontrailplan.com` domain.
-- `bourbon-trail-planning-checklist.pdf` — Lead magnet delivered via MailerLite
-- `bourbon-trail-map.pdf` — Printable/downloadable bourbon trail map; linked from homepage and map.html. Generated from data by `scripts/generate_pdf_map.py`, which lays out both pages from scratch on every run. The source of truth is the live site itself: the script reads the `const D=[...]` array in `trip-builder.html` (name, lat, lng, region, type, cost, booking) and the cards in `distilleries.html` (city, Official Trail vs Craft tag), joins them on the profile filename, and assigns map numbers. Page 1 is a landscape hero map (statewide outline, region-colored numbered pins, a zoomed Central Corridor inset, region legend, QR to the Trip Builder). Page 2 is a landscape four-column reference list grouped by region (number, city, Trail/Craft, booking difficulty, tour cost) plus a drive-times table, a booking-ease index, and a second QR. There is no separate data file to maintain; `scripts/pdf_map_data.json` is written by the script as a readable snapshot of what it derived, for inspection only (not an input). Assets live in `scripts/assets/` (Kentucky outline GeoJSON, DM Sans + Fraunces TTFs). The old `scripts/pdf_map_add_distillery.py` in-place editor is obsolete and should not be used.
-- `images/` — Distillery photos, named `{distillery}-1.jpg`, `{distillery}-2.jpg`, etc. All photos are EXIF-rotation-fixed and optimized for web (max 1200px, ~80% JPEG quality)
-
-### Quick reference: editing the PDF map later
-- **Add or edit a distillery:** make the normal site edits (`trip-builder.html`, `distilleries.html`, etc.), then run `python scripts/generate_pdf_map.py`.
-- **Change a drive time, the booking-ease descriptions, or the QR target:** edit the `drives` list, the `gloss` list, or `TRIP_BUILDER_URL` near the top of `build_page2` / the script header.
-- **Change brand colors, region colors, or fonts:** the palette and `REGION_COLORS` dict are at the top of the script; fonts are in `scripts/assets/fonts/`.
-- **Header logo:** both PDF pages embed the raster brand lockup `images/nav-2x.png` via the `logo()` function (`LOGO_PNG` / `_LOGO_AR` constants). If the brand lockup art changes, re-export `nav-2x.png` (keep it a wide transparent PNG) and re-run the generator — no code change needed unless the aspect ratio changes.
-- **Move a town to a different region:** two dicts near the top of the script control this, and both feed the map pin color and the page-2 list section. Use `_CITY_REGION` for legacy `Central`/`Other` towns (e.g. Shelbyville's Bulleit + Jeptha Creed are mapped to Louisville, the I-64 corridor, rather than Lexington/Lawrenceburg). Use `_REGION_OVERRIDE` when the site already tags a real region but it is geographically misleading for planning (e.g. Paris is tagged Northern KY on the site but sits ~17 mi from the Lexington distilleries, so it is overridden to Lexington/Lawrenceburg). Geographic outliers that sit apart from their region's other pins (Shelbyville, Danville, Paris) get a small town label in the inset so they read clearly; that list is in `build_page1`.
-- **Page orientation:** both pages are currently US Letter landscape. Page sizes are set at the top of `build_page1` and `build_page2` (`W,H = 792,612`) if you ever want page 2 back in portrait.
-
-## Nav & Footer Template (ALL pages)
-- **Top nav links (in order):** Plan Your Trip → Distilleries → Map → Where to Stay → Eat & Drink → Trip Builder → Guides → Booking Guide (CTA style)
-- Map must be a nav item on every new page created
-
-### Header logo (ALL pages)
-- **Brand assets** live in `images/`: `bourbon-trail-planner-nav.svg` (wide lockup, ~1020×136, renders ~300px at height 40px), `bourbon-trail-planner-icon.svg` (pin-only mark, square `viewBox="74 88 364 364"`, renders 40×40 at height 40px), plus `-nav-reversed.svg` / `-lockup*.svg` variants. The homepage footer uses `-nav-reversed.svg` at height 36px — leave it alone when batch-editing the header.
-- **Hamburger breakpoint is `900px` site-wide (HB=900).** Every page collapses the nav to the hamburger at `max-width:900px`. When adding a page, match this: the nav must show the hamburger (and hide `.nav-links`) at ≤900px. (Historically most pages used 640px; they were unified to 900px so the icon-only tier never has to share the header with the full link row below ~940px, where the 8 links wrapped.) On most pages the collapse rules live in the same `@media (max-width:900px)` block as the mobile logo rule below; some pages also retain an older `@media (max-width:640px)` block with redundant (harmless, subset) `.nav-links{display:none}` / `.mobile-menu-btn{display:block}` lines plus that page's content rules — leave those content rules at their breakpoint.
-- **Responsive logo swap (three tiers):** the header logo is wrapped in a `<picture>` with two `<source>`s (first match wins). Exact structure:
-  ```html
-  <a href="index.html" class="logo"><picture><source media="(max-width:900px)" srcset="images/bourbon-trail-planner-nav.svg?v=4"><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
-  ```
-  Plus a mobile rule appended to the `<style>` block that also drives the collapse: `@media (max-width:900px){.nav-links{display:none;}.mobile-menu-btn{display:block;}.logo-lockup{width:min(72vw,300px)!important;height:auto!important;}}` (the `!important` is required to beat the inline `height:40px`). Tiers:
-  - **≥1200px** → full lockup at height 40px (the `<img>` default; no `<source>` matches).
-  - **901 … 1199px** → 40px pin icon with the full link row. The lockup would blow past the `max-width:1200px` `.nav-inner` cap here; the icon frees ~260px so the nav stays on one line (verified one-line at 1024). (A ~40px sliver just above 900 can still wrap the 8 links; negligible and rarely hit.)
-  - **≤900px (hamburger shown)** → full lockup again, sized `width:min(72vw,300px);height:auto` so the wordmark is legible and clears the hamburger on a 375px phone (~17px gap). Verified 375/414/768/850/1024/1280: hamburger opens/closes correctly, no logo/hamburger collision, wordmark visible at mobile widths.
-- **`.nav-links` gap is `26px` (not 32px)** site-wide. This was tightened from 32px specifically so the wide lockup + all 8 links clear one line inside the 1200px cap with ~38px of slack at 1280/1440/1920. Do NOT bump it back to 32px — the lockup nav wraps to two lines above ~1200px if you do.
-- **Favicon chain** (in every page `<head>`, SVG primary + PNG fallbacks, versioned with `?v=`):
-  ```html
-  <link rel="icon" type="image/svg+xml" href="/images/bourbon-trail-planner-icon.svg?v=4">
-  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=4">
-  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180.png?v=4">
-  ```
-  Bump the `?v=` query on all three (and the `<picture>` srcset) together when the icon art changes, to bust caches.
-
-### Footer variants
-Two footer patterns exist — use the one that matches the page type:
-
-**Homepage footer** (`index.html` only): Multi-column grid with Plan / Explore / Resources sections, inline brand description, and a `.footer-bottom` bar. Uses custom CSS classes (`.footer-inner`, `.footer-col`, etc.).
-
-**Interior page footer** (all other pages): Single-row flexbox with all nav links inline, Instagram handle line, and standard copyright. No custom footer CSS needed — uses inline styles:
+**Header logo, three tiers** via `<picture>` (first match wins):
 ```html
-<footer>
-  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px 20px;margin-bottom:16px;font-size:13px;">
-    <a href="index.html">Home</a>
-    <a href="3-day-bourbon-trail-itinerary.html">Plan Your Trip</a>
-    <a href="distilleries.html">Distilleries</a>
-    <a href="map.html">Map</a>
-    <a href="trip-builder.html">Trip Builder</a>
-    <a href="guides.html">Guides</a>
-    <a href="where-to-stay-bourbon-trail.html">Where to Stay</a>
-    <a href="bourbon-trail-booking-guide.html">Booking Guide</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </div>
-  <div style="margin-bottom:12px;font-size:13px;"><a href="https://www.instagram.com/mybourbontrailplan" target="_blank" rel="noopener">@mybourbontrailplan on Instagram</a></div>
-  <p>&copy; 2026 <a href="index.html">Bourbon Trail Planner</a>. Not affiliated with the Kentucky Distillers' Association.</p>
-</footer>
+<a href="index.html" class="logo"><picture><source media="(max-width:900px)" srcset="images/bourbon-trail-planner-nav.svg?v=4"><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
 ```
-The footer element itself needs the background/color styles from the page's CSS (`.footer` or `footer` selector). Copy from any interior page like `distilleries.html`.
+Plus, in the `<style>` block: `@media (max-width:900px){.nav-links{display:none;}.mobile-menu-btn{display:block;}.logo-lockup{width:min(72vw,300px)!important;height:auto!important;}}` — the `!important` is required to beat the inline `height:40px`.
 
-## Distillery Profile Template Rules
-When creating or editing distillery profiles:
-- Use an existing profile like `distillery-buffalo-trace.html` as the canonical template reference
-- All profiles MUST have: correct canonical URL (`https://mybourbontrailplan.com/filename.html`), OG tags (og:title, og:description, og:type, og:url), GA script, MailerLite universal script, `-webkit-text-size-adjust: 100%`, and `TouristAttraction` JSON-LD schema (see `scripts/add_schema.py` for the standard structure)
-- **Do NOT add a `review` or `reviewRating` block to TouristAttraction schemas** — self-authored ratings violate Google's review snippet policy and cause Rich Results Test critical errors
-- **`@type` must be an array: `["TouristAttraction", "LocalBusiness"]`** — `openingHours` is a `LocalBusiness` property; using a single string type `"TouristAttraction"` causes a schema.org validator warning
-- Photo gallery section goes between "What to Expect" and "Tour Options", using the `.photo-gallery` / `.gallery-grid` classes
-- Photos are referenced as `images/{distillery}-1.jpg` etc. — always use `loading="lazy"` on gallery images
-- Gallery uses `aspect-ratio: 4/3` with `object-fit: cover` (NOT fixed height) to avoid cropping important content
-- Use `repeat(3, 1fr)` grid for 3 photos, `repeat(2, 1fr)` for 4 photos
-- Lightbox: each gallery page includes a `.gallery-lightbox` div and click-to-expand JS before `</body>` — tap any photo to see it full-screen
-- Distilleries with photos so far: Willett (3), Heaven Hill (3), Chicken Cock (4), Lux Row (4), Larrikin (3), Preservation (3), Four Roses (4), Peerless (3), Wild Turkey (4), Maker's Mark (4), Old Forester (4), Buffalo Trace (4), Stitzel-Weller (4), Buzzard's Roost (3), Evan Williams (2), Log Still (3), Michter's (2)
-- Buffalo Trace gift shop guide also has a 4-photo gallery (photos 6, 9, 10, 11 from the buffalo-trace-*.jpeg set)
-- Nearby pairing cards must link to real profile pages (never `href="#"`)
-- Restaurant cards link to `eat-and-drink-bourbon-trail.html`
-- Sidebar region guides link to `guides.html`
-- After creating a new profile: add it to `distilleries.html`, `trip-builder.html`, `map.html`, and `sitemap.xml`
+- **≥1200px** → full lockup at 40px height (the `<img>` default, no `<source>` matches).
+- **901–1199px** → 40px pin icon with the full link row. The lockup would blow past the 1200px `.nav-inner` cap here; the icon frees ~260px so the nav stays on one line.
+- **≤900px** → full lockup again at `width:min(72vw,300px)`, so the wordmark stays legible and clears the hamburger on a 375px phone.
 
-### Rating Categories — always six bars, two label sets (DO NOT otherwise deviate)
-Every profile's "Our Honest Ratings" block uses **exactly six bars, in this order**. Bars 2, 4, 5, 6 are identical everywhere; **only bars 1 and 3 change** depending on the venue class:
+Brand assets in `images/`: `bourbon-trail-planner-nav.svg` (wide lockup), `bourbon-trail-planner-icon.svg` (pin-only, `viewBox="74 88 364 364"`), plus `-nav-reversed.svg` and `-lockup*.svg`. The homepage footer uses `-nav-reversed.svg` at 36px; leave it alone when batch-editing headers.
+
+**Favicon chain** in every `<head>`, versioned to bust caches. Bump `?v=` on all three **and** the `<picture>` srcset together when the icon art changes:
+```html
+<link rel="icon" type="image/svg+xml" href="/images/bourbon-trail-planner-icon.svg?v=4">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png?v=4">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon-180.png?v=4">
+```
+
+### Footer, two variants
+**Homepage only:** multi-column grid (Plan / Explore / Resources) with custom classes (`.footer-inner`, `.footer-col`) and a `.footer-bottom` bar.
+
+**Every other page:** single-row flexbox, all nav links inline, Instagram handle line, copyright. No custom footer CSS needed. Copy the block from any interior page such as `distilleries.html`; the `<footer>` element itself takes its background from that page's CSS.
+
+### Required on every page
+GA script, MailerLite universal script (after GA, before `</body>`), correct self-canonical, OG tags, favicon chain, and `-webkit-text-size-adjust: 100%` in the `html` rule (iOS Safari text inflation). `check_site.py` verifies all of these.
+
+**GA must be exactly two separate `<script>` tags:** (1) `<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVK4D6KJJP"></script>` and (2) the inline `dataLayer` / `gtag('config', ...)` block. **Never nest one `<script>` inside another** — the parser misreads it, the JS throws, and `gtag` is undefined for the whole page.
+
+**All `gtag(...)` calls must be guarded:** `if(typeof gtag==='function'){gtag(...)}`, so a blocked tracker can never abort a user-facing action like opening a modal or firing a mailto.
+
+---
+
+## Distillery profiles
+
+Use `distillery-buffalo-trace.html` as the template reference. Every profile needs the standard furniture above plus `TouristAttraction` JSON-LD (see `scripts/add_schema.py` for the structure).
+
+- **`@type` must be the array `["TouristAttraction", "LocalBusiness"]`.** `openingHours` is a `LocalBusiness` property; a single string type triggers a schema.org validator warning.
+- **Never add a `review` or `reviewRating` block.** Self-authored ratings violate Google's review-snippet policy and cause Rich Results Test critical errors.
+- Photo gallery sits between "What to Expect" and "Tour Options", using `.photo-gallery` / `.gallery-grid`. Photos are `images/{distillery}-N.jpg` with `loading="lazy"`. Use `aspect-ratio: 4/3` with `object-fit: cover`, never a fixed height. Grid is `repeat(3, 1fr)` for three photos, `repeat(2, 1fr)` for four. Each gallery page includes a `.gallery-lightbox` div plus click-to-expand JS before `</body>`.
+- Nearby pairing cards must link to real profile pages, never `href="#"`. Restaurant cards link to `eat-and-drink-bourbon-trail.html`; sidebar region guides link to `guides.html`.
+- **Profiles have no date surfaces.** `TouristAttraction` carries no `dateModified` and profiles have no `.article-meta` bar. Do not add date fields just to have them.
+
+### Sidebar Contact section, fixed order
+1. `<a href="map.html?distillery={slug}" class="sidebar-link">See on Map &rarr;</a>` — always first
+2. Phone row (`.sidebar-row`) — in Contact only, **not** in Quick Details
+3. Official website link
+
+**No Google Maps links** — the `map.html?distillery={slug}` deep link replaces them. Do not add `google.com/maps` URLs to the sidebar. Phone lives in Contact only, removed from Quick Details to kill the duplication.
+
+### Internal linking conventions
+- Every profile links to `map.html?distillery={slug}` via the sidebar "See on Map".
+- Guide pages link to `map.html?region={region}` **in context**, not as a nav item. Currently done on: `where-to-stay-bourbon-trail`, `3-day-bourbon-trail-itinerary`, `eat-and-drink-bourbon-trail`, `louisville-whiskey-row-walking-guide`, `kentucky-bourbonfest`, `bourbon-trail-non-bourbon-drinkers`.
+- Style inline region map links in guide body copy as `style="color:var(--primary-light);font-weight:500;"`.
+
+### Ratings: six bars, two label sets
+Every profile's "Our Honest Ratings" block uses **exactly six bars in this order**. Bars 2, 4, 5 and 6 are identical everywhere; **only bars 1 and 3 change** by venue class:
 
 | # | Working distillery | Urban tasting room |
 |---|---|---|
 | 1 | Tour Quality | **Experience Quality** |
 | 2 | Value for Money | Value for Money |
-| 3 | Campus &amp; Grounds | **Space &amp; Atmosphere** |
+| 3 | Campus & Grounds | **Space & Atmosphere** |
 | 4 | Gift Shop | Gift Shop |
 | 5 | Booking Ease | Booking Ease |
 | 6 | Crowd Level | Crowd Level |
 
-- **Which set to use is an editorial judgment, NOT `data-production`.** Use the tasting-room labels only for an **urban room with no grounds and no tour** (a bar, lounge, or tasting counter). `data-production="tasting"` is *not* the trigger: `distillery-stitzel-weller.html` is tagged `tasting` but is a historic campus with real grounds and real tours, so it correctly keeps the **distillery** labels. Currently on the tasting-room labels: Dark Arts, Whiskey Thief (Louisville), Fresh Bourbon, Chicken Cock.
-- **Why two sets (July 2026).** The old rule forced all six distillery labels onto every venue and told you to silently reinterpret them ("score Campus &amp; Grounds on the interior space"). That produced Dark Arts scoring **9.0 for "Campus &amp; Grounds"** at a blending house with no campus: the number was right, the label was lying. Relabeling bars 1 and 3 makes the label say what the score already meant. Four of six bars stay identical **on purpose** so headline ratings stay comparable across all venues and readers don't have to learn two systems. Do not widen this into a fully separate tasting-room scale.
-- **Relabeling does not mean re-rating.** When the two label sets were introduced, the four existing urban rooms had their labels changed and their **scores left untouched**, because the scores already encoded the reinterpreted meaning. If you move a venue between label sets, change the label and leave the number alone unless you have a real reason.
-- **Ratings score the VISIT, never the whiskey.** Do not add a "Whiskey Quality" bar, and do not grade how the bourbon tastes in the body copy or the verdict either. We rate every venue on the visitor experience; singling one out for a taste knock is unfair to it and inconsistent with the rest. If the whiskey is genuinely the story (a signature pour, a flight worth ordering), mention it as a *recommendation* ("the old fashioned flight is the thing to order"), not as a score or a criticism. Buzzard's Roost and Dark Arts both had a "Whiskey Quality" bar; a reader emailed to point out the inconsistency and both were normalized in July 2026.
-- **Never invent a rating.** Every card carries a numeric rating and every profile carries six bars plus a verdict; these are Kyle's editorial judgments from real visits and are the entire premise of the site. If Kyle has not visited a venue, do not ship a guessed score, do not average other venues, and do not infer one from press coverage. Leave it as an explicit TODO and ask him.
-- **The "Food &amp; Dining" swap (bar 4).** Two venues replace "Gift Shop" with "Food &amp; Dining" because the on-site kitchen is the actual reason to visit: `distillery-pensive.html` (award-winning kitchen, every dish named after a racehorse) and `distillery-monks-road-boiler-house.html` (a full chophouse menu, the only tasting room on Whiskey Row with real dining). This started as a Pensive one-off and Kyle extended it to Monk's Road in July 2026, so it is now a **narrow, named exception, not a free-for-all**: use it only where the food is the headline reason to go, and confirm with Kyle before applying it to a third venue. Everywhere else, bar 4 is "Gift Shop".
-- The headline rating in the snapshot card (`Our Rating`, e.g. `7.5 / 10`) is **editorial, not the average of the six bars**. Changing the bars does not require changing the headline. Changing the headline *does* require updating the matching rating on the card in `distilleries.html`.
-- **Every rating exists in THREE places and they drift. The profile snapshot is canonical.** The copies are: the profile's `snap-value` headline (source of truth), the `dist-card-rating` div on that distillery's card in `distilleries.html`, and the `rating:` field in the `const D=[...]` array in `trip-builder.html`. `map.html` carries no rating, so there is no fourth copy.
-  - Changing a rating means changing **all three**. Missing one is invisible until someone compares pages.
-  - **Audited August 2026: 23 of 60 disagreed.** The instructive part is the split. The **directory** was wrong in 16 cases and the **trip builder** in only 7, so both secondary copies had drifted in different places and there was no single stale file. Do not assume one copy is the reliable one; always resolve to the profile. Several trip-builder errors looked like digit transpositions (Evan Williams 7.8 stored as 8.7, Log Still 8.4 as 7.8).
-  - **To check for drift, run `python scripts/check_ratings.py`.** It reads each profile's snapshot as truth and reports any directory or trip-builder value that disagrees. Pass `--apply` to sync them. Run it after any rating change and before a release.
+- **Which set is an editorial judgment, NOT `data-production`.** Use the tasting-room labels only for an urban room with no grounds and no tour. `distillery-stitzel-weller.html` is tagged `tasting` but is a historic campus with real grounds and tours, so it correctly keeps the distillery labels. Currently on tasting-room labels: Dark Arts, Whiskey Thief (Louisville), Fresh Bourbon, Chicken Cock.
+- **Why two sets:** the old rule forced all six distillery labels onto every venue and told you to silently reinterpret them. That produced Dark Arts scoring 9.0 for "Campus & Grounds" at a blending house with no campus — the number was right, the label was lying. Four of six bars stay identical **on purpose** so headline ratings stay comparable. Do not widen this into a separate tasting-room scale.
+- **Relabelling is not re-rating.** When the two sets were introduced the existing urban rooms kept their scores, because the scores already encoded the reinterpreted meaning. If you move a venue between sets, change the label and leave the number alone.
+- **Ratings score the VISIT, never the whiskey.** No "Whiskey Quality" bar, and do not grade how the bourbon tastes in body copy or the verdict either. If the whiskey is the story, make it a *recommendation* ("the old fashioned flight is the thing to order"), not a score. Buzzard's Roost and Dark Arts both had a Whiskey Quality bar; a reader emailed about the inconsistency and both were normalised.
+- **The "Food & Dining" swap (bar 4)** replaces Gift Shop at exactly two venues where the kitchen is the reason to visit: `distillery-pensive.html` and `distillery-monks-road-boiler-house.html`. This is a **narrow, named exception**. Confirm with Kyle before applying it to a third venue.
+- **Never invent a rating.** Every card carries a number and every profile six bars plus a verdict; these are Kyle's editorial judgments from real visits and are the premise of the site. If Kyle has not visited, do not ship a guessed score, do not average other venues, do not infer one from press coverage. Leave an explicit TODO and ask him.
+- The headline rating (`Our Rating`, e.g. `7.5 / 10`) is **editorial, not the average of the six bars.** Changing bars does not require changing the headline.
 
-### Sidebar Contact Section — Standard Structure
-All 60 active profiles have a standardized Contact section. Order must be:
-1. `<a href="map.html?distillery={slug}" class="sidebar-link">See on Map &rarr;</a>` — always first
-2. Phone row (`<div class="sidebar-row">`) — in Contact only, NOT in Quick Details
-3. Official Website link
-- **No Google Maps link** — the "See on Map" deep-link replaces it; do not add `google.com/maps` links to the sidebar
-- Phone goes in Contact section only (removed from Quick Details to eliminate duplication)
+### Ratings live in THREE files and they drift
+The copies are the profile's `snap-value` headline (**canonical**), the `dist-card-rating` div in `distilleries.html`, and the `rating:` field in `trip-builder.html`'s `D` array. `map.html` carries no rating, so there is no fourth copy. Changing a rating means changing all three.
 
-### Internal Linking Conventions
-- Every distillery profile links to `map.html?distillery={slug}` via the "See on Map" sidebar link
-- Guide pages link to `map.html?region={region}` in context: `where-to-stay`, `3-day-bourbon-trail-itinerary`, `eat-and-drink-bourbon-trail`, `louisville-whiskey-row-walking-guide`, `kentucky-bourbonfest`, `bourbon-trail-non-bourbon-drinkers`
-- Use `style="color:var(--primary-light);font-weight:500;"` for inline region map links in guide page body copy
+**Audited August 2026: 23 disagreed.** The instructive part is the split — the **directory** was wrong in 16 cases and the **trip builder** in 7, so both secondary copies had drifted in different places and there was no single stale file. Never assume one copy is the reliable one; always resolve to the profile. Several trip-builder errors were digit transpositions (Evan Williams 7.8 stored as 8.7).
 
-## Trip Builder — Critical Technical Notes
+**Run `python scripts/check_ratings.py`** to detect drift (exit 1 if any), `--apply` to sync to the profile.
 
-### Architecture
-- 60 distilleries with Leaflet.js markers, region filters, smart pairing tips
-- **Distillery dots** are managed via `_addPin(id)` / `_removePin(id)`, which call `marker.addTo(map)` and `marker.removeFrom(map)`. A `_onMap` boolean flag prevents duplicate adds/removes. Click handlers survive DOM recreation because they're attached to the Leaflet marker object, not the DOM element. Trip stop dots (added to the trip) are always kept on the map — `_addPin` is called for them regardless of zoom.
-- **Region overlay markers** are always on the map. When zoomed in (`show=true`), they're hidden by setting `opacity:0` and `pointer-events:none` on **both** the Leaflet icon wrapper (`m._icon`) **and** the inner `.region-overlay` child element — setting it on the wrapper alone is not sufficient because CSS `pointer-events:auto` on the child overrides the parent's inline `none` in HTML. Regions where this matters: Louisville (Old Forester, Evan Williams, Buzzard's Roost), Bardstown (Chicken Cock), Frankfort (Buffalo Trace, Castle & Key), Lexington (Fresh Bourbon).
+---
 
-### Mobile Layout
-- Breakpoint: 900px
-- Browse and Your Trip buttons are in a **fixed top action bar below the nav** (not floating bottom buttons — bottom positioning was abandoned due to iPhone Safari toolbar conflicts)
-- All mobile interactive elements use z-index 800+ to stay above Leaflet layers
+## SEO
 
-### Mobile z-index Stack (DO NOT violate this order)
-```
-2000  — Email overlay modal
-1100  — Nav dropdown menu
-1001  — Hamburger button
-1000  — Nav bar
- 850  — Browse panel, sidebar/trip panel
- 800  — Mobile action bar (top)
- 700  — Leaflet popup pane (DO NOT go below this for interactive elements)
- 600  — Leaflet marker pane
- 400  — Leaflet overlay pane
- 200  — Leaflet tile pane
-```
+- Canonicals point to `https://mybourbontrailplan.com/filename.html`, with the extension. The homepage is bare `https://mybourbontrailplan.com/`.
+- Titles under 85 characters, meta descriptions under 170.
+- Every page needs OG tags: `og:title`, `og:description`, `og:type`, `og:url`.
+- **Schema by page type:** distillery profiles `["TouristAttraction","LocalBusiness"]` with `address`, `geo`, `telephone`, `openingHours`, `isAccessibleForFree`, `url`, `sameAs`; guides/articles `Article` with `url`, `mainEntityOfPage`, `author`, `publisher`, `datePublished`, `dateModified`; directory and map pages `CollectionPage` with `url` + `publisher`; homepage `WebSite` + `Organization` (two blocks); trip builder `WebApplication`; About `AboutPage`; Contact `ContactPage`. Add `FAQPage` where a page has a real FAQ.
+- **author/publisher is always** `{"@type": "Organization", "name": "Bourbon Trail Planner"}` — never `Person`, never a different name.
+- **datePublished/dateModified are ISO 8601 with an Eastern offset**, e.g. `2026-02-22T00:00:00-05:00`, never bare `YYYY-MM-DD`. The site stamps `-05:00` year-round for consistency, including summer dates technically on `-04:00`. Do not "fix" some to `-04:00` and leave a mixed pattern.
 
-### Map Label Behavior
-- Distillery name labels are hidden by default (`display:none`) and shown via `#map.show-labels` class
-- Label threshold is **filter-aware**: `Math.min(10, RD[aRF].zoom)` when a region is active, 12 when "All" — so Western at zoom 8 shows labels, Northern at zoom 10 shows labels, "All" requires zoom 12
-- Desktop hover shows label on mouseover at any zoom (`@media (hover:hover)` so it doesn't fire on touch)
-- `filterRegion()` calls `handleZoom()` at the end so labels update immediately when the filter changes
+### Updating a guide's date: THREE surfaces, every time
+On any **content** change to a guide or article, bump all three. They live in two files and forgetting one is the most repeated mistake on this site.
 
-### handleZoom() vs updateZoomUI() — Important Split
-Two functions handle zoom-level changes:
-- **`updateZoomUI()`** — fires **immediately** on every `zoomend` and `moveend` event. Updates: back button visibility, region overlay opacity/pointer-events, map label class (`show-labels`). No debounce. This ensures UI elements never lag behind map movement.
-- **`handleZoom()`** — debounced 200ms after each `zoomend`/`moveend`. Calls `updateZoomUI()` first, then runs the expensive `_addPin`/`_removePin` loop over all 60 distilleries. The debounce prevents thrashing during fast zooming.
-- `filterRegion()` calls `handleZoom()` directly (not debounced) at the end so dots and labels update immediately when a region is selected.
+1. **JSON-LD `dateModified`** in the page `<head>`.
+2. **The visible "Updated {Month} {Year}"** in the `.article-meta` bar under the H1.
+3. **The `.guide-date` span on that guide's card in `guides.html`** — a different file, which is why it gets forgotten. Existing spans are inconsistent: most show a bare **publish** month matching `datePublished`, a few are prefixed `Updated `. If a card says `Updated `, keep the prefix and bump the month. If it shows a bare publish date, leave it unless deliberately converting. Some cards have no date span at all; that is fine, there is simply nothing to bump.
 
-### handleZoom() Thresholds (all filter-aware)
-- **Dot threshold** (`showThr`): `Math.min(10, RD[aRF].zoom)` when filtered, `10` when "All" — dots appear at the region's flyTo zoom
-- **Label threshold** (`labelZoom`): same formula as dot threshold — labels and dots appear together
-- **Back button** ("← All Regions"): shows at `z >= showThr` — visible as soon as dots appear
-- **Region overlay buttons** (e.g. "Western 8 distilleries"): hidden when `show=true`, visible when `show=false`
+- Leave `datePublished` alone; it records original publication.
+- **`guides.html` card copy goes stale too.** The card `<p>` duplicates claims from the page. On a material change, reread the blurb, not just the date.
+- Skip the bump for pure style/markup edits (CSS, nav/footer templates, favicon versions). Bump for anything a reader notices: new facts, corrections, rewritten copy, added or removed sections.
+- Every guide's `.article-meta` should carry a read-time item and an Updated item. Read time is roughly **200 words per minute** over the body copy.
 
-### RG City-to-Region Mapping (trip-builder.html)
-- `Newport:'Northern'` — New Riff and Pensive are both in Newport; they appear under the Northern filter
-- Most other Northern KY cities (Independence, Ludlow, Sparta, Maysville, Burlington, Augusta) also map to `Northern`
-- `Paris:'Lexington'` — Paris is 17 mi from Lexington distilleries, a natural Lexington-day add-on (closer to Lexington than to the Northern KY cluster)
-- `Danville:'Lexington'`, `Lawrenceburg:'Lexington'` — these towns sit in the Lexington/Lawrenceburg corridor and appear under the Lexington filter
-- `Shelbyville:'Louisville'`, `Crestwood:'Louisville'` — I-64/I-71 corridor distilleries grouped with Louisville per the PDF map regions
-- `Lebanon:'Bardstown'`, `Radcliff:'Bardstown'` — grouped with Bardstown per the PDF map regions
+---
 
-### Region Data (RD) — flyTo destinations
-- `Louisville`, `Bardstown`, `Frankfort`: zoom 14
-- `Lexington`: zoom 11
-- `Northern`: zoom 10
-- **`Western`: lat 37.13, lng -87.59, zoom 8** — spans 2+ degrees of longitude; zoom 10 is too close for mobile to see all 8 distilleries; center is midpoint of extremes (not geographic mean) for best viewport fit
-- `Central` region was removed — all formerly-Central distilleries (Bulleit, Jeptha Creed, Kentucky Artisan, Larrikin) are now in Louisville or Lexington per PDF regions
+## Copy style
 
-### Western Button Mobile Repositioning
-- On desktop the Western button marker sits at the `RD` flyTo center (–87.59), which is visible in the wide desktop viewport
-- On mobile (< 900px), the initial overview viewport only spans ~2 degrees of longitude and the Western center is off-screen to the left
-- **Mobile fix**: Western button marker is placed at `lat 37.3, lng -86.2` with `iconAnchor [0,28]` (left-aligned) so the button sits near the left edge of the initial mobile view and extends rightward into full view
-- Clicking the button still `flyTo`s `RD.Western` (37.13, -87.59, zoom 8) — marker position and flyTo destination are separate
-- Detection: `const isMobile = window.innerWidth < 900` at map init time
-
-### Mobile Back Button ("← All Regions")
-- `position:absolute; top:24px; left:54px` — `top:24px` clears the fixed action bar; `left:54px` clears the Leaflet zoom controls (~36px wide at left edge). Previous `left:12px` placed it directly behind the zoom control.
-- `z-index:600` — stays below the action bar (800); the extra `top` clearance keeps it visually below, not z-fighting above
-
-### Trip State Persistence (localStorage)
-- Key: `btp-plan`; stores `{trip, tDays, aDay}` as JSON
-- `saveState()` is called by every mutator (add stop, remove stop, drag reorder, clear, switch day, change day count)
-- `loadState()` returns `true` if valid saved data was found and applied
-- Both use a try/catch wrapper matching the existing `btp-seen` pattern — localStorage failure (private mode, quota) is always silent
-- On restore, `fitBounds()` zooms the map to fit all trip markers: `{padding:[60,60], maxZoom:13, animate:false}`. For a single stop, `setView` at zoom 13. This is required because the back button only appears at the region zoom threshold — restoring a trip at the default overview zoom would otherwise hide it.
-- `rebuildDayTabs()` handles 4-day restored plans: removes any tabs > 3 then recreates them up to `tDays`. Uses IIFE closures in `onclick` to correctly capture day number.
-
-### Shareable Trip URL (`?plan=` parameter)
-- Encoding: slugs comma-joined per day, days semicolon-separated. Example: `day1slug1,day1slug2;day2slug1;day3slug1,day3slug2`
-- `getShareURL()` builds the full URL; `getPlanString()` produces just the encoded plan portion
-- `importPlan(str)` decodes and populates `trip[]`; unknown slugs are silently skipped (forward-compatible)
-- After import, `history.replaceState` strips the `?plan=` param so subsequent edits don't re-import the original on refresh
-- Plan is immediately saved to localStorage after import so it persists if the user refreshes
-- `rebuildDayTabs()` is called after import to support shared 4-day plans
-- GA4 event `plan_loaded_from_link` fires on import (with stop count)
-
-### Copy Trip Link Button
-- Element: `.share-btn#shareBtn` in sidebar footer, between the email button and clear button
-- Disabled alongside `#exportBtn` when no stops are added (`updateStats()` drives both)
-- `copyShareLink()` tries `navigator.clipboard.writeText()` first, falls back to `fallbackCopy()` (textarea select/exec)
-- On success, shows a non-blocking fixed toast (`#shareToast`, z-index 1900) with a 5s auto-dismiss and an inline link to open the email modal
-- GA4 event `share_link_copied` fires on copy (with stop count)
-
-### Drag-to-Reorder Stops
-- SortableJS 1.15.6 is loaded from unpkg after the Leaflet script tag
-- Drag handle: `.drag-handle` div at the start of each `.stop-card` (six-dot SVG icon)
-- `Sortable.create(area, {...})` is called at the end of `renderStops()` after `innerHTML` is set. If a Sortable already exists on the element (`area._sortable`), it's destroyed first to prevent double-init
-- `delay:150` + `delayOnTouchOnly:true` — prevents drag from firing during normal scroll on touch; desktop drag starts immediately
-- `onEnd` handler reads the DOM order of `.stop-card[data-id]` elements, rebuilds `trip[aDay]` from that order, then calls `refreshIcons(); renderStops(); drawRoutes(); updateStats(); saveState()`
-- Do NOT use `delayOnTouchOnly:false` or remove `delay` — this causes the drag handle to intercept vertical scroll on mobile
-
-### Onboarding and Empty-State Copy
-- **Never hardcode distillery counts or region counts** in the onboarding badge or empty-state subhead — these numbers change as distilleries are added and become stale immediately.
-- Current onboarding badge: "Explore Kentucky distilleries · free to use" (no count)
-- Current empty-state subhead: "across Kentucky's best distilleries" (no count)
-
-### Why Bottom Buttons Were Abandoned
-iPhone Safari's dynamic bottom toolbar height isn't accounted for by `env(safe-area-inset-bottom)`. Multiple attempts with increased bottom values, dvh units, and @supports fallbacks all failed across iPhone 16 Pro and 17 Pro simultaneously. Top action bar eliminates all bottom-edge issues permanently.
-
-### Urban tasting rooms are DIRECTORY-ONLY (no trip builder, no map, no PDF)
-New urban tasting rooms get a **profile page + a card in `distilleries.html` only**. Do **not** add them to `trip-builder.html` or `map.html`, and therefore they never reach `bourbon-trail-map.pdf` (the generator iterates the trip-builder `D` array and looks up `distilleries.html` by profile filename, so a card with no `D` entry is simply skipped — no code change, no warning).
-
-- **Why:** the map and trip builder plan a *driving* route between destinations. These rooms are walk-up sub-stops of a block that is already pinned, and they physically cannot be pinned. Measured at zoom 14: Green River (714 W Main), Pursuit (722), and Bardstown Bourbon Co. (730) fall **3.5–7px apart**, against the 28px minimum in the section below. Big Bat (800) is ~12px from BBC. They would render as one unreadable blob, and OverlappingMarkerSpiderfier was deliberately removed and must not come back. The 700 block is already represented on the map by Buzzard's Roost (624) and Michter's Fort Nelson (801).
-- **This is not a blanket "tasting rooms are excluded" rule.** The five older tasting venues (Stitzel-Weller, Dark Arts, Fresh Bourbon, Chicken Cock, Whiskey Thief Louisville) **are** in the trip builder and map and should stay there: they are spaced fine (Whiskey Thief Louisville sits 37px from Angel's Envy) and are drive-to destinations. Do not "consistency-fix" them by removing their pins.
-- If a *future* tasting room is a genuine drive-to destination and clears 28px from every existing pin, it can have a pin. The test is spacing and routability, not `data-production`.
-- Known pre-existing violation: Evan Williams and Buzzard's Roost already sit 22.3px apart. Left alone; don't make it worse.
-
-### Adding a New Distillery to Trip Builder
-1. Verify coordinates on Google Maps (right-click → copy coordinates)
-2. Check for pin overlap with nearby distilleries at zoom 14 — pins must be 28px+ apart
-3. Add to the distilleries array in trip-builder.html
-4. Add smart pairing tip if there's a nearby distillery within 5 min drive
-5. Update the region count in the relevant region overlay button HTML (e.g. "Western · 8 distilleries")
-6. Also add to `distilleries.html` and `sitemap.xml`
-6b. Add a row to the matching regional map page (`bourbon-trail-map-{louisville|bardstown|frankfort|lexington}.html`) in its `.dl` list, in the same order `map.html` draws the pins. Skip this only if the distillery lands in Northern or Western, which have no regional page. Do **not** add a count anywhere while you are in there; see the count policy below.
-7. Add `TouristAttraction` JSON-LD schema to the new profile's `<head>` — include `address`, `geo`, `telephone`, `openingHours`, `url`, `sameAs` (see `scripts/add_schema.py` for the exact structure). Do NOT include a `review` block.
-8. Regenerate the printable map: `python scripts\generate_pdf_map.py`. No map-specific arguments are needed. Because the generator reads `trip-builder.html` and `distilleries.html`, the new distillery flows in automatically once steps above have added it to those two files (pins renumber, the checklist reflows, the region counts update). Commit the regenerated `bourbon-trail-map.pdf` with the rest of the deploy. Note: the trip-builder `region` value can be one of the legacy buckets (`Other`); the generator remaps those to the six display regions by city. If you ever add a distillery in a brand-new city that maps to `Other`, the script prints a one-line warning telling you to add a `_CITY_REGION` entry near the top of `generate_pdf_map.py`.
-
-## SEO Notes
-- All canonical URLs must point to `https://mybourbontrailplan.com/filename.html`
-- All pages need OG tags (og:title, og:description, og:type, og:url)
-- Title tags under 85 characters
-- Meta descriptions under 170 characters
-- Schema markup: fully comprehensive JSON-LD across all page types:
-  - Distillery profiles: `["TouristAttraction", "LocalBusiness"]` (array type) with `address`, `geo`, `telephone`, `openingHours`, `isAccessibleForFree`, `url`, `sameAs` — **no `review` block** (violates Google policy, causes Rich Results errors); array type required so `openingHours` is valid per schema.org
-  - Guide/article pages: `Article` with `url`, `mainEntityOfPage`, `author`, `publisher`, `datePublished`, `dateModified`
-  - Directory pages (`distilleries.html`, `guides.html`, `map.html`): `CollectionPage` with `url`, `publisher`
-  - Homepage: `WebSite` + `Organization` (two separate schema blocks)
-  - Trip builder: `WebApplication`; About: `AboutPage`; Contact: `ContactPage`
-- **author/publisher**: always `{"@type": "Organization", "name": "Bourbon Trail Planner"}` — never `Person`, never a different name string
-- **datePublished/dateModified**: always ISO 8601 with Eastern offset, e.g. `2026-02-22T00:00:00-05:00` — never bare `YYYY-MM-DD`. The site stamps `-05:00` year-round for consistency, including summer dates that are technically EDT (`-04:00`). Match the existing convention; do not "fix" some to `-04:00` and leave a mixed pattern.
-- `scripts/add_schema.py` — bulk schema utility; use as the reference template when writing TouristAttraction schema for a new distillery profile
-- Sitemap at `sitemap.xml` — update when adding any new page
-
-### Updating a guide's date — THREE surfaces, every time
-Whenever you make a **content change** to a guide or article page, bump **all three** of these. They live in two different files and it is easy to change one and forget the others (this has already happened twice):
-
-1. **The JSON-LD `dateModified`** in the page's `<head>` schema block (ISO 8601, `-05:00`).
-2. **The visible "Updated {Month} {Year}" line** in the page's `.article-meta` bar under the H1 (next to the calendar SVG, alongside the "N min read" item).
-3. **The `.guide-date` span on that guide's card in `guides.html`** — the guides index. This is the one everyone forgets because it lives in a different file entirely. Note the existing spans are inconsistent: most show a bare **publish** month (`Jun 2026`) that matches the page's `datePublished`, while a few are prefixed `Updated `. If a card says `Updated `, keep that prefix and bump the month. If it shows a bare publish date, leave it alone unless you're deliberately converting it.
-
-- Leave `datePublished` alone. It records original publication and never changes.
-- These surfaces **drift**, and they have: in July 2026 the itinerary page had a schema `dateModified` of April while its visible line still read February, and the Whiskey Row guide shipped a full rewrite while its `guides.html` card still advertised "Updated Apr 2026". Check all three.
-- **`guides.html` card copy goes stale too.** The card's `<p>` summary duplicates claims from the page (counts, "6+ distilleries", route direction). When you materially change a guide, reread its card blurb, not just its date.
-- Skip the bump for pure style/markup edits with no content change (CSS tweaks, nav/footer template updates, favicon versions). Bump it for anything a reader would notice: new facts, corrections, rewritten copy, added or removed sections.
-- **Distillery profiles have neither surface** — `TouristAttraction` schema carries no `dateModified` and profiles have no `.article-meta` bar. Nothing to bump there. Do not add date fields to a profile just to have them.
-- Every guide's `.article-meta` bar should carry both a read-time item and an Updated item. Read time is computed at roughly **200 words per minute** over the body copy.
-
-## Affiliate Links — DO NOT modify these URLs
-- Booking.com links use CJ Affiliate tracking URLs — migrated from Awin/tidd.ly in June 2026
-- **CJ link format:** `https://{cj-domain}/click-101752228-17293132?url={encoded-booking.com-url}` where `{cj-domain}` is one of: `www.kqzyfj.com`, `www.anrdoezrs.net`, `www.tkqlhce.com`, `www.jdoqocy.com` (all are valid CJ tracking domains — the specific domain is assigned per link at generation time)
-- Active Booking.com links:
-  - New Hope Bourbon Stop: `https://www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fnew-hope-bourbon-stop-new-hope.html`
-  - Hotel Distil (Louisville): `https://www.anrdoezrs.net/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fautograph-collection-distil.html`
-  - Omni Louisville: `https://www.tkqlhce.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fomni-louisville.html`
-  - 21c Museum Louisville: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2F21c-museum.html`
-  - Hampton Inn Louisville: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fhampton-inn-louisville-downtown.html`
-  - Bardstown Motor Lodge: `https://www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fbardstown-motor-lodge.html`
-  - The Trail Hotel (Bardstown): `https://www.kqzyfj.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fthe-trail.html`
-  - Old Talbott Tavern: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fthe-old-talbott-tavern.html`
-  - Capital Plaza (Frankfort): `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fcapital-plaza.html`
-  - 21c Museum Lexington: `https://www.jdoqocy.com/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2F21c-museum-lexington.html`
-  - Hilton Lexington Downtown: `https://www.anrdoezrs.net/click-101752228-17293132?url=https%3A%2F%2Fwww.booking.com%2Fhotel%2Fus%2Fhilton-lexington-downtown.html`
-- VRBO link: `https://vrbo.com/affiliate/VD0a4b2`
-- Kyle's Airbnb: direct link (no affiliate network)
-- Commission is earned on ANY Booking.com booking through the affiliate link, not just the linked property
-
-## Email Marketing (MailerLite)
-- Account ID: 2164831
-- Universal script is on every HTML page (placed after GA script)
-- Signup forms on: homepage (modal), itinerary page (modal), trip builder (inline), booking guide (inline)
-- 3-email nurture sequence active (Day 3: top distilleries, Day 6: where to stay featuring Kyle's property, Day 10: booking mistakes)
-- Lead magnet: PDF checklist delivered via welcome automation
-
-### MailerLite Form IDs
-- `CliYpr` — Printable PDF map (delivered via email); triggers from PDF map modal on homepage, itinerary page, and map.html
-- `WD5yKI` — Planning checklist lead magnet; triggers from checklist modal on homepage and itinerary page; also inline on trip builder and booking guide
-
-### GA4 Event Tracking on MailerLite Forms
-The 5 pages with embedded MailerLite forms (index.html, 3-day-bourbon-trail-itinerary.html, map.html, trip-builder.html, bourbon-trail-booking-guide.html) each have a MutationObserver in their GA4 init `<script>` block (trip-builder has it in its own `<script>` block immediately after the MailerLite script). The observer watches for `.ml-form-successBody` changing from `display:none` to visible — the exact DOM transition MailerLite makes on confirmed subscription. It fires `gtag('event', 'email_signup', {'method': ...})` at most once per form per page load.
-
-- `CliYpr` → `method: 'pdf_map'`
-- `WD5yKI` → `method: 'checklist'`
-
-**If adding a new page with a MailerLite form**, copy the observer one-liner from any existing form page's GA4 init block and add it there. The dataLayer.push interception approach was tried first and confirmed broken — MailerLite does not push `form_submit` to the dataLayer for `ml-embedded` forms. Ensure the `gtag` call inside the observer is guarded with `if(typeof gtag==='function'){...}`.
-
-`trip_builder_complete` fires in `openEmailModal()` in trip-builder.html with the stop count as `{'stops': N}`.
-
-### Free Resources Modal Pattern
-Homepage and itinerary page have a unified "Free Trip Planning Resources" section with two gold-border cards side by side (stacking on mobile). Each card opens its own modal containing the MailerLite form — no inline embedded widgets in the page flow. Modal functions: `openPdfModal()` / `closePdfModal()` and `openChecklistModal()` / `closeChecklistModal()`. Both modals share z-index 2000 and close on outside click or Escape. map.html has the PDF map modal only (no checklist modal).
-
-## Google Drive Artifact Files
-The repo contains files named with ` (1)` suffixes (e.g., `distillery-chicken-cock (1).html`, `guides (1).html`). These are Google Drive sync duplicates — identical to the originals, not separate pages. Also `.tmp.driveupload/` folder accumulates Google Drive temp files. Neither should be edited or referenced; they can be cleaned up by deleting them, but they're harmless if left in place.
-
-## Copy Style
-
-### Em Dashes
-Do not use em dashes (`—` or `&mdash;`) anywhere in site content. The site was fully de-em-dashed in June 2026 (1,018 instances). Use context-appropriate punctuation instead:
+### No em dashes, anywhere in site content
+The site was fully de-em-dashed in June 2026 (1,018 instances). Use:
 
 | Context | Replacement |
 |---|---|
-| `<title>`, `og:title`, JSON-LD `headline` (Title — Subtitle) | `: ` |
-| H1–H6 heading with no existing colon | `: ` |
-| H1–H6 heading that already contains `: ` | `, ` |
-| `<strong>Label</strong> — Description` (itinerary/day-stop lists, trip builder instructions) | `: ` |
+| `<title>`, `og:title`, JSON-LD `headline` | `: ` |
+| Heading with no existing colon | `: ` |
+| Heading that already contains `: ` | `, ` |
+| `<strong>Label</strong> — Description` | `: ` |
 | Body copy, card descriptions, meta descriptions | `, ` |
-| Short connective phrases where comma reads awkwardly | ` - ` (regular hyphen with spaces) |
+| Short connective phrases where a comma reads awkwardly | ` - ` |
 
-If a batch of em dashes ever needs removing (e.g. after importing copy from another source), run `python scripts/remove_em_dashes.py` from the project root.
+`python scripts/remove_em_dashes.py` cleans a batch (e.g. after importing copy). `check_site.py` fails on any that reappear.
 
-### Other Punctuation
-- Regular hyphens (` - `) are acceptable when a comma would create an awkward run-on in body copy
-- No smart/curly quotes in HTML — use straight quotes or HTML entities
+### Other punctuation
+Regular hyphens (` - `) are fine where a comma would create a run-on. No smart/curly quotes in HTML; use straight quotes or entities.
 
-## Known Gotchas
-- **Notepad++ Find in Files** was previously used for batch changes — with Claude Code, this is no longer needed. Just describe the batch change and Claude Code will handle it.
-- **`_redirects` now exists at the repo root and the `/m/*` rules are PERMANENT.** This is the site's first Netlify `_redirects` file (there is still no `netlify.toml`; the one inside `.netlify/` remains stale CLI state). The `/m/:region/:host` paths are the short links encoded into the printable QR cards generated by `embed-bourbon-trail-map.html`. **A host prints a card once and it sits in a guest binder for years, so those paths can never be removed or renamed.** If the destination needs to change, change the right-hand side and every card already in the wild keeps working. They are deliberately **302, not 301**, because a 301 gets cached by browsers indefinitely and takes away the ability to re-point them. Statewide uses the explicit slug `/m/ky` rather than an empty region, because a bare `/m/<property-name>` would read the property name as a region. The UTM parameters live in the redirect target, not the QR payload, so the encoded URL stays short: that dropped the QR from version 9 to 4-7, which means chunkier modules at the same print size and a code that scans from across a room instead of at arm's length.
-- **MailerLite universal script** must be on every new page (after GA script, before closing body tag)
-- **GA script** must be on every new page (in head) — use exactly two separate `<script>` tags: (1) `<script async src="https://www.googletagmanager.com/gtag/js?id=G-DVK4D6KJJP"></script>` and (2) `<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DVK4D6KJJP');</script>`. Never embed one `<script>` tag inside another — the HTML parser will misread it, the JS will throw a syntax error, and `gtag` will be undefined on the whole page.
-- **All `gtag(...)` calls must be guarded** — always wrap as `if(typeof gtag==='function'){gtag(...)}` so a tracker failure can never abort a user-facing action (e.g. opening a modal or firing a mailto link)
-- **iOS Safari text inflation** — all pages need `-webkit-text-size-adjust: 100%` in the html CSS rule
-- **No OverlappingMarkerSpiderfier** — was removed from the trip builder, don't re-add it
-- **Barton 1792** — not open to the public; profile file exists (`distillery-barton-1792.html`) but is intentionally excluded from the site. Do NOT add to `distilleries.html`, `trip-builder.html`, `map.html`, or `sitemap.xml`
-- **Log Still is in New Haven, KY** (not New Hope) — Kyle's Airbnb is in New Hope, these are different places
-- **Site emoji are HTML numeric entities, not raw characters.** They are written as `&#128197;` / `&#9201;`, so grepping for the literal glyph (or a Unicode-range regex) returns **zero hits and looks like the site is emoji-free. It is not.** To find them, grep for the entity form: `grep -oE '&#x?[0-9A-Fa-f]+;' *.html`, then decode codepoints above `0x2000`. This exact trap produced a confidently wrong "there are no emoji on this site" audit in July 2026. The old CLAUDE.md line claiming "No emojis" reinforced it — it described the homepage icon style, not the site.
+### Never hardcode counts
+Prefer removing counts entirely. Where a number is unavoidable use the rounded **"60+"** form.
 
-## Emoji-to-Icon Migration (in progress)
+- **Region totals are the worst offenders** and are banned. A per-region count must stay in sync across `map.html`'s region cards, the four regional pages (title, meta, hero pills, body copy) and anything quoting it, and it breaks whenever a distillery is added. It shipped wrong twice in one week: `map.html` said 12 Bardstown and 8 Western when the pin data said 11 and 9, and a regional page hero claimed "seven of them sit on one street" while its own cluster card correctly said five (the seven had silently counted unpinned tasting rooms). All region totals have been removed from `map.html`'s `.region-card-stats` and from the four regional pages.
+- **Never hardcode counts in trip-builder onboarding or empty-state copy.** Current badge: "Explore Kentucky distilleries · free to use". Current empty-state subhead: "across Kentucky's best distilleries".
+- **If you want a number, derive it.** The one count a visitor sees is the live "Showing N distilleries" in the map sidebar, computed by `applyFilter()` at runtime, which cannot drift.
+- **Counts describing pacing or a pair are fine** and should not be scrubbed: "three distilleries is the honest ceiling", "2 to 3 per day", "the two furthest apart are twenty minutes apart". The test is whether adding a distillery makes the sentence false.
 
-Migrating emoji UI icons to the brand icon system.
+### Content rules
+- **The KDA Passport program ended July 2025.** Never reference the Kentucky Bourbon Trail Passport, stamp program or KDA companion app. If a page mentions it, remove it.
+- **"Urban Bourbon Trail" is a program we do not cover** (decided August 2026). It is a Louisville Tourism program covering **bars and restaurants, not distilleries**, and its passport component has changed. Do not describe the program, reference a passport or t-shirt reward, or claim any property is an official stop. `hotels near urban bourbon trail in louisville` is the biggest query hitting `where-to-stay-bourbon-trail.html`, but the searcher's real question is "which hotel lets me walk to distilleries", which the Louisville walkability section answers. Use "urban bourbon" or "Louisville's urban bourbon scene" descriptively at most once or twice per page. Same reasoning as the KDA note: we do not describe programs we have not verified and do not cover.
+- **Booking tier definitions** (restated August 2026 to match how the cards are actually tagged): **Easy** = walk-ups often work, a week or two is plenty. **Moderate** = you want a reservation, usually 2-4 weeks ahead. **Hard** = book 4+ weeks ahead, and the toughest calendars only open ~8 weeks out. The tier is **not** a pure function of lead time; it also encodes walk-up availability and how many slots exist per day, which is why a few Moderate cards carry a 1-week book-ahead. Do not "fix" those by re-tiering. The canonical lead time is the **Book Ahead snapshot value on the profile**; the booking guide's master table and trip-builder's `bookWeeks` must agree with it.
+- **Region taxonomy.** Public-facing copy uses six regions: Louisville, Bardstown, Frankfort, Lexington/Lawrenceburg, Northern Kentucky, Western Kentucky. But **`map.html` filter buttons are Louisville / Bardstown / Frankfort / Lexington / Other**, with Northern and Western both normalising to Other. `trip-builder.html` has finer-grained buttons. **Never write copy telling users to "tap Western" or "tap Northern" on the map** — those buttons do not exist. Point to the trip builder for those regions.
 
-**Done:** homepage feature cards (6) and guide card headers (3); where-to-stay lodging cards (hero slots removed, 28px inline `.type-chip` at the eyebrow); where-to-stay region banners (icon chip removed, trail-underline city name); where-to-stay's two lightbulb callouts (`icon-lightbulb`); the **site-wide badge-pill sweep** — official/craft/independent `badge-trail` pills → `icon-badge` (58), `badge-landmark` award pills → `icon-trophy` (4), `tour-card-rec rec-top` and `rc-tag tag-must` top-pick pills → `icon-star` (69), all inline 16px `<img>`; and the **distillery snapshot/tour-meta pass** across all 60 profiles (see below).
+---
 
-**Distillery snapshot + tour-meta (done, all 60 profiles).**
-- `.snap-icon` (the 4 centered snapshot-card icons): calendar→`icon-calendar` (Book Ahead), stopwatch→`icon-clock` (Tour Length), trophy→`icon-trophy` (Our Rating; one profile used a glowing-star for the same slot, also → trophy), pin→`icon-pin` (Region). Rendered as a **bare 26px `<img>`** with `style="display:block;margin:0 auto"` (the card is `text-align:center`; no chip — matches the bare emoji it replaced).
-- `.tour-meta-item` (the inline meta row): money→`icon-cost`, stopwatch→`icon-clock`, calendar→`icon-calendar`, as a **bare 16px `<img>`** (the row is `display:flex;align-items:center;gap:5px`, which handles spacing/alignment — no vertical-align hack needed).
-- **Glyphs with no matching icon were stripped to text, not left as emoji** (a raw emoji next to line-art SVGs in the same row looks broken): group-size busts 👤/👥 ("Small groups", "Up to 10 people", etc., 10 instances) and dark-arts's one-off flavor glyphs (globe/bottle/pushpin/cocktail, 4 instances). The text label alone carries the meaning.
-- Do **not** force-map onto near-miss icons (stopwatch→calendar, pin→route); duration and location must stay visually distinct.
+## Data integrity: things that exist in more than one place
 
-**Deliberately left as emoji (survivors):**
-- ~30 one-off `badge-trail` **flavor** glyphs, one per distillery (horse, corn, crossed swords, ship, fire, palette, bridge, family, AU/US flags...). No counterpart in a trip-planning icon set; mapping them would destroy the meaning.
-- Callout/status glyphs with no mapped icon: warning `⚠` in `.warning-box` headers (9), check marks `✓` in booking checklists (16), and assorted inline content emoji in guide body copy (thermometer, fork-and-knife, bottle, etc.).
-- Lightbulb `💡` callouts on pages **other than** where-to-stay (12, same `.tip-box-header` pattern) — trivially convertible to `icon-lightbulb` in a follow-up, just not in the named scope of this pass.
+Most bugs on this site are one copy of a fact drifting from another. The pattern to prefer is **derive it**; where that is not possible, know the full list of copies.
 
-## Content Accuracy Notes
-- **KDA Passport program ended July 2025** — do NOT reference the Kentucky Bourbon Trail Passport, stamp program, or KDA companion app anywhere on the site. The program is discontinued. If a page mentions it, remove the reference.
-- **"Urban Bourbon Trail" is a program we do not cover (decided August 2026).** The official Urban Bourbon Trail is a Louisville Tourism program covering **bars and restaurants, not distilleries**, and its passport component has changed. So: do **not** describe the program, do **not** reference a passport or t-shirt reward, and do **not** claim any property, hotel, or distillery is an official stop on it. `hotels near urban bourbon trail in louisville` is the single biggest query hitting `where-to-stay-bourbon-trail.html` (287 impressions, 0 clicks), but the searcher's actual question is "which hotel lets me walk to distilleries," which is what the Louisville walkability section answers. Use "urban bourbon" or "Louisville's urban bourbon scene" descriptively, at most once or twice per page, only where the sentence genuinely calls for it. The goal is to answer the walkability question, not to rank for a branded program whose content we don't have. Same reasoning as the KDA passport note above: we don't describe programs we haven't verified and don't cover.
-- Kyle has real bourbon trail experience — the site reflects honest, opinionated reviews
-- Distilleries CAN pay for featured listings but CANNOT change ratings (disclosed on About page)
-- Visitor stat: "Record 2.7 million annual visitors and growing" (use as evergreen)
-- Budget guide uses per-person pricing
-- Three Boys Farm Distillery is now Whiskey Thief Distilling Co.
-- **Chicken Cock rating is 7.0** — bar is smaller than expected, accessible area limited to bar + two front gift shop rooms. Old fashioned flight is a highlight worth mentioning.
-- **Bardstown Bourbon Co has TWO venues.** (1) **Bardstown campus**, 1500 Parkway Dr, the working distillery and full tour (`distillery-bardstown-bourbon-co.html`), Mo-Tu 10-3 / We-Su 9-5. (2) **Louisville tasting room**, 730 W Main St on Whiskey Row (`distillery-bardstown-bourbon-co-louisville.html`), phone (502) 791-6575, **Mo-Sa 11-7, closed Sunday**. Directory-only, no map pin. Rating 8.1; Value scored 7.0, the lowest of the tasting rooms, so the copy says plainly that you pay for what you get. The draw is Louisville-only exclusive releases plus staff who explain BBC's sourcing/collaboration model well. Nothing is distilled in Louisville. Do not reuse the campus's hours or address on the Louisville page. The Whiskey Row guide's BBC stop linked to the *Bardstown* profile until July 2026; fixed.
-- **Monk's Road Boiler House** (file: `distillery-monks-road-boiler-house.html`) — Log Still's Louisville outpost at 131 W Main St on Whiskey Row, opened July 2024, phone (502) 230-6600. Fine dining plus tasting room in a restored industrial space; the first distillery tasting room on the Row to offer full dining. The Monk's Road whiskey is distilled at Log Still in New Haven (`distillery-log-still.html`), so this is directory-only (no map/trip-builder pin). Uses the **Food &amp; Dining** bar in place of Gift Shop. Rating 8.4. **Hours are the trap:** open seven days but the opening time moves - Mo-We 3 PM, Th 12 PM, Fr-Sa 12 PM (to 11:45 PM, the latest kitchen on the Row), Su 5 PM. **It is only a lunch option Thursday through Saturday.** The walking guide called it "a natural lunch" flatly and its route block listed it under Lunch with no caveat; both were corrected July 2026 once the real hours came in. Do not reintroduce an unqualified lunch recommendation.
-- **Green River has TWO venues, both Official Trail.** (1) **Owensboro**, 10 Distillery Rd, the working distillery (`distillery-green-river.html`). (2) **Louisville tasting room**, 714 W Main St on Whiskey Row, opened 2025 (`distillery-green-river-louisville.html`), phone (502) 804-5383, Tue-Sat 11-7, **closed Sunday and Monday**. Kyle verified against the KDA/KBT site in July 2026 that **both locations are listed on the official trail**, so both carry the Official Trail badge. Nothing is distilled in Louisville. Do not reuse Owensboro's phone ((270) 691-9001) or hours (We-Sa 9-5) on the Louisville page: they are different venues. Signature experience in Louisville is Fill-Your-Spirits, $15 per person plus the cost of a bottle, and which barrel is open varies.
-- **Chicken Cock has TWO venues, and they get confused.** (1) **Circa 1856 Bardstown**, 103 E Stephen Foster Ave, Bardstown — the main venue and the one `distillery-chicken-cock.html` covers; opened 2024. (2) **"The Coupe"**, NuLu, Louisville — a speakeasy/cocktail destination, relaunched March 2026, a separate venue that is *not* the Bardstown one. The main venue is in **Bardstown, not Lawrenceburg** (Lawrenceburg is Wild Turkey); the Whiskey Row guide asserted "the Lawrenceburg tasting room" and was corrected July 2026. Nothing is distilled at either: Chicken Cock is "crafted in partnership with Bardstown Bourbon Company", which is why the Bardstown venue is `data-production="tasting"` despite the card calling it a micro-distillery.
-- **Heaven's to Betsy Bakery** added to eat-and-drink page (On the Road section) and Wild Turkey nearby cards — Lawrenceburg, outstanding Reuben sandwich
-- **Becker & Bird Distillery** (file: `distillery-baker-bird.html`) — the distillery's official KBT name is Becker & Bird; the winery on the same property is called Baker-Bird. File name stays as-is for URL continuity.
-- **Augusta Distillery** (file: `distillery-augusta.html`) — separate from Becker & Bird, also in Augusta, KY at 207 Seminary Ave. Produces Buckner's bourbon (Best Bourbon at 2023 SFWSC). Wed–Sat 11–5 only. Rating 8.1. River Proof Barrel Experience ($29) is their signature tour. Trip builder pin: lat 38.7731, lng -83.9968. Smart pairing: Augusta + Becker & Bird (5-min walk).
-- **General George Stillhouse & Distillery** (file: `distillery-general-george.html`) — Western KY craft distillery in Falls of Rough (Grayson County) at 1867 Junction Rd. Land once owned by George Washington. Joined KBT January 2026. Produces Founding Fox bourbon, gin, vodka; also Shakertown Spirits and Bluefield Bourbon. Three tour options: Ambassador's Tour + Thieving (1 hr, top pick), Founding Fox Tasting & Tour (40 min), Tasting in the Fox Den (30 min). Pricing not published — book via generalgeorgestillhouse.setmore.com. Rating 7.0. Phone: (702) 505-9481. Trip builder pin: lat 37.5546, lng -86.5132 (corrected July 2026 to the geocoded 1867 Junction Rd address; was 37.5607, -86.5326). Smart pairing: General George + Green River (~50 min).
-- **Garrard County Distilling Co.** — SHUT DOWN. File `distillery-garrard-county.html` remains in repo but must NOT be added to the site anywhere.
-- **Pensive Distilling Co.** (file: `distillery-pensive.html`) — Newport, KY craft distillery in a historic Prohibition-era building. Speakeasy tasting room requires a password (provided at booking). Named after Pensive, the 1944 Kentucky Derby/Preakness winner. On-site kitchen is award-winning (City Beat Top 10 NKY Restaurants); every menu item named after a racehorse. Live music Fridays. Tours $15–$25, easy booking via Peek. Rating 8.0. Pair with New Riff (5 min, same city). Trip builder pin: lat 39.09, lng -84.4923 (corrected July 2026 to the 720 Monmouth St, Newport address; was 38.9928, -84.4969, which sat ~6.7 mi south of Newport). Region: Northern (Newport maps to Northern in RG).
-- **Stitzel-Weller gift shop accuracy** — Old Fitzgerald is now a Heaven Hill brand (produced in Bardstown); it is NOT available at Stitzel-Weller. Gift shop reliably carries Blade & Bow, I.W. Harper, and Bulleit. Orphan Barrel releases show up occasionally but cannot be counted on — do not present as a reliable find. The Old Fitz history is fine to mention as historical context (it was produced there), but don't imply visitors can buy it there.
-- **WhistlePig The Vault** — Louisville tasting room at 403 E Market St (NuLu, near Angel's Envy), opened 2026. Vermont-based brand (rye-focused, not a KY distillery). **Now in scope for a tasting-room profile + card** (decision reversed July 2026). It was previously excluded on the grounds that it's "a brand experience room, not a production facility" — but that is exactly what `data-production="tasting"` now encodes, so the reason for excluding it expired once the directory could represent the distinction. Directory-only, like every urban tasting room: no trip-builder or map pin. Also covered as a callout card in the "Speakeasies & New Openings" section of `louisville-whiskey-row-walking-guide.html`. Key detail: original 1911 bank pneumatic tube system is used to mix and deliver drinks — visibly in action from your seat. Tasting tiers: $50 hosted (groups 4–10), $250 Vault Collection, $300 Vault Experience (up to 6 guests). Hours: Tue–Sat 10am–5pm. Cocktail bar is walk-in; seated tastings require reservation.
-- **The Rickhouse Restaurant & Lounge** — is in BARDSTOWN at 112 Xavier Dr. Dinner only, closed Mondays. It is a legitimate bourbon-forward dinner spot. NEVER present it as a Frankfort option.
-- **Rick's White Light Diner (Frankfort)** — appears closed as of late 2025. Do not recommend.
-- **Bourbon on Main (Frankfort)** — verified Frankfort lunch option, bourbon-focused. Used as the Day 3 lunch recommendation replacing the nonexistent "Rick House" in Frankfort. Appears in itinerary, eat-and-drink, where-to-stay, and castle-key nearby card.
-- **General George Stillhouse** — distillery card badge is "Official Trail" (joined KBT January 2026). The CLAUDE.md entry above this one predates that badge change; both are accurate: it is a craft producer AND on the official trail.
-- **Pensive Distilling Co.** — distillery card badge is "Official Trail" (confirmed July 2026, not a craft-only listing). data-type stays "craft" in distilleries.html since it's a small producer; only the display badge is "Official Trail".
-- **Region taxonomy decision (July 2026):** Public-facing copy on the site uses SIX regions: Louisville, Bardstown, Frankfort, Lexington/Lawrenceburg, Northern Kentucky, Western Kentucky. However, `map.html` filter buttons are Louisville/Bardstown/Frankfort/Lexington/Other (Northern and Western both normalize to "Other" on the map). `trip-builder.html` has more granular region buttons. Do NOT write copy telling users to "tap Western" or "tap Northern" on the map — those buttons do not exist there. Reference the Trip Builder instead for those regions.
-- **Buffalo Trace is NOT an official Kentucky Bourbon Trail member** — Sazerac left the KDA in 2009 and never rejoined. Its profile badge and any card/label must say "Independent" / "Independent Distillery", never "Official Trail" or "Official Bourbon Trail". (A leftover official badge on the profile was caught and fixed July 2026.)
-- **Booking data provenance (July 2026):** Booking tiers and lead times for the ten majors (Buffalo Trace, Angel's Envy, Maker's Mark, Woodford Reserve, Old Forester, Wild Turkey, Four Roses, Heaven Hill, Evan Williams, Jim Beam) were verified against official distillery reservation pages in July 2026. Tier definitions (restated August 2026 to match how the 60 cards are actually tagged): **Easy = walk-ups often work, a week or two of lead time is plenty; Moderate = you want a reservation, usually 2-4 weeks ahead; Hard = book 4+ weeks ahead, and the toughest calendars only open ~8 weeks out.** The old wording ("Easy = same-week, Moderate = 1-3 weeks, calendars open 2-3 months out") never matched the data: Heaven Hill, Evan Williams, and Jim Beam are all tagged Easy at a 1-2 week book-ahead, and no calendar on the site opens further than 8 weeks. The tier is **not** a pure function of lead time, it also encodes walk-up availability and how many tour slots exist per day, which is why a few Moderate cards (Copper &amp; Kings, Kentucky Artisan, James E. Pepper, Fresh Bourbon) carry a 1-week book-ahead. Do not "fix" those by re-tiering them. The canonical lead time for any distillery is the **Book Ahead snapshot value on its profile**; `bourbon-trail-booking-guide.html`'s master table and `trip-builder.html`'s `bookWeeks` field must agree with it (all three were reconciled August 2026). Buffalo Trace releases new dates weekly on Wednesdays at 10:00 AM Eastern, each release covering a 7-day window ~8 weeks out; never describe it as "no drop day" or "Monday mornings". Jim Beam main-line distillation at Clermont is paused for 2026 (tours/tastings/Kitchen Table all still operating). Hours blocks on distillery-wild-turkey.html, distillery-wilderness-trail.html, distillery-hartfield.html, and distillery-kentucky-artisan.html still carry the unverified copy-pasted template pattern and remain unverified. Next verification pass due before the 2027 index refresh.
-- **Hardcoded distillery count policy:** Prefer removing hardcoded counts from all copy (onboarding, meta descriptions, etc.). Where a number is unavoidable, use the rounded "60+" form. Never hardcode exact counts in onboarding or empty-state copy in trip-builder.html — those numbers change when distilleries are added and go stale immediately.
-  - **Extended August 2026 to region totals, which are the worst offenders.** A per-region count has to be kept in sync across `map.html`'s region cards, the four regional map pages (title, meta, hero pills, body copy) and anything else that quotes it, and it breaks every time a distillery is added. It shipped wrong twice inside a single week: `map.html` said 12 Bardstown and 8 Western when the pin data said 11 and 9, and a regional page hero claimed "seven of them sit on one street" while its own cluster card correctly said five (the seven had silently included unpinned tasting rooms). **All region totals are now removed** from `map.html`'s `.region-card-stats` and from the four regional pages.
-  - **The one count a visitor sees is the live "Showing N distilleries" in the map sidebar**, which `applyFilter()` computes at runtime and which therefore cannot drift. That is the right pattern: if you want to show a number, derive it.
-  - Counts that describe **pacing or a pair** are fine and should not be scrubbed: "three distilleries is the honest ceiling", "2 to 3 per day", "the two distilleries furthest apart". Those stay true no matter how many distilleries exist. The test is whether adding a distillery to the site makes the sentence false.
+| Fact | Copies | Canonical | Check |
+|---|---|---|---|
+| Distillery rating | profile snapshot, `distilleries.html` card, `trip-builder.html` `D` array | profile | `scripts/check_ratings.py` |
+| Booking lead time | profile Book Ahead snapshot, booking guide table, `trip-builder.html` `bookWeeks` | profile | manual |
+| Guide date | JSON-LD `dateModified`, visible `.article-meta` line, `guides.html` card | none, all three must match | `scripts/check_site.py` |
+| Distillery presence | profile, `distilleries.html`, `trip-builder.html`, `map.html`, regional map page, `sitemap.xml` | n/a | `scripts/check_site.py` |
+| PDF map data | derived at build time from `trip-builder.html` + `distilleries.html` | those two files | regenerate |
 
-### Regional map pages (added August 2026)
-`bourbon-trail-map-louisville.html`, `-bardstown.html`, `-frankfort.html`, `-lexington.html`. Each embeds the live map through `map.html?embed=1&internal=1&region={region}`, so **no distillery data is duplicated** — the pins, popups and sidebar all come from `map.html`'s own array.
+### Adding a new distillery
+1. Verify coordinates on Google Maps (right-click → copy coordinates).
+2. **Check pin overlap at zoom 14 — pins must be 28px+ apart.** If it cannot clear that, it is directory-only (see below).
+3. Add to the `D` array in `trip-builder.html`, plus a smart pairing tip if another distillery is within a 5-minute drive.
+4. Add to `distilleries.html`.
+5. Add to `map.html`'s `DISTILLERIES` array.
+6. Add a row to the matching **regional map page** (`bourbon-trail-map-{louisville|bardstown|frankfort|lexington}.html`) in its `.dl` list, in the order `map.html` draws the pins. Skip only for Northern or Western, which have no regional page. Add no counts while you are in there.
+7. Add `TouristAttraction` JSON-LD to the profile (`address`, `geo`, `telephone`, `openingHours`, `url`, `sameAs`; no `review` block).
+8. Regenerate the sitemap, then the PDF map: `python scripts\generate_pdf_map.py`. The generator reads `trip-builder.html` and `distilleries.html`, so it flows in automatically; pins renumber and the checklist reflows. Commit the regenerated PDF. If the distillery is in a brand-new city that maps to `Other`, the script prints a one-line warning telling you to add a `_CITY_REGION` entry.
+9. Run `python scripts/check_site.py`.
 
-- **`internal=1` is required on these iframes.** It suppresses GA inside the frame (the parent page already counts the view), hides the "Powered by" attribution badge, and makes in-frame link clicks navigate the whole tab instead of opening a new one. Without it, every regional page view fires an `embed_load` event with `embed_host` set to our own domain, which corrupts the metric that exists to show which *partners* deployed the widget, and double-counts `map.html` pageviews.
-- **Adding a distillery now means adding a row to its regional page too**, in the `.dl` list, matching the order `map.html` draws the pins. Add this to the checklist in "Adding a New Distillery to Trip Builder". If you forget, the list is merely incomplete rather than wrong, which is deliberate: it is why these pages carry no totals.
-- **No Northern or Western page exists and none should be added** without a separate decision. Those regions normalise to `other` on the map and have no filter button, so a page for them would send readers looking for controls that are not there. The Lexington page states this explicitly and points to the trip builder for finer-grained regions.
+### Urban tasting rooms are DIRECTORY-ONLY
+A new urban tasting room gets a **profile page plus a card in `distilleries.html`, and nothing else.** No `trip-builder.html`, no `map.html`, and therefore never the PDF (the generator iterates the trip-builder `D` array, so a card with no `D` entry is silently skipped).
+
+**Why:** the map and trip builder plan a *driving* route. These rooms are walk-up sub-stops of a block that is already pinned, and they physically cannot be pinned. Measured at zoom 14, Green River (714 W Main), Pursuit (722) and Bardstown Bourbon Co. (730) fall **3.5–7px apart** against a 28px minimum. They would render as one unreadable blob, and OverlappingMarkerSpiderfier was deliberately removed and must not come back. The 700 block is already represented by Buzzard's Roost (624) and Michter's Fort Nelson (801).
+
+- **This is not a blanket "tasting rooms are excluded" rule.** Stitzel-Weller, Dark Arts, Fresh Bourbon, Chicken Cock and Whiskey Thief (Louisville) **are** in the trip builder and map and should stay: they are spaced fine and are drive-to destinations. Do not "consistency-fix" them by removing pins.
+- A future tasting room that is a genuine drive-to destination and clears 28px from every existing pin can have a pin. **The test is spacing and routability, not `data-production`.**
+- Known pre-existing violation: Evan Williams and Buzzard's Roost sit 22.3px apart. Left alone; do not make it worse.
+
+---
+
+## Embeddable map widget
+
+`map.html?embed=1` strips the nav, footer, SEO content block and PDF modal, and fills the viewport, so partners can iframe the map. `embed-bourbon-trail-map.html` is the landing page that generates the snippet and the no-website host toolkit. Implementation detail is in `NOTES-internals.md`.
+
+- **Framing is allowed and requires no headers.** The site sends no `X-Frame-Options` and no CSP. If you ever add a `_headers` file, do not set a site-wide `frame-ancestors` without carving out the embed.
+- **The attribution `<a>` must live in the parent page, outside the iframe.** A link inside an iframe passes no equity, so an in-frame credit would be decoration rather than the actual trade. This is the single detail that decides whether the widget produces referring domains.
+- **The snippet ships `loading="lazy"`**, so the widget costs an unscrolled host page nothing.
+- **`internal=1` is required when embedding our own map on our own pages** (the regional map pages). It suppresses GA inside the frame, hides the attribution badge, and makes link clicks navigate the whole tab. Without it, every regional page view fires `embed_load` with `embed_host` set to our own domain, corrupting the metric that exists to show which **partners** deployed the widget, and double-counts `map.html` pageviews.
+- **The widget writes no cookies and no storage** on a partner's guests, because GA runs in Consent Mode with `analytics_storage: 'denied'` in embed mode. The embed page promises this in writing, so keep it true. Trade-off: embed views have no persistent client ID, so GA4 counts them as new users each time; do not read "users" on embed traffic as people.
+
+### Printable QR cards and `_redirects`
+`js/qr.js` is a **vendored** QR encoder (byte mode, versions 1-40, all four EC levels), not a third-party API: an external endpoint would leak the URL, add an uncontrolled dependency, and can rot silently on printed material that lives in a guest binder for years. `scripts/verify_qr.js` proves it against the `qrcode` Python package for every version, level and mask (2,672 matrices, 0 diffs). Run it if you touch the encoder. Bump the `?v=` on the `js/qr.js` script tag when you do, or browsers serve the cached copy.
+
+**`_redirects` exists at the repo root and the `/m/*` rules are PERMANENT.** (There is still no `netlify.toml`.) `/m/:region/:host` are the short links encoded into the printable QR cards. **A host prints a card once and it sits in a guest binder for years, so those paths can never be removed or renamed.** To change where they go, change the right-hand side and every card already in the wild keeps working. They are deliberately **302, not 301** — a 301 gets cached indefinitely and removes the ability to re-point them. Statewide uses the explicit slug `/m/ky`, because a bare `/m/<property-name>` would read the property name as a region. UTMs live in the redirect target, not the QR payload, so the encoded URL stays short; that dropped the QR from version 9 to 4-7, meaning chunkier modules at print size and a code that scans from across a room.
+
+---
+
+## Regional map pages
+
+`bourbon-trail-map-{louisville,bardstown,frankfort,lexington}.html`. Each embeds the live map through `map.html?embed=1&internal=1&region={region}`, so **no distillery data is duplicated** — pins, popups and sidebar all come from `map.html`'s array.
+
+- Adding a distillery means adding a row to its regional page (step 6 above). If you forget, the list is merely incomplete rather than wrong, which is deliberate and is why these pages carry no totals.
+- **No Northern or Western page exists and none should be added** without a separate decision. Those regions normalise to `other` on the map and have no filter button, so a page would send readers hunting for controls that do not exist. The Lexington page states this and points to the trip builder.
+
+---
+
+## Affiliate links: DO NOT modify these URLs
+
+Booking.com links use CJ Affiliate tracking, migrated from Awin/tidd.ly in June 2026. Format: `https://{cj-domain}/click-101752228-17293132?url={encoded-booking.com-url}` where `{cj-domain}` is one of `www.kqzyfj.com`, `www.anrdoezrs.net`, `www.tkqlhce.com`, `www.jdoqocy.com` — all valid, assigned per link at generation time.
+
+**Ten Booking.com links are live**, all on `where-to-stay-bourbon-trail.html` (Old Talbott Tavern also appears on the itinerary): Hotel Distil, Omni Louisville, 21c Museum Louisville, Hampton Inn Louisville, Bardstown Motor Lodge, The Trail Hotel, Old Talbott Tavern, Capital Plaza, 21c Museum Lexington, Hilton Lexington Downtown.
+
+**New Hope Bourbon Stop is the exception.** A CJ Booking.com link for it exists but is **not used on the site**, because Kyle's own property leads with direct booking (`bourbonstopky.com`, best rate) plus Airbnb and VRBO. Do not "restore" a Booking.com link there without asking — sending Kyle's own bookings through an affiliate network would cost him the direct margin.
+
+**The exact URLs live in `where-to-stay-bourbon-trail.html`. Copy from there; never reconstruct one by hand.** They used to be listed here verbatim, which made this file a second copy of live data, the exact drift pattern documented above. Instead `check_site.py` now asserts the invariants on every affiliate link it finds: the publisher ID is `click-101752228-17293132`, the tracking domain is one of the four CJ domains, and the target is booking.com. Corruption fails a check rather than needing someone to compare against a doc.
+
+VRBO: `https://vrbo.com/affiliate/VD0a4b2`. Kyle's Airbnb is a direct link, no affiliate network.
+
+**Commission is earned on ANY Booking.com booking through the link, not just the linked property.**
+
+---
+
+## Email marketing (MailerLite)
+
+Account 2164831, universal script on every page after the GA script. Signup forms on: homepage (modal), itinerary (modal), trip builder (inline), booking guide (inline), map (PDF modal). Three-email nurture sequence active. Lead magnet is the PDF checklist, delivered by welcome automation.
+
+**Form IDs:** `CliYpr` = printable PDF map. `WD5yKI` = planning checklist lead magnet.
+
+**GA4 event tracking on MailerLite forms.** Each page with an embedded form has a MutationObserver in its GA4 init block, watching for `.ml-form-successBody` changing from `display:none` to visible — the exact DOM transition MailerLite makes on confirmed subscription. It fires `email_signup` at most once per form per page load, with `method: 'pdf_map'` for `CliYpr` and `method: 'checklist'` for `WD5yKI`.
+
+**If you add a page with a MailerLite form**, copy the observer one-liner from an existing form page. **The dataLayer.push interception approach was tried and is confirmed broken** — MailerLite does not push `form_submit` to the dataLayer for `ml-embedded` forms.
+
+`trip_builder_complete` fires in `openEmailModal()` in trip-builder.html with `{'stops': N}`.
+
+**Free Resources modal pattern:** homepage and itinerary have a "Free Trip Planning Resources" section with two gold-border cards side by side, stacking on mobile. Each opens its own modal containing the form; no inline widgets in the page flow. Functions `openPdfModal()`/`closePdfModal()` and `openChecklistModal()`/`closeChecklistModal()`, both at z-index 2000, closing on outside click or Escape. `map.html` has the PDF modal only.
+
+---
+
+## Known gotchas
+
+- **Site emoji are HTML numeric entities, not raw characters.** They are written `&#128197;` / `&#9201;`, so grepping for the literal glyph (or a Unicode-range regex) returns **zero hits and looks like the site is emoji-free. It is not.** Find them with `grep -oE '&#x?[0-9A-Fa-f]+;' *.html` then decode codepoints above `0x2000`. This produced a confidently wrong "there are no emoji on this site" audit in July 2026.
+- **Netlify post-processing breaks markup greps.** See deployment step 3. This is the single most repeated debugging trap on this site.
+- **`git ls-files` beats a bare glob** for any sweep, because of the Drive ` (1)` duplicates and `.claude/worktrees/`.
+- **No OverlappingMarkerSpiderfier.** It was removed from the trip builder; do not re-add it.
+- Notepad++ Find in Files was the old batch-edit tool. No longer needed; just describe the batch change.
