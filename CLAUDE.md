@@ -105,9 +105,15 @@ Root-level HTML pages, an `images/` folder (distillery photos named `{distillery
 
 **Other:** `sitemap.xml` (generated), `_redirects` (see below), `bourbon-trail-planning-checklist.pdf` (lead magnet), `bourbon-trail-map.pdf` (generated).
 
-### Google Drive: this has already destroyed published content
+### Google Drive: resolved 10 August 2026, but read this before trusting old history
 
-**The repo currently lives inside a Google Drive synced folder, and that has cost real work.** Files with a ` (1)` suffix are Drive conflict duplicates; `.tmp.driveupload/` is Drive's mid-sync scratch space. Both are now gitignored and untracked. Never edit or reference either, and prefer `git ls-files` over a bare glob for any sweep.
+**The repo now lives at `C:\dev\mybourbontrailplan`, outside any synced folder.** It used to sit inside Google Drive, which destroyed published content once (below). Moving it out is the fix, and it is done: GitHub already provides the versioning and off-machine backup Drive was duplicating, so keep the repo out of Drive, Dropbox, OneDrive and any other sync root.
+
+Two habits survive the move and are still worth keeping:
+- **Never `git add .` here.** Stage explicitly. That advice appears in the deployment section too; this is why.
+- **`git ls-files` beats a bare glob** for any sweep, because of `.claude/worktrees/`.
+
+`check_site.py` still warns if a ` (1)` duplicate or `.tmp.driveupload/` appears in the tree. That should now never fire; if it does, something re-synced the repo into Drive and the working copy may not be what you think.
 
 **The incident (commit `b6f383c`, 8 April 2026, "trip builder updates").** A `git add .` swept **228 `.tmp.driveupload/` files** plus two ` (1)` duplicates into a single commit that *also* restored **older copies of several HTML files over newer ones**. 252 files changed, 621 deletions, under a message about the trip builder. It silently deleted published content that nobody noticed for four months:
 
@@ -119,11 +125,9 @@ Root-level HTML pages, an `images/` folder (distillery photos named `{distillery
 
 A second commit the same day (`c9efa97`) has the identical signature. All of the above except the Heaven Hill and Woodford items were restored from `b6f383c~1` in August 2026.
 
-**What protects you now, and what does not:**
-- `.gitignore` keeps Drive junk out of commits. `check_site.py` warns if any artefact appears in the tree at all, because its presence means Drive was mid-sync and the working copy may not be what you think.
-- `check_site.py` also asserts that distilleries within 0.25 mi of each other cross-link, which is what would have caught the Larrikin and Buzzard's Roost losses.
-- **Neither stops Drive overwriting your working files.** That is the part that actually loses work. **The real fix is moving this repo out of the Drive folder** — GitHub already provides the versioning and off-machine backup Drive was doing, so running both is redundant and actively harmful.
-- **Never `git add .` here.** Stage explicitly. That advice appears in the deployment section too; this is why.
+**Why it stayed invisible for four months, which is the reusable lesson.** Nothing compared the site against itself, so a silent deletion read as normal. `check_site.py` now asserts that distilleries within 0.25 mi of each other cross-link, which is exactly what would have caught the Larrikin and Buzzard's Roost losses. Prefer checks of that shape - an invariant the content must satisfy - over trusting that a diff was reviewed.
+
+**Commits before August 2026 may contain silent reverts.** When archaeology takes you into that history, do not assume a file's state in an old commit was intentional.
 
 ---
 
@@ -374,6 +378,6 @@ Account 2164831, universal script on every page after the GA script. Signup form
 
 - **Site emoji are HTML numeric entities, not raw characters.** They are written `&#128197;` / `&#9201;`, so grepping for the literal glyph (or a Unicode-range regex) returns **zero hits and looks like the site is emoji-free. It is not.** Find them with `grep -oE '&#x?[0-9A-Fa-f]+;' *.html` then decode codepoints above `0x2000`. This produced a confidently wrong "there are no emoji on this site" audit in July 2026.
 - **Netlify post-processing breaks markup greps.** See deployment step 3. This is the single most repeated debugging trap on this site.
-- **`git ls-files` beats a bare glob** for any sweep, because of the Drive ` (1)` duplicates and `.claude/worktrees/`.
+- **`git ls-files` beats a bare glob** for any sweep, because of `.claude/worktrees/`.
 - **No OverlappingMarkerSpiderfier.** It was removed from the trip builder; do not re-add it.
 - Notepad++ Find in Files was the old batch-edit tool. No longer needed; just describe the batch change.
