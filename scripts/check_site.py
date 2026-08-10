@@ -282,6 +282,66 @@ for f in SITE_PAGES:
             warn(f, f'possible hardcoded count: "...{m.group(0)}..." in "{ctx.strip()[:90]}"')
 
 
+# ------------------------------------------------- Google Drive sync artefacts
+# A `git add .` once swept 228 .tmp.driveupload files into a commit that also
+# restored older copies of several HTML files over newer ones, silently deleting
+# published content. .gitignore covers the junk now; this fails loudly if any
+# reappears in the tree, because its presence means Drive was mid-sync and the
+# working copy may not be what you think it is.
+for junk in glob.glob(".tmp.drive*") + glob.glob("* (1).*") + glob.glob("* (2).*"):
+    warn(junk, "Google Drive sync artefact present. Drive may have overwritten "
+               "working files; check `git diff` before committing anything")
+
+
+# --------------------------------------- reciprocal nearby cards between neighbours
+# Two of the five items lost in that overwrite were nearby cards between
+# distilleries a few minutes apart (Wild Turkey / Larrikin at 0.2 mi, Buzzard's
+# Roost and its Whiskey Row neighbours). Nothing noticed for four months. The
+# pairings are derivable from the coordinates already in map.html, so assert
+# them rather than trusting anyone to spot a missing card.
+def map_coords():
+    s = SRC.get("map.html", "")
+    if "const DISTILLERIES" not in s:
+        return {}
+    blob = s.split("const DISTILLERIES", 1)[1]
+    out = {}
+    for it in re.findall(r"\{([^{}]*)\}", blob):
+        prof = re.search(r'profile:"(distillery-[^"]+\.html)"', it)
+        la = re.search(r"lat:([\-0-9.]+)", it)
+        ln = re.search(r"lng:([\-0-9.]+)", it)
+        if prof and la and ln:
+            out[prof.group(1)] = (float(la.group(1)), float(ln.group(1)))
+    return out
+
+def miles(a, b):
+    import math
+    R = 3958.8
+    p1, p2 = math.radians(a[0]), math.radians(b[0])
+    h = (math.sin((p2 - p1) / 2) ** 2
+         + math.cos(p1) * math.cos(p2) * math.sin(math.radians(b[1] - a[1]) / 2) ** 2)
+    return 2 * R * math.asin(math.sqrt(h))
+
+COORDS = map_coords()
+# Tuned deliberately. A profile has room for four or five nearby cards, so
+# "everything within a mile" is an impossible bar: at 1.0 mi this produced 41
+# warnings, mostly unavoidable in dense clusters like Whiskey Row, and a check
+# people learn to ignore is worse than no check. At 0.25 mi it produces a short
+# list where every entry is genuinely a missing pairing.
+NEIGHBOUR_MI = 0.25
+names = sorted(COORDS)
+for i, a in enumerate(names):
+    for b in names[i + 1:]:
+        if a in BLOCKED or b in BLOCKED:
+            continue
+        if miles(COORDS[a], COORDS[b]) > NEIGHBOUR_MI:
+            continue
+        d = miles(COORDS[a], COORDS[b])
+        for x, y in ((a, b), (b, a)):
+            if x in SRC and y not in SRC[x]:
+                warn(x, f"no nearby card linking to {y}, which is {d:.1f} mi away "
+                        f"(under {NEIGHBOUR_MI} mi neighbours should cross-link)")
+
+
 # ---------------------------------------------------------- affiliate links
 # CLAUDE.md used to list all 11 Booking.com URLs verbatim so they could be
 # checked by eye. That is a second copy of live data, which is the drift pattern

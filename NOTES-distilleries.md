@@ -83,7 +83,7 @@ Key detail: the original 1911 bank pneumatic tube system is used to mix and deli
 - **Rick's White Light Diner (Frankfort)** — appears closed as of late 2025. Do not recommend.
 - **Bourbon on Main (Frankfort)** — verified Frankfort lunch option, bourbon-focused. Used as the Day 3 lunch recommendation, replacing a nonexistent "Rick House" in Frankfort. Appears in the itinerary, eat-and-drink, where-to-stay, and the Castle & Key nearby card.
 - **Wallace Station** — deli and bakery at Midway, near Woodford Reserve. Excellent sandwiches, popular with locals, so arrive before the lunch rush. The reliable food recommendation for the Lexington/Versailles corridor.
-- **Heaven's to Betsy Bakery** — Lawrenceburg, outstanding Reuben sandwich. **[NOT ON THE SITE]** CLAUDE.md previously claimed this had been added to `eat-and-drink-bourbon-trail.html` (On the Road section) and the Wild Turkey nearby cards. Checked August 2026: **it is on neither.** Either the edit never landed or it was reverted. Worth adding as a Lawrenceburg lunch option, but do not cite it as existing copy until it does.
+- **Heaven's to Betsy Bakery** — Lawrenceburg, scratch bakery and lunch spot, and the Reuben is one of the best Kyle has had anywhere. Small place, locals know about it, so go early. On `eat-and-drink-bourbon-trail.html` in the On the Road section, plus a Wild Turkey nearby card. **It was originally added 31 March 2026, silently destroyed on 8 April by the Google Drive overwrite (see the incident note in CLAUDE.md), and restored from history in August 2026.** If it disappears again, that is the signature of the same problem, not an editorial decision.
 - **[GAP] `eat-and-drink-bourbon-trail.html` has no Lexington section.** It covers Louisville, Bardstown, Frankfort and "On the Road". Meanwhile `distillery-dark-arts.html` asserts Lexington has the best dining on the trail outside Louisville. The Lexington regional map page handles this honestly rather than inventing restaurants. A Lexington section is the obvious follow-up.
 
 ---
@@ -97,6 +97,19 @@ Booking tiers and lead times for the ten majors (Buffalo Trace, Angel's Envy, Ma
 **Jim Beam** main-line distillation at Clermont is **paused for 2026**. Tours, tastings and the Kitchen Table are all still operating.
 
 **[UNVERIFIED] Hours blocks** on `distillery-wild-turkey.html`, `distillery-wilderness-trail.html`, `distillery-hartfield.html` and `distillery-kentucky-artisan.html` still carry the copy-pasted template pattern and have never been verified against the venues. Next verification pass due before the 2027 index refresh.
+
+---
+
+---
+
+## [NEEDS KYLE] Content lost in the April 2026 Drive overwrite, not yet restored
+
+Two items were deleted by commit `b6f383c` and deliberately **not** restored, because the copy is from April 2026 and makes factual claims about facilities and tours that may have changed since. Confirm they are still accurate, then restore from `git show b6f383c~1:<file>`.
+
+1. **Heaven Hill: the Springs Distillery and the Heritage Rising Tour.** The removed copy said Heaven Hill's brand-new **$200M Springs Distillery opened September 2025**, marking the return of distilling to Bardstown, and listed a **Heritage Rising Tour** of it. Also removed: a nearby card for **Five Brothers Bar & Kitchen**, described as a good spot after your tasting. If the tour still runs, this is strong content that the profile currently lacks entirely.
+2. **Woodford Reserve: the Barrel to Bottle Experience.** Described as their premium deep-dive, covering the full process from raw grain to finished bottle. Check whether it is still offered and at what price before restoring.
+
+Also worth knowing: the same overwrite removed coordinate and schema values that have since been superseded, so do not blanket-restore that commit. Only these two content items are outstanding.
 
 ---
 

@@ -5,3 +5,21 @@
 
 # Python bytecode cache
 __pycache__/
+
+# ---------------------------------------------------------------------------
+# Google Drive sync artefacts.
+#
+# This repo currently lives inside a Drive-synced folder. Drive writes temp
+# files mid-sync and creates " (1)" duplicates on conflict, and a `git add .`
+# once swept 228 of them into a commit that ALSO restored older copies of
+# several HTML files over newer ones. That silently destroyed published content
+# (see the incident note in CLAUDE.md).
+#
+# These rules stop the junk reaching commits. They do NOT stop Drive
+# overwriting working files, which is the part that actually loses work. The
+# real fix is moving this repo out of the Drive folder.
+# ---------------------------------------------------------------------------
+.tmp.driveupload/
+.tmp.drivedownload/
+* (1).*
+* (2).*

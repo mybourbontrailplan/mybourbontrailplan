@@ -105,7 +105,25 @@ Root-level HTML pages, an `images/` folder (distillery photos named `{distillery
 
 **Other:** `sitemap.xml` (generated), `_redirects` (see below), `bourbon-trail-planning-checklist.pdf` (lead magnet), `bourbon-trail-map.pdf` (generated).
 
-**Google Drive artefacts:** files with a ` (1)` suffix are Drive sync duplicates, identical to the originals, not separate pages. `.tmp.driveupload/` accumulates temp files. Never edit or reference either. Exclude them from any sweep — `git ls-files` is safer than a bare glob.
+### Google Drive: this has already destroyed published content
+
+**The repo currently lives inside a Google Drive synced folder, and that has cost real work.** Files with a ` (1)` suffix are Drive conflict duplicates; `.tmp.driveupload/` is Drive's mid-sync scratch space. Both are now gitignored and untracked. Never edit or reference either, and prefer `git ls-files` over a bare glob for any sweep.
+
+**The incident (commit `b6f383c`, 8 April 2026, "trip builder updates").** A `git add .` swept **228 `.tmp.driveupload/` files** plus two ` (1)` duplicates into a single commit that *also* restored **older copies of several HTML files over newer ones**. 252 files changed, 621 deletions, under a message about the trip builder. It silently deleted published content that nobody noticed for four months:
+
+- The Heaven's to Betsy Bakery restaurant card and its Wild Turkey nearby card
+- The Larrikin nearby card on Wild Turkey, 0.2 mi apart
+- Buzzard's Roost nearby cards on Evan Williams, Michter's and Old Forester
+- Heaven Hill's Springs Distillery and Heritage Rising Tour content
+- Woodford's Barrel to Bottle Experience
+
+A second commit the same day (`c9efa97`) has the identical signature. All of the above except the Heaven Hill and Woodford items were restored from `b6f383c~1` in August 2026.
+
+**What protects you now, and what does not:**
+- `.gitignore` keeps Drive junk out of commits. `check_site.py` warns if any artefact appears in the tree at all, because its presence means Drive was mid-sync and the working copy may not be what you think.
+- `check_site.py` also asserts that distilleries within 0.25 mi of each other cross-link, which is what would have caught the Larrikin and Buzzard's Roost losses.
+- **Neither stops Drive overwriting your working files.** That is the part that actually loses work. **The real fix is moving this repo out of the Drive folder** — GitHub already provides the versioning and off-machine backup Drive was doing, so running both is redundant and actively harmful.
+- **Never `git add .` here.** Stage explicitly. That advice appears in the deployment section too; this is why.
 
 ---
 
