@@ -353,6 +353,18 @@
   .nav-links.mobile-open li { width: 100%; }
   .nav-links.mobile-open a { display: block; padding: 10px 0; font-size: 16px; border-bottom: 1px solid var(--border); }
   .nav-links.mobile-open a.nav-cta { text-align: center; margin-top: 8px; border-bottom: none; border-radius: 8px; padding: 12px; }
+  .photo-gallery { margin: 32px 0; }
+  .photo-gallery h2 { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary-dark); margin: 0 0 16px; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .gallery-item { border-radius: var(--radius); overflow: hidden; position: relative; cursor: pointer; }
+  .gallery-item img { width: 100%; aspect-ratio: 4/3; object-fit: cover; display: block; transition: transform 0.3s; }
+  .gallery-item:hover img { transform: scale(1.03); }
+  .gallery-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 10px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.6)); color: white; font-size: 12.5px; font-weight: 500; }
+  .gallery-lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); z-index: 3000; align-items: center; justify-content: center; cursor: pointer; }
+  .gallery-lightbox.active { display: flex; }
+  .gallery-lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+  .gallery-lightbox-close { position: absolute; top: 16px; right: 20px; color: white; font-size: 32px; font-weight: 700; cursor: pointer; line-height: 1; }
+  @media (max-width: 640px) { .gallery-grid { grid-template-columns: 1fr; } }
 
   @media (max-width:900px){.nav-links{display:none;}.mobile-menu-btn{display:block;}.logo-lockup{width:min(72vw,300px)!important;height:auto!important;}}
 </style>
@@ -483,6 +495,27 @@
                 <p>The current operation is small and scrappy, a genuine craft distillery that embraces its underdog identity. The owners are passionate about both the history of the site and their own spirits production. Tours here feel more like a conversation than a scripted presentation.</p>
                 <p>Located just outside Frankfort, Glenns Creek pairs naturally with Buffalo Trace and Castle & Key for a Frankfort-focused day. It's the quietest and most intimate of the three, offering a nice contrast to Buffalo Trace's crowds.</p>
 
+<div class="photo-gallery">
+<h2>Photos from Our Visit</h2>
+<div class="gallery-grid">
+  <div class="gallery-item">
+    <img src="images/glenns-creek-1.jpg" alt="Glenns Creek Distilling banner reading bourbon without the BS on a weathered stone building" loading="lazy">
+    <div class="gallery-caption">Bourbon without the BS, which is a fair summary of the place</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/glenns-creek-2.jpg" alt="The former Old Crow distillery campus with long stone warehouse buildings and a gravel road" loading="lazy">
+    <div class="gallery-caption">The old Old Crow campus, most of it long out of use</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/glenns-creek-3.jpg" alt="Ivy covered ruin of an Old Crow distillery warehouse with broken windows" loading="lazy">
+    <div class="gallery-caption">Nature has taken back most of the site, and they have left it that way</div>
+  </div>
+  <div class="gallery-item">
+    <img src="images/glenns-creek-4.jpg" alt="Glenns Creek tasting bar with stools and barrels set among working distillery equipment" loading="lazy">
+    <div class="gallery-caption">The tasting bar sits in among the working equipment</div>
+  </div>
+</div>
+</div>
     <h2 id="tours">Tour Options</h2>
     <div class="tour-card">
       <div class="tour-card-header">
@@ -663,5 +696,7 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
 /* affiliate_click GA4 tracking (delegated) */
 document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.href||'';var t=null;if(/kqzyfj\.com|anrdoezrs\.net|tkqlhce\.com|jdoqocy\.com/.test(href))t='booking_com';else if(/vrbo\.com\/affiliate/.test(href))t='vrbo';else if(/bourbonstopky\.com/.test(href))t='direct_booking';else if(/airbnb\./.test(href))t='airbnb';if(!t)return;var n=a.getAttribute('data-property')||(a.textContent||'').replace(/\s+/g,' ').trim().slice(0,100)||'unknown';if(typeof gtag==='function'){gtag('event','affiliate_click',{page_path:location.pathname,property_name:n,link_type:t});}},true);
 </script>
+<div class="gallery-lightbox" id="galleryLightbox" onclick="this.classList.remove('active')"><span class="gallery-lightbox-close">&times;</span><img id="lightboxImg" src="" alt=""></div>
+<script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 </body>
 </html>
