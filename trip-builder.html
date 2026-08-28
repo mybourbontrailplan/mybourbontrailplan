@@ -393,7 +393,7 @@ let trip={1:[],2:[],3:[]},aDay=1,tDays=3,MM={},rLines=[],map,aRF='all',regMk=[];
 
 function initMap(){
   map=L.map('map',{center:[38.05,-85.3],zoom:8,zoomControl:true});
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19}).addTo(map);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=cb1_2h05_1_f21066d63a3a3ef751ec2683',{attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19}).addTo(map);
 
   // Region cards
   const isMobile=window.innerWidth<900;
