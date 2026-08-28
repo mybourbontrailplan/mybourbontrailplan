@@ -72,13 +72,23 @@ m.submit(["https://mybourbontrailplan.com/foo.html"], m.load_key())
 
 - Static HTML/CSS/JS. **No build tools, no framework, no CMS** — every page is a standalone HTML file at root level.
 - Fonts: DM Sans (body) + Fraunces (display).
-- Maps: Leaflet.js with CartoDB Light tiles. SortableJS 1.15.6 for trip-builder drag-to-reorder, loaded from unpkg after Leaflet.
+- Maps: Leaflet.js with CartoDB Light raster tiles, which require a CARTO API key (see below). SortableJS 1.15.6 for trip-builder drag-to-reorder, loaded from unpkg after Leaflet.
 - QR codes: `js/qr.js`, a vendored encoder. See "Printable QR cards" below.
 - Analytics: GA4 `G-DVK4D6KJJP` on all pages. Custom events: `email_signup`, `trip_builder_complete`, `share_link_copied`, `plan_loaded_from_link`, `affiliate_click`, `embed_load`, `embed_snippet_copied`, `host_toolkit_generate`.
 - Email: MailerLite, account 2164831, universal script on every page after the GA script.
 - Affiliates: CJ Affiliate for Booking.com and VRBO, direct Airbnb.
 - Contact and About render the email address in JS to prevent scraping/mangling.
 - Search Console verified via meta tag on all pages.
+
+### CARTO basemap tiles: the key, the quota and the retirement notice
+
+Raster tiles have required an API key since August 2026, appended as `?key=` on the tile URL. The key lives in exactly **two** places, the `L.tileLayer(...)` call in `map.html` and the one in `trip-builder.html`. Nothing else requests CARTO tiles: no shared JS file holds the config, and both the embed widget and the printable QR cards resolve to our own `map.html`, so they inherit the key automatically and no partner ever needs a fresh snippet. Rotating the key is therefore a two-file edit plus a push.
+
+- **There is no dashboard, no account and no allowlist.** The key arrives by email from `support-basemaps@carto.com`. Do not go hunting for a console to restrict it by domain, because there isn't one. `app.carto.com` is CARTO's warehouse-GIS *platform*, an unrelated product whose signup asks which data warehouse you use; an account there does nothing for basemaps. This was chased once already.
+- **Free up to 5,000,000 tile requests per calendar month**, counted across raster and vector together. Overage is soft: CARTO says they will get in touch rather than cut you off. There is no usage dashboard, so an email from them would be the first signal.
+- **Attribution visibility is the condition of the free tier**, not courtesy. The CARTO and OpenStreetMap links must stay on every map. Do not strip them while tidying up map UI.
+- **Raster is being retired.** CARTO recommends moving to vector basemaps, which means MapLibre GL rather than a Leaflet raster tile layer: a rewrite of the map init in both files, not a URL swap. No deadline has been given. The same key already covers vector, so when the key requirement reaches vector there is nothing new to obtain.
+- Tile requests from a partner's embed carry **our** origin, not the host's, because the request is made by our framed document rather than their page. Verified by test, and it is why one key serves every embed.
 
 ## Design system
 
