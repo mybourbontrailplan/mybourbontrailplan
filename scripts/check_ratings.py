@@ -16,6 +16,12 @@ import re, sys, glob, io
 
 APPLY = '--apply' in sys.argv
 
+def to_file(href):
+    """Accept /distillery-x or distillery-x.html, return the filename."""
+    h = href.lstrip('/').split('?')[0].split('#')[0]
+    return h if h.endswith('.html') else h + '.html'
+
+
 canon = {}
 for f in sorted(glob.glob('distillery-*.html')):
     if ' (1)' in f: continue
@@ -28,7 +34,8 @@ changes = {'distilleries.html': [], 'trip-builder.html': []}
 # ---- distilleries.html: <div class="dist-card-rating">X</div> inside each card
 d = open('distilleries.html', encoding='utf-8').read()
 def fix_card(m):
-    prof, attrs, body = m.group(1), m.group(2), m.group(3)
+    href, attrs, body = m.group(1), m.group(2), m.group(3)
+    prof = to_file(href)
     want = canon.get(prof)
     if not want: return m.group(0)
     def rep(rm):
@@ -38,19 +45,27 @@ def fix_card(m):
             return f'dist-card-rating">{want}<'
         return rm.group(0)
     newbody = re.sub(r'dist-card-rating">([^<]+)<', rep, body, count=1)
-    return f'<a href="{prof}" class="dist-card"{attrs}>{newbody}</a>'
-d2 = re.sub(r'<a href="(distillery-[^"]+\.html)" class="dist-card"([^>]*)>([\s\S]{0,1800}?)</a>', fix_card, d)
+    return f'<a href="{href}" class="dist-card"{attrs}>{newbody}</a>'
+CARD_RE = r'<a href="(/?distillery-[^"]+?)" class="dist-card"([^>]*)>([\s\S]{0,1800}?)</a>'
+d2 = re.sub(CARD_RE, fix_card, d)
+if not re.search(CARD_RE, d):
+    sys.exit("distilleries.html: 0 dist-cards parsed - the card regex is out of "
+             "date and this check is not running.")
 
 # ---- trip-builder.html: profile:"X" ... rating:N
 t = open('trip-builder.html', encoding='utf-8').read()
 def fix_tb(m):
-    prof, mid, have = m.group(1), m.group(2), m.group(3)
-    want = canon.get(prof)
+    href, mid, have = m.group(1), m.group(2), m.group(3)
+    want = canon.get(to_file(href))
     if want and have != want:
-        changes['trip-builder.html'].append((prof, have, want))
-        return f'profile:"{prof}"{mid}rating:{want}'
+        changes['trip-builder.html'].append((to_file(href), have, want))
+        return f'profile:"{href}"{mid}rating:{want}'
     return m.group(0)
-t2 = re.sub(r'profile:"(distillery-[^"]+\.html)"([^}]*?)rating:([0-9.]+)', fix_tb, t)
+TB_RE = r'profile:"(/?distillery-[^"]+?)"([^}]*?)rating:([0-9.]+)'
+t2 = re.sub(TB_RE, fix_tb, t)
+if not re.search(TB_RE, t):
+    sys.exit("trip-builder.html: 0 profile entries parsed - the regex is out of "
+             "date and this check is not running.")
 
 for fn, rows in changes.items():
     print(f"\n=== {fn}: {len(rows)} rating(s) to correct ===")

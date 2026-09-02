@@ -147,9 +147,15 @@ for f in SITE_PAGES:
         fail(f, "no canonical")
     else:
         want = ("https://mybourbontrailplan.com/" if f == "index.html"
-                else f"https://mybourbontrailplan.com/{f}")
+                else f"https://mybourbontrailplan.com/{f[:-5]}")
         if c.group(1) != want:
             fail(f, f"canonical is {c.group(1)}, expected {want}")
+
+        # og:url must agree with the canonical. They are two statements of the
+        # same fact, so a check is cheaper than trusting they stay in step.
+        o = re.search(r'property="og:url"\s+content="([^"]+)"', s)
+        if o and o.group(1) != want:
+            fail(f, f"og:url is {o.group(1)}, expected {want} (must match canonical)")
 
     for prop in ("og:title", "og:description", "og:type", "og:url"):
         if f'property="{prop}"' not in s:
@@ -170,8 +176,8 @@ for f in SITE_PAGES:
     if "favicon-32.png" not in s:
         warn(f, "missing favicon chain")
     # nav must carry a Map link, and collapse at 900px
-    if 'href="map.html"' not in s and f != "map.html":
-        warn(f, "no nav link to map.html")
+    if 'href="/map"' not in s and f != "map.html":
+        warn(f, "no nav link to /map")
     if "max-width:900px" not in s.replace(" ", "") and "max-width: 900px" not in s:
         warn(f, "no 900px hamburger breakpoint")
     # unguarded gtag calls outside the init block
@@ -232,9 +238,9 @@ for f in SITE_PAGES:
 
 # -------------------------------------------------------- link integrity
 for f in PAGES:
-    for href in set(re.findall(r'href="([a-z0-9][a-z0-9\-]*\.html)(?:#[^"]*)?"', SRC[f])):
-        if not os.path.exists(href):
-            fail(f, f"link to missing file: {href}")
+    for slug in set(re.findall(r'href="/([a-z0-9][a-z0-9\-]*)(?:[?#][^"]*)?"', SRC[f])):
+        if not os.path.exists(slug + ".html"):
+            fail(f, f"link to missing page: /{slug}")
     for src in set(re.findall(r'src="(images/[^"]+?)"', SRC[f])):
         clean = src.split("?")[0]
         if not os.path.exists(clean):
@@ -247,10 +253,12 @@ for f in PAGES:
 SITE_FILES = ["distilleries.html", "trip-builder.html", "map.html"] + [
     f for f in PAGES if f.startswith("bourbon-trail-map-")]
 for b in BLOCKED:
+    slug = b[:-5]
     for f in SITE_FILES:
-        if os.path.exists(f) and b in SRC.get(f, ""):
+        src = SRC.get(f, "")
+        if os.path.exists(f) and (b in src or f'"/{slug}"' in src or f'"/{slug}?' in src):
             fail(f, f"references excluded page {b}")
-    if os.path.exists("sitemap.xml") and b in read("sitemap.xml"):
+    if os.path.exists("sitemap.xml") and slug in read("sitemap.xml"):
         fail("sitemap.xml", f"contains excluded page {b}")
 
 
@@ -259,7 +267,7 @@ if os.path.exists("sitemap.xml"):
     sm = read("sitemap.xml")
     listed = set(re.findall(r"<loc>https://mybourbontrailplan\.com/([^<]*)</loc>", sm))
     for f in SITE_PAGES:
-        key = "" if f == "index.html" else f
+        key = "" if f == "index.html" else f[:-5]
         if key not in listed:
             warn("sitemap.xml", f"{f} is not in the sitemap (run generate_sitemap.py)")
 
@@ -280,6 +288,68 @@ for f in SITE_PAGES:
         ctx = txt[max(0, m.start() - 70):m.end() + 70]
         if not ALLOWED.search(ctx):
             warn(f, f'possible hardcoded count: "...{m.group(0)}..." in "{ctx.strip()[:90]}"')
+
+
+# ----------------------------------------------------- clean-URL integrity
+# Every page is served at exactly one indexable URL: the extensionless clean
+# form. Google spent months indexing the .html twin because the canonicals
+# pointed there, so these checks guard the whole shape of that fix.
+#
+# Netlify's Pretty URLs post-processing rewrites href="x.html" to href="/x" in
+# the served HTML, which means a .html link in the source LOOKS fine on the
+# live site. It is still wrong: it depends on a deprecated Netlify feature, and
+# it does not apply inside JS strings, where map.html and trip-builder.html
+# build their profile links. Check the source, not the served page.
+INTERNAL_HTML = re.compile(
+    r'(?:href|src)="(?!https?://)[^"]*?([a-z0-9][a-z0-9\-]*\.html)'
+    r'|"/?([a-z0-9][a-z0-9\-]*\.html)"'
+)
+for f in PAGES:
+    hits = set()
+    for m in INTERNAL_HTML.finditer(SRC[f]):
+        name = m.group(1) or m.group(2)
+        if os.path.exists(name):
+            hits.add(name)
+    for name in sorted(hits):
+        fail(f, f"internal link still uses the .html form: {name} (must be /{name[:-5]})")
+
+# The generated block in _redirects must cover every page, forced. An unforced
+# rule is silently skipped by Netlify because the .html file exists on disk.
+if os.path.exists("_redirects"):
+    rd = read("_redirects")
+    for f in PAGES + sorted(BLOCKED):
+        dest = "/" if f == "index.html" else f"/{f[:-5]}"
+        if not re.search(rf'^/{re.escape(f)}\s+{re.escape(dest)}\s+301!$', rd, re.M):
+            fail("_redirects", f"no forced 301 for /{f} (run generate_redirects.py)")
+    for m in re.finditer(r'^(/\S+\.html)\s+(\S+)\s+301(!?)$', rd, re.M):
+        if not m.group(3):
+            fail("_redirects", f"{m.group(1)} is an unforced 301; Netlify will skip it")
+    # A redirect target must not itself be a redirect source.
+    sources = set(re.findall(r'^(/\S+)\s+\S+\s+30[12]!?$', rd, re.M))
+    for m in re.finditer(r'^\S+\s+(/\S*?)(?:\?\S*)?\s+30[12]!?$', rd, re.M):
+        if m.group(1) in sources:
+            fail("_redirects", f"redirect chain: target {m.group(1)} is itself redirected")
+
+# sitemap shape: clean URLs, every entry dated, none of the fields Google
+# ignores. The absence of lastmod is why Google did not re-read this file
+# between April and September 2026.
+if os.path.exists("sitemap.xml"):
+    sm_raw = read("sitemap.xml")
+    locs = re.findall(r"<loc>([^<]*)</loc>", sm_raw)
+    for loc in locs:
+        if loc.endswith(".html"):
+            fail("sitemap.xml", f"lists the .html form, which 301s: {loc}")
+    n_last = len(re.findall(r"<lastmod>", sm_raw))
+    if n_last != len(locs):
+        fail("sitemap.xml", f"{len(locs)} URLs but {n_last} lastmod tags; every entry needs one")
+    for dead in ("changefreq", "priority"):
+        if f"<{dead}>" in sm_raw:
+            fail("sitemap.xml", f"<{dead}> is ignored by Google and was removed; do not re-add it")
+
+if not os.path.exists("robots.txt"):
+    fail("robots.txt", "missing; it is the only place the sitemap is declared")
+elif "sitemap.xml" not in read("robots.txt").lower():
+    fail("robots.txt", "does not reference sitemap.xml")
 
 
 # ------------------------------------------------- Google Drive sync artefacts
@@ -306,11 +376,13 @@ def map_coords():
     blob = s.split("const DISTILLERIES", 1)[1]
     out = {}
     for it in re.findall(r"\{([^{}]*)\}", blob):
-        prof = re.search(r'profile:"(distillery-[^"]+\.html)"', it)
+        prof = re.search(r'profile:"/?(distillery-[^"?#]+?)(?:\.html)?"', it)
         la = re.search(r"lat:([\-0-9.]+)", it)
         ln = re.search(r"lng:([\-0-9.]+)", it)
         if prof and la and ln:
-            out[prof.group(1)] = (float(la.group(1)), float(ln.group(1)))
+            # Key on the filename regardless of the URL form in the array, so
+            # this survives another URL-shape change.
+            out[prof.group(1) + ".html"] = (float(la.group(1)), float(ln.group(1)))
     return out
 
 def miles(a, b):
@@ -322,6 +394,13 @@ def miles(a, b):
     return 2 * R * math.asin(math.sqrt(h))
 
 COORDS = map_coords()
+# This check went blind once: the clean-URL migration changed the shape of
+# profile: in map.html's array and map_coords() quietly returned {}, taking the
+# proximity check with it and LOOKING like six warnings had been fixed. An
+# invariant that can silently stop running is worse than no invariant.
+if os.path.exists("map.html") and not COORDS:
+    fail("map.html", "map_coords() parsed 0 distilleries; the proximity "
+                     "cross-link check is not running (parser out of date?)")
 # Tuned deliberately. A profile has room for four or five nearby cards, so
 # "everything within a mile" is an impossible bar: at 1.0 mi this produced 41
 # warnings, mostly unavoidable in dense clusters like Whiskey Row, and a check
@@ -337,7 +416,13 @@ for i, a in enumerate(names):
             continue
         d = miles(COORDS[a], COORDS[b])
         for x, y in ((a, b), (b, a)):
-            if x in SRC and y not in SRC[x]:
+            # Pages link to the clean URL now; accept either form so this reads
+            # the intent (is there a card pointing at the neighbour?) rather
+            # than one particular URL spelling.
+            linked = x in SRC and (y in SRC[x] or f'"/{y[:-5]}"' in SRC[x]
+                                   or f'"/{y[:-5]}?' in SRC[x]
+                                   or f'"/{y[:-5]}#' in SRC[x])
+            if x in SRC and not linked:
                 warn(x, f"no nearby card linking to {y}, which is {d:.1f} mi away "
                         f"(under {NEIGHBOUR_MI} mi neighbours should cross-link)")
 

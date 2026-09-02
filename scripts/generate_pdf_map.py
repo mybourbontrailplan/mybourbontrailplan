@@ -99,9 +99,18 @@ def _js_array(html, varname):
     js=re.sub(r'([{,]\s*)([A-Za-z_][A-Za-z0-9_]*)\s*:', r'\1"\2":', raw)
     return json.loads(js)
 
+def _norm(href):
+    """Accept /distillery-x or distillery-x.html; the join key is the filename."""
+    h=href.lstrip("/").split("?")[0].split("#")[0]
+    return h if h.endswith(".html") else h+".html"
+
 def _cards(html):
     out={}
-    for href,body in re.findall(r'<a href="(distillery-[^"]+\.html)" class="dist-card"[^>]*>(.*?)</a>', html, re.S):
+    rows=re.findall(r'<a href="(/?distillery-[^"]+?)" class="dist-card"[^>]*>(.*?)</a>', html, re.S)
+    if not rows:
+        raise SystemExit("distilleries.html: 0 dist-cards parsed - the card regex "
+                         "is out of date; the PDF would be built from incomplete data.")
+    for href,body in rows:
         loc=re.search(r'dist-card-region">([^<]+)<', body)
         meta=re.findall(r'<span[^>]*>([^<]+)</span>', body)
         trail=None
@@ -110,7 +119,7 @@ def _cards(html):
             elif m.strip()=="Craft": trail="Craft"
             elif m.strip()=="Independent": trail="Independent"
         city=loc.group(1).split(",")[0].strip() if loc else None
-        out[href]={"city":city,"trail":trail}
+        out[_norm(href)]={"city":city,"trail":trail}
     return out
 
 def load():
@@ -120,7 +129,7 @@ def load():
     cards=_cards(ds)
     recs=[]
     for d in D:
-        card=cards.get(d.get("profile"), {})
+        card=cards.get(_norm(d.get("profile") or ""), {})
         city=card.get("city") or d["region"]
         if city in _REGION_OVERRIDE:
             region=_REGION_OVERRIDE[city]

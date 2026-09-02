@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mybourbontrailplan.com/sitemap.xml

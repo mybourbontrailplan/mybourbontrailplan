@@ -427,8 +427,8 @@ NON_DISTILLERY_SCHEMAS = {
         "@type": "Article",
         "headline": "Where to Eat & Drink on the Kentucky Bourbon Trail (2026)",
         "description": "Best restaurants and bars near Bourbon Trail distilleries. Louisville, Bardstown, Frankfort, and Lexington dining guides.",
-        "url": "https://mybourbontrailplan.com/eat-and-drink-bourbon-trail.html",
-        "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mybourbontrailplan.com/eat-and-drink-bourbon-trail.html"},
+        "url": "https://mybourbontrailplan.com/eat-and-drink-bourbon-trail",
+        "mainEntityOfPage": {"@type": "WebPage", "@id": "https://mybourbontrailplan.com/eat-and-drink-bourbon-trail"},
         "author": {"@type": "Person", "name": "Kyle Cowden"},
         "publisher": {"@type": "Organization", "name": "Bourbon Trail Planner", "url": "https://mybourbontrailplan.com/"},
         "datePublished": "2026-01-15",
@@ -439,7 +439,7 @@ NON_DISTILLERY_SCHEMAS = {
         "@type": "WebApplication",
         "name": "Bourbon Trail Trip Builder",
         "description": "Build your perfect Kentucky Bourbon Trail itinerary. Add distilleries, see drive times, get smart tips, and export your plan. Free, no account needed.",
-        "url": "https://mybourbontrailplan.com/trip-builder.html",
+        "url": "https://mybourbontrailplan.com/trip-builder",
         "applicationCategory": "TravelApplication",
         "operatingSystem": "Web",
         "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
@@ -450,12 +450,12 @@ NON_DISTILLERY_SCHEMAS = {
         "@type": "AboutPage",
         "name": "About Bourbon Trail Planner",
         "description": "Bourbon Trail Planner was built by people who've actually done the Kentucky Bourbon Trail — multiple times.",
-        "url": "https://mybourbontrailplan.com/about.html",
+        "url": "https://mybourbontrailplan.com/about",
         "mainEntity": {
             "@type": "Person",
             "name": "Kyle Cowden",
             "description": "Kentucky Bourbon Trail veteran and independent travel guide author.",
-            "url": "https://mybourbontrailplan.com/about.html",
+            "url": "https://mybourbontrailplan.com/about",
         },
     },
     "contact.html": {
@@ -463,7 +463,7 @@ NON_DISTILLERY_SCHEMAS = {
         "@type": "ContactPage",
         "name": "Contact Bourbon Trail Planner",
         "description": "Get in touch with the Bourbon Trail Planner team. Questions, corrections, partnership inquiries, and feedback welcome.",
-        "url": "https://mybourbontrailplan.com/contact.html",
+        "url": "https://mybourbontrailplan.com/contact",
     },
 }
 

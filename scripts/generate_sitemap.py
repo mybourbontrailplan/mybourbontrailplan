@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""
+r"""
 Regenerates sitemap.xml by scanning root-level HTML files.
 
 Exclusion rules (applied in order):
@@ -7,19 +7,29 @@ Exclusion rules (applied in order):
   2. Explicit blocklist — shuttered/non-public pages
   3. Files with <meta name="robots" content="noindex"> anywhere in <head>
 
-Priority/changefreq is assigned from an explicit table. Distillery profiles
-not listed there default to 0.7/monthly; any other unlisted page defaults to
-0.8/monthly so new guide pages are indexed conservatively without manual edits.
+URLs are the extensionless clean form (https://mybourbontrailplan.com/map),
+matching the canonical on every page. Never emit the .html form: those URLs
+301 to the clean form, and a sitemap full of redirects slows re-crawling at
+exactly the wrong moment.
 
-To promote a high-traffic distillery to 0.8 priority, add it to
-HIGH_PRIORITY_DISTILLERIES below.
+Every entry carries <lastmod>, which is the whole point of the file. Google
+did not re-read this sitemap between 3 April and 2 September 2026 because it
+carried no lastmod at all, only changefreq and priority, both of which Google
+ignores. Those two fields are deliberately absent now; do not add them back.
+check_site.py fails if they reappear.
+
+lastmod is the file's last git commit date, except for files with uncommitted
+changes, which get today. That ordering matters: you regenerate before you
+commit, so a page edited in the pending commit must not report the previous
+commit's date.
 
 Run from repo root: python scripts\generate_sitemap.py
 """
 
 import os
 import re
-import sys
+import subprocess
+from datetime import date
 
 BASE_URL = "https://mybourbontrailplan.com"
 SITEMAP_FILE = "sitemap.xml"
@@ -29,47 +39,6 @@ BLOCKLIST = {
     "distillery-garrard-county.html",  # shuttered distillery
     "distillery-barton-1792.html",     # not open to the public
     "email-signup-cta.html",           # code fragment, not a standalone page
-}
-
-# Explicit (priority, changefreq) for all known pages.
-# New pages not listed here fall through to pattern-based defaults below.
-PAGE_CONFIG = {
-    "index.html":                                (1.0, "weekly"),
-    "distilleries.html":                         (0.9, "weekly"),
-    "guides.html":                               (0.8, "weekly"),
-    "3-day-bourbon-trail-itinerary.html":        (0.9, "monthly"),
-    "trip-builder.html":                         (0.9, "monthly"),
-    "bourbon-trail-booking-guide.html":          (0.9, "monthly"),
-    "where-to-stay-bourbon-trail.html":          (0.9, "monthly"),
-    "bourbon-trail-budget-guide.html":           (0.9, "monthly"),
-    "bourbon-trail-transportation-guide.html":   (0.9, "monthly"),
-    "bourbon-trail-bachelor-party-guide.html":   (0.9, "monthly"),
-    "map.html":                                  (0.8, "monthly"),
-    "eat-and-drink-bourbon-trail.html":          (0.8, "monthly"),
-    "buffalo-trace-gift-shop-guide.html":        (0.8, "monthly"),
-    "kentucky-bourbonfest.html":                 (0.8, "monthly"),
-    "best-time-to-visit-bourbon-trail.html":     (0.8, "monthly"),
-    "bourbon-trail-non-bourbon-drinkers.html":   (0.8, "monthly"),
-    "louisville-whiskey-row-walking-guide.html": (0.8, "monthly"),
-    "about.html":                                (0.5, "monthly"),
-    "contact.html":                              (0.5, "monthly"),
-}
-
-# High-traffic distillery profiles that warrant 0.8 instead of the default 0.7.
-# Add new profiles here once they establish meaningful search traffic.
-HIGH_PRIORITY_DISTILLERIES = {
-    "distillery-angels-envy.html",
-    "distillery-buffalo-trace.html",
-    "distillery-evan-williams.html",
-    "distillery-four-roses.html",
-    "distillery-heaven-hill.html",
-    "distillery-jim-beam.html",
-    "distillery-log-still.html",
-    "distillery-makers-mark.html",
-    "distillery-old-forester.html",
-    "distillery-preservation.html",
-    "distillery-wild-turkey.html",
-    "distillery-woodford-reserve.html",
 }
 
 _NOINDEX_RE = re.compile(
@@ -88,27 +57,40 @@ def has_noindex(path):
         return False
 
 
-def get_config(filename):
-    if filename in PAGE_CONFIG:
-        return PAGE_CONFIG[filename]
-    if filename in HIGH_PRIORITY_DISTILLERIES:
-        return (0.8, "monthly")
-    if filename.startswith("distillery-"):
-        return (0.7, "monthly")
-    return (0.8, "monthly")
-
-
 def to_url(filename):
-    return f"{BASE_URL}/" if filename == "index.html" else f"{BASE_URL}/{filename}"
+    """Repo filename -> its canonical clean URL."""
+    if filename == "index.html":
+        return f"{BASE_URL}/"
+    return f"{BASE_URL}/{filename[:-5]}"
+
+
+def _git(args, cwd):
+    return subprocess.run(["git"] + args, cwd=cwd, capture_output=True,
+                          text=True).stdout
+
+
+def build_lastmod(repo_root, names):
+    """Map filename -> YYYY-MM-DD. Uncommitted edits report today."""
+    today = date.today().isoformat()
+    dirty = set()
+    for line in _git(["status", "--porcelain", "--"] + names, repo_root).splitlines():
+        dirty.add(os.path.basename(line[3:].strip().strip('"')))
+
+    out = {}
+    for name in names:
+        if name in dirty:
+            out[name] = today
+            continue
+        stamp = _git(["log", "-1", "--format=%cs", "--", name], repo_root).strip()
+        out[name] = stamp or today
+    return out
 
 
 def main():
     repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     sitemap_path = os.path.join(repo_root, SITEMAP_FILE)
 
-    included = []
-    skipped = []
-
+    included, skipped = [], []
     for name in sorted(os.listdir(repo_root)):
         if not name.endswith(".html"):
             continue
@@ -126,34 +108,32 @@ def main():
             continue
         included.append(name)
 
-    # Sort: highest priority first; alpha within each priority tier
-    included.sort(key=lambda n: (-get_config(n)[0], n))
+    # Homepage first, then alphabetical. Ordering carries no ranking meaning;
+    # it just keeps the file readable in a diff.
+    included.sort(key=lambda n: (n != "index.html", n))
+
+    lastmod = build_lastmod(repo_root, included)
 
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
     for name in included:
-        priority, changefreq = get_config(name)
         lines.append(
             f'  <url>'
             f'<loc>{to_url(name)}</loc>'
-            f'<changefreq>{changefreq}</changefreq>'
-            f'<priority>{priority:.1f}</priority>'
+            f'<lastmod>{lastmod[name]}</lastmod>'
             f'</url>'
         )
     lines.append("</urlset>")
 
-    output = "\n".join(lines) + "\n"
     with open(sitemap_path, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(output)
+        fh.write("\n".join(lines) + "\n")
 
-    print(f"sitemap.xml written — {len(included)} URLs included, {len(skipped)} excluded")
+    print(f"sitemap.xml written - {len(included)} URLs included, {len(skipped)} excluded")
     print()
     for name in included:
-        priority, _ = get_config(name)
-        print(f"  {priority:.1f}  {to_url(name)}")
-
+        print(f"  {lastmod[name]}  {to_url(name)}")
     if skipped:
         print()
         print("Excluded:")

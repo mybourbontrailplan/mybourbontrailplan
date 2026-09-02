@@ -18,6 +18,10 @@
 # are 302 and not 301: a 301 gets cached by browsers indefinitely and takes the
 # ability to re-point them away from us.
 #
+# Targets are the clean /map URL, not /map.html. A .html target would chain
+# through the page-redirect block below (302 then 301), and a printed card
+# cannot be reissued to shorten the path.
+#
 # The tracking params live here rather than in the QR so the code stays short.
 # utm_medium=qr is baked in because only the printed card uses these; the guest
 # message and guidebook links are clicked rather than typed, so they carry their
@@ -28,8 +32,111 @@
 # and the first segment would be read as a region. map.html ignores a region it
 # does not recognise, so region=ky simply shows everything.
 
-/m/ky/:host        /map.html?utm_source=host&utm_medium=qr&utm_campaign=guest-map&utm_content=:host                  302
-/m/ky              /map.html?utm_source=host&utm_medium=qr&utm_campaign=guest-map                                    302
-/m/:region/:host   /map.html?region=:region&utm_source=host&utm_medium=qr&utm_campaign=guest-map&utm_content=:host   302
-/m/:region         /map.html?region=:region&utm_source=host&utm_medium=qr&utm_campaign=guest-map                     302
-/m                 /map.html?utm_source=host&utm_medium=qr&utm_campaign=guest-map                                    302
+/m/ky/:host        /map?utm_source=host&utm_medium=qr&utm_campaign=guest-map&utm_content=:host                  302
+/m/ky              /map?utm_source=host&utm_medium=qr&utm_campaign=guest-map                                    302
+/m/:region/:host   /map?region=:region&utm_source=host&utm_medium=qr&utm_campaign=guest-map&utm_content=:host   302
+/m/:region         /map?region=:region&utm_source=host&utm_medium=qr&utm_campaign=guest-map                     302
+/m                 /map?utm_source=host&utm_medium=qr&utm_campaign=guest-map                                    302
+
+# --- BEGIN GENERATED PAGE REDIRECTS (python scripts\generate_redirects.py) ---
+
+# Clean-URL migration, September 2026. Each page is served at its
+# extensionless URL; the .html form 301s here so it cannot be indexed
+# separately. Regenerate with the script above after adding or removing a
+# page, then commit. check_site.py fails if this block is out of date.
+
+/3-day-bourbon-trail-itinerary.html                  /3-day-bourbon-trail-itinerary                       301!
+/about.html                                          /about                                               301!
+/best-time-to-visit-bourbon-trail.html               /best-time-to-visit-bourbon-trail                    301!
+/bourbon-trail-bachelor-party-guide.html             /bourbon-trail-bachelor-party-guide                  301!
+/bourbon-trail-booking-guide.html                    /bourbon-trail-booking-guide                         301!
+/bourbon-trail-budget-guide.html                     /bourbon-trail-budget-guide                          301!
+/bourbon-trail-map-bardstown.html                    /bourbon-trail-map-bardstown                         301!
+/bourbon-trail-map-frankfort.html                    /bourbon-trail-map-frankfort                         301!
+/bourbon-trail-map-lexington.html                    /bourbon-trail-map-lexington                         301!
+/bourbon-trail-map-louisville.html                   /bourbon-trail-map-louisville                        301!
+/bourbon-trail-non-bourbon-drinkers.html             /bourbon-trail-non-bourbon-drinkers                  301!
+/bourbon-trail-transportation-guide.html             /bourbon-trail-transportation-guide                  301!
+/buffalo-trace-gift-shop-guide.html                  /buffalo-trace-gift-shop-guide                       301!
+/contact.html                                        /contact                                             301!
+/distilleries.html                                   /distilleries                                        301!
+/distillery-angels-envy.html                         /distillery-angels-envy                              301!
+/distillery-augusta.html                             /distillery-augusta                                  301!
+/distillery-baker-bird.html                          /distillery-baker-bird                               301!
+/distillery-bardstown-bourbon-co-louisville.html     /distillery-bardstown-bourbon-co-louisville          301!
+/distillery-bardstown-bourbon-co.html                /distillery-bardstown-bourbon-co                     301!
+/distillery-barrel-house.html                        /distillery-barrel-house                             301!
+/distillery-barton-1792.html                         /distillery-barton-1792                              301!
+/distillery-bh-james.html                            /distillery-bh-james                                 301!
+/distillery-bluegrass.html                           /distillery-bluegrass                                301!
+/distillery-boone-county.html                        /distillery-boone-county                             301!
+/distillery-boundary-oak.html                        /distillery-boundary-oak                             301!
+/distillery-buffalo-trace.html                       /distillery-buffalo-trace                            301!
+/distillery-bulleit.html                             /distillery-bulleit                                  301!
+/distillery-buzzards-roost.html                      /distillery-buzzards-roost                           301!
+/distillery-casey-jones.html                         /distillery-casey-jones                              301!
+/distillery-castle-key.html                          /distillery-castle-key                               301!
+/distillery-chicken-cock.html                        /distillery-chicken-cock                             301!
+/distillery-copper-and-kings.html                    /distillery-copper-and-kings                         301!
+/distillery-dark-arts.html                           /distillery-dark-arts                                301!
+/distillery-dueling-grounds.html                     /distillery-dueling-grounds                          301!
+/distillery-evan-williams.html                       /distillery-evan-williams                            301!
+/distillery-four-roses.html                          /distillery-four-roses                               301!
+/distillery-fresh-bourbon.html                       /distillery-fresh-bourbon                            301!
+/distillery-garrard-county.html                      /distillery-garrard-county                           301!
+/distillery-general-george.html                      /distillery-general-george                           301!
+/distillery-glenns-creek.html                        /distillery-glenns-creek                             301!
+/distillery-golden-pond.html                         /distillery-golden-pond                              301!
+/distillery-green-river-louisville.html              /distillery-green-river-louisville                   301!
+/distillery-green-river.html                         /distillery-green-river                              301!
+/distillery-hartfield.html                           /distillery-hartfield                                301!
+/distillery-heaven-hill.html                         /distillery-heaven-hill                              301!
+/distillery-j-mattingly.html                         /distillery-j-mattingly                              301!
+/distillery-jackson-purchase.html                    /distillery-jackson-purchase                         301!
+/distillery-james-e-pepper.html                      /distillery-james-e-pepper                           301!
+/distillery-jeptha-creed.html                        /distillery-jeptha-creed                             301!
+/distillery-jim-beam.html                            /distillery-jim-beam                                 301!
+/distillery-kentucky-artisan.html                    /distillery-kentucky-artisan                         301!
+/distillery-larrikin.html                            /distillery-larrikin                                 301!
+/distillery-limestone-branch.html                    /distillery-limestone-branch                         301!
+/distillery-log-still.html                           /distillery-log-still                                301!
+/distillery-lux-row.html                             /distillery-lux-row                                  301!
+/distillery-makers-mark.html                         /distillery-makers-mark                              301!
+/distillery-mb-roland.html                           /distillery-mb-roland                                301!
+/distillery-michters.html                            /distillery-michters                                 301!
+/distillery-monks-road-boiler-house.html             /distillery-monks-road-boiler-house                  301!
+/distillery-neeley-family.html                       /distillery-neeley-family                            301!
+/distillery-new-riff.html                            /distillery-new-riff                                 301!
+/distillery-old-forester.html                        /distillery-old-forester                             301!
+/distillery-old-pogue.html                           /distillery-old-pogue                                301!
+/distillery-peerless.html                            /distillery-peerless                                 301!
+/distillery-pensive.html                             /distillery-pensive                                  301!
+/distillery-preservation.html                        /distillery-preservation                             301!
+/distillery-rabbit-hole.html                         /distillery-rabbit-hole                              301!
+/distillery-rd1-spirits.html                         /distillery-rd1-spirits                              301!
+/distillery-second-sight.html                        /distillery-second-sight                             301!
+/distillery-stitzel-weller.html                      /distillery-stitzel-weller                           301!
+/distillery-the-bard-bardstown.html                  /distillery-the-bard-bardstown                       301!
+/distillery-the-bard.html                            /distillery-the-bard                                 301!
+/distillery-town-branch.html                         /distillery-town-branch                              301!
+/distillery-wenzel.html                              /distillery-wenzel                                   301!
+/distillery-whiskey-thief-franklin.html              /distillery-whiskey-thief-franklin                   301!
+/distillery-whiskey-thief.html                       /distillery-whiskey-thief                            301!
+/distillery-wild-turkey.html                         /distillery-wild-turkey                              301!
+/distillery-wilderness-trail.html                    /distillery-wilderness-trail                         301!
+/distillery-willett.html                             /distillery-willett                                  301!
+/distillery-woodford-reserve.html                    /distillery-woodford-reserve                         301!
+/eat-and-drink-bourbon-trail.html                    /eat-and-drink-bourbon-trail                         301!
+/email-signup-cta.html                               /email-signup-cta                                    301!
+/embed-bourbon-trail-map.html                        /embed-bourbon-trail-map                             301!
+/guides.html                                         /guides                                              301!
+/index.html                                          /                                                    301!
+/kentucky-bourbonfest.html                           /kentucky-bourbonfest                                301!
+/kentucky-whiskey-trail.html                         /kentucky-whiskey-trail                              301!
+/louisville-whiskey-row-walking-guide.html           /louisville-whiskey-row-walking-guide                301!
+/map.html                                            /map                                                 301!
+/printable-bourbon-trail-map.html                    /printable-bourbon-trail-map                         301!
+/trip-builder.html                                   /trip-builder                                        301!
+/where-to-stay-bourbon-trail.html                    /where-to-stay-bourbon-trail                         301!
+
+# --- END GENERATED PAGE REDIRECTS ---

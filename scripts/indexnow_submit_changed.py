@@ -52,10 +52,14 @@ def get_changed_files():
 
 
 def to_url(filename):
-    """Convert a repo filename to its canonical URL."""
+    """Convert a repo filename to its canonical URL.
+
+    The clean, extensionless form: the .html URL 301s, and submitting a
+    redirect tells the crawler to re-fetch the old address.
+    """
     if filename == "index.html":
         return f"{BASE_URL}/"
-    return f"{BASE_URL}/{filename}"
+    return f"{BASE_URL}/{filename[:-5]}"
 
 
 def submit(urls, key):
