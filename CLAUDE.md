@@ -21,11 +21,16 @@ Kyle's Kentucky Bourbon Trail trip-planning site. Static HTML/CSS/JS, deployed o
 
 **Deploying is just pushing** — Netlify auto-builds on every push to `main`. There is no deploy command. **Do NOT run `netlify deploy --prod --dir=.`**; the CLI is not installed (`netlify` is not on PATH) and is not needed. That step used to be documented here and always failed, because the push had already deployed the site. The `.netlify/` folder is leftover state from a one-time CLI use, not active config.
 
-### 1. Regenerate the sitemap, if pages were added, removed or noindex-toggled
+### 1. Regenerate the sitemap and redirects, if pages were added or removed
 ```
 python scripts\generate_sitemap.py
+python scripts\generate_redirects.py
 ```
-Scans root-level HTML, applies the blocklist and noindex exclusions, writes a fresh `sitemap.xml`. Commit it with the rest of the deploy. Skip for CSS-only or content-only edits to existing pages.
+`generate_sitemap.py` scans root-level HTML, applies the blocklist and noindex exclusions, and writes a fresh `sitemap.xml` with a `<lastmod>` per page. `generate_redirects.py` rewrites the generated block in `_redirects` so every `.html` URL keeps its forced 301 to the clean URL. Run **both**; `check_site.py` fails if either is stale.
+
+Run the sitemap generator **before** committing, not after: `lastmod` comes from each file's last git commit date, and files with uncommitted changes get today. Commit both files with the rest of the deploy.
+
+Skip both for content-only edits to existing pages (the sitemap's `lastmod` will still be refreshed on the next run, which is fine).
 
 ### 2. Push
 ```
@@ -42,9 +47,8 @@ $r.Content -match '{a string your change added}'
 ```
 
 **Netlify post-processes the HTML it serves, so the deployed source is not byte-identical to the repo.** Confirmed repeatedly:
-- `.html` extensions are stripped: `href="distillery-x.html"` is served as `href='/distillery-x'`.
-- `href="index.html"` becomes `href='/'`.
-- Double quotes become single quotes, **and attributes get reordered**: `<a href="index.html" class="logo">` is served as `<a class='logo' href='/'>`.
+- Double quotes become single quotes, **and attributes get reordered**: `<a href="/" class="logo">` is served as `<a class='logo' href='/'>`.
+- It also strips `.html` from any attribute that still carries it. Since the September 2026 clean-URL migration the source has none, so this no longer masks anything, but do not rely on it: it does **not** touch URLs inside JS strings, and it is a deprecated Netlify feature. Write clean URLs in the source.
 
 So grepping for `href="foo.html"`, `class="dist-card"`, or an attribute pair in a particular order returns **zero and looks like a failed deploy when the deploy was fine.** This has burned multiple debugging cycles, most recently a live rating verification that appeared to fail because `class` now precedes `href`. Grep for **prose the change introduced**, a rendered label, or an extension-less fragment. Also beware strings that span a tag: `"not an official member"` fails if the copy is `not <strong>an official</strong> member`.
 
@@ -152,7 +156,7 @@ Order: Plan Your Trip → Distilleries → Map → Where to Stay → Eat & Drink
 
 **Header logo, three tiers** via `<picture>` (first match wins):
 ```html
-<a href="index.html" class="logo"><picture><source media="(max-width:900px)" srcset="images/bourbon-trail-planner-nav.svg?v=4"><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
+<a href="/" class="logo"><picture><source media="(max-width:900px)" srcset="images/bourbon-trail-planner-nav.svg?v=4"><source media="(max-width:1199px)" srcset="images/bourbon-trail-planner-icon.svg?v=4"><img src="images/bourbon-trail-planner-nav.svg" alt="Bourbon Trail Planner" class="logo-lockup" style="height:40px;width:auto;display:block"></picture></a>
 ```
 Plus, in the `<style>` block: `@media (max-width:900px){.nav-links{display:none;}.mobile-menu-btn{display:block;}.logo-lockup{width:min(72vw,300px)!important;height:auto!important;}}` — the `!important` is required to beat the inline `height:40px`.
 
@@ -194,15 +198,15 @@ Use `distillery-buffalo-trace.html` as the template reference. Every profile nee
 - **Profiles have no date surfaces.** `TouristAttraction` carries no `dateModified` and profiles have no `.article-meta` bar. Do not add date fields just to have them.
 
 ### Sidebar Contact section, fixed order
-1. `<a href="map.html?distillery={slug}" class="sidebar-link">See on Map &rarr;</a>` — always first
+1. `<a href="/map?distillery={slug}" class="sidebar-link">See on Map &rarr;</a>` — always first
 2. Phone row (`.sidebar-row`) — in Contact only, **not** in Quick Details
 3. Official website link
 
-**No Google Maps links** — the `map.html?distillery={slug}` deep link replaces them. Do not add `google.com/maps` URLs to the sidebar. Phone lives in Contact only, removed from Quick Details to kill the duplication.
+**No Google Maps links** — the `/map?distillery={slug}` deep link replaces them. Do not add `google.com/maps` URLs to the sidebar. Phone lives in Contact only, removed from Quick Details to kill the duplication.
 
 ### Internal linking conventions
-- Every profile links to `map.html?distillery={slug}` via the sidebar "See on Map".
-- Guide pages link to `map.html?region={region}` **in context**, not as a nav item. Currently done on: `where-to-stay-bourbon-trail`, `3-day-bourbon-trail-itinerary`, `eat-and-drink-bourbon-trail`, `louisville-whiskey-row-walking-guide`, `kentucky-bourbonfest`, `bourbon-trail-non-bourbon-drinkers`.
+- Every profile links to `/map?distillery={slug}` via the sidebar "See on Map".
+- Guide pages link to `/map?region={region}` **in context**, not as a nav item. Currently done on: `where-to-stay-bourbon-trail`, `3-day-bourbon-trail-itinerary`, `eat-and-drink-bourbon-trail`, `louisville-whiskey-row-walking-guide`, `kentucky-bourbonfest`, `bourbon-trail-non-bourbon-drinkers`.
 - Style inline region map links in guide body copy as `style="color:var(--primary-light);font-weight:500;"`.
 
 ### Ratings: six bars, two label sets
@@ -236,7 +240,8 @@ The copies are the profile's `snap-value` headline (**canonical**), the `dist-ca
 
 ## SEO
 
-- Canonicals point to `https://mybourbontrailplan.com/filename.html`, with the extension. The homepage is bare `https://mybourbontrailplan.com/`.
+- **Canonicals point to the extensionless clean URL**, `https://mybourbontrailplan.com/filename` with no `.html`. The homepage is bare `https://mybourbontrailplan.com/`. `og:url` must match the canonical exactly; `check_site.py` fails if they disagree.
+- **Every internal link uses the clean form too**, root-relative: `href="/distilleries"`, not `href="distilleries.html"`. That includes URLs inside JS strings, such as the `profile:` fields in `map.html` and `trip-builder.html`. Netlify rewrites `.html` in HTML attributes on the way out but **not** inside JS strings, so a `.html` value there really is served. `check_site.py` fails on any internal `.html` reference.
 - Titles under 85 characters, meta descriptions under 170.
 - Every page needs OG tags: `og:title`, `og:description`, `og:type`, `og:url`.
 - **Schema by page type:** distillery profiles `["TouristAttraction","LocalBusiness"]` with `address`, `geo`, `telephone`, `openingHours`, `isAccessibleForFree`, `url`, `sameAs`; guides/articles `Article` with `url`, `mainEntityOfPage`, `author`, `publisher`, `datePublished`, `dateModified`; directory and map pages `CollectionPage` with `url` + `publisher`; homepage `WebSite` + `Organization` (two blocks); trip builder `WebApplication`; About `AboutPage`; Contact `ContactPage`. Add `FAQPage` where a page has a real FAQ.
@@ -312,7 +317,7 @@ Most bugs on this site are one copy of a fact drifting from another. The pattern
 5. Add to `map.html`'s `DISTILLERIES` array.
 6. Add a row to the matching **regional map page** (`bourbon-trail-map-{louisville|bardstown|frankfort|lexington}.html`) in its `.dl` list, in the order `map.html` draws the pins. Skip only for Northern or Western, which have no regional page. Add no counts while you are in there.
 7. Add `TouristAttraction` JSON-LD to the profile (`address`, `geo`, `telephone`, `openingHours`, `url`, `sameAs`; no `review` block).
-8. Regenerate the sitemap, then the PDF map: `python scripts\generate_pdf_map.py`. The generator reads `trip-builder.html` and `distilleries.html`, so it flows in automatically; pins renumber and the checklist reflows. Commit the regenerated PDF. If the distillery is in a brand-new city that maps to `Other`, the script prints a one-line warning telling you to add a `_CITY_REGION` entry.
+8. Regenerate the sitemap and the redirects (`python scripts\generate_sitemap.py`, `python scripts\generate_redirects.py`), then the PDF map: `python scripts\generate_pdf_map.py`. The generator reads `trip-builder.html` and `distilleries.html`, so it flows in automatically; pins renumber and the checklist reflows. Commit the regenerated PDF. If the distillery is in a brand-new city that maps to `Other`, the script prints a one-line warning telling you to add a `_CITY_REGION` entry.
 9. Run `python scripts/check_site.py`.
 
 ### Urban tasting rooms are DIRECTORY-ONLY
@@ -340,7 +345,7 @@ A new urban tasting room gets a **profile page plus a card in `distilleries.html
 ### Printable QR cards and `_redirects`
 `js/qr.js` is a **vendored** QR encoder (byte mode, versions 1-40, all four EC levels), not a third-party API: an external endpoint would leak the URL, add an uncontrolled dependency, and can rot silently on printed material that lives in a guest binder for years. `scripts/verify_qr.js` proves it against the `qrcode` Python package for every version, level and mask (2,672 matrices, 0 diffs). Run it if you touch the encoder. Bump the `?v=` on the `js/qr.js` script tag when you do, or browsers serve the cached copy.
 
-**`_redirects` exists at the repo root and the `/m/*` rules are PERMANENT.** (There is still no `netlify.toml`.) `/m/:region/:host` are the short links encoded into the printable QR cards. **A host prints a card once and it sits in a guest binder for years, so those paths can never be removed or renamed.** To change where they go, change the right-hand side and every card already in the wild keeps working. They are deliberately **302, not 301** — a 301 gets cached indefinitely and removes the ability to re-point them. Statewide uses the explicit slug `/m/ky`, because a bare `/m/<property-name>` would read the property name as a region. UTMs live in the redirect target, not the QR payload, so the encoded URL stays short; that dropped the QR from version 9 to 4-7, meaning chunkier modules at print size and a code that scans from across a room.
+**`_redirects` exists at the repo root and the `/m/*` rules are PERMANENT.** (There is still no `netlify.toml`.) Below the `/m/*` block sits a **generated** block of forced 301s, one per page, from `.html` to the clean URL; regenerate it with `scripts\generate_redirects.py` rather than editing by hand. The `/m/*` targets point at `/map`, not `/map.html`, so a printed card resolves in one hop instead of chaining through the page redirect. `/m/:region/:host` are the short links encoded into the printable QR cards. **A host prints a card once and it sits in a guest binder for years, so those paths can never be removed or renamed.** To change where they go, change the right-hand side and every card already in the wild keeps working. They are deliberately **302, not 301** — a 301 gets cached indefinitely and removes the ability to re-point them. Statewide uses the explicit slug `/m/ky`, because a bare `/m/<property-name>` would read the property name as a region. UTMs live in the redirect target, not the QR payload, so the encoded URL stays short; that dropped the QR from version 9 to 4-7, meaning chunkier modules at print size and a code that scans from across a room.
 
 ---
 
