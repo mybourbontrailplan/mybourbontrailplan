@@ -70,7 +70,6 @@ BASELINE = {
     "distillery-pensive.html": (0, 171),
     "distillery-preservation.html": (0, 189),
     "distillery-whiskey-thief.html": (0, 183),
-    "kentucky-bourbonfest.html": (89, 177),
 }
 FIXED_SINCE_BASELINE = []
 # Not real pages: Drive sync duplicates and the CTA fragment.
