@@ -36,3 +36,6 @@ _inbox/
 .tmp.drivedownload/
 * (1).*
 * (2).*
+
+# Phase 1 Viator research notes. Never committed, so never deployed.
+docs/

@@ -274,6 +274,22 @@
   .tour-meta-item { display: flex; align-items: center; gap: 5px; }
   .tour-meta-item strong { color: var(--text); }
 
+  /* Viator backup tours (sold-out section) */
+  .viator-btn {
+    display: inline-block; margin-top: 14px; padding: 11px 22px;
+    background: var(--primary); color: white; border-radius: 8px;
+    font-weight: 600; font-size: 14px; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .viator-btn:hover { background: var(--primary-light); }
+  .affiliate-note {
+    font-size: 13px; color: var(--text-light);
+    line-height: 1.6; margin: 16px 0 0;
+  }
+  @media (max-width: 640px) {
+    .viator-btn { display: block; width: 100%; text-align: center; }
+  }
+
   /* RATING BARS */
   .rating-group { margin: 24px 0; }
   .rating-row {
@@ -578,6 +594,48 @@
       <p>Tuesday through Thursday tours are the easiest to book and have the smallest crowds. If you can structure your itinerary to hit Buffalo Trace midweek, you'll have a much better experience, shorter gift shop lines, more personal tour interactions, and a better shot at finding allocated bottles.</p>
     </div>
 
+    <h2 id="sold-out">Can't Get a Buffalo Trace Reservation?</h2>
+    <p>Buffalo Trace tours are some of the hardest reservations on the trail to land. Before you give up, check our <a href="/bourbon-trail-booking-guide">Booking Guide</a> for how to catch cancellations. If your dates are still full, a guided tour that includes a Buffalo Trace stop is the most reliable backup, and transportation is handled for you.</p>
+    <p>One thing to know before you book: both tours below include a <strong>premium tasting</strong> at Buffalo Trace, not the Trace Tour or the Hard Hat Tour described above. They get you onto the campus and into a tasting, which is the part you cannot walk up and reserve.</p>
+
+    <div class="tour-card">
+      <div class="tour-card-header">
+        <h4>Buffalo Trace, Bulleit, Pappy &amp; Co. and Rabbit Hole Bourbon Tour</h4>
+        <span class="tour-card-rec rec-top"><img src="images/icons/icon-star.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:4px">Best Backup</span>
+      </div>
+      <div class="tour-card-body">
+        <p>A full day covering four stops, with Buffalo Trace first thing in the morning. Lunch is included, and the day ends back where it started in downtown Louisville. The other stops are Bulleit, Rabbit Hole and the Pappy &amp; Company shop.</p>
+        <p><strong>At Buffalo Trace:</strong> "Enjoy a premium tasting of exclusive bourbons at this historic distillery." One hour, admission included.</p>
+        <div class="tour-meta">
+          <div class="tour-meta-item"><img src="images/icons/icon-building.svg" alt="" width="16" height="16"> <strong>Mint Julep Experiences</strong></div>
+          <div class="tour-meta-item"><img src="images/icons/icon-pin.svg" alt="" width="16" height="16"> Departs <strong>downtown Louisville</strong></div>
+          <div class="tour-meta-item"><img src="images/icons/icon-clock.svg" alt="" width="16" height="16"> <strong>9.5 hours</strong></div>
+          <div class="tour-meta-item">Shared group, free cancellation</div>
+        </div>
+        <a href="https://www.viator.com/tours/Louisville/Buffalo-Trace-Bulleit-Distilling-and-Rabbit-Hole/d25791-59505P16?pid=P00320394&mcid=42383&medium=link&campaign=buffalo-trace-soldout" class="viator-btn" target="_blank" rel="sponsored noopener" data-property="buffalo-trace-soldout">View Tour on Viator &rarr;</a>
+      </div>
+    </div>
+
+    <div class="tour-card">
+      <div class="tour-card-header">
+        <h4>Buffalo Trace, Pappy &amp; Co., and Kentucky Artisan Bourbon Tour</h4>
+        <span class="tour-card-rec rec-good">Sundays Only</span>
+      </div>
+      <div class="tour-card-body">
+        <p>A shorter Sunday option built around brunch, with Buffalo Trace first and Kentucky Artisan, home of Jefferson's Reserve, second. Worth knowing that this is one distillery tour plus one tasting plus a shop stop, so it is a lighter day than the tour above rather than a cheaper version of it.</p>
+        <p><strong>At Buffalo Trace:</strong> "Indulge in a premium tasting of exclusive bourbons at this historic distillery." One hour, admission included.</p>
+        <div class="tour-meta">
+          <div class="tour-meta-item"><img src="images/icons/icon-building.svg" alt="" width="16" height="16"> <strong>Mint Julep Experiences</strong></div>
+          <div class="tour-meta-item"><img src="images/icons/icon-pin.svg" alt="" width="16" height="16"> Departs <strong>downtown Louisville</strong></div>
+          <div class="tour-meta-item"><img src="images/icons/icon-clock.svg" alt="" width="16" height="16"> <strong>8 hours</strong></div>
+          <div class="tour-meta-item">Shared group, free cancellation</div>
+        </div>
+        <a href="https://www.viator.com/tours/Louisville/Boozy-Brunch-Buffalo-Trace-Kentucky-Artisan-Pappy-and-Co/d25791-59505P20?pid=P00320394&mcid=42383&medium=link&campaign=buffalo-trace-soldout" class="viator-btn" target="_blank" rel="sponsored noopener" data-property="buffalo-trace-soldout">View Tour on Viator &rarr;</a>
+      </div>
+    </div>
+
+    <p class="affiliate-note">Always confirm the listing includes a Buffalo Trace tour or tasting on your travel date before booking. We earn a commission if you book through these links, at no extra cost to you.</p>
+
     <h2 id="gift-shop">Gift Shop & Allocated Bottles</h2>
     <p>The Buffalo Trace gift shop is one of the best on the trail, and it's the main reason some people visit. Daily offerings include Buffalo Trace bourbon, <strong>Weller Special Reserve</strong> (a big change from a few years ago when it was nearly impossible to find), Traveller Whiskey, and Sazerac Rye, all available every day at MSRP.</p>
     <p><strong>The allocated rotation is the real draw.</strong> Blanton's, Weller Antique 107, Eagle Rare, and E.H. Taylor Small Batch all rotate in and out, availability varies, and not every bottle is available every week. Buffalo Trace now posts each day's allocated bottle availability on their website each morning at <a href="https://www.buffalotracedistillery.com/visit-us/product-availability/" target="_blank" rel="noopener">buffalotracedistillery.com</a>, check it before you leave your hotel. On rare occasions, special bottles beyond the standard rotation show up; when they do, they go fast.</p>
@@ -760,7 +818,7 @@ document.querySelectorAll('.nav-links a').forEach(function(link) {
 <script>document.querySelectorAll('.gallery-item img').forEach(function(img){img.addEventListener('click',function(){document.getElementById('lightboxImg').src=this.src;document.getElementById('galleryLightbox').classList.add('active');});});</script>
 <script>
 /* affiliate_click GA4 tracking (delegated) */
-document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.href||'';var t=null;if(/kqzyfj\.com|anrdoezrs\.net|tkqlhce\.com|jdoqocy\.com/.test(href))t='booking_com';else if(/vrbo\.com\/affiliate/.test(href))t='vrbo';else if(/bourbonstopky\.com/.test(href))t='direct_booking';else if(/airbnb\./.test(href))t='airbnb';if(!t)return;var n=a.getAttribute('data-property')||(a.textContent||'').replace(/\s+/g,' ').trim().slice(0,100)||'unknown';if(typeof gtag==='function'){gtag('event','affiliate_click',{page_path:location.pathname,property_name:n,link_type:t});}},true);
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.href||'';var t=null;if(/kqzyfj\.com|anrdoezrs\.net|tkqlhce\.com|jdoqocy\.com/.test(href))t='booking_com';else if(/vrbo\.com\/affiliate/.test(href))t='vrbo';else if(/bourbonstopky\.com/.test(href))t='direct_booking';else if(/airbnb\./.test(href))t='airbnb';else if(/viator\.com/.test(href))t='viator';if(!t)return;var n=a.getAttribute('data-property')||(a.textContent||'').replace(/\s+/g,' ').trim().slice(0,100)||'unknown';if(typeof gtag==='function'){gtag('event','affiliate_click',{page_path:location.pathname,property_name:n,link_type:t});}},true);
 </script>
 </body>
 </html>

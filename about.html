@@ -141,7 +141,7 @@
 
 <h2>How This Site Makes Money</h2>
 <p>Transparency matters. Here's how we keep the lights on:</p>
-<p>One lodging recommendation on this site is a property we own (the New Hope Bourbon Stop, near Bardstown). It's labeled "Our Property" wherever it appears, and it's always listed alongside plenty of alternatives so you can make an informed choice. This site uses affiliate links for lodging bookings. If you book a hotel or rental through one of our links, we may earn a small commission at no extra cost to you. We also plan to add tour booking links and featured distillery partnerships as the site grows. Distilleries and tour companies may pay for premium placement or featured listings on this site.</p>
+<p>One lodging recommendation on this site is a property we own (the New Hope Bourbon Stop, near Bardstown). It's labeled "Our Property" wherever it appears, and it's always listed alongside plenty of alternatives so you can make an informed choice. This site uses affiliate links for lodging and tour bookings. Our partners are Booking.com (through CJ Affiliate), Expedia (through VRBO) and Viator for guided distillery tours. If you book through one of our links, we may earn a small commission at no extra cost to you. We also plan to add featured distillery partnerships as the site grows. Distilleries and tour companies may pay for premium placement or featured listings on this site.</p>
 <p>Here's the important distinction: <strong>our editorial reviews and ratings are never for sale.</strong> A distillery can pay for a featured listing, but they can't pay us to change a rating from a 7.5 to a 9.0. Every review reflects our real experience. If a place isn't worth recommending on its merits, a paid placement won't change that, and we'll always clearly label what's sponsored vs. what's editorial. We think you can tell the difference, and we respect that.</p>
 
 <h2>Get in Touch</h2>
@@ -183,7 +183,7 @@ if(el){var a=document.createElement('a');a.href='mai'+'lto:'+n+'@'+d;a.textConte
 </script>
 <script>
 /* affiliate_click GA4 tracking (delegated) */
-document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.href||'';var t=null;if(/kqzyfj\.com|anrdoezrs\.net|tkqlhce\.com|jdoqocy\.com/.test(href))t='booking_com';else if(/vrbo\.com\/affiliate/.test(href))t='vrbo';else if(/bourbonstopky\.com/.test(href))t='direct_booking';else if(/airbnb\./.test(href))t='airbnb';if(!t)return;var n=a.getAttribute('data-property')||(a.textContent||'').replace(/\s+/g,' ').trim().slice(0,100)||'unknown';if(typeof gtag==='function'){gtag('event','affiliate_click',{page_path:location.pathname,property_name:n,link_type:t});}},true);
+document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var href=a.href||'';var t=null;if(/kqzyfj\.com|anrdoezrs\.net|tkqlhce\.com|jdoqocy\.com/.test(href))t='booking_com';else if(/vrbo\.com\/affiliate/.test(href))t='vrbo';else if(/bourbonstopky\.com/.test(href))t='direct_booking';else if(/airbnb\./.test(href))t='airbnb';else if(/viator\.com/.test(href))t='viator';if(!t)return;var n=a.getAttribute('data-property')||(a.textContent||'').replace(/\s+/g,' ').trim().slice(0,100)||'unknown';if(typeof gtag==='function'){gtag('event','affiliate_click',{page_path:location.pathname,property_name:n,link_type:t});}},true);
 </script>
 </body>
 </html>

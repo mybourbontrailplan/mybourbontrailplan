@@ -372,6 +372,50 @@ VRBO: `https://vrbo.com/affiliate/VD0a4b2`. Kyle's Airbnb is a direct link, no a
 
 **Commission is earned on ANY Booking.com booking through the link, not just the linked property.**
 
+### Viator: the "sold-out backup" component
+
+Viator pays on experiences booked within 30 days of a click. Live in two places: the sold-out
+section on `distillery-buffalo-trace.html` and the Mint Julep card on the transportation guide.
+
+**Link format.** `{CLEAN_VIATOR_URL}?pid=P00320394&mcid=42383&medium=link&campaign={CAMPAIGN}`,
+with `target="_blank" rel="sponsored noopener"`. Never alter or drop `pid`, `mcid` or `medium`.
+`campaign` is lowercase letters, numbers and dashes only; anything else breaks Viator tracking.
+Current campaigns: `buffalo-trace-soldout`, `transport-mint-julep`. If a clean URL already
+contains a `?`, stop and ask Kyle rather than guessing at the join.
+
+**When the component is worth adding.** Only on a distillery whose own reservations are genuinely
+hard to get, which in practice means a Book Ahead snapshot of 4+ weeks plus a real pattern of
+readers clicking out to the distillery's own site. Buffalo Trace qualified because it was the
+site's single largest source of outbound clicks. **Do not roll this out to more profiles without
+asking Kyle**, and never on a venue where walk-ups work: there the section is pure noise.
+
+**Vetting is the whole job.** A tour only ships after passing all four:
+1. The distillery is a **confirmed** stop, named in the itinerary or title. Reject "or",
+   "depending on availability", "choose from a list", or a route the operator builds after
+   booking. This rejects otherwise excellent listings and it should.
+2. Rating 4.7+ with 15+ reviews.
+3. At least one review in the last 3 months, so the operator is demonstrably active.
+4. Read the recent reviews. Two or more mentioning the same problem (poor communication,
+   itinerary changed, unsafe driving, no-show pickups, refund disputes) is an exclusion.
+
+Record the vetting in `docs/viator-tour-shortlist.md`. That folder is gitignored, so the notes
+never deploy and ratings never leak into published copy.
+
+**Never publish prices, star ratings or review counts.** They go stale and they conflict with
+the first-hand accuracy standard everywhere else on the site. Cards carry tour name, operator,
+departure point, duration, and the distillery inclusion quoted verbatim from the listing.
+
+**Say what the reader actually gets.** Both Buffalo Trace cards are a *tasting*, not the Trace
+Tour or the Hard Hat. The profile sells the Hard Hat hard, so the section states the difference
+outright. A backup that quietly over-promises costs more trust than the commission is worth.
+
+**Disclosure is required** in any section carrying these links: "We earn a commission if you
+book through these links, at no extra cost to you."
+
+**Tracking.** `viator.com` is already a branch in the delegated `affiliate_click` listener, so
+a new link needs no JS. Add `data-placement`-style attribution via `data-property="{campaign}"`,
+which the listener reads into `property_name`.
+
 ---
 
 ## Email marketing (MailerLite)
