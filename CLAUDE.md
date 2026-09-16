@@ -416,6 +416,31 @@ book through these links, at no extra cost to you."
 a new link needs no JS. Add `data-placement`-style attribution via `data-property="{campaign}"`,
 which the listener reads into `property_name`.
 
+**The `pid` redirect is KNOWN and DELIBERATELY left alone.** Adding `?pid=` to a Viator product
+URL makes Viator rewrite `/tours/{City}/{slug}/d25791-{code}` to `/{City}/d25791-ttd/p-{code}`,
+a destination page titled "Explore Louisville", rather than the product page. Verified September
+2026 on all three live links; `pid` alone triggers it, and the URL we use is Viator's own
+`canonical` and `og:url` for that product, so this is Viator's affiliate router, not a bad link.
+Do not "fix" it by inventing URL formats: an `/en-US/` prefixed variant 404s.
+
+Kyle's call, and it is the right one: the landing page puts our tour first badged "You selected",
+`pid` survives the redirect so the click is still attributed, and **Viator pays 8% on any
+experience booked within 30 days of the click, not just the linked product**, so a reader who
+lands on a broader grid and books something else still pays out. The redirect arguably widens the
+funnel. Revisit only if Viator support supplies a deep-link format that holds the product page.
+
+**Commission mechanics worth remembering:** 8%, 30-day cookie, any experience, **paid only after
+the experience is completed**. Cancellations and no-shows earn nothing, and there is a lag
+between booking and payout, so do not read a booking as banked revenue.
+
+**Regional reality: every qualifying Kentucky bourbon tour on Viator departs Louisville.**
+Searched September 2026 for Lexington, Frankfort and Bardstown departures. Viator's Kentucky
+bourbon inventory is one small pool under destination `d25791` (Louisville), and nothing
+departing Lexington or Frankfort clears the vetting bar. This is why the Buffalo Trace cards say
+"Departs downtown Louisville" for a Frankfort distillery. It is a genuine mismatch with no fix
+available, not an oversight. The one real exception is **Taste of Bardstown's walking food tour**,
+which departs Bardstown itself but visits bars and restaurants, not distilleries.
+
 ---
 
 ## Email marketing (MailerLite)
