@@ -86,7 +86,7 @@
       "name": "Does the widget work on Squarespace, Wix, or WordPress?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. It is plain HTML with no scripts to install. Paste it into a WordPress Custom HTML block, a Squarespace Code block, a Wix Embed HTML element, or any page where you can add raw HTML."
+        "text": "Yes. It is plain HTML with no scripts to install. Paste it into a WordPress Custom HTML block (not a Classic or Paragraph block), a Squarespace Code block, a Wix Embed HTML element, or any page where you can add raw HTML."
       }
     },
     {
@@ -531,6 +531,7 @@
         </button>
       </div>
       <textarea id="snippet" readonly spellcheck="false" aria-label="Embed code snippet"></textarea>
+      <p class="builder-hint">On WordPress, paste this into a <strong>Custom HTML</strong> block, not a Classic or Paragraph block. Copy it straight from here rather than through an email or a doc, which can swap in look-alike characters that break the code.</p>
     </div>
 
     <!-- FORMAT B: link, QR code, guest message, printable placard -->
@@ -676,7 +677,7 @@
   <h2 id="how-to-install">How to Install It</h2>
   <p>There is no plugin, no script tag, and nothing to configure. It is one block of plain HTML.</p>
   <ul>
-    <li><strong>WordPress:</strong> add a Custom HTML block and paste it in. In the classic editor, switch to the Text tab first.</li>
+    <li><strong>WordPress:</strong> add a Custom HTML block and paste it in. Not a Classic or Paragraph block: those run the code through a visual editor that quietly breaks it, and you get a blank box where the map should be. In the classic editor, switch to the Text tab first.</li>
     <li><strong>Squarespace:</strong> add a Code block and paste it in. Leave the type set to HTML.</li>
     <li><strong>Wix:</strong> Add &rsaquo; Embed Code &rsaquo; Embed HTML, then choose Code and paste.</li>
     <li><strong>Airbnb or VRBO listings:</strong> those platforms accept neither custom HTML nor QR images, so the link is your way in. Put it in your guidebook or your check-in message. The <a href="#no-website">link and QR section</a> below writes both for you.</li>
@@ -937,19 +938,16 @@
     const h = heightSel.value;
     /* The <a> lives in the parent page, outside the iframe, on purpose:
        a link inside an iframe passes no equity to us, so an in-frame
-       credit would be decoration rather than the actual trade. */
+       credit would be decoration rather than the actual trade.
+       No indentation and one tag per line, on purpose: editors such as
+       WordPress's Classic block turn leading spaces into non-breaking
+       spaces, which the browser then reads as part of the attribute name
+       ("&nbsp;&nbsp;src"), leaving an iframe with no src. That shipped a
+       blank box on New Hope Bourbon Stop's own site in October 2026. */
     return '<!-- Kentucky Bourbon Trail map, free widget from mybourbontrailplan.com -->\n'
       + '<div style="max-width:100%;margin:0 auto">\n'
-      + '  <iframe\n'
-      + '    src="' + embedURL(region, true, pin) + '"\n'
-      + '    title="Kentucky Bourbon Trail Distillery Map"\n'
-      + '    width="100%" height="' + h + '" loading="lazy"\n'
-      + '    style="display:block;width:100%;border:1px solid #e4e8f0;border-radius:12px">\n'
-      + '  </iframe>\n'
-      + '  <p style="margin:8px 0 0;font:14px/1.5 -apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif;color:#5a6178">\n'
-      + '    Interactive map by <a href="' + creditURL(region) + '" target="_blank" rel="noopener">Bourbon Trail Planner</a>,\n'
-      + '    free to embed on your site.\n'
-      + '  </p>\n'
+      + '<iframe src="' + embedURL(region, true, pin) + '" title="Kentucky Bourbon Trail Distillery Map" width="100%" height="' + h + '" loading="lazy" style="display:block;width:100%;border:1px solid #e4e8f0;border-radius:12px"></iframe>\n'
+      + '<p style="margin:8px 0 0;font:14px/1.5 -apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif;color:#5a6178">Interactive map by <a href="' + creditURL(region) + '" target="_blank" rel="noopener">Bourbon Trail Planner</a>, free to embed on your site.</p>\n'
       + '</div>';
   }
 
