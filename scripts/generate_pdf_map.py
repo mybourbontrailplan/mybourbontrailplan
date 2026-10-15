@@ -45,6 +45,12 @@ STAY_CARD = {"url": "https://mybourbontrailplan.com/m/stay",
              "head": "Stay in the middle of it",
              "body": "Our place, the New Hope Bourbon Stop, sits a mile from Log "
                      "Still, between Bardstown and Maker's Mark. Scan to book direct."}
+# House marker on the Central Corridor inset. Coordinates supplied by Kyle
+# (October 2026), exact, not geocoded. The true spot is about 10pt from Log
+# Still's pin at print scale, so the icon and label sit out on a leader line
+# in the nearest clear space, the same way crowded pins do. Set to None to drop.
+STAY_PIN = {"lat": 37.63278430080856, "lng": -85.5069397012172,
+            "label": "New Hope Bourbon Stop"}
 
 # ---------- brand ----------
 INK      = (0x0E/255, 0x2F/255, 0x44/255)   # dark navy  #0E2F44
@@ -320,6 +326,53 @@ def draw_pin(page, x, y, num, color, r=7.2, fs=7.2, anchor=None):
     page.draw_circle(fitz.Point(x,y), r, color=WHITE, fill=color, width=0.9)
     text(page, x, y+fs*0.34, str(num), font="dm-bold", size=fs, color=WHITE, align="center")
 
+def stay_marker(page, proj, pins, inner, taken, pin_r=6.4):
+    """Small dot at the property's true position, leader line out to a house
+    icon plus label placed in the first clear spot. Skips (with a warning)
+    rather than drawing anything that would touch a pin or a label."""
+    hx, hy = proj(STAY_PIN["lng"], STAY_PIN["lat"])
+    label, fs, s = STAY_PIN["label"], 6.0, 4.2     # s = house half-width
+    lw = _tl(page, label, "dm-med", fs)
+    def boxes(ix, iy):
+        icon = fitz.Rect(ix-s, iy-s-1.5, ix+s, iy+s)
+        lab = fitz.Rect(ix+s+2.5, iy-4.5, ix+s+2.5+lw, iy+2.5)
+        return icon, lab
+    def clear(r, pad=2.0):
+        r2 = fitz.Rect(r.x0-pad, r.y0-pad, r.x1+pad, r.y1+pad)
+        if not inner.contains(r2): return False
+        for px, py in pins:
+            nx = min(max(px, r2.x0), r2.x1); ny = min(max(py, r2.y0), r2.y1)
+            if math.hypot(px-nx, py-ny) < pin_r: return False
+        return not any(r2.intersects(t) for t in taken)
+    def seg_clear(ax, ay, bx, by):
+        for px, py in pins:
+            vx, vy = bx-ax, by-ay; L = vx*vx+vy*vy or 1
+            t = max(0, min(1, ((px-ax)*vx+(py-ay)*vy)/L))
+            if math.hypot(px-(ax+t*vx), py-(ay+t*vy)) < pin_r+1.2: return False
+        return True
+    best = None
+    for dist in range(14, 46, 2):
+        for ang in range(0, 360, 15):
+            ix = hx + dist*math.cos(math.radians(ang))
+            iy = hy + dist*math.sin(math.radians(ang))
+            icon, lab = boxes(ix, iy)
+            if clear(icon) and clear(lab) and seg_clear(hx, hy, ix, iy):
+                best = (ix, iy); break
+        if best: break
+    dot_ok = all(math.hypot(px-hx, py-hy) > pin_r+1.6 for px, py in pins)
+    if not best or not dot_ok:
+        print("  [warn] no clean spot for the stay marker on the inset; skipped")
+        return
+    ix, iy = best
+    page.draw_line(fitz.Point(hx, hy), fitz.Point(ix, iy), color=INK, width=0.5)
+    page.draw_circle(fitz.Point(hx, hy), 1.3, color=None, fill=INK)
+    # house: square body plus roof, white keyline so it reads on the paper fill
+    roof = [fitz.Point(ix-s-0.8, iy-0.6), fitz.Point(ix, iy-s-1.6), fitz.Point(ix+s+0.8, iy-0.6)]
+    page.draw_rect(fitz.Rect(ix-s+0.9, iy-0.8, ix+s-0.9, iy+s), color=WHITE, fill=INK, width=0.6)
+    page.draw_polyline(roof, color=WHITE, fill=INK, width=0.6, closePath=True)
+    _, lab = boxes(ix, iy)
+    text(page, lab.x0, iy+2, label, font="dm-med", size=fs, color=INK)
+
 # ---------- header / footer ----------
 LOGO_PNG = os.path.join(ROOT, "images", "nav-2x.png")   # full brand lockup (pin + wordmark)
 _LOGO_AR = 2040 / 272                                    # raster width / height
@@ -446,6 +499,12 @@ def build_page1(doc, data, ky):
             by=max(p[1] for p in pts)+13
             text(page, cx, by, town, font="dm-med", size=6.2, color=TOWN, align="center")
     # region labels placed above each cluster centroid (clear of pins)
+    taken=[]   # label boxes the stay marker must avoid
+    for town in ("Shelbyville","Danville","Paris"):
+        if town in bycity:
+            pts=bycity[town]; cx=sum(p[0] for p in pts)/len(pts)
+            by=max(p[1] for p in pts)+13; tw=_tl(page,town,"dm-med",6.2)
+            taken.append(fitz.Rect(cx-tw/2, by-5, cx+tw/2, by+1.5))
     clusters={}
     for d,p in zip(central, ipos):
         clusters.setdefault(d["region"], []).append(p)
@@ -465,6 +524,11 @@ def build_page1(doc, data, ky):
                inner.x1- _tl(page,short[reg],"dm-bold",6.6)/2)
         text(page, cx, ly, short[reg], font="dm-bold", size=6.6,
              color=REGION_COLORS[reg], align="center", tracking=0.5)
+        lw=_tl(page,short[reg],"dm-bold",6.6)+0.5*len(short[reg])
+        taken.append(fitz.Rect(cx-lw/2, ly-6, cx+lw/2, ly+1.5))
+
+    if STAY_PIN:
+        stay_marker(page, iproj, ipos, inner, taken)
 
     order=data["meta"]["region_order"]
     # ---- legend (bottom left band): two columns of three, so the band has
