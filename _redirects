@@ -32,6 +32,12 @@
 # and the first segment would be read as a region. map.html ignores a region it
 # does not recognise, so region=ky simply shows everything.
 
+# /m/stay is the QR on the printable PDF map's "Stay in the middle of it" card,
+# pointing at our own property's direct booking site. Same rules as the rest:
+# permanent path, 302, re-point by editing the right-hand side. It must sit
+# above /m/:region, which would otherwise read "stay" as a region.
+/m/stay            https://bourbonstopky.com/?utm_source=mybourbontrailplan&utm_medium=pdf&utm_campaign=pdf_map 302
+
 /m/ky/:host        /map?utm_source=host&utm_medium=qr&utm_campaign=guest-map&utm_content=:host                  302
 /m/ky              /map?utm_source=host&utm_medium=qr&utm_campaign=guest-map                                    302
 /m/:region/:host   /map?region=:region&utm_source=host&utm_medium=qr&utm_campaign=guest-map&utm_content=:host   302

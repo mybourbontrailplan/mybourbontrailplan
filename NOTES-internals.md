@@ -191,7 +191,7 @@ The old `.guide-img-label` (the ghosted "3D"/"BT"/"$$" two-character mark) is go
 
 **The source of truth is the live site.** The script reads the `const D=[...]` array in `trip-builder.html` (name, lat, lng, region, type, cost, booking) and the cards in `distilleries.html` (city, Official Trail vs Craft tag), joins them on the profile filename, and assigns map numbers. There is no separate data file to maintain. `scripts/pdf_map_data.json` is written by the script as a readable snapshot of what it derived, for inspection only, never an input.
 
-Page 1 is a landscape hero map: statewide outline, region-coloured numbered pins, a zoomed Central Corridor inset, region legend, QR to the trip builder. Page 2 is a landscape four-column reference list grouped by region (number, city, Trail/Craft, booking difficulty, tour cost) plus a drive-times table, a booking-ease index and a second QR.
+Page 1 is a landscape hero map: statewide outline, region-coloured numbered pins, a zoomed Central Corridor inset, a two-column region legend, and two QR cards in the bottom band: "Build your route" (trip builder) and "Stay in the middle of it" (New Hope Bourbon Stop, via the `/m/stay` short link in `_redirects`). Page 2 is a landscape four-column reference list grouped by region (number, city, Trail/Craft, booking difficulty, tour cost) plus a drive-times table, a booking-ease index and a second QR.
 
 Assets are in `scripts/assets/`: Kentucky outline GeoJSON, DM Sans and Fraunces TTFs.
 
@@ -205,7 +205,9 @@ Assets are in `scripts/assets/`: Kentucky outline GeoJSON, DM Sans and Fraunces 
 - **Move a town to a different region:** two dicts near the top control this and both feed the pin colour and the page-2 list section. Use `_CITY_REGION` for legacy `Central`/`Other` towns (Shelbyville's Bulleit and Jeptha Creed map to Louisville, the I-64 corridor, rather than Lexington/Lawrenceburg). Use `_REGION_OVERRIDE` when the site tags a real region that is geographically misleading for planning (Paris is tagged Northern KY but sits about 17 mi from the Lexington distilleries, so it is overridden to Lexington/Lawrenceburg). Geographic outliers that sit apart from their region's other pins (Shelbyville, Danville, Paris) get a small town label in the inset; that list is in `build_page1`.
 - **Page orientation:** both pages are US Letter landscape. Page sizes are set at the top of `build_page1` and `build_page2` (`W,H = 792,612`).
 
-**[STALE] The booking-ease glossary in the script does not match CLAUDE.md.** The `gloss` list still reads "Easy: Walk-up or same-week reservation" and "Moderate: Book 1 to 3 weeks ahead", which is the wording CLAUDE.md replaced in August 2026 (see the booking tier definitions there). It will ship wrong on the next PDF regeneration. Fix the `gloss` list when you next touch the generator.
+- **Page 1 card copy and QR targets:** the `ROUTE_CARD` and `STAY_CARD` dicts at the top of the script. Bodies word-wrap to the card, and the script warns if a heading overflows. The legend is two columns of three so both cards fit without shrinking the map or the inset; keep it that way if a card is added or lengthened. The stay card's "Our place" is the disclosure, so it stays in the copy.
+- **The stay QR encodes `https://mybourbontrailplan.com/m/stay`, never the booking URL.** The UTMs live in the `_redirects` target, so the code stays small and the destination can be re-pointed without reprinting. `/m/stay` must stay above `/m/:region` in `_redirects`, which would otherwise read "stay" as a region.
+- **No house marker on the inset.** The brief that added the stay card asked for one only if coordinates were already in the repo, and none are. The only coordinates are in the property's own embed URL on bourbonstopky.com, and they have not been confirmed for print.
 
 ---
 

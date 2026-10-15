@@ -33,6 +33,19 @@ REGION_ORDER = ["Louisville","Bardstown & New Hope","Frankfort",
 TRIP_BUILDER_URL = ("https://mybourbontrailplan.com/trip-builder"
                     "?utm_source=pdf_map&utm_medium=qr&utm_campaign=printable_map")
 
+# Page 1 bottom-band cards. Copy lives here, not in the layout code.
+ROUTE_CARD = {"url": TRIP_BUILDER_URL,
+              "head": "Build your route",
+              "body": "Scan to open the free Trip Builder: pick stops, see real "
+                      "drive times, and save a day-by-day plan."}
+# The QR encodes a short link, not the booking URL. /m/stay is a 302 in
+# _redirects that carries the UTMs, so the code stays small and the target can
+# be re-pointed without reprinting. "Our place" is the disclosure; keep it.
+STAY_CARD = {"url": "https://mybourbontrailplan.com/m/stay",
+             "head": "Stay in the middle of it",
+             "body": "Our place, the New Hope Bourbon Stop, sits a mile from Log "
+                     "Still, between Bardstown and Maker's Mark. Scan to book direct."}
+
 # ---------- brand ----------
 INK      = (0x0E/255, 0x2F/255, 0x44/255)   # dark navy  #0E2F44
 PRIMARY  = (0x1B/255, 0x4F/255, 0x72/255)   # primary    #1B4F72
@@ -182,6 +195,45 @@ def text(page, x, y, s, font="dm", size=10, color=INK, align="left", tracking=0)
         for ch, wch in zip(s, widths):
             page.insert_text((tx, y), ch, fontname=font, fontsize=size, color=color)
             tx += wch + tracking
+
+def wrap(page, s, font, size, width):
+    """Greedy word wrap to a max line width in points."""
+    lines, cur = [], ""
+    for w in s.split():
+        t = (cur + " " + w).strip()
+        if cur and _tl(page, t, font, size) > width:
+            lines.append(cur); cur = w
+        else:
+            cur = t
+    if cur: lines.append(cur)
+    return lines
+
+def qr_png(url):
+    qr = qrcode.QRCode(border=0, box_size=10,
+                       error_correction=qrcode.constants.ERROR_CORRECT_M)
+    qr.add_data(url); qr.make()
+    img = qr.make_image(fill_color="#0E2F44", back_color="white").convert("RGB")
+    buf = io.BytesIO(); img.save(buf, format="PNG")
+    return buf.getvalue()
+
+def qr_card(page, rect, spec, qsize=54, body_size=8.0, line_h=10.4):
+    """Bordered card: QR on the left, Fraunces heading and wrapped body right."""
+    rrect(page, rect, 8, color=HAIR, fill=PAPER, width=1)
+    qy = rect.y0 + (rect.height - qsize) / 2
+    page.insert_image(fitz.Rect(rect.x0+10, qy, rect.x0+10+qsize, qy+qsize),
+                      stream=qr_png(spec["url"]))
+    tx = rect.x0 + 10 + qsize + 11
+    tw = rect.x1 - 10 - tx
+    lines = wrap(page, spec["body"], "dm", body_size, tw)
+    # Top-aligned rather than centred, so side-by-side cards with different
+    # body lengths keep their headings on one line.
+    y = rect.y0 + 22
+    text(page, tx, y, spec["head"], font="fr-bold", size=11.5, color=INK)
+    for i, ln in enumerate(lines):
+        text(page, tx, y + 15 + i*line_h, ln, font="dm", size=body_size, color=MUTED)
+    if _tl(page, spec["head"], "fr-bold", 11.5) > tw:
+        print(f"  [warn] card heading '{spec['head']}' overflows its card")
+    return len(lines)
 
 # ---------- projection ----------
 class Proj:
@@ -415,33 +467,26 @@ def build_page1(doc, data, ky):
              color=REGION_COLORS[reg], align="center", tracking=0.5)
 
     order=data["meta"]["region_order"]
-    # ---- legend (bottom left band) ----
+    # ---- legend (bottom left band): two columns of three, so the band has
+    # room for both QR cards without touching the map or the inset ----
     ly=496
     text(page, M, ly, "REGIONS", font="dm-bold", size=8.5, color=INK, tracking=1.6)
-    col_w=143; rows=[order[:3],order[3:]]
-    for ri,row in enumerate(rows):
-        yy=ly+18+ri*20
-        for ci,reg in enumerate(row):
-            xx=M+ci*col_w
-            page.draw_circle(fitz.Point(xx+5, yy-3), 5, color=WHITE, fill=REGION_COLORS[reg], width=0.8)
-            text(page, xx+16, yy, reg, font="dm-med", size=8.6, color=INK)
+    cols=[order[:3],order[3:]]
+    lx=M
+    for col in cols:
+        for ri,reg in enumerate(col):
+            yy=ly+18+ri*17
+            page.draw_circle(fitz.Point(lx+5, yy-3), 5, color=WHITE, fill=REGION_COLORS[reg], width=0.8)
+            text(page, lx+16, yy, reg, font="dm-med", size=8.6, color=INK)
+        lx += 16 + max(_tl(page, r, "dm-med", 8.6) for r in col) + 16
+    legend_x1 = lx - 16
 
-    # ---- QR card (bottom right) ----
-    qr = qrcode.QRCode(border=0, box_size=10,
-                       error_correction=qrcode.constants.ERROR_CORRECT_M)
-    qr.add_data(data["meta"]["trip_builder_url"]); qr.make()
-    img = qr.make_image(fill_color="#0E2F44", back_color="white").convert("RGB")
-    buf=io.BytesIO(); img.save(buf, format="PNG"); buf.seek(0)
-    card=fitz.Rect(452, 486, W-M, 560)
-    rrect(page, card, 8, color=HAIR, fill=PAPER, width=1)
-    qsize=58
-    page.insert_image(fitz.Rect(card.x0+12, card.y0+8, card.x0+12+qsize, card.y0+8+qsize),
-                      stream=buf.getvalue())
-    tx=card.x0+12+qsize+12
-    text(page, tx, card.y0+24, "Build your route", font="fr-bold", size=12.5, color=INK)
-    text(page, tx, card.y0+40, "Scan to open the free Trip Builder:", font="dm", size=8.6, color=MUTED)
-    text(page, tx, card.y0+52, "pick stops, see real drive times,", font="dm", size=8.6, color=MUTED)
-    text(page, tx, card.y0+64, "and save a day-by-day plan.", font="dm", size=8.6, color=MUTED)
+    # ---- two QR cards (bottom right): route builder, then our place ----
+    gap=10
+    cx0=legend_x1+18
+    cw=(W-M-cx0-gap)/2
+    qr_card(page, fitz.Rect(cx0, 482, cx0+cw, 562), ROUTE_CARD)
+    qr_card(page, fitz.Rect(cx0+cw+gap, 482, W-M, 562), STAY_CARD)
 
     # footer
     page.draw_line(fitz.Point(M,575), fitz.Point(W-M,575), color=HAIR, width=0.8)
