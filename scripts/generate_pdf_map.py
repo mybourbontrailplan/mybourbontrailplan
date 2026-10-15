@@ -344,8 +344,18 @@ def stay_marker(page, proj, pins, inner, taken, pin_r=6.4):
             nx = min(max(px, r2.x0), r2.x1); ny = min(max(py, r2.y0), r2.y1)
             if math.hypot(px-nx, py-ny) < pin_r: return False
         return not any(r2.intersects(t) for t in taken)
+    # If the true spot sits under a distillery pin (at print scale the house is
+    # Log Still's neighbour), the leader starts at that pin's edge instead of
+    # at a dot, so it reads as "right next to this pin" without covering it.
+    cover = next(((px, py) for px, py in pins
+                  if math.hypot(px-hx, py-hy) <= pin_r+1.6), None)
+    def anchor(ix, iy):
+        if not cover: return hx, hy
+        cx, cy = cover; d = math.hypot(ix-cx, iy-cy) or 1
+        return cx + (ix-cx)/d*(pin_r+0.8), cy + (iy-cy)/d*(pin_r+0.8)
     def seg_clear(ax, ay, bx, by):
         for px, py in pins:
+            if cover and (px, py) == cover: continue
             vx, vy = bx-ax, by-ay; L = vx*vx+vy*vy or 1
             t = max(0, min(1, ((px-ax)*vx+(py-ay)*vy)/L))
             if math.hypot(px-(ax+t*vx), py-(ay+t*vy)) < pin_r+1.2: return False
@@ -356,16 +366,17 @@ def stay_marker(page, proj, pins, inner, taken, pin_r=6.4):
             ix = hx + dist*math.cos(math.radians(ang))
             iy = hy + dist*math.sin(math.radians(ang))
             icon, lab = boxes(ix, iy)
-            if clear(icon) and clear(lab) and seg_clear(hx, hy, ix, iy):
+            if clear(icon) and clear(lab) and seg_clear(*anchor(ix, iy), ix, iy):
                 best = (ix, iy); break
         if best: break
-    dot_ok = all(math.hypot(px-hx, py-hy) > pin_r+1.6 for px, py in pins)
-    if not best or not dot_ok:
+    if not best:
         print("  [warn] no clean spot for the stay marker on the inset; skipped")
         return
     ix, iy = best
-    page.draw_line(fitz.Point(hx, hy), fitz.Point(ix, iy), color=INK, width=0.5)
-    page.draw_circle(fitz.Point(hx, hy), 1.3, color=None, fill=INK)
+    ax, ay = anchor(ix, iy)
+    page.draw_line(fitz.Point(ax, ay), fitz.Point(ix, iy), color=INK, width=0.5)
+    if not cover:
+        page.draw_circle(fitz.Point(hx, hy), 1.3, color=None, fill=INK)
     # house: square body plus roof, white keyline so it reads on the paper fill
     roof = [fitz.Point(ix-s-0.8, iy-0.6), fitz.Point(ix, iy-s-1.6), fitz.Point(ix+s+0.8, iy-0.6)]
     page.draw_rect(fitz.Rect(ix-s+0.9, iy-0.8, ix+s-0.9, iy+s), color=WHITE, fill=INK, width=0.6)
