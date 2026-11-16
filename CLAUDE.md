@@ -111,7 +111,7 @@ Root-level HTML pages, an `images/` folder (distillery photos named `{distillery
 
 **Content:** `eat-and-drink-bourbon-trail.html`, `about.html` (monetisation disclosure), `contact.html`.
 
-**Guides:** `best-time-to-visit-bourbon-trail.html`, `bourbon-trail-non-bourbon-drinkers.html`, `louisville-whiskey-row-walking-guide.html`, `bourbon-trail-transportation-guide.html`, `kentucky-bourbonfest.html`, `kentucky-whiskey-trail.html`, `bourbon-trail-bachelor-party-guide.html`, `buffalo-trace-gift-shop-guide.html`.
+**Guides:** `best-time-to-visit-bourbon-trail.html`, `bourbon-trail-non-bourbon-drinkers.html`, `louisville-whiskey-row-walking-guide.html`, `bourbon-trail-transportation-guide.html`, `kentucky-bourbonfest.html`, `kentucky-whiskey-trail.html`, `bourbon-trail-bachelor-party-guide.html`, `buffalo-trace-gift-shop-guide.html`, `bourbon-trail-in-winter.html`.
 
 **Map pages:** `map.html` (full interactive), `printable-bourbon-trail-map.html` (PDF landing page), `embed-bourbon-trail-map.html` (widget + host toolkit), and four regional pages `bourbon-trail-map-{louisville,bardstown,frankfort,lexington}.html`.
 
